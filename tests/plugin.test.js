@@ -72,7 +72,7 @@ function plugin(options = {}) {
     createPage() { const p = { id: 'temp', type: 'PAGE', appendChild(node) { node.parent = p; }, remove() { p.removed = true; } }; pages.push(p); return p; },
   };
   const Clock = options.now ? class extends Date { constructor(...args) { super(...(args.length ? args : [0])); } static now() { return options.now(); } } : Date;
-  vm.runInNewContext(code, { figma, __html__: '', setTimeout, clearTimeout, TextEncoder, Date: Clock });
+  vm.runInNewContext(options.sourceCode || code, { figma, __html__: '', setTimeout, clearTimeout, TextEncoder, Date: Clock });
   const transportMessages=[];
   const send = async value => {
     await figma.ui.onmessage(value);
@@ -272,7 +272,7 @@ function proxyReply(request, sources) {
 async function proxyAudit(p, sources = [authored.source()], alter) {
   p.messages.length = 0;
   let done = false;
-  const running = p.send({ type: 'audit', requestId: 'auto' }).finally(() => { done = true; });
+  const running = p.send({ type: 'audit', requestId: 'auto', ...(p.connectCatalogs ? {connectCatalogs:true} : {}) }).finally(() => { done = true; });
   const seen = new Set();
   for (let turn = 0; !done && turn < 200; turn++) {
     for (const request of p.messages.filter(m => m.type === 'resolve-contracts')) if (!seen.has(request.requestId)) {
@@ -290,6 +290,44 @@ async function proxyAudit(p, sources = [authored.source()], alter) {
   assert.equal(done, true, 'Proxy handshake must finish'); await running;
   return p.messages.find(m => m.type === 'audit-result')?.audit;
 }
+
+test('current source main routes only proved direct raw owners and keeps the standalone child audit',async()=>{
+  const root=path.join(__dirname,'..'),esbuild=require('esbuild'),options=require('../build').runtimeBuildOptions(false);
+  const built=await esbuild.build({absWorkingDir:root,entryPoints:['src/code.ts'],bundle:true,write:false,platform:'browser',format:'iife',target:['es2017'],
+    supported:{'object-rest-spread':false},alias:options.alias,define:{__APOLLO_PROGRESSBAR_PILOT__:'true',__APOLLO_AGENT_NATIVE_SCOPE__:'null',__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__:'null',__APOLLO_NATIVE_BUILD_INPUTS_SHA__:'"synthetic-source-fixture"'},
+    plugins:[{name:'synthetic-capture-input',setup(build){build.onLoad({filter:/[\\/]src[\\/]audit-catalog\.ts$/},()=>({contents:"import {collectAnatomy} from '../packages/component-contract-core/src/figma-capture'; export async function captureCatalogAudit(subject,contract){const observed=await collectAnatomy(subject,contract.facts.component.platform,{});return figma.syntheticRawCapture(subject,contract,observed.anatomy);}",loader:'ts'}));}}]});
+  const A='a'.repeat(40),C='c'.repeat(40),H='1'.repeat(64),copy=v=>JSON.parse(JSON.stringify(v));
+  const parent=authored.source(),child=authored.source();
+  for(const [s,key,id]of [[parent,A,'fixture.raw-parent'],[child,C,'fixture.raw-child']]){
+    s.manual.component.componentId=s.manual.component.contractId=s.manual.component.familyId=id;s.manual.component.componentKey=key;
+    s.manual.representations[0].locator={componentKey:key};s.variantEvidence.variants[0].componentKey=key;s.variantEvidence.variants[0].componentSetKey=key;
+  }
+  parent.manual.targets.push({id:'child',semanticRole:'child',pathHint:'Test / Child',resolution:'resolved',lineage:[]});
+  parent.manual.rules[0].targetScope='self-and-descendants';
+  for(const supported of [true,false]){
+    const p=plugin({sourceCode:built.outputFiles[0].text,key:A}),nested=p.instance('nested',1);
+    nested.name='Child';nested.parent=p.actual;nested.getMainComponentAsync=async()=>({key:C,id:'nested-main',componentPropertyDefinitions:{}});p.actual.children.push(nested);p.connectCatalogs=true;
+    p.figma.syntheticRawCapture=(subject,contract,anatomy)=>{
+      const host=subject.id==='actual',snapshot={schemaVersion:'apollo.predicate-snapshot.v2',generatedAt:'2026-10-01T00:00:00Z',selection:['root'],context:{platform:'desktop',modes:{},unknownFacts:[]},
+        source:{rootNodeId:subject.id,componentKey:host?A:C,componentSetKey:'',representationId:'figma',fileKey:'file',pageId:'page',truncated:false,occurrenceAddressVersion:1,propertyReferenceIdentityVersion:1,instanceIdentityVersion:1,
+          captureTopology:{complete:true,issues:[]},catalogueNodeIds:host?{root:'actual',child:'nested'}:{root:'nested'},catalogReference:{referenceHash:host?H:'2'.repeat(64),releaseId:'e'.repeat(64)}},
+        nodes:[{id:'root',name:host?'Test':'Child',type:'INSTANCE',parentId:null,childIds:host?['child']:[],visible:true,resolvedModes:{},appearance:{opacity:1},
+          component:{identity:{componentKey:host?A:C,componentSetKey:''},properties:{},propertyTypes:{},propertyReferenceBindings:{}},unknownFacts:[]}]};
+      if(host)snapshot.nodes.push(Object.assign(copy(snapshot.nodes[0]),{id:'child',name:'Child',parentId:'root',childIds:[],component:{identity:{componentKey:C,componentSetKey:''},properties:{},propertyTypes:{},propertyReferenceBindings:{}}}));
+      const base=copy(snapshot);base.source.rawCatalogue={referenceHash:snapshot.source.catalogReference.referenceHash,manualSourceHash:contract.package.manualSourceHash,compiledContractHash:api.contractHash(contract),
+        catalog:{file:host?'parent.json':'child.json',sha256:H},representationId:'figma',paths:host?{root:'',child:'Child'}:{root:''},families:{[A]:'',[C]:''}};
+      if(!supported&&host)base.source.rawCatalogue.compiledContractHash='9'.repeat(64);
+      const ids=Object.fromEntries(snapshot.nodes.map(n=>[n.id,anatomy.find(a=>a.figmaNodeId===snapshot.source.catalogueNodeIds[n.id]).id]));
+      for(const s of [snapshot,base]){s.selection=s.selection.map(id=>ids[id]);for(const n of s.nodes){n.id=ids[n.id];n.parentId=n.parentId===null?null:ids[n.parentId];n.childIds=n.childIds.map(id=>ids[id]);}s.source.catalogueNodeIds=Object.fromEntries(Object.entries(s.source.catalogueNodeIds).map(([id,native])=>[ids[id],native]));}
+      base.source.rawCatalogue.paths=Object.fromEntries(Object.entries(base.source.rawCatalogue.paths).map(([id,p])=>[ids[id],p]));
+      snapshot.rawCatalogueReference={base};return {snapshot,anatomy,warnings:[],unmatchedBaselineNodeIds:[]};
+    };
+    const audit=await proxyAudit(p,[parent,child]);assert.ok(audit,JSON.stringify(p.messages));
+    assert.equal(audit.components.length,2);assert.equal(Boolean(audit.components[1].ownerContext),supported);
+    assert(audit.components.every(c=>c.result.engine.evaluations.length>0));assert.equal(audit.notChecked.length,0);
+    assert.equal(p.created.length,0);assert.equal(p.pages.length,0);
+  }
+});
 
 test('a selected section fetches once per key, checks repeated instances and marks missing contracts', async () => {
   const p = plugin({ opacity: .5 }), second = p.instance('second', .3), foreign = p.instance('foreign', 1);
@@ -367,14 +405,20 @@ test('an earlier instance changed while a later scope captures cannot publish a 
   const fresh=await proxyAudit(p);assert.ok(fresh);assert.ok(p.messages.some(m=>m.type==='audit-recovery'));assert.ok(fresh.components.find(c=>c.scopeId==='actual').snapshot.nodes.some(n=>n.appearance?.opacity===.2));
 });
 
-test('deselection during contract resolution preserves captured roots and rejects foreign late replies', async () => {
+test('deselection during contract resolution preserves captured roots and rejects foreign late replies', async t => {
   const p=plugin();await p.send({type:'ready'});const running=p.send({type:'audit',requestId:'pending'});
-  for(let turn=0;!p.messages.some(m=>m.type==='resolve-contracts')&&turn<20;turn++)await new Promise(resolve=>setImmediate(resolve));
-  const request=p.messages.find(m=>m.type==='resolve-contracts');assert.ok(request);p.figma.currentPage.selection=[];p.handlers.selectionchange();
+  t.after(async()=>{await p.send({type:'audit-cancel',requestId:'pending'});await running;});
+  const nextRequest=async previous=>{
+    const deadline=Date.now()+2000;
+    let request;
+    while(!(request=p.messages.find(m=>m.type==='resolve-contracts'&&m.requestId!==previous))&&Date.now()<deadline)
+      await new Promise(resolve=>setTimeout(resolve,1));
+    assert.ok(request,'Proxy request must arrive after host yields');return request;
+  };
+  const request=await nextRequest();p.figma.currentPage.selection=[];p.handlers.selectionchange();
   await p.send({type:'contracts-resolved',requestId:'foreign',data:proxyReply(request,[authored.source()])});assert.equal(p.messages.some(m=>m.type==='audit-result'),false);
   await p.send({type:'contracts-resolved',requestId:request.requestId,data:proxyReply(request,[authored.source()])});
-  for(let turn=0;!p.messages.some(m=>m.type==='resolve-contracts'&&m.requestId!==request.requestId)&&turn<30;turn++)await new Promise(resolve=>setImmediate(resolve));
-  const verify=p.messages.find(m=>m.type==='resolve-contracts'&&m.requestId!==request.requestId);assert.ok(verify);await p.send({type:'contracts-resolved',requestId:verify.requestId,data:proxyReply(verify,[authored.source()])});await running;
+  const verify=await nextRequest(request.requestId);await p.send({type:'contracts-resolved',requestId:verify.requestId,data:proxyReply(verify,[authored.source()])});await running;
   const result=p.messages.find(m=>m.type==='audit-result');assert.ok(result);assert.equal(result.audit.selection.roots[0].nodeId,'actual');
   await p.send({type:'focus-scope',auditId:result.audit.auditId,nodeId:'actual'});assert.equal(p.figma.currentPage.selection[0].id,'actual');
 });

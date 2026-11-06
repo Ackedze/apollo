@@ -1,5 +1,9 @@
 const test = require('node:test'), assert = require('node:assert/strict');
-const { collectContractOwnedParts, contractHash, aggregateAreaResult } = require("../dist/runtime.cjs");
+const built = require('esbuild').buildSync(require('../build').runtimeBuildOptions(false));
+const sourceModule = {exports:{}};
+new Function('require','module','exports',built.outputFiles[0].text)(require,sourceModule,sourceModule.exports);
+const sourceRuntime = sourceModule.exports;
+const { collectContractOwnedParts, contractHash, aggregateAreaResult } = sourceRuntime;
 const fixtures = require("./fixtures"), { reference } = require("./dependency-fixtures");
 
 function fixture(count = 4) {
@@ -38,6 +42,43 @@ test('ownership records the exact declared part, independent reference and curre
   assert.equal(JSON.stringify(f), before);
 });
 
+function rawOwnerFixture() {
+  const f=fixture(1), A='a'.repeat(40), B='b'.repeat(40), C='c'.repeat(40), D='d'.repeat(40), H='1'.repeat(64);
+  const root=f.snapshot.nodes[0],part=f.snapshot.nodes[1];
+  root.component.identity={componentKey:A,componentSetKey:B};part.component.identity={componentKey:C,componentSetKey:D};
+  part.appearance={opacity:1};f.snapshot.source.componentKey=A;f.snapshot.source.componentSetKey=B;
+  f.snapshot.source.representationId='figma';f.snapshot.source.captureTopology={complete:true,issues:[]};
+  f.contract.facts.component.componentKey=A;f.contract.facts.representations[0].locator={componentSetKey:B};
+  delete f.snapshot.variantReference;delete f.contract.facts.variantEvidence;
+  f.contract.customizationPolicy[0].targetId='root';f.contract.customizationPolicy[0].targetScope='self-and-descendants';
+  f.contract.rules[0].select.traverse='self-and-descendants';
+  const base=JSON.parse(JSON.stringify(f.snapshot));
+  base.source.rawCatalogue={referenceHash:H,catalog:{file:'fixture.json',sha256:H},manualSourceHash:f.contract.package.manualSourceHash,
+    representationId:'figma',paths:{root:'','part-0':'Part 0'},families:{[A]:B,[C]:D}};
+  f.snapshot.rawCatalogueReference={base};return f;
+}
+test('raw owner attribution retains actual rule/target traces and partial coverage without complete-reference forgery',()=>{
+ const f=rawOwnerFixture(),before=JSON.stringify(f.snapshot),parts=collectContractOwnedParts(f.snapshot,f.contract);
+ assert.equal(parts.length,1);assert.equal(parts[0].snapshotNodeId,'part-0');assert.equal(parts[0].proofBasis,'pinned-raw-catalogue');
+ assert(parts[0].ruleEvidence.some(e=>e.ruleId==='source.rule.1'&&e.subjectNodeId==='part-0'&&e.classification==='compliant'));
+ assert.equal(parts[0].coverage.state,'evaluated');assert.equal(f.snapshot.variantReference,undefined);
+ assert.equal(JSON.stringify(f.snapshot),before);
+ f.snapshot.nodes[1].unknownFacts=['appearance.opacity'];
+ assert.equal(collectContractOwnedParts(f.snapshot,f.contract).length,0,'unknown-only attempts are not checked coverage');
+ f.contract.rules.push(Object.assign({},f.contract.rules[0],{ruleId:'source.rule.2',assert:{predicate:'equals',actual:{fact:'type'},expected:{literal:'INSTANCE'}}}));
+ assert.equal(collectContractOwnedParts(f.snapshot,f.contract)[0].coverage.state,'partial');
+ assert.equal(collectContractOwnedParts(f.snapshot,f.contract,[]).length,0,'no run is not coverage');
+});
+test('raw owner refuses stale source, foreign identity, unknown ownership and external swap content',()=>{
+ for(const edit of [f=>f.snapshot.rawCatalogueReference.base.source.rawCatalogue.manualSourceHash='2'.repeat(64),
+  f=>f.snapshot.nodes[1].component.identity.componentKey='e'.repeat(40),
+  f=>f.snapshot.nodes[1].unknownFacts=['component.propertyReferenceBindings'],
+  f=>f.snapshot.nodes[1].component.propertyReferenceBindings={mainComponent:'Swap'},
+  f=>f.contract.customizationPolicy[0].controlPaths=[{contentOwnership:'external',target:'part-0'}]]) {
+  const f=rawOwnerFixture();edit(f);assert.equal(collectContractOwnedParts(f.snapshot,f.contract).length,0);
+ }
+});
+
 function hiddenPartAudit() {
   const f = fixture(1), part = f.snapshot.nodes[1];
   f.snapshot.source.captureTopology = { complete:true, limitReached:false, issues:[] };
@@ -47,7 +88,7 @@ function hiddenPartAudit() {
   rule.select.traverse = 'self-and-descendants';
   rule.select.where = [{predicate:'equals',actual:{fact:'semantic.role'},expected:{literal:'part-0'},missingPolicy:'unknown'}];
   policy.targetId = 'part-0'; policy.targetScope = 'self';
-  return { ...f, part, audit: () => require('../dist/runtime.cjs').auditContractSnapshot(f.snapshot,f.contract) };
+  return { ...f, part, audit: () => sourceRuntime.auditContractSnapshot(f.snapshot,f.contract) };
 }
 test('a proven hidden target retains its raw not-applicable verdict without an empty-selector coverage gap', () => {
   const f = hiddenPartAudit(), before = JSON.stringify(f.snapshot), result = f.audit();
@@ -135,7 +176,7 @@ test('attribution cannot promote incomplete host coverage to complete', () => {
 
 const core = require('../packages/component-contract-core/dist/core.cjs');
 const { fixture: configured, switchVariant, clone } = require('../packages/component-contract-core/tests/helpers/declared-configured.cjs');
-const { scopeContractCaptureWarnings } = require('../dist/runtime.cjs');
+const { scopeContractCaptureWarnings } = sourceRuntime;
 const { appendUnmatchedBaselineWarning, captureInstanceAudit } = require('../packages/component-contract-core/dist/capture.cjs');
 const { runNativeOccurrenceCapture } = require('../packages/component-contract-core/tests/helpers/native-occurrence-capture.cjs');
 function variantPart() {
@@ -251,7 +292,200 @@ for (const [name, edit] of [
 });
 
 
-const { auditContractSnapshot } = require('../dist/runtime.cjs');
+const { auditContractSnapshot } = sourceRuntime;
+function directRawAuditFixture() {
+  const f=rawOwnerFixture(), part=f.snapshot.nodes[1], E='e'.repeat(40), F='f'.repeat(40);
+  const label={id:'label-owner',name:'Current label',type:'INSTANCE',parentId:part.id,childIds:['label-text'],visible:true,
+    appearance:{opacity:1},resolvedModes:{},component:{identity:{componentKey:E,componentSetKey:F},properties:{},propertyTypes:{},propertyReferenceBindings:{}},unknownFacts:[]};
+  const text={id:'label-text',name:'Caption',type:'TEXT',parentId:label.id,childIds:[],visible:true,
+    appearance:{opacity:1},text:{fontSize:16},resolvedModes:{},unknownFacts:[]};
+  part.childIds=[label.id];part.resolvedModes={};f.snapshot.nodes.push(label,text);
+  Object.assign(f.snapshot.source,{fileKey:'synthetic-file',pageId:'synthetic-page',occurrenceAddressVersion:1,
+    catalogueNodeIds:{root:'1:1',[part.id]:'I1:1;2:1',[label.id]:'I1:1;2:1;3:1',[text.id]:'I1:1;2:1;3:1;4:1'}});
+  f.snapshot.context.unknownFacts=[];
+  const base=clone(f.snapshot);delete base.rawCatalogueReference;
+  base.source.rawCatalogue=clone(f.snapshot.rawCatalogueReference.base.source.rawCatalogue);
+  Object.assign(base.source.rawCatalogue.paths,{[label.id]:'Part 0 / Current label',[text.id]:'Part 0 / Current label / Caption'});
+  f.snapshot.rawCatalogueReference={base};
+  const child=clone(f.snapshot);delete child.rawCatalogueReference;child.selection=[part.id];child.nodes=child.nodes.slice(1);child.nodes[0].parentId=null;
+  Object.assign(child.source,{rootNodeId:f.snapshot.source.catalogueNodeIds[part.id],componentKey:part.component.identity.componentKey,componentSetKey:part.component.identity.componentSetKey});
+  child.context.platform='universal';
+  const contract=fixtures.contract();contract.package.id=contract.package.componentId=contract.facts.component.componentId='fixture.direct-child';
+  contract.facts.component.componentKey=child.source.componentKey;contract.facts.component.platform='universal';
+  contract.facts.representations[0].locator={componentSetKey:child.source.componentSetKey};contract.facts.representations[0].platform='universal';
+  contract.capabilities.facts=['baseline.effective.appearance.opacity'];
+  contract.rules[0].assert.expected={fact:'baseline.effective.appearance.opacity'};contract.rules[0].select.traverse='self-and-descendants';
+  contract.customizationPolicy[0].targetId='root';contract.customizationPolicy[0].targetScope='self-and-descendants';
+  const standalone=clone(child);standalone.nodes[0].appearance.opacity=.4;standalone.nodes[1].name='Historical anonymous';delete standalone.nodes[1].component.identity;
+  standalone.source.rawCatalogue={referenceHash:'2'.repeat(64),catalog:{file:'child.json',sha256:'2'.repeat(64)},manualSourceHash:contract.package.manualSourceHash,
+    representationId:'figma',paths:{[part.id]:'',[label.id]:'Historical anonymous',[text.id]:'Historical anonymous / Caption'},families:{[child.source.componentKey]:child.source.componentSetKey}};
+  child.rawCatalogueReference={base:standalone};
+  f.snapshot.source.catalogReference={referenceHash:base.source.rawCatalogue.referenceHash,releaseId:'synthetic-release'};
+  child.source.catalogReference={referenceHash:standalone.source.rawCatalogue.referenceHash,releaseId:'synthetic-release'};
+  const owner={snapshot:f.snapshot,contract:f.contract,nodeId:part.id,nodeMap:Object.fromEntries(child.nodes.map(n=>[n.id,n.id]))};
+  const repin=()=>{base.source.rawCatalogue.compiledContractHash=contractHash(f.contract);standalone.source.rawCatalogue.compiledContractHash=contractHash(contract);};
+  repin();return {f,part,label,text,child,contract,owner,base,standalone,repin};
+}
+test('direct raw owner binds an anonymous source subtree without borrowing actual expected values',()=>{
+  const a=directRawAuditFixture(),before=JSON.stringify(a);
+  assert.equal(sourceRuntime.canUseDirectRawOwnerContext(a.child,a.contract,a.owner),true);
+  const result=auditContractSnapshot(a.child,a.contract,undefined,a.owner);
+  assert.deepEqual(result.engine.evaluations.map(e=>e.classification),['compliant','compliant','compliant']);
+  assert.equal(JSON.stringify(a),before);
+  a.part.appearance.opacity=a.child.nodes[0].appearance.opacity=.5;
+  const changed=auditContractSnapshot(a.child,a.contract,undefined,a.owner).engine.evaluations;
+  const root=changed.find(e=>e.subjectNodeId===a.part.id);
+  assert.equal(root.classification,'violation');assert.equal(root.trace.expected,1);
+});
+for(const [name,mutate]of [
+  ['parent platform outside its representation',a=>a.f.snapshot.context.platform='ios'],
+  ['child channel outside the current parent',a=>a.child.context.platform='ios'],
+  ['foreign parent representation',a=>{a.f.snapshot.source.representationId=a.base.source.representationId=a.base.source.rawCatalogue.representationId='foreign';}],
+  ['foreign child representation',a=>{a.child.source.representationId=a.standalone.source.representationId=a.standalone.source.rawCatalogue.representationId='foreign';}],
+  ['parent base representation mismatch',a=>a.base.source.representationId='foreign'],
+  ['child base representation mismatch',a=>a.standalone.source.representationId='foreign'],
+  ['deprecated parent representation',a=>a.f.contract.facts.representations[0].status='deprecated'],
+  ['deprecated child representation',a=>a.contract.facts.representations[0].status='deprecated'],
+  ['ambiguous parent representation',a=>a.f.contract.facts.representations.push(Object.assign({},clone(a.f.contract.facts.representations[0]),{id:'another'}))],
+  ['ambiguous child representation',a=>a.contract.facts.representations.push(Object.assign({},clone(a.contract.facts.representations[0]),{id:'another'}))],
+  ['wrong parent capture source key',a=>a.f.snapshot.source.componentKey='9'.repeat(40)],
+  ['wrong child capture source key',a=>a.child.source.componentKey='9'.repeat(40)],
+  ['wrong parent independent source key',a=>a.base.source.componentKey='9'.repeat(40)],
+  ['wrong child independent source key',a=>a.standalone.source.componentKey='9'.repeat(40)],
+  ['wrong parent capture source family',a=>a.f.snapshot.source.componentSetKey='9'.repeat(40)],
+  ['wrong child independent source family',a=>a.standalone.source.componentSetKey='9'.repeat(40)],
+  ['parent independent platform mismatch',a=>a.base.context.platform='ios'],
+  ['child independent platform mismatch',a=>a.standalone.context.platform='desktop'],
+  ['coincident parent key cannot bypass an explicit foreign set',a=>a.f.contract.facts.representations[0].locator={componentKey:a.f.snapshot.source.componentKey,componentSetKey:'9'.repeat(40)}],
+  ['coincident child key cannot bypass an explicit foreign set',a=>a.contract.facts.representations[0].locator={componentKey:a.child.source.componentKey,componentSetKey:'9'.repeat(40)}],
+])test('raw owner representation proof refuses '+name,()=>{
+  const a=directRawAuditFixture();mutate(a);a.repin();
+  assert.equal(sourceRuntime.canUseDirectRawOwnerContext(a.child,a.contract,a.owner),false);
+  assert.throws(()=>auditContractSnapshot(a.child,a.contract,undefined,a.owner),error=>['APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE','APOLLO_V4_CONTRACT_INCOMPATIBLE'].includes(error.code));
+});
+test('raw owner representation proof preserves the declared and captured universal child channels',()=>{
+  for(const channel of ['universal','desktop']){
+    const a=directRawAuditFixture();a.child.context.platform=channel;
+    a.f.contract.facts.representations.push(Object.assign({},clone(a.f.contract.facts.representations[0]),{id:'historical',status:'deprecated'}));a.repin();
+    assert.equal(sourceRuntime.canUseDirectRawOwnerContext(a.child,a.contract,a.owner),true,channel);
+    assert(auditContractSnapshot(a.child,a.contract,undefined,a.owner).engine.evaluations.every(e=>e.classification==='compliant'));
+  }
+});
+for(const [name,mutate]of [
+  ['parent manual',a=>a.base.source.rawCatalogue.manualSourceHash='9'.repeat(64)],
+  ['child manual',a=>a.standalone.source.rawCatalogue.manualSourceHash='9'.repeat(64)],
+  ['parent compiled input',a=>a.f.contract.rules[0].presentation.title='changed'],
+  ['child compiled input',a=>a.contract.rules[0].presentation.title='changed'],
+  ['parent reference',a=>a.base.source.rawCatalogue.referenceHash='9'.repeat(64)],
+  ['child reference',a=>a.standalone.source.rawCatalogue.referenceHash='9'.repeat(64)],
+  ['source catalogue pin',a=>a.base.source.rawCatalogue.catalog.sha256='bad'],
+  ['foreign release',a=>a.child.source.catalogReference.releaseId='other'],
+  ['foreign parent',a=>a.f.snapshot.nodes[0].component.identity.componentKey='9'.repeat(40)],
+  ['foreign standalone source key',a=>a.standalone.nodes[1].component.identity={componentKey:'9'.repeat(40)}],
+  ['foreign anonymous source family',a=>a.standalone.nodes[1].component.identity={componentSetKey:'9'.repeat(40)}],
+  ['failed catalogue read',a=>a.child.source.catalogReference.failures=['unavailable']],
+  ['incomplete source topology',a=>a.standalone.source.captureTopology.complete=false],
+  ['foreign capture id',a=>a.child.source.catalogueNodeIds[a.label.id]='foreign'],
+  ['duplicate capture id',a=>a.f.snapshot.source.catalogueNodeIds.root=a.child.source.catalogueNodeIds[a.label.id]],
+  ['missing native map',a=>delete a.owner.nodeMap[a.label.id]],
+  ['changed child',a=>a.child.nodes[0].appearance.opacity=.5],
+  ['different page',a=>a.child.source.pageId='other'],
+  ['unknown actual modes',a=>a.child.context.unknownFacts.push('modes')],
+  ['unknown resolved modes',a=>a.child.nodes[0].unknownFacts.push('resolvedModes')],
+  ['changed resolved modes',a=>a.child.context.modes={other:'mode'}],
+  ['truncated topology',a=>a.f.snapshot.source.truncated=true],
+  ['incomplete topology',a=>a.child.source.captureTopology.complete=false],
+  ['open swap',a=>{a.child.nodes[1].component.propertyReferenceBindings.mainComponent='Swap';a.label.component.propertyReferenceBindings.mainComponent='Swap';}],
+  ['incomplete source tree',a=>a.standalone.nodes.pop()],
+])test('direct raw owner refuses '+name,()=>{
+  const a=directRawAuditFixture();mutate(a);
+  assert.equal(sourceRuntime.canUseDirectRawOwnerContext(a.child,a.contract,a.owner),false);
+  assert.throws(()=>auditContractSnapshot(a.child,a.contract,undefined,a.owner),{code:'APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE'});
+});
+test('direct raw owner retains independent typography and source gaps',()=>{
+  const a=directRawAuditFixture(),rule=clone(a.contract.rules[0]);
+  rule.ruleId='source.font';rule.select.where=[{predicate:'equals',actual:{fact:'type'},expected:{literal:'TEXT'}}];
+  rule.assert.actual={fact:'text.fontSize'};rule.assert.expected={fact:'baseline.effective.text.fontSize'};
+  a.contract.rules.push(rule);a.contract.coverage.compiledRules=2;a.contract.capabilities.facts.push('baseline.effective.text.fontSize');a.repin();
+  a.text.text.fontSize=a.child.nodes[2].text.fontSize=20;
+  const changed=auditContractSnapshot(a.child,a.contract,undefined,a.owner).engine.evaluations.find(e=>e.ruleId==='source.font');
+  assert.equal(changed.classification,'violation');assert.equal(changed.trace.expected,16);
+  a.base.nodes.find(n=>n.id===a.text.id).unknownFacts.push('text.fontSize');
+  assert.equal(auditContractSnapshot(a.child,a.contract,undefined,a.owner).engine.evaluations.find(e=>e.ruleId==='source.font').classification,'human-review');
+});
+test('direct raw owner Draft evidence executes only in the existing explicit authoring-preview mode',()=>{
+  const a=directRawAuditFixture();a.f.contract.status='draft';a.f.contract.rules[0].authority.status='draft';a.repin();
+  assert.throws(()=>auditContractSnapshot(a.child,a.contract,undefined,a.owner),{code:'APOLLO_V4_CONTRACT_INCOMPATIBLE'});
+  a.owner.evaluationMode='authoring-preview';
+  assert(auditContractSnapshot(a.child,a.contract,undefined,a.owner).engine.evaluations.every(e=>e.classification==='compliant'));
+  assert.equal(a.f.contract.rules[0].authority.status,'draft');
+});
+test('direct raw owner never chooses anonymous siblings by their order or name',()=>{
+  for(const reverse of [false,true]){
+    const a=directRawAuditFixture(),extra=clone(a.label),text=clone(a.text);
+    extra.id='second-label';extra.name='Second';extra.component.identity.componentKey='9'.repeat(40);extra.childIds=['second-text'];
+    text.id='second-text';text.parentId=extra.id;
+    for(const s of [a.f.snapshot,a.base,a.child,a.standalone]){
+      s.nodes.find(n=>n.id===a.part.id).childIds.push(extra.id);s.nodes.push(clone(extra),clone(text));
+      if(reverse)s.nodes.find(n=>n.id===a.part.id).childIds.reverse();
+    }
+    a.base.source.rawCatalogue.paths[extra.id]='Part 0 / Second';a.base.source.rawCatalogue.paths[text.id]='Part 0 / Second / Caption';
+    for(const id of [extra.id,text.id]){a.owner.nodeMap[id]=id;a.child.source.catalogueNodeIds[id]=a.f.snapshot.source.catalogueNodeIds[id]='I1:1;2:1;'+id;}
+    delete a.standalone.nodes.find(n=>n.id===extra.id).component.identity;
+    a.standalone.source.rawCatalogue.paths[extra.id]='Anonymous second';a.standalone.source.rawCatalogue.paths[text.id]='Anonymous second / Caption';
+    assert.equal(sourceRuntime.canUseDirectRawOwnerContext(a.child,a.contract,a.owner),false);
+  }
+});
+let directRawCoreModule;
+function directRawSourceCore(){
+  if(!directRawCoreModule){
+    const built=require('esbuild').buildSync({stdin:{contents:"export {validatedDirectRawOwnerCapture} from './packages/component-contract-core/src/component-dependencies'; export {prepareValidationSnapshot} from './packages/component-contract-core/src/runtime';",resolveDir:require('node:path').join(__dirname,'..'),loader:'ts'},bundle:true,write:false,platform:'node',format:'cjs'});
+    directRawCoreModule={exports:{}};new Function('require','module','exports',built.outputFiles[0].text)(require,directRawCoreModule,directRawCoreModule.exports);
+  }return directRawCoreModule;
+}
+test('direct raw owner absence needs independent compiled shape and known variant agreement',()=>{
+  for(const mode of ['closed','no-shape','shape-disagrees','unknown-properties','extra-variant-property']){
+    const a=directRawAuditFixture(),shape=[{path:'',type:'ROOT'},{path:'Historical anonymous',type:'INSTANCE'},{path:'Historical anonymous / Caption',type:'TEXT'}];
+    a.contract.facts.variantEvidence={schemaVersion:'apollo.variant-anatomy.v1',sourceHash:'c'.repeat(64),structures:{shape},variants:[{componentKey:a.child.source.componentKey,componentSetKey:a.child.source.componentSetKey,structureId:'shape',properties:{}}]};
+    a.contract.facts.targets.push({id:'addon',semanticRole:'addon',pathHint:'Test / Addon',resolution:'resolved',lineage:[]});
+    if(mode==='no-shape')delete a.contract.facts.variantEvidence;
+    if(mode==='shape-disagrees')shape.push({path:'Addon',type:'INSTANCE'});
+    if(mode==='unknown-properties'){a.part.unknownFacts.push('component.properties');a.child.nodes[0].unknownFacts.push('component.properties');}
+    if(mode==='extra-variant-property')for(const n of [a.part,a.child.nodes[0]]){n.component.propertyTypes.Other='VARIANT';n.component.properties.Other='True';}
+    a.repin();
+    const capture=clone(a.f.snapshot);capture.componentDependencyCaptures=[{nodeId:a.owner.nodeId,nodeMap:a.owner.nodeMap,snapshot:a.child}];
+    const m=directRawSourceCore();
+    const proof=m.exports.validatedDirectRawOwnerCapture(capture,a.owner.nodeId,a.f.contract,a.contract);
+    assert.ok(proof.ownerBaseline);
+    const prepared=m.exports.prepareValidationSnapshot(a.child,a.contract,undefined,proof.ownerBaseline),fact=prepared.declaredTargetIdentitiesV1.targets.find(t=>t.targetId==='addon');
+    assert.equal(fact.status,mode==='closed'?'resolved':'unknown',mode);
+    if(mode==='closed')assert.equal(fact.present,false);
+  }
+});
+test('direct raw owner preserves normal palette and narrowly scoped Custom token authority',()=>{
+  const a=directRawAuditFixture(),paint=token=>[{type:'SOLID',visible:true,opacity:1,color:{r:1,g:2,b:3},tokenId:token}];
+  a.base.nodes.find(n=>n.id===a.part.id).appearance.fill=paint('neutral');a.standalone.nodes[0].appearance.fill=paint('standalone-blue');
+  a.part.appearance.fill=paint('neutral');a.child.nodes[0].appearance.fill=paint('neutral');
+  const fill=clone(a.contract.rules[0]);fill.ruleId='synthetic.raw-fill';fill.select={from:'selection-root',traverse:'self'};
+  fill.assert={predicate:'matches-effective-baseline',actual:{fact:'appearance.fill'},expected:{fact:'baseline.effective.appearance.fill'},missingPolicy:'unknown'};
+  a.contract.rules.push(fill);a.contract.coverage.compiledRules=2;a.contract.capabilities.facts.push('baseline.effective.appearance.fill');a.repin();
+  const audit=()=>auditContractSnapshot(a.child,a.contract,undefined,a.owner);
+  assert.equal(audit().engine.evaluations.find(e=>e.ruleId===fill.ruleId).classification,'compliant');
+  const parent=a.f.contract,policy={id:'raw-custom',status:'reviewed',targetId:'part-0',targetScope:'self',permission:'constrained',capability:'appearance.fill',controlPaths:[{kind:'direct',target:'part-0',property:'appearance.fill'}],execution:{route:'predicate'}};
+  parent.customizationPolicy.push(policy);const token=clone(parent.rules[0]);token.ruleId='raw-custom.1';token.source.anchor=policy.id;
+  token.select={from:'selection-root',traverse:'self-and-descendants',where:[{predicate:'equals',actual:{fact:'id'},expected:{literal:a.part.id}}]};
+  token.assert={predicate:'binding-satisfies',actual:{fact:'paintBindingsV1.fill'},expected:{literal:{required:true}},missingPolicy:'unknown'};
+  parent.rules.push(token);parent.runtimePolicy.paintBindingFactsVersion=1;parent.coverage={sourceRules:2,policyRules:2,policyOnlyRules:0,compiledRules:2,nonExecutableRules:0};a.repin();
+  a.part.appearance.fill=a.child.nodes[0].appearance.fill=paint('custom-orange');
+  assert.equal(audit().engine.evaluations.find(e=>e.ruleId===fill.ruleId).classification,'not-applicable');
+  a.part.appearance.opacity=a.child.nodes[0].appearance.opacity=.5;
+  assert(audit().engine.evaluations.some(e=>e.classification==='violation'));
+  a.part.appearance.fill=a.child.nodes[0].appearance.fill=paint(null);
+  assert.equal(auditContractSnapshot(a.f.snapshot,parent).engine.evaluations.find(e=>e.ruleId===token.ruleId).classification,'violation');
+  assert.equal(audit().engine.evaluations.find(e=>e.ruleId===fill.ruleId).classification,'not-applicable');
+  token.when={predicate:'equals',actual:{literal:false},expected:{literal:true}};a.repin();
+  assert.notEqual(audit().engine.evaluations.find(e=>e.ruleId===fill.ruleId).classification,'not-applicable');
+});
 function ownedAuditFixture() {
   const f=fixture(1), part=f.snapshot.nodes[1];
   f.snapshot.source.occurrenceAddressVersion=1;

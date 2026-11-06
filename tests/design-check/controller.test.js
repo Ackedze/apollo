@@ -392,3 +392,9 @@ test('dispose prevents delayed results from publishing into an unmounted UI', as
   controller.subscribe(() => notifications++); const pending = controller.sendChat('test'); controller.destroy();
   const observed = notifications; reply.resolve({ text: 'late result' }); await pending; assert.equal(notifications, observed);
 });
+test('V3 launch uses one callback for components/texts and never starts the contract/document pair',async()=>{
+ const calls=[];const c=createDesignCheckController({auditEngine:'v3',onAudit:value=>{calls.push(value);},onDocumentAudit:()=>{throw Error('legacy document collector must not run');}});
+ c.setAuditReady(true);await c.startAudit('texts');assert.equal(calls.length,1);assert.equal(calls[0].kind,'texts');assert.equal(c.getState().audit,null);assert.equal(c.getState().documentAudit.status,'idle');
+ c.setV3AuditState({busy:false,result:{runId:'old'},runId:'old',stale:false,texts:{result:null},progress:''});c.setDocumentPageAvailable(true);c.setAuditReady(true);await c.startDocumentAudit();assert.equal(calls.length,2);assert.equal(calls[1].kind,'components');assert.equal(c.getState().audit,null);
+ c.destroy();
+});

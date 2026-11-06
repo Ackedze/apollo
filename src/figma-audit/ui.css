@@ -4,3 +4,20 @@
 .apollo-figma-audit-path{overflow-wrap:anywhere;font-size:12px}.apollo-figma-audit blockquote{margin:8px 0;padding-left:12px;border-left:2px solid #ddd;font-size:12px}
 .apollo-figma-audit dl{display:grid;grid-template-columns:1fr auto;gap:4px 16px}.apollo-figma-audit dd{margin:0}.apollo-figma-audit th,.apollo-figma-audit td{text-align:left;padding:8px;vertical-align:top}.apollo-figma-audit table{width:100%;font-size:12px}
 .apollo-figma-audit-report{margin-top:16px}.apollo-figma-audit button:focus-visible,.apollo-figma-audit input:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.apollo-figma-audit .apollo-figma-audit-actions{position:sticky;top:0;z-index:1;background:#fff;padding:12px 0;margin-top:4px}
+.apollo-figma-audit-progress{margin:12px 0;overflow-wrap:anywhere}.apollo-figma-audit-context{white-space:pre-wrap;overflow-wrap:anywhere}
+.apollo-figma-audit-log{padding-left:20px}.apollo-figma-audit-log li{margin:12px 0}.apollo-figma-audit-log p{font-size:12px}
+.apollo-figma-audit summary{overflow-wrap:anywhere}.apollo-figma-audit-report>label{display:flex;align-items:flex-start;gap:8px;margin:12px 0}.apollo-figma-audit-report input{flex-shrink:0;margin-top:4px}
+.apollo-figma-audit th,.apollo-figma-audit td{font-variant-numeric:tabular-nums}.apollo-figma-audit button{max-width:100%;white-space:normal}
+.apollo-figma-audit-table-scroll{max-width:100%;overflow-x:auto;margin:12px 0 16px;scrollbar-width:thin;scrollbar-color:#c6c8ce #fff}
+.apollo-figma-audit-table-scroll:focus-visible{outline:2px solid #2a77ef;outline-offset:2px}
+.apollo-figma-audit .apollo-figma-audit-table{min-width:720px;table-layout:fixed;border-collapse:collapse;font-size:13px;line-height:20px}
+.apollo-figma-audit-table col:nth-child(1){width:16%}.apollo-figma-audit-table col:nth-child(2){width:24%}.apollo-figma-audit-table col:nth-child(3),.apollo-figma-audit-table col:nth-child(4){width:18%}.apollo-figma-audit-table col:nth-child(5){width:24%}
+.apollo-figma-audit-table th,.apollo-figma-audit-table td{padding:12px 8px;overflow-wrap:anywhere;border-bottom:1px solid #dcdde2}
+.apollo-figma-audit-table thead th{background:#f2f3f5;font-weight:600}.apollo-figma-audit-table tbody th{font-weight:400}
+.apollo-figma-audit-table p{margin:4px 0}.apollo-figma-audit-table details{padding:0;border:0}.apollo-figma-audit-table summary{font-size:12px}
+.apollo-figma-audit-status{font-weight:600}
+.apollo-figma-audit .apollo-figma-audit-layer{padding:0;border:0;background:transparent;color:inherit;font:inherit;text-align:left;overflow-wrap:anywhere;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.apollo-figma-audit .apollo-figma-audit-layer:hover:not(:disabled){text-decoration-thickness:2px}.apollo-figma-audit .apollo-figma-audit-layer:disabled{background:transparent;color:var(--apollo-muted);cursor:default}
+.apollo-figma-audit-lifecycle-table col:nth-child(1){width:16%}.apollo-figma-audit-lifecycle-table col:nth-child(2){width:24%}.apollo-figma-audit-lifecycle-table col:nth-child(3){width:36%}.apollo-figma-audit-lifecycle-table col:nth-child(4){width:24%}
+@media(max-width:500px){.apollo-figma-audit{padding-inline:20px}.apollo-figma-audit th,.apollo-figma-audit td{padding:6px 4px}}

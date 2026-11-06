@@ -18,11 +18,11 @@ export type DialoguePort = { cancelScope: 'client-only';
   status?(): Promise<{ available: boolean; version: string | null; compatibility?: CompatibilityStatus }>;
   resetSession?(): void;
 };
-export type ControllerOptions = { tabs?: Tab[]; preferenceScope?: 'agent-source' | 'all-ui'; settingCapabilities?: Partial<Record<keyof UISettings, boolean>>;
+export type ControllerOptions = { auditEngine?: 'v3'; tabs?: Tab[]; preferenceScope?: 'agent-source' | 'all-ui'; settingCapabilities?: Partial<Record<keyof UISettings, boolean>>;
   beforeOperation?(): Promise<void>;
   preferences?: { load(): Promise<Preferences | null>; save(value: Preferences): Promise<unknown> };
   dialogue?: DialoguePort;
-  onAudit?(input: { requestId: string; uiPreferences: UISettings }): Promise<Audit | void> | void;
+  onAudit?(input: { kind?: 'components'|'texts'; requestId: string; uiPreferences: UISettings }): Promise<Audit | boolean | void> | boolean | void;
   onStopAudit?():void;
   onDocumentAudit?(input: { requestId: string; uiPreferences: UISettings }): Promise<void> | void;
   onDocumentFocus?(findingId: string, targetId: string): void;
@@ -32,7 +32,7 @@ export type ControllerOptions = { tabs?: Tab[]; preferenceScope?: 'agent-source'
   onCaptureExample?(value: unknown): void;
 };
 export type ControllerState = {
-  settings: UISettings; selectedTab: string | null; view: string; mode: 'check' | 'generation' | 'skills'; settingsNotice: string;
+  v3Audit:any; settings: UISettings; selectedTab: string | null; view: string; mode: 'check' | 'generation' | 'skills'; settingsNotice: string;
   preferenceStatus: string; preferenceError: string; auditReady: boolean; auditBusy: boolean;auditStopping:boolean;auditCancelled:boolean;auditNotice:string;auditFailures:any[]; auditProgress: string; auditStale: boolean;
   documentPageAvailable: boolean;documentActions:any;documentAction:{busy:boolean;status:string;message:string;[key:string]:unknown}; documentAudit: DocumentAuditState; auditError: string; audit: Audit | null; contextKey: string | null; tabs: Record<string, TabData>;
   chat: { open: boolean; source: 'langflow' | 'codex'; busy: boolean; error: string; unreadCount: number;
@@ -41,7 +41,7 @@ export type ControllerState = {
     proxy: { available: boolean | null; version: string | null; compatibility?: CompatibilityStatus | null } };
 };
 export type DesignCheckController = {
-  getState(): ControllerState; subscribe(listener: () => void): () => void;
+  setV3AuditState(value:any):void; getState(): ControllerState; subscribe(listener: () => void): () => void;
   getVisibleTabs(): Tab[]; getTabItems(id: string | null): Evaluation[];
   restorePreferences(): Promise<void>; updateSetting(key: string, value: unknown): boolean;
   selectTab(id: string): boolean; setView(view: string): boolean; setMode(mode: string): boolean; setAudit(audit: Audit): void;
@@ -50,7 +50,7 @@ export type DesignCheckController = {
   actOnDocumentFinding(findingId:string,targetId:string,actionId:string):void;setDocumentActions(value:any):void;setDocumentAction(value:any):void;
   focusDocumentFinding(findingId: string, targetId: string): void; setDocumentAudit(value: DocumentAuditState): void;
   setAuditProgress(requestId:string,message:string):void; setAuditStale():void;
-  setTabData(id: string, value: TabData): void; setAuditReady(ready: boolean): void; startAudit(): Promise<boolean>;
+  setTabData(id: string, value: TabData): void; setAuditReady(ready: boolean): void; startAudit(kind?:'components'|'texts'): Promise<boolean>;
   invalidateAudit(): void; openChat(): void; closeChat(): void; setAgentSource(source: string): boolean;
   sendChat(question: string): Promise<boolean>; cancelChat(): boolean; setContext(key: string | null): void;
   refreshProxyStatus(): Promise<void>; setProxyStatus(value: { available: boolean | null; version: string | null }): void;

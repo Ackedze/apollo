@@ -1,3 +1,4 @@
+import {createV3NativePort} from './v3-audit/native-port';
 import { createCurrentPageDiagnosticObserver } from "./generation/native/observer";
 declare const __APOLLO_NATIVE_BUILD_INPUTS_SHA__: string;
 import { captureInstanceAudit, collectAnatomy } from "../packages/component-contract-core/src/figma-capture";
@@ -38,7 +39,8 @@ const tokenJournalBridge=require("./token-journal-native").createTokenJournalBri
 const auditStatisticsBridge=require('./audit-statistics/native').createStatisticsBridge({storage:figma.clientStorage,post,hash:engine.stableHash});
 const designCheckUiBridge = createUiMainBridge({ storage: figma.clientStorage, resize: (width: number, height: number) => figma.ui.resize(width, height), post });
 const generationSessionBridge = createSessionBridge({ storage: figma.clientStorage, post });
-const nativePageObserver = createCurrentPageDiagnosticObserver(figma,invalidateNativeDiagnostic);
+let v3Port:ReturnType<typeof createV3NativePort>|null=null,v3Revision=0;
+const nativePageObserver = createCurrentPageDiagnosticObserver(figma,event=>{if(event)v3Port?.observeChange(event);else{v3Revision++;v3Port?.invalidate();}invalidateNativeDiagnostic();});
 function invalidateNativeDiagnostic(){post({type:'native-diagnostic-invalidated'});}
 let busy = false, generation = 0, lastAudit: any = null, selectionId = '', localMode = false;
 const localContracts = new Map<string, any>(), focusNodes = new Map<string, string>();
@@ -58,7 +60,12 @@ const documentAuditBridge = createDocumentAuditBridge({ catalogPolicyReader:requ
 figmaAuditBridge=require('./figma-audit/native').createFigmaAuditBridge({api:figma,hash:engine.stableHash,post,isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy())||layerNamesBridge.isApplying()});
 const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,observer:()=>nativePageObserver.snapshot(),isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy()),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
 reglyphBridge=createReglyphBridge({api:figma,post,isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
-landingCanvas=require('./landing/native').createLandingCanvasBridge({api:figma,hash:engine.stableHash,post,buildId:__APOLLO_NATIVE_BUILD_INPUTS_SHA__,isUnavailable:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy()});
+landingCanvas=require('./landing/context-native').createLandingCanvasBridge({api:figma,hash:engine.stableHash,post,buildId:__APOLLO_NATIVE_BUILD_INPUTS_SHA__,isUnavailable:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy()});
+v3Port=createV3NativePort({post,pluginVersion:require('../package.json').version,readRevision:()=>v3Revision,
+ isUnavailable:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy(),
+ canMutate:()=>{const observation=nativePageObserver.snapshot();return observation.status==='available'&&observation.pageId===figma.currentPage.id;},
+ onBusy:value=>{busy=value;},onMutation:()=>{v3Revision++;v3Port?.invalidate();documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
+
 function post(value: any) { figma.ui.postMessage(value); }
 const auditReportBridge=createAuditReportBridge({post,read:(id:string)=>{
   if(busy||documentAuditBridge.isActionBusy()||lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==figma.currentPage.id||lastAudit?.auditId!==id)throw Error('AUDIT_REPORT_STALE');
@@ -298,6 +305,8 @@ async function audit(requestId: string, options:any={}) {
         ownerContext = { snapshot: owner.captured.snapshot, contract: owner.contract,
           evaluationMode: owner.contract.status === 'draft' ? 'authoring-preview' : undefined,
           nodeId: ownership.snapshotNodeId, nodeMap };
+        // Attribution alone cannot replace a baseline; nested-variant raw owners stay standalone.
+        if (ownership.proofBasis === 'pinned-raw-catalogue' && !runtime.canUseDirectRawOwnerContext(captured.snapshot, contract, ownerContext)) ownerContext = undefined;
       }
       const diagnostics = scopeNativeSlotCaptureWarnings(captured);
       try { result = runtime.auditContractSnapshot(captured.snapshot, contract, item.evaluationOptions, ownerContext, diagnostics); }
@@ -328,17 +337,17 @@ async function audit(requestId: string, options:any={}) {
       for (const run of result.engine.dependencyRuns || []) if (run.status === 'executed' && run.nodeId && map.has(run.nodeId)) {
         covered.set(map.get(run.nodeId)!, { byScopeId: scopeId, dependencyId: run.dependencyId, reason: 'pinned-dependency-executed' });
       }
-      function registerParts(snapshot: any, ownerContract: any, nodeMap: Record<string, string>) {
+      function registerParts(snapshot: any, ownerContract: any, nodeMap: Record<string, string>, evaluations?: any[]) {
         const ownerNodeId = map.get(nodeMap[snapshot.selection[0]]);
         if (!ownerNodeId) return;
-        for (const part of collectContractOwnedParts(snapshot, ownerContract)) {
+        for (const part of collectContractOwnedParts(snapshot, ownerContract, evaluations)) {
           const id = map.get(nodeMap[part.snapshotNodeId]);
           if (id) ownedParts.set(id, Object.assign({}, part, { byScopeId: scopeId, ownerNodeId }));
         }
       }
       const localMap: Record<string, string> = {};
       captured.snapshot.nodes.forEach((node: any) => { localMap[node.id] = node.id; });
-      registerParts(captured.snapshot, contract, localMap);
+      registerParts(captured.snapshot, contract, localMap, result.engine.evaluations);
       for (const part of collectPermittedExternalParts(captured.snapshot, contract)) {
         const id = map.get(String(part.snapshotNodeId));
         if (id) externalParts.set(id, Object.assign({}, part, { byScopeId: scopeId }));
@@ -484,7 +493,7 @@ progressBarPilot?.start();
 figma.showUI(__html__, { width: 800, height: 860, themeColors: true });
 const releaseHostYield = setHostYieldTransport((ticket:string) => post({type:'audit-host-yield',ticket}));
 figma.on('selectionchange', refreshSelection);
-bindAreaPage();figma.on('currentpagechange',()=>{landingCanvas?.pageChanged();invalidateArea();bindAreaPage();refreshSelection();});figma.on('close',()=>{releaseHostYield();landingCanvas?.close();if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);});
+bindAreaPage();figma.on('currentpagechange',()=>{landingCanvas?.pageChanged();invalidateArea();bindAreaPage();refreshSelection();});figma.on('close',()=>{v3Port?.close();releaseHostYield();landingCanvas?.close();if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);});
 async function focusAuditFinding(message:any){
   const report=lastAudit,revision=lastAuditRevision;
   const reply=(success:boolean,text='',nodeId?:string)=>post({type:'audit-focus-result',requestId:message.requestId,auditId:message.auditId,targetId:message.targetId,success,message:text,nodeId});
@@ -511,6 +520,7 @@ figma.ui.onmessage = async (message: any) => {
   if(Object.keys(message).sort().join(',')==='ticket,type' && typeof message.ticket==='string' && message.ticket.length>0 && message.ticket.length<=150) completeHostYield(message.ticket);
   return;
  }
+  if (v3Port?.accept(message)) return;
   if (landingCanvas.accept(message)) return;
   if (progressBarPilot?.accept(message)) return;
   if (catalogPort.accept(message) || contractDataBridge.accept(message) || auditReportBridge.accept(message)) return;
@@ -538,7 +548,7 @@ figma.ui.onmessage = async (message: any) => {
       if (message.error) request.reject(Object.assign(new Error(message.error),{code:message.code})); else request.resolve(message.data);
       return;
     }
-    if (message.type === 'ready') { void catalogReaders.initialize(); refreshSelection(); return; }
+    if (message.type === 'ready') { refreshSelection(); return; }
     if (message.type === 'use-proxy') {
       if (busy) throw new Error('Дождитесь завершения проверки.');
        localMode = false; localContracts.clear(); generation++; lastAudit = null; focusNodes.clear();

@@ -48,4 +48,4 @@ function createNotificationProof({nodes,hash,guard=()=>{},verify=async()=>{},onE
  async function finish(publish){while(true){await settle();if(!pending&&verified===serial){assertStable();return publish();}await new Promise(resolve=>setTimeout(resolve,0));}}
  return{notify,settle,finish,assertCurrent,assertStable,hasPending:()=>Boolean(pending),close:()=>{closed=true;}};
 }
-module.exports={createNotificationProof,observationNodes};
+module.exports={createNotificationProof,observationNodes,nodeEvidence};

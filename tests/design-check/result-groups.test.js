@@ -70,7 +70,7 @@ test('yellow-only findings keep neutral mood; any confirmed red finding takes pr
  check(value,'customStyles',[{findingId:'fill',status:'custom-style'}]);assert.equal(auditQuality(summary(value)),'violation');assert.equal(summary(value).total,5);
  value.documentAudit.result.checks.pop();value.tabs.changes.items.push({classification:'violation',evaluationId:'red'});assert.equal(auditQuality(summary(value)),'violation');
  value.tabs.changes.executionComplete=false;assert.equal(auditQuality(summary(value)),'violation');
- value.documentAudit.status='stale';assert.equal(auditQuality(summary(value)),'unchecked');
+ value.documentAudit.status='stale';assert.equal(auditQuality(summary(value)),'violation');
 });
 test('current theme is clean; theme mismatch is red and unavailable theme remains yellow',()=>{
  for(const [status,expected] of [['theme-current','clean'],['theme-mismatch','violation'],['unknown','warning']]){

@@ -7,14 +7,6 @@ export function FindingCard({ title, tone = 'violation', location, library, acti
   library?: string | null;
   actions?: React.ReactNode; children?: React.ReactNode; information: React.ReactNode;
 }) {
-  const [expanded, setExpanded] = useState(false), informationId = useId();
-  const dialog = useRef<HTMLDialogElement>(null), trigger = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    if (!expanded || !dialog.current) return;
-    const modal = dialog.current, opener = trigger.current;
-    modal.showModal();
-    return () => { modal.close(); if (opener?.isConnected) opener.focus(); };
-  }, [expanded]);
   function focusObject(event: React.MouseEvent<HTMLElement>) {
     const target = event.target;
     if (event.defaultPrevented || event.button !== 0 || !(target instanceof Element)
@@ -35,21 +27,10 @@ export function FindingCard({ title, tone = 'violation', location, library, acti
         </>}</div>
       </div>
       <div className="apollo-finding-controls">{actions}
-        <button ref={trigger} className="apollo-finding-info-toggle" type="button" aria-label="Сведения проверки" title="Сведения проверки"
-          aria-haspopup="dialog" aria-controls={expanded ? informationId : undefined} onClick={() => setExpanded(true)}>
-          <img src={assets.imgFixer} width={16} height={16} alt="" />
-        </button>
+        <FindingInformation>{information}</FindingInformation>
       </div>
     </div>
-    {expanded && createPortal(<dialog ref={dialog} className="apollo-finding-dialog" id={informationId} role="dialog" aria-modal="true" aria-labelledby={`${informationId}-title`}
-      onCancel={event => { event.preventDefault(); setExpanded(false); }} onClick={event => { event.stopPropagation(); if (event.target === event.currentTarget) setExpanded(false); }}>
-      <div className="apollo-finding-dialog-content">
-        <header><h2 id={`${informationId}-title`}>Сведения проверки</h2><button type="button" aria-label="Закрыть сведения проверки" onClick={() => setExpanded(false)}>
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="m6 6 12 12M18 6 6 18" /></svg>
-        </button></header>
-        <section className="apollo-finding-information-body">{information}</section>
-      </div>
-    </dialog>, document.body)}
+
   </article>;
 }
 
@@ -62,4 +43,30 @@ export function FindingComparison({ property, before, after, beforeLabel, afterL
     {after !== undefined && <><span className="apollo-finding-arrow" aria-hidden="true">→</span>
       <strong title={afterLabel ? `${afterLabel}: ${after}` : after}><span className="design-check-sr-only">{afterLabel ? `${afterLabel}: ` : ''}</span>{after}</strong></>}
   </div>;
+}
+
+export function FindingInformation({children}:{children:React.ReactNode}) {
+  const [expanded, setExpanded] = useState(false), informationId = useId();
+  const dialog = useRef<HTMLDialogElement>(null), trigger = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!expanded || !dialog.current) return;
+    const modal = dialog.current, opener = trigger.current;
+    modal.showModal();
+    return () => { modal.close(); if (opener?.isConnected) opener.focus(); };
+  }, [expanded]);
+  return <>
+        <button ref={trigger} className="apollo-finding-info-toggle" type="button" aria-label="Сведения проверки" title="Сведения проверки"
+          aria-haspopup="dialog" aria-controls={expanded ? informationId : undefined} onClick={() => setExpanded(true)}>
+          <img src={assets.imgFixer} width={16} height={16} alt="" />
+        </button>
+    {expanded && createPortal(<dialog ref={dialog} className="apollo-finding-dialog" id={informationId} role="dialog" aria-modal="true" aria-labelledby={`${informationId}-title`}
+      onCancel={event => { event.preventDefault(); setExpanded(false); }} onClick={event => { event.stopPropagation(); if (event.target === event.currentTarget) setExpanded(false); }}>
+      <div className="apollo-finding-dialog-content">
+        <header><h2 id={`${informationId}-title`}>Сведения проверки</h2><button type="button" aria-label="Закрыть сведения проверки" onClick={() => setExpanded(false)}>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button></header>
+        <section className="apollo-finding-information-body">{children}</section>
+      </div>
+    </dialog>, document.body)}
+  </>;
 }

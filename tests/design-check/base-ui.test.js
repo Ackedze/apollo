@@ -18,7 +18,7 @@ test('confirmed Corp with incomplete unrelated coverage renders grey Base and no
  await harness('overview',{state:s,summary:summary(s),busy:false,checkedScope:'Область',onOpen(){},onBase(){opens++;}},async w=>{
   const button=w.document.querySelector('.apollo-base-result');assert.equal(button.textContent,'База');assert.equal(w.getComputedStyle(button).backgroundColor,'rgba(0, 0, 0, 0.04)');
   assert.equal(button.querySelector('.apollo-group-count'),null);assert.doesNotMatch(w.document.body.textContent,/Темизация не подтверждена|Установи темизацию|Сменить|Подробнее/);
-  assert.equal(w.document.querySelector('.apollo-mascot svg'),null);button.click();assert.equal(opens,1);
+  assert.equal(w.document.querySelector('.apollo-mascot svg'),null);assert.equal(button.disabled,true);button.click();assert.equal(opens,0);
  });
 });
 test('Base counter follows two, one and zero errors and keeps the ordinary card background',async()=>{

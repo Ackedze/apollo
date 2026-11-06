@@ -1,16 +1,18 @@
 const test = require('node:test'), assert = require('node:assert/strict');
 const { assessCompatibility, compare, createCompatibilityClient } = require('../src/compatibility');
 const { createDesignCheckController } = require('../src/design-check/controller');
-const health = () => ({ ok: true, proxy: { version: '1.4.17' }, compatibility: { protocolVersion: 1,
+const health = () => ({ ok: true, proxy: { version: '1.4.24' }, compatibility: { protocolVersion: 1,
   data: { state: 'ready', version: 'a'.repeat(64), schemaVersion: 'apollo.proxy-data-release.v1',
-    profileVersion: '0.4.1', deliveryProfile: 'checking-ask-figma-mcp', generatedAt: '2026-11-03T19:00:00.000Z' } } });
+    profileVersion: '0.4.1', deliveryProfile: 'checking-ask-figma-mcp', generatedAt: '2026-11-05T00:00:00.000Z' } } });
 
-for (const proxyVersion of ['1.4.17', '1.4.18', '1.5.0', '1.10.0']) test('compatible stable Proxy ' + proxyVersion, () => {
+for (const proxyVersion of ['1.4.24', '1.4.25', '1.5.0', '1.10.0']) test('compatible stable Proxy ' + proxyVersion, () => {
   const value = health(); value.proxy.version = proxyVersion;
   assert.equal(assessCompatibility(value).state, 'compatible');
 });
 for (const [name, change, expected] of [
-  ['old Proxy', h => { h.proxy.version = '1.4.16'; }, 'update-proxy'],
+  ['old Proxy', h => { h.proxy.version = '1.4.22'; }, 'update-proxy'],
+  ['previous Proxy without the V3 data API', h => { h.proxy.version = '1.4.23'; }, 'update-proxy'],
+  ['previous data before the V3 dataset', h => { h.compatibility.data.generatedAt = '2026-11-04T12:00:00.000Z'; }, 'update-data'],
   ['future major Proxy', h => { h.proxy.version = '2.0.0'; }, 'update-apollo'],
   ['missing version', h => { delete h.proxy.version; }, 'update-proxy'],
   ['unsafe version', h => { h.proxy.version = '999999999999999999999999.0.0'; }, 'update-proxy'],

@@ -3,7 +3,8 @@ import { snapshotPaths } from "../packages/component-contract-core/src/snapshot-
 import { materializeVariantFacts, materializeVerifiedVariantTargets, variantAvailability } from "../packages/component-contract-core/src/variant-facts";
 import { compareInstanceBoundaries, correspondingPath, withinBoundary } from "../packages/component-contract-core/src/instance-boundaries";
 import { materializeInstanceContentReferences } from "../packages/component-contract-core/src/instance-content-reference";
-import { prepareValidationSnapshot } from "../packages/component-contract-core/src/runtime";
+import { prepareValidationSnapshot, evaluateCompiledContract } from "../packages/component-contract-core/src/runtime";
+import { rawCatalogCorrespondence } from "../packages/component-contract-core/src/raw-catalog-reference";
 
 export type OwnedAreaPart = {
   snapshotNodeId: string;
@@ -14,6 +15,9 @@ export type OwnedAreaPart = {
   targetRole: string;
   referencePath: string;
   reason: 'component-owned-part';
+  proofBasis?: 'pinned-raw-catalogue';
+  ruleEvidence?: Array<{ruleId:string; targetId:string; subjectNodeId:string; classification:string; factPaths:string[]}>;
+  coverage?: {state:'evaluated'|'partial'; uncertain:number};
 };
 const record = (value: unknown): Record<string, any> => value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, any> : {};
 const unknown = (node: Record<string, unknown>, fact: string) => ((node.unknownFacts || []) as string[])
@@ -143,7 +147,8 @@ export function emptyOwnedTextScope(snapshot: PreviewSnapshot, contract: Compile
 
 /** Attribution only. A declared semantic part needs independent correspondence;
  * this never executes rules, hides host gaps or grants a library baseline. */
-export function collectContractOwnedParts(snapshot: PreviewSnapshot, contract: CompiledContract): OwnedAreaPart[] {
+export function collectContractOwnedParts(snapshot: PreviewSnapshot, contract: CompiledContract, evaluations?: any[]): OwnedAreaPart[] {
+  if ((snapshot as any).rawCatalogueReference?.base?.source?.rawCatalogue) return collectRawOwnedParts(snapshot,contract,evaluations);
   const paths = snapshotPaths(snapshot), reference = snapshot.variantReference;
   if (!paths || !reference?.complete || snapshot.source?.propertyReferenceIdentityVersion !== 1) return [];
   const available = variantAvailability(snapshot, contract);
@@ -217,6 +222,53 @@ export function collectContractOwnedParts(snapshot: PreviewSnapshot, contract: C
     parts.push({ snapshotNodeId: String(node.id), ownerComponentId: contract.package.componentId,
       ownerContractId: contract.package.id, manualSourceHash: contract.package.manualSourceHash,
       targetId: targets[0].id, targetRole: targets[0].semanticRole, referencePath, reason: 'component-owned-part' });
+  }
+  return parts;
+}
+
+function collectRawOwnedParts(snapshot:PreviewSnapshot,contract:CompiledContract,evaluations?:any[]):OwnedAreaPart[] {
+  if(snapshot.source?.propertyReferenceIdentityVersion!==1||!snapshotPaths(snapshot))return [];
+  const base=(snapshot as any).rawCatalogueReference.base;
+  const fresh=prepareValidationSnapshot(snapshot,contract), paths=snapshotPaths(fresh)!;
+  const {matches}=rawCatalogCorrespondence(fresh,base,contract);
+  if(!matches.size)return [];
+  const ledger=(fresh as any).declaredTargetIdentitiesV1?.targets || [], external:string[]=[];
+  for(const policy of contract.customizationPolicy.filter(p=>p.status!=='deprecated'))for(const control of policy.controlPaths)
+    if(control.contentOwnership==='external') {
+      const target=ledger.find((t:any)=>t.targetId===control.target);
+      if(!target||target.status!=='resolved')return [];
+      if(target.present!==false)external.push(target.referencePath);
+    }
+  const ran:any[]=evaluations || evaluateCompiledContract(snapshot,contract).evaluations as any[], parts:OwnedAreaPart[]=[];
+  const byId=new Map(fresh.nodes.map(n=>[String(n.id),n]));
+  const fixed=contract.customizationPolicy.some(p=>p.status!=='deprecated'&&p.permission==='forbidden'
+    &&p.capability==='component.baseline'&&p.targetScope==='self-and-descendants'
+    &&contract.facts.targets.some(t=>t.id===p.targetId&&t.semanticRole==='root'));
+  for(const node of fresh.nodes) {
+    const match=matches.get(String(node.id)), path=paths.get(String(node.id))!;
+    if(node.type!=='INSTANCE'||!path||!match||external.some(p=>withinBoundary(match.referencePath,p)))continue;
+    const targets=ledger.filter((t:any)=>t.status==='resolved'&&t.nodeId===node.id);
+    if(targets.length!==1)continue;
+    let ancestor:any=node,blocked=false;
+    while(ancestor) {
+      if(ancestor.type==='SLOT'||record(ancestor.component).propertyReferenceBindings?.mainComponent!==undefined&&!fixed
+        ||['id','type','parentId','component.identity','component.propertyReferenceBindings'].some(f=>unknown(ancestor,f))) {blocked=true;break;}
+      ancestor=ancestor.parentId===null?undefined:byId.get(String(ancestor.parentId));
+    }
+    if(blocked)continue;
+    const target=targets[0],boundFacts=contract.facts.semanticApi.filter(p=>p.bindings.some(b=>b.targetId===target.targetId
+      &&b.representationId===fresh.source?.representationId)).flatMap(p=>['semanticApi.'+p.id,'host.semanticApi.'+p.id]);
+    const evidence=ran.filter(e=>e.subjectNodeId&&paths.has(e.subjectNodeId)
+      &&(withinBoundary(paths.get(e.subjectNodeId)!,path)||e.trace?.factPaths?.some((f:string)=>boundFacts.includes(f)))&&e.classification!=='not-applicable'
+      &&e.trace?.reason!=='rule authority is not active'&&contract.rules.some(r=>r.ruleId===e.ruleId));
+    if(!evidence.some(e=>['compliant','violation','allowed'].includes(e.classification)))continue;
+    const uncertain=evidence.filter(e=>!['compliant','violation','allowed'].includes(e.classification)).length;
+    parts.push({snapshotNodeId:String(node.id),ownerComponentId:contract.package.componentId,ownerContractId:contract.package.id,
+      manualSourceHash:contract.package.manualSourceHash,targetId:target.targetId,targetRole:target.semanticRole,
+      referencePath:match.referencePath,reason:'component-owned-part',proofBasis:'pinned-raw-catalogue',
+      ruleEvidence:evidence.map(e=>({ruleId:e.ruleId,targetId:target.targetId,subjectNodeId:e.subjectNodeId,classification:e.classification,
+        factPaths:e.trace?.factPaths || []})),
+      coverage:{state:uncertain?'partial':'evaluated',uncertain}});
   }
   return parts;
 }

@@ -4,14 +4,18 @@ import { resolveCaptureRepresentation } from '../packages/component-contract-cor
 import { allowedComponentPropertyNames } from '../packages/component-contract-core/src/instance-validation';
 import { configureInstanceMainAliases } from '../packages/component-contract-core/src/instance-main-aliases';
 import { planInstanceContentReferences, materializeInstanceContentReferences } from '../packages/component-contract-core/src/instance-content-reference';
-import { captureVariantReference } from '../packages/component-contract-core/src/variant-facts';
 import { captureTransitionContext } from '../packages/component-contract-core/src/transition-capture';
 import { dependencyPinIssue, COMPONENT_DEPENDENCY_DEPTH_LIMIT, COMPONENT_DEPENDENCY_CAPTURE_LIMIT, DIRECT_CHILD_DEPENDENCY_CAPTURE_LIMIT } from '../packages/component-contract-core/src/component-dependencies';
 import type { CompiledContract } from '../packages/component-contract-core/src/types';
 
 // This switch is an explicit, bounded experiment. No catalogue failure invokes
 // the live reference materializer, including for a dependency or final recheck.
-const pilotComponents = new Set(['core.web.button', 'web-corp.title-view', 'core.web.spinner']);
+const pilotComponents = new Set([
+  'web-corp.title-view', 'core.web.button', 'core.web.spinner',
+  'web-corp.status-property', 'web-core.status', 'web-core.status-badge',
+  'web-core.icon-view', 'web-core.indicator', 'core.web.link',
+  'web-corp.filter-company-select', 'web-core.icon-button', 'web-core.skeleton',
+]);
 function fail(code: string, message: string): never { throw Object.assign(Error(message + ' (' + code + ')'), { code }); }
 const transitionSession = 'catalog-' + Date.now() + '-' + Math.random().toString(36).slice(2);
 let transitionSequence = 0;
@@ -44,24 +48,46 @@ function resourceReferences(snapshot: any) {
   return references;
 }
 
-/** Resolve identities already present in the document; never import a resource. */
-async function resourceWitnesses(prepared: any, snapshot: any, control: CaptureReadControl) {
-  const candidates: any[] = [], collections = new Set<string>(Object.keys(snapshot.context.modes));
-  const remember = (kind: string, resource: any) => {
-    if (!resource || typeof resource.id !== 'string' || typeof resource.key !== 'string')
-      fail('CATALOG_RESOURCE_READ_FAILED', 'Figma не вернула идентификатор используемого ресурса.');
-    candidates.push(Object.assign({kind, consumerId:resource.id, consumerKey:resource.key},
-      kind === 'collection' ? {consumerModes:resource.modes} : {}));
+function markUnreadResource(snapshot: any, id: string) {
+  const visit = (node: any, value: any, path: string) => {
+    if (value === id) node.unknownFacts = Array.from(new Set((node.unknownFacts || []).concat(path)));
+    else if (value && typeof value === 'object') for (const [key, child] of Object.entries(value)) {
+      if (key === id) node.unknownFacts = Array.from(new Set((node.unknownFacts || []).concat(path)));
+      visit(node, child, path ? path + '.' + key : key);
+    }
   };
-  const references = resourceReferences(snapshot);
-  for (const row of references.values() as Iterable<any>) {
-    control.guard();
-    const item = await control.read<any>(() => row.kind === 'token'
+  for (const node of snapshot.nodes) for (const field of ['appearance','variable','textStyleEvidenceV1','textFillEvidenceV1','hostVariableUsageV1'])
+    visit(node, node[field], field);
+}
+
+/** Resolve identities already present in the document; never import a resource.
+ * Published component keys can have several document-local aliases. */
+async function resourceWitnesses(prepared: any, snapshot: any, control: CaptureReadControl, failures: string[], allowComponentAliases: boolean) {
+  const candidates: any[] = [], collections = new Set<string>(Object.keys(snapshot.context.modes));
+  const read = async (kind: string, id: string, work: () => Promise<any>) => {
+    try {
+      control.guard();
+      const resource = await control.read(work);
+      if (!resource || resource.id !== id || typeof resource.key !== 'string' || !resource.key
+        || kind === 'component' && resource.type !== 'COMPONENT') throw Error('CATALOG_RESOURCE_READ_FAILED');
+      candidates.push(Object.assign({kind, consumerId:id, consumerKey:resource.key},
+        kind === 'collection' ? {consumerModes:resource.modes} : {}));
+      return resource;
+    } catch (error) {
+      control.guard();
+      if ((error as any)?.code === 'AUDIT_CANCELLED') throw error;
+      failures.push('CATALOG_RESOURCE_READ_FAILED: ' + kind + ':' + id);
+      // Only comparisons consuming this unread identity become UNKNOWN.
+      markUnreadResource(snapshot, id);
+      return undefined;
+    }
+  };
+  for (const row of resourceReferences(snapshot).values()) {
+    const item = await read(row.kind === 'token' ? 'variable' : 'style', row.id, () => row.kind === 'token'
       ? figma.variables.getVariableByIdAsync(row.id) : figma.getStyleByIdAsync(row.id));
-    remember(row.kind === 'token' ? 'variable' : 'style', item);
-    if (row.kind === 'token' && item && 'variableCollectionId' in item) collections.add(String(item.variableCollectionId));
+    if (row.kind === 'token' && item?.variableCollectionId) collections.add(String(item.variableCollectionId));
   }
-  for (const id of collections) remember('collection', await control.read(() => figma.variables.getVariableCollectionByIdAsync(id)));
+  for (const id of collections) await read('collection', id, () => figma.variables.getVariableCollectionByIdAsync(id));
   const componentIds = new Set<string>();
   for (const node of snapshot.nodes) {
     for (const id of [node.component?.identity?.mainComponentId, node.component?.sourceIdentity?.ownerMainComponentId])
@@ -71,18 +97,23 @@ async function resourceWitnesses(prepared: any, snapshot: any, control: CaptureR
       if (type === 'INSTANCE_SWAP' && typeof id === 'string' && id) componentIds.add(id);
     }
   }
-  for (const id of componentIds) {
-    const node = await control.read(() => figma.getNodeByIdAsync(id));
-    if (!node || node.type !== 'COMPONENT') fail('CATALOG_RESOURCE_READ_FAILED', 'Figma не вернула источник свойства замены.');
-    remember('component', node);
-  }
-  return prepared.resourceRequirements.flatMap((requirement: any) => {
+  for (const id of componentIds) await read('component', id, () => figma.getNodeByIdAsync(id));
+  const witnesses = prepared.resourceRequirements.flatMap((requirement: any) => {
     const matches = candidates.filter(row => row.kind === requirement.kind && row.consumerKey === requirement.sourceKey);
-    const unique = new Map(matches.map(row => [row.consumerId, row]));
-    if (unique.size > 1) fail('CATALOG_RESOURCE_IDENTITY_AMBIGUOUS', 'Ключ ресурса соответствует нескольким источникам в документе.');
-    const match = Array.from(unique.values())[0] as any;
+    const unique = new Map<string, any>(matches.map(row => [row.consumerId, row]));
+    // Alias-aware contracts retain an independent namespaced source ID; every
+    // observed local alias is keyed separately. Never choose an occurrence by ID.
+    if (requirement.kind === 'component' && allowComponentAliases) return [];
+    if (unique.size > 1) {
+      // No first-match fallback for styles, tokens or mode domains.
+      failures.push('CATALOG_RESOURCE_IDENTITY_AMBIGUOUS: ' + requirement.kind + ':' + requirement.sourceKey);
+      for (const match of unique.values()) markUnreadResource(snapshot, match.consumerId);
+      return [];
+    }
+    const match = Array.from(unique.values()).sort((a, b) => a.consumerId.localeCompare(b.consumerId))[0];
     return match ? [Object.assign({}, match, {sourceId:requirement.sourceId, sourceKey:requirement.sourceKey})] : [];
   });
+  return {witnesses, componentKeys:Object.fromEntries(candidates.filter(row => row.kind === 'component').map(row => [row.consumerId, row.consumerKey]))};
 }
 
 export async function captureCatalogAudit(subject: InstanceNode, contract: CompiledContract, releaseId: string,
@@ -104,39 +135,84 @@ export async function captureCatalogAudit(subject: InstanceNode, contract: Compi
   const revisions = Array.from(new Set(contract.rules.map(rule => rule.revision)));
   const revision = contract.package.manualRevision ?? (revisions.length === 1 ? revisions[0] : undefined);
   if (typeof revision !== 'number' || !Number.isSafeInteger(revision)) fail('CATALOG_CONTRACT_REVISION_REQUIRED', 'В контракте не закреплена ревизия каталожной проверки.');
-  const selection = {contractId:contract.package.id, componentId:contract.package.componentId,
+  let selection: any = {contractId:contract.package.id, componentId:contract.package.componentId,
     revision, representationId:representation.id,
     componentKey:main.key, variantKey:main.key, config, modes};
-  const response = await resolve(selection);
-  control.guard();
-  const prepared = buildCatalogReference(response, contract, {releaseId, selection});
-  const captureControl = Object.assign({}, control, {preparedSourceTopology:prepared.preparedSourceTopology});
-  const actual = await collectNodes(subject, representation.platform, modes, undefined, captureControl);
-  const witnesses = await resourceWitnesses(prepared, actual.snapshot, control);
-  const baseline = applyCatalogResourceRemap(prepared, witnesses);
-  const swapKeys: Record<string, string> = {};
-  if (contract.runtimePolicy.portableSwapIdentityVersion === 1) for (const requirement of baseline.resourceRequirements) {
-    if (requirement.kind !== 'component') continue;
-    const witness = witnesses.find((w: any) => w.kind === 'component' && w.sourceId === requirement.sourceId);
-    const id = witness?.consumerId || 'catalog-source:component:' + prepared.referenceHash + ':' + requirement.sourceId;
-    swapKeys[id] = requirement.sourceKey;
+  const failures: string[] = [];
+  let prepared: ReturnType<typeof buildCatalogReference> | undefined;
+  try {
+    const response = await resolve(selection);
+    control.guard();
+    prepared = buildCatalogReference(response, contract, {releaseId, selection});
+  } catch (error) {
+    control.guard();
+    if ((error as any)?.code === 'AUDIT_CANCELLED') throw error;
+    failures.push((error as any)?.code || 'CATALOG_REFERENCE_FAILED');
   }
-  for (const snapshot of [actual.snapshot, baseline.snapshot]) {
+  // An unavailable reference must not enable the live pristine-instance path.
+  const sourceTopology = prepared?.preparedSourceTopology || {componentKey:main.key, rootNodeId:main.id, nodes:[]};
+  const captureControl = Object.assign({}, control, {preparedSourceTopology:sourceTopology});
+  const actual = await collectNodes(subject, representation.platform, modes, undefined, captureControl);
+  (actual.snapshot.source as any).catalogueNodeIds = Object.fromEntries(actual.anatomy.map(n => [n.id, n.figmaNodeId]));
+  if ((prepared?.snapshot.source as any)?.rawCatalogue) {
+    const nestedComponentKeys = Array.from(new Set(actual.snapshot.nodes.filter(n => n.type === 'INSTANCE'
+      && !actual.snapshot.selection.includes(String(n.id))).map(n => (n.component as any)?.identity?.componentKey)
+      .filter((k): k is string => typeof k === 'string' && /^[a-f0-9]{40}$/i.test(k)))).sort();
+    if (nestedComponentKeys.length) try {
+      const requested = Object.assign({}, selection, {hostContext:{nestedComponentKeys}});
+      const response = await resolve(requested);
+      control.guard();
+      prepared = buildCatalogReference(response, contract, {releaseId, selection:requested});
+      selection = requested;
+    } catch (error) {
+      control.guard();
+      if ((error as any)?.code === 'AUDIT_CANCELLED') throw error;
+      failures.push((error as any)?.code || 'CATALOG_NESTED_REFERENCE_FAILED');
+    }
+  }
+  let baseline: ReturnType<typeof applyCatalogResourceRemap> | undefined;
+  const swapKeys: Record<string, string> = {};
+  if (prepared) {
+    const resources = await resourceWitnesses(prepared, actual.snapshot, control, failures, contract.runtimePolicy.instanceMainComponentAliasesVersion === 1);
+    Object.assign(swapKeys, resources.componentKeys);
+    try { baseline = applyCatalogResourceRemap(prepared, resources.witnesses); }
+    catch (error) { control.guard(); failures.push((error as any)?.code || 'CATALOG_RESOURCE_REMAP_FAILED'); }
+    // The full independent reference pin remains authoritative for API facts,
+    // even if visual resource/mode remapping failed.
+    for (const requirement of prepared.resourceRequirements) if (requirement.kind === 'component') {
+      const witness = baseline && resources.witnesses.find((w: any) => w.kind === 'component' && w.sourceId === requirement.sourceId);
+      const id = baseline ? witness?.consumerId || 'catalog-source:component:' + prepared.referenceHash + ':' + requirement.sourceId : requirement.sourceId;
+      if (swapKeys[id] && swapKeys[id] !== requirement.sourceKey) delete swapKeys[id];
+      else swapKeys[id] = requirement.sourceKey;
+    }
+  }
+  for (const snapshot of [actual.snapshot, baseline?.snapshot]) {
+    if (!snapshot) continue;
     if (contract.runtimePolicy.portableSwapIdentityVersion === 1) snapshot.source!.swapComponentKeys = swapKeys;
     Object.assign(snapshot.source!, {componentKey:main.key, componentSetKey:setKey, representationId:representation.id});
     configureInstanceMainAliases(snapshot, contract.runtimePolicy.instanceMainComponentAliasesVersion === 1);
   }
-  const materialized = materializeCatalogBaseline(actual.snapshot, baseline.snapshot);
-  materialized.snapshot.variantReference = captureVariantReference(baseline.snapshot, main.key, setKey,
-    Object.keys((main.parent?.type === 'COMPONENT_SET' ? main.parent : main).componentPropertyDefinitions));
+  // collectNodes also serves authoring and initializes a self baseline. It is
+  // never independent audit evidence when the catalogue could not be applied.
+  if (!baseline) for (const node of actual.snapshot.nodes) {
+    node.baseline = {effective:{}};
+    node.baselineProvenance = {status:'unresolved', reason:'catalog-reference-unavailable'};
+    node.unknownFacts = Array.from(new Set([...(Array.isArray(node.unknownFacts) ? node.unknownFacts : []), 'baseline.effective']));
+  }
+  const raw = Boolean((baseline?.snapshot.source as any)?.rawCatalogue);
+  const materialized = baseline ? materializeCatalogBaseline(actual.snapshot, baseline.snapshot, contract) : actual;
+  if (prepared && !raw) materialized.snapshot.variantReference = baseline?.variantReference || prepared.variantReference;
+  if (raw) (materialized.snapshot as any).rawCatalogueReference = {base:baseline!.snapshot};
   // Preserve the same replay validator and explicit uncertainty for unsupported
   // configured host replacements. Do not borrow any observed visual facts.
-  const attempts = planInstanceContentReferences(materialized.snapshot).map(boundary => ({
+  const attempts = baseline && !raw ? planInstanceContentReferences(materialized.snapshot).map(boundary => ({
     boundaryNodeId:boundary.nodeId, failure:'catalog-configured-host-unavailable',
-  }));
-  materialized.snapshot.instanceContentReferences = {schemaVersion:'apollo.instance-content-references.v4',
-    hostContextVariableModesVersion:1, base:baseline.snapshot, attempts};
-  materializeInstanceContentReferences(materialized.snapshot);
+  })) : [];
+  if (baseline && !raw) {
+    materialized.snapshot.instanceContentReferences = {schemaVersion:'apollo.instance-content-references.v4',
+      hostContextVariableModesVersion:1, base:baseline.snapshot, attempts};
+    materializeInstanceContentReferences(materialized.snapshot);
+  }
   const accepted = new Set<string>(), dependencies: any[] = [];
   for (const dependency of contract.componentDependencies || []) if (!dependency.issue && dependency.contract
     && !dependencyPinIssue(dependency, dependency.contract)) {
@@ -174,7 +250,7 @@ export async function captureCatalogAudit(subject: InstanceNode, contract: Compi
     }
   }
   const unmatched = materialized.snapshot.nodes.filter(node => (node.baselineProvenance as any)?.status !== 'matched').map(node => String(node.id));
-  const warnings: string[] = [];
+  const warnings: string[] = failures.map(code => 'Часть эталонных фактов недоступна; независимые проверки выполнены. (' + code + ')');
   const baselineDiagnostics = appendUnmatchedBaselineWarning(warnings, unmatched);
   if (attempts.length) warnings.push('Каталог не содержит независимые настроенные host-эталоны для заменённого содержимого.');
   if (temporalStart) {
@@ -183,11 +259,11 @@ export async function captureCatalogAudit(subject: InstanceNode, contract: Compi
       sessionId:transitionSession, sequence, manualSourceHash:contract.package.manualSourceHash,
       externalContext:temporalStart.context, complete}, complete ? {} : {reason:temporalStart.reason || end.reason || 'changed-during-capture'});
   }
-  Object.assign(materialized.snapshot.source!, {catalogReference:{schemaVersion:'apollo.catalog-capture.v1', referenceHash:prepared.referenceHash,
-    releaseId, mechanism:'athena-v3-structure-and-native-facts'}});
+  Object.assign(materialized.snapshot.source!, {catalogReference:{schemaVersion:'apollo.catalog-capture.v1', referenceHash:prepared?.referenceHash,
+    releaseId, failures, mechanism:raw?'athena-v3-raw-catalogue':'athena-v3-structure-and-native-facts'}});
   control.guard();
   return {componentKey:main.key, anatomy:actual.anatomy, snapshot:materialized.snapshot,
     imageDataUrl:'', width:subject.width, height:subject.height, matchedBaselineNodes:materialized.snapshot.nodes.length - unmatched.length,
     unmatchedBaselineNodeIds:unmatched, warnings, baselineDiagnostics, manualSourceHash:contract.package.manualSourceHash,
-    preparedSourceTopology:prepared.preparedSourceTopology, referenceOrigin:'catalog'};
+    preparedSourceTopology:sourceTopology, referenceOrigin:'catalog'};
 }

@@ -64,11 +64,11 @@ function buildResultGroups(state, tabs, getItems) {
 /** Presentation only: the mascot uses the same red/yellow meanings as finding cards. */
 /** @returns {'unchecked' | 'clean' | 'warning' | 'violation'} */
 function auditQuality(summary, busy = false) {
-  if (busy || summary.total === null || summary.stale) return 'unchecked';
+  if (busy || summary.total === null) return 'unchecked';
   const categories = summary.groups.flatMap(group => group.categories).concat(summary.theme || []);
   const red = categories.some(category => category.issues.some(entry => entry.classification
     ? entry.classification === 'violation' : !['unknown','update','local','detached'].includes(entry.status)));
   if (red) return 'violation';
-  return summary.total > 0 || summary.incomplete ? 'warning' : 'clean';
+  return summary.total > 0 || summary.incomplete ? 'warning' : summary.stale ? 'unchecked' : 'clean';
 }
 module.exports = { buildResultGroups, auditQuality, baseCheck };

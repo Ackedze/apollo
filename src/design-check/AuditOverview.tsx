@@ -19,12 +19,12 @@ export function AuditOverview({ progress, summary, busy, checkedScope, onOpen, o
         <ul>{summary.coverageDetails?.length ? summary.coverageDetails.map(item=><li key={item.id}><strong>{item.title}:</strong> {item.reason}</li>) : <li>Подробности доступны в соответствующих разделах результатов.</li>}</ul>
       </details>}
     </div>
-    {theme && <button className="apollo-base-result" onClick={onBase} type="button" aria-label={'База: ' + (theme.count === null ? 'проверка ещё не запускалась' : theme.count + ' замечаний')}>
+    {theme && <button className="apollo-base-result" disabled={!theme.count} onClick={onBase} type="button" aria-label={'База: ' + (theme.count === null ? 'проверка ещё не запускалась' : theme.count + ' замечаний')}>
       <span>База</span>
       {theme.count !== null && theme.count > 0 && <span className="apollo-group-count has-issues">{theme.count}</span>}
     </button>}
     <div className="apollo-overview-groups">
-      {summary.groups.map(group => <button key={group.id} type="button" className="apollo-overview-group" onClick={() => onOpen(group)}
+      {summary.groups.map(group => <button key={group.id} type="button" className="apollo-overview-group" disabled={!group.connected || !group.count} onClick={() => onOpen(group)}
         aria-label={group.title + ': ' + (group.count === null ? 'проверка не подключена' : group.count + ' замечаний')}>
         <span className="apollo-overview-group-heading"><strong>{group.title}</strong>{group.count !== null && group.count > 0 && <span className="apollo-group-count has-issues">{group.count}</span>}</span>
         <span className="apollo-overview-group-description">{group.id === 'styles' ? 'Детачи, переменные, устаревшие, кастомные стили и токены' : group.id === 'components' ? 'Детачи, локальные компоненты и нарушение правил применения' : 'Ошибки применения компонентных и проектировочных паттернов'}</span>

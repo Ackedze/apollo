@@ -5,13 +5,19 @@ const esbuild = require('esbuild');
 const { JSDOM } = require('jsdom');
 
 const app = path.resolve(__dirname, '../..');
-const bundle = esbuild.buildSync({
+const bundle = esbuild.build({
   stdin: { contents: "export { mountDesignCheck, createDesignCheckController, tabDefinitions } from './src/design-check';", resolveDir: app },
   bundle: true, write: false, outfile: path.join(app, 'tests/progressbar-transport.bundle.js'),
   loader: { '.module.css': 'local-css' }, platform: 'browser', format: 'iife', globalName: 'PilotShell',
+  // A test-only launcher exercises transport without reopening the disabled production category.
+  plugins: [{ name: 'diagnostic-pattern-entry', setup(build) {
+    build.onResolve({ filter: /^\.\/AuditOverview$/ }, () => ({ path: 'overview', namespace: 'diagnostic' }));
+    build.onLoad({ filter: /.*/, namespace: 'diagnostic' }, () => ({ loader: 'tsx', resolveDir: app,
+      contents: `import React from 'react';import {AuditOverview as Actual} from ${JSON.stringify(path.join(app,'src/design-check/AuditOverview.tsx'))};export function AuditOverview(props){return <><Actual {...props}/><button data-diagnostic-pattern-entry onClick={()=>props.onOpen({id:'patterns'})}>Диагностический транспортный сценарий</button></>;}` }));
+  } }],
   define: { 'process.env.NODE_ENV': '"production"', __APOLLO_PROGRESSBAR_PILOT__: 'true',
     __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: '"http://localhost:3001/v1/analyze/codex/runs"' },
-}).outputFiles.find(file => file.path.endsWith('.js')).text;
+}).then(result => result.outputFiles.find(file => file.path.endsWith('.js')).text);
 const tick = () => new Promise(resolve => setTimeout(resolve, 10));
 
 async function harness() {
@@ -25,11 +31,14 @@ async function harness() {
     return { ok: false, json: async () => ({ success: false, code: 'PROGRESSBAR_TEST_STOP' }) };
   };
   parent.postMessage = value => { if (value.pluginMessage?.type === 'progressbar-native-request') native.push(value.pluginMessage); };
-  ui.eval(bundle + '\nwindow.PilotShell = PilotShell;');
+  ui.eval((await bundle) + '\nwindow.PilotShell = PilotShell;');
   const controller = ui.PilotShell.createDesignCheckController({ tabs: ui.PilotShell.tabDefinitions });
   const view = ui.PilotShell.mountDesignCheck(ui.document.querySelector('#root'), controller);
   await tick();
-  ui.document.querySelector('[aria-label^="Паттерны:"]').click(); await tick();
+  const productionEntry = ui.document.querySelector('[aria-label^="Паттерны:"]');
+  assert.equal(productionEntry.disabled, true); productionEntry.click(); await tick();
+  assert.equal(native.length, 0); assert.equal(ui.document.querySelector('.apollo-progressbar-start'), null);
+  ui.document.querySelector('[data-diagnostic-pattern-entry]').click(); await tick();
   ui.document.querySelector('.apollo-progressbar-start').click(); await tick();
   assert.equal(native.length, 1);
   const reply = { type: 'progressbar-native-result', requestId: native[0].requestId, operation: 'capture',
@@ -39,7 +48,7 @@ async function harness() {
     close() { view.unmount(); controller.destroy(); outer.close(); } };
 }
 
-test('actual Patterns shell accepts correlated native replies from immediate and outer Figma ancestors', async () => {
+test('diagnostic-only Patterns transport accepts correlated native replies from immediate and outer Figma ancestors', async () => {
   for (const sender of ['parent', 'outer']) {
     const h = await harness();
     try {
@@ -52,7 +61,7 @@ test('actual Patterns shell accepts correlated native replies from immediate and
   }
 });
 
-test('actual Patterns shell refuses null, sibling, child, self and uncorrelated replies before Proxy preparation', async () => {
+test('diagnostic-only Patterns transport refuses null, sibling, child, self and uncorrelated replies before Proxy preparation', async () => {
   const h = await harness();
   try {
     for (const source of [null, h.outer.document.querySelector('#foreign').contentWindow, h.ui.document.querySelector('#child').contentWindow, h.ui]) {
@@ -65,7 +74,7 @@ test('actual Patterns shell refuses null, sibling, child, self and uncorrelated 
   } finally { h.close(); }
 });
 
-test('actual Patterns shell forwards capture v2 context evidence intact to preparation', async () => {
+test('diagnostic-only Patterns transport forwards capture v2 context evidence intact to preparation', async () => {
   const h = await harness();
   try {
     h.reply.result.schemaVersion = 'apollo.progressbar-capture.v2';

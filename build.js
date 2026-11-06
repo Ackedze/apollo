@@ -56,6 +56,7 @@ async function build() {
   const dist = path.join(root, "./dist");
   fs.mkdirSync(dist, { recursive: true });
   const result = await esbuild.build(runtimeBuildOptions());
+  const auditPreparation=await esbuild.build({absWorkingDir:root,entryPoints:['src/v3-audit/data-preparation.ts'],outfile:path.join(dist,'v3-audit-preparation.cjs'),bundle:true,platform:'node',format:'cjs',target:['node18'],metafile:true});
   if(process.env.APOLLO_AGENT_NATIVE_SCOPE_PATH||process.env.APOLLO_NATIVE_DIAGNOSTIC_INPUTS_PATH)throw Error('LEGACY_GENERATION_BUILD_CONFIGURATION_RETIRED');
   const agentScope=null,agentScopeInput=null;
   const agentProtocol=await esbuild.build({absWorkingDir:root,entryPoints:["src/generation/agent/protocol.js"],outfile:path.join(dist,'agent-protocol.cjs'),bundle:true,platform:'node',format:'cjs',target:['node18'],alias:aliases,metafile:true});
@@ -75,7 +76,7 @@ async function build() {
   const uiOptions = {absWorkingDir: root, entryPoints: ['src/ui.js'], outfile: path.join(dist, 'ui.js'), loader: { '.module.css': 'local-css' }, bundle: true, platform: 'browser', format: 'iife', target: ['es2020'], write: false, alias: aliases, metafile: true, define: {'process.env.NODE_ENV': '"production"', __APOLLO_PLUGIN_VERSION__: JSON.stringify(require('./package.json').version), __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__: '"pending"', __APOLLO_PROGRESSBAR_PILOT__: 'true', __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: JSON.stringify('http://localhost:3001/v1/analyze/codex/runs')}};
   const uiInputs = await esbuild.build(uiOptions);
   const readPortInputs = ['build.js','src/ui.html','src/design-check/tsconfig.json','tsconfig.json','package.json','instructions/landing/figma-workflow.md','instructions/agent-generation/figma-owned-mapping.json','node_modules/react/package.json','node_modules/react-dom/package.json','node_modules/scheduler/package.json'];
-  const inputs = Array.from(new Set(Object.keys(result.metafile.inputs).concat(Object.keys(main.metafile.inputs), Object.keys(uiInputs.metafile.inputs),Object.keys(agentProtocol.metafile.inputs),Object.keys(agentFigmaProtocol.metafile.inputs),Object.keys(agentFigmaPostconditions.metafile.inputs),readPortInputs))).filter(input => input !== '<define:__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__>' && input !== '<define:__APOLLO_AGENT_NATIVE_SCOPE__>').sort().map((input) => {
+  const inputs = Array.from(new Set(Object.keys(result.metafile.inputs).concat(Object.keys(main.metafile.inputs), Object.keys(uiInputs.metafile.inputs),Object.keys(auditPreparation.metafile.inputs),Object.keys(agentProtocol.metafile.inputs),Object.keys(agentFigmaProtocol.metafile.inputs),Object.keys(agentFigmaPostconditions.metafile.inputs),readPortInputs))).filter(input => input !== '<define:__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__>' && input !== '<define:__APOLLO_AGENT_NATIVE_SCOPE__>').sort().map((input) => {
     const absolutePath = path.resolve(root, input);
     if (path.relative(repository, absolutePath).startsWith('..')) {
       throw new Error(`Build reads code outside the Apollo repository: ${input}`);

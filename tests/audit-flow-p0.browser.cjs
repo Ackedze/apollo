@@ -20,7 +20,7 @@ async function until(check){for(let i=0;i<1000;i++){const value=check();if(value
   page.on('pageerror',e=>errors.push(e.message));await page.route(/^https?:/,route=>{
    const headers={'Content-Type':'application/json','Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'*','Access-Control-Allow-Methods':'*','Access-Control-Allow-Private-Network':'true'};
    if(route.request().method()==='OPTIONS')return route.fulfill({status:200,headers});
-   if(new URL(route.request().url()).pathname==='/health')return route.fulfill({status:200,headers,body:JSON.stringify({ok:true,proxy:{version:'1.4.17'},compatibility:{protocolVersion:1,data:{state:'ready',version:'a'.repeat(64),schemaVersion:'apollo.proxy-data-release.v1',profileVersion:'0.4.1',deliveryProfile:'checking-ask-figma-mcp',generatedAt:'2026-11-03T19:00:00.000Z'}}})});
+   if(new URL(route.request().url()).pathname==='/health')return route.fulfill({status:200,headers,body:JSON.stringify({ok:true,proxy:{version:'1.4.23'},compatibility:{protocolVersion:1,data:{state:'ready',version:'a'.repeat(64),schemaVersion:'apollo.proxy-data-release.v1',profileVersion:'0.4.1',deliveryProfile:'checking-ask-figma-mcp',generatedAt:'2026-11-04T12:00:00.000Z'}}})});
    return route.abort();
   });await page.goto(pathToFileURL(path.join(__dirname,'../dist/ui.html')).href);ready=true;for(const m of queued)await page.evaluate(m=>window.emitPlugin(m),m);queued=[];
   await f.api.ui.onmessage({type:'load-contract',source:authored.nested().source});

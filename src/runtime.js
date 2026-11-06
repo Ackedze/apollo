@@ -10,6 +10,12 @@ function loadRuntimeContract(contract, options) {
   return assertRuntimeContract(contract, engine, options);
 }
 
+function canUseDirectRawOwnerContext(snapshot, contract, owner) {
+  const host = JSON.parse(JSON.stringify(owner.snapshot));
+  host.componentDependencyCaptures = [{nodeId:owner.nodeId,nodeMap:owner.nodeMap,snapshot}];
+  return Boolean(dependencies.validatedDirectRawOwnerCapture(host,owner.nodeId,owner.contract,contract).ownerBaseline);
+}
+
 function auditContractSnapshot(snapshot, inputContract, options, ownerContext, captureDiagnostics) {
   const mode = contractEvaluationMode(options), contract = loadRuntimeContract(inputContract, options);
   if (!snapshot || snapshot.schemaVersion !== 'apollo.predicate-snapshot.v2'
@@ -46,11 +52,15 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext, c
   if (owner) {
     boundCapture(owner.snapshot, 0);
     const parent = loadRuntimeContract(owner.contract, owner.evaluationMode ? { evaluationMode: owner.evaluationMode } : undefined);
-    const parts = collectContractOwnedParts(owner.snapshot, parent).filter(part => part.snapshotNodeId === owner.nodeId);
+    const raw = Boolean(owner.snapshot.rawCatalogueReference?.base?.source?.rawCatalogue);
+    const ownerEvaluations = raw ? core.evaluateCompiledContract(owner.snapshot,
+      owner.evaluationMode === 'authoring-preview' ? core.prepareAuthoringPreviewContract(parent) : parent).evaluations : undefined;
+    const parts = collectContractOwnedParts(owner.snapshot, parent, ownerEvaluations).filter(part => part.snapshotNodeId === owner.nodeId);
     const host = JSON.parse(JSON.stringify(owner.snapshot));
     host.componentDependencyCaptures = (host.componentDependencyCaptures || []).filter(capture => capture.nodeId !== owner.nodeId);
     host.componentDependencyCaptures.push({ nodeId: owner.nodeId, nodeMap: owner.nodeMap, snapshot });
-    const proof = parts.length === 1 && dependencies.validatedDependencyCapture(host, owner.nodeId, contract);
+    const proof = parts.length === 1 && (raw ? dependencies.validatedDirectRawOwnerCapture(host, owner.nodeId, parent, contract)
+      : dependencies.validatedDependencyCapture(host, owner.nodeId, contract));
     if (!proof?.snapshot || !proof.nodeMap || contract.capabilities.facts.some(fact => fact.startsWith('baseline.effective')) && !proof.ownerBaseline) {
       const error = new TypeError('Enclosing component evidence is unavailable or inconsistent');
       error.code = 'APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE';
@@ -71,7 +81,7 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext, c
     const hasOwnerFillConstraint = parent.customizationPolicy.some(policy => policy.status !== 'deprecated'
       && policy.permission === 'constrained' && policy.capability === 'appearance.fill'
       && (policy.targetScope || 'self') === 'self');
-    const parentEvaluations = hasOwnerFillConstraint ? core.evaluateCompiledContract(owner.snapshot,
+    const parentEvaluations = hasOwnerFillConstraint ? ownerEvaluations || core.evaluateCompiledContract(owner.snapshot,
       owner.evaluationMode === 'authoring-preview' ? core.prepareAuthoringPreviewContract(parent) : parent).evaluations : [];
     for (const evaluation of parentEvaluations) {
       if (evaluation.applicability !== 'applicable' || !['compliant', 'violation'].includes(evaluation.classification)) continue;
@@ -130,7 +140,7 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext, c
     || contract.runtimePolicy.memberCollectionsVersion === 1 && entry.collection?.missing?.length
       && !(entry.applicability === 'not-applicable' && entry.trace?.truth === 'false')).length;
   const incompleteDependencies = (result.dependencyRuns || []).filter((run) => !['executed', 'not-applicable'].includes(run.status)).length;
-  const captureIncomplete = snapshot.source?.truncated === true
+  const captureIncomplete = Boolean(snapshot.source?.catalogReference?.failures?.length) || snapshot.source?.truncated === true
     || snapshot.source?.captureTopology?.complete === false
     || Boolean(snapshot.source?.captureTopology?.issues?.length);
   const audit = {
@@ -171,7 +181,7 @@ function replayArchivedReport(report) {
 }
 
 module.exports = {
-  CONTRACT_SCHEMA, RUNTIME_VERSION, loadRuntimeContract, auditContractSnapshot, replayArchivedReport,
+  CONTRACT_SCHEMA, RUNTIME_VERSION, loadRuntimeContract, auditContractSnapshot, replayArchivedReport, canUseDirectRawOwnerContext,
   SOURCE_SCHEMA: authoring.SOURCE_SCHEMA, loadAuthoringSource: authoring.loadAuthoringSource, sourceFromFiles: authoring.sourceFromFiles,
   linkSourcePackages: authoring.linkSourcePackages,
   reviewAuthoringSource: authoring.reviewAuthoringSource,

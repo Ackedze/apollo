@@ -36,7 +36,7 @@
 .apollo-scope { min-width:0; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; line-height:20px; color:var(--apollo-text); text-align:center; }
 .apollo-back { border:0; background:transparent; color:inherit; display:inline-flex; align-items:center; gap:8px; padding:8px 0; cursor:pointer; font-size:14px; font-weight:500; white-space:nowrap; }
 .apollo-back svg { width:20px; height:20px; }
-.apollo-categories { box-sizing:border-box; display:flex; align-items:flex-start; min-width:0; flex:0 1 auto; height:56px; overflow-x:auto; gap:24px; padding-top:18px; margin-left:auto; scrollbar-width:thin; }
+.apollo-categories { box-sizing:border-box; display:flex; align-items:flex-start; min-width:0; flex:0 1 auto; height:56px; overflow-x:auto; gap:16px; padding-top:18px; margin-left:auto; scrollbar-width:thin; }
 .apollo-categories button { box-sizing:border-box; flex:0 0 auto; height:38px; background:none; border:0; border-bottom:3px solid transparent; padding:0 0 15px; color:var(--apollo-muted); font-size:14px; line-height:20px; cursor:pointer; white-space:nowrap; }
 .apollo-categories button[aria-pressed="true"] { color:#18181b; border-bottom-color:#18181b; }
 .apollo-categories button:disabled { opacity:.5; cursor:default; }
@@ -47,6 +47,7 @@
 .apollo-overview { display:flex; flex:1; min-height:0; flex-direction:column; gap:8px; padding:8px; }
 .apollo-overview-total { flex:1; min-height:196px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:16px 24px; }
 .apollo-mascot { width:196px; height:196px; flex:0 0 196px; display:grid; place-items:center; }
+.apollo-overview-total .apollo-mascot { height:160px; flex-basis:160px; }
 .apollo-mascot-body { display:grid; place-items:center; width:144px; height:144px; border-radius:50%; background:#f2f3f5; color:#18181b; box-shadow:none; transition:background-color .2s ease-out; }
 .apollo-mascot.quality-clean .apollo-mascot-body { background:#bce8cb; }
 .apollo-mascot.quality-warning .apollo-mascot-body { background:#ffe09a; }
@@ -71,7 +72,7 @@
 @media (prefers-reduced-motion:reduce) { .apollo-mascot * { animation:none !important; } .apollo-mascot-gaze { transform:none; transition:none; } }
 .apollo-overview-total h2 { font-size:16px; line-height:24px; font-weight:500; margin:12px 0 0; }
 .apollo-overview-total p { font-size:14px; line-height:20px; margin:8px 0 0; color:var(--apollo-muted); max-width:55ch; }
-.apollo-overview-total .apollo-overview-caption { margin:24px 0 0; font-size:16px; line-height:24px; color:var(--apollo-text); }
+.apollo-overview-total .apollo-overview-caption { margin:8px 0 0; font-size:16px; line-height:24px; color:var(--apollo-text); }
 .apollo-overview-total:has(.apollo-mascot.quality-unchecked:not(.is-checking)) .apollo-overview-caption { color:var(--apollo-muted); }
 .apollo-overview-total .apollo-overview-coverage { color:var(--apollo-muted); font-size:13px; line-height:20px; text-align:left; max-width:100%; margin-top:12px; }
 .apollo-overview-coverage summary { cursor:pointer; }
@@ -183,3 +184,33 @@
 
 
 .apollo-new #generation-panel .apollo-generation-options button:disabled { color:#62626b; cursor:default; }
+
+/* Result pages retain the V3 card hierarchy with Apollo status and held actions. */
+.apollo-overview-group:disabled,.apollo-base-result:disabled { cursor:default; }
+.apollo-overview-group:disabled strong,.apollo-base-result:disabled > span:first-child { color:rgba(4,4,19,.55); }
+.apollo-v3-findings { display:flex; flex-direction:column; gap:8px; }
+.apollo-v3-findings .apollo-finding-status { flex:0 0 12px; height:20px; margin-right:8px; }
+.apollo-v3-findings .apollo-finding-status img { top:-5px; }
+.apollo-v3-findings .apollo-finding-status.current > span { top:3px; }
+.apollo-v3-findings .apollo-finding-info-toggle { display:grid; place-items:center; width:24px; height:24px; padding:4px; background:rgba(4,4,19,.06); border:0; border-radius:50%; }
+.apollo-v3-findings button:focus-visible,.apollo-v3-findings select:focus-visible { outline:2px solid #1769d2; outline-offset:2px; }
+
+.apollo-v3-finding-message { color:rgba(4,4,19,.55); }
+
+.apollo-result-progress { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+@media (max-width:560px) {
+ .apollo-contextbar:has(.apollo-categories:not(:empty)) { flex-basis:auto; flex-wrap:wrap; gap:0; padding:8px 16px 0; border-radius:24px; }
+ .apollo-contextbar .apollo-categories { flex:1 0 100%; height:40px; margin-left:0; padding-top:8px; gap:12px; }
+ .apollo-contextbar .apollo-categories button { height:32px; padding-bottom:8px; }
+}
+
+.apollo-finding-action-menu { display:inline-flex; flex:none; width:max-content; max-width:100%; min-width:0; }
+.apollo-finding-action-menu>button { width:max-content; max-width:100%; flex:none; }
+.apollo-finding-action-popup { position:fixed; z-index:10020; overflow:visible; box-sizing:border-box; }
+.apollo-v3-finding-message.is-warning { color:#a45a0b; }
+.apollo-v3-finding-message.is-violation { color:#c13325; }
+.apollo-v3-finding-message::before { content:""; display:inline-block; width:6px; height:6px; margin-right:6px; border-radius:50%; background:currentColor; vertical-align:middle; }
+.apollo-audit-toast { position:fixed; z-index:10030; bottom:20px; left:50%; transform:translateX(-50%); box-sizing:border-box; width:max-content; max-width:calc(100vw - 32px); display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:16px; color:#18181b; background:#fff; box-shadow:0 6px 24px rgba(4,4,19,.18); font:14px/20px "Apollo Alfa",sans-serif; }
+.apollo-audit-toast>span { min-width:0; overflow-wrap:anywhere; }
+.apollo-audit-toast>button,.apollo-audit-toast>button:disabled { flex:none; color:#18181b; }
+.apollo-audit-toast.is-error>span { color:#c13325; }

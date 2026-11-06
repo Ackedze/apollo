@@ -1,5 +1,178 @@
 # Apollo Architecture Backlog
 
+## AP-GENERATION-LEGACY-FLOW-REMOVAL-01 — удалить прежний механизм генерации
+
+- **P1 · BACKLOG**, поручение владельца 06.11.2026; основной реестр — `docs/APOLLO_PRODUCT_BACKLOG.md` рабочего каталога.
+- После приёмки прямого CLI → Figma MCP провести отдельный рефакторинг и удалить неиспользуемые старые service/planner/nativePlan/checkpoints/исполнитель плагина, протоколы и устаревшие тесты/инструкции. Перед удалением проверить реальные импорты и сборочные consumers.
+- Сохранить историю, экспорт и чтение старых чатов, действующую проверку V3 и другие навыки. Старый flow отключается сейчас; массовое удаление — отдельная задача.
+
+
+06.11.2026: по прямому решению владельца контрактный/Predicate-пилот и связанные с ним проверки сняты с активной очереди. Разделы «Архив» сохраняют историю и не требуют дальнейших прогонов. Текущая проверка V3, авторинг её правил, исправления UI и доставка данных продолжаются отдельно.
+
+## AP-AUDIT-V3-MIGRATION-01 — проверка V3 в текущем Apollo
+
+- [ ] **SOURCE ACCEPTED · общая сборка и ручная приёмка впереди**, решение владельца от 04.11.2026. Исполнитель: Design Check; координация и ревью: General.
+- Контрактный пилот проверки остановлен. Перенести существующие проверки текстов/компонентов, сравнение и классификацию кастомизаций, токенов и отвязанных цветов V3 в текущий UI Apollo. Контрактное ядро и контрактный fallback не входят в новый путь проверки.
+- Все необходимые индексы и рабочие данные поставляются в пакете Proxy; runtime не зависит от папок автора и прямого чтения raw Git.
+- Перед записью установить цепочку producer → reader → comparator → caller, точные source/data paths и проверки переноса. Различать успешное сравнение и непроверенные данные; сохранять защитные проверки.
+- Генерация, «Спросить», навыки и отдельно порученные работы не меняются этим переносом. История, контракты и чужие изменения сохраняются. Ранее принятый R3G/203 UNKNOWN — исторический результат; дальнейшая разработка контрактного пилота заменена этой задачей.
+- Публикация и установка не поручены; ручные тесты выполняет владелец.
+
+
+## AP-AUDIT-V3-RULE-AUTHORING-01 — удобное создание исполняемых правил V3
+
+- [ ] **P0 · приоритет владельца от 05.11.2026; первый CLI реализован локально**, исходное поручение от 04.11.2026. По прямому поручению владельца дальнейший исполнитель — существующий чат «Apollo CB :: Contract Creation», теперь работающий над исполняемыми правилами V3. Координация и ревью: General; исходный разбор механики: Design Check. Парная запись в общем бэклоге: `AP-AUDIT-V3-RULE-AUTHORING-01`.
+- Начать сразу после завершения Design Check переноса данных проверки в пакет Proxy. Публикация, установка и ручная приёмка не являются условием начала этого разбора. Текущий перенос не прерывать.
+- На основе фактической реализации V3 разобрать, где и как сейчас создаются правила и исключения, как они подготавливаются/загружаются и какими исполнителями проверяются.
+- Определить удобный механизм создания, изменения и проверки исполняемых правил Apollo V3, максимально переиспользуя существующие форматы, подготовку данных и исполнители. Сначала описать рабочий процесс автора и реальные ограничения; не возвращаться к остановленному универсальному контрактному пилоту.
+- Результат: проверенная карта текущей цепочки и конкретное предложение процесса авторинга с небольшим пилотом на существующих правилах. Для уже поддерживаемого вида проверки показать изменение правила через данные без правки движка, сохранив положительные и отрицательные проверки.
+- Анализ и синтетический пилот приняты: изменение `min` в существующем `composition-contract.json` меняет результат через действующие normalizer/registry/evaluator; 11 контролей пройдены. Предложение — выбор поддерживаемого вида правила, правка существующего JSON и preview с положительным/отрицательным примером. Новый DSL или универсальный движок не предлагается; editor и новые нормы не реализованы.
+- Первый CLI расположен в `shared/design-system_ab/apollo/scripts/v3-rule-author.cjs`; инструкция — `shared/design-system_ab/apollo/V3_RULE_AUTHORING.md`. Поддержан `countBetween`, анкета, candidate/preview/diff и проверка настоящим V3 evaluator; 7 тестов и проверка существующего правила ButtonGroup пройдены. Продолжать эту реализацию, не начинать новый контрактный процесс. Прежнее имя файла `composition-contract.json` относится к существующему формату V3 и не требует переименования.
+- Продолжение принято General на уровне исходников: интерактивный выбор компонента и существующего правила, сохранение ID/селектора, явный отказ неподдерживаемому условию, проверка изменения источников во время анкеты; команда `inspect` показывает фактическую проекцию V3, RuleID, селекторы и пути определений. 16 тестов суммарного среза пройдены; ButtonGroup — 44 правила и 10 условий композиции. Это просмотр и авторинг `countBetween`, без проверки макета, автоматического применения нормы или публикации. Другие виды правил пока доступны только для просмотра.
+- Находки `AP-V3-CATALOG-RULE-001`–`009` переданы тому же исполнителю и сохранены во [внутреннем реестре каталожных правил, r2](../../../.local/apollo-v3-rule-authoring-handoff-2026-11-05/catalog-rule-backlog/BACKLOG.md). Пропуски уже обнаруженных нарушений в UI (`007`, `008`) исправляет Design Check; остальные требуют проверки источников и области правила. Эта запись не разрешает менять рабочие нормы или возобновлять контрактный пилот.
+
+## AP-LANDING-TECHNICAL-PATCH-DECISION-01 — формат технического исправления
+
+- [ ] **P0 · BACKLOG**, поручение владельца от 04.11.2026. Ответственный: Generation.
+- `technicalPatch.decision` возвращается объектом, хотя валидатор требует непустую строку до 2000 символов; тип внутреннего поля в примере промпта не определён явно. Результат — `LANDING_TECHNICAL_PATCH_INVALID` вместо восстановления выполнения.
+- Приёмка: согласовать явный контракт ответа между промптом, схемой и валидатором; воспроизвести отклонённую форму ответа регрессионным тестом. Не использовать молчаливое преобразование типов и не ослаблять проверки источников и исходного состояния.
+- Запись в бэклог не открывает запись исходников, сборку или публикацию.
+
+## AP-LANDING-CONTINUATION-ROUTING-01 — команда «продолжай»
+
+- [ ] **P0 · BACKLOG**, поручение владельца от 04.11.2026. Ответственный: Generation.
+- Чистая команда «продолжай» не распознаётся как продолжение сохранённого выполнения и запускает планировщик; результат — `LANDING_EDIT_SCOPE_INVALID`.
+- Приёмка: после свежего чтения продолжать сохранённое выполнение без перепланирования и потери принятых фактов/планов. Добавить регрессию для этой команды и отрицательный контроль для настоящего запроса на изменение лендинга.
+- Запись в бэклог не открывает запись исходников, сборку или публикацию.
+
+
+## Архив · AP-CATALOG-AUTOLAYOUT-FACTS-01 — полнота параметров Auto Layout
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
+
+- (Отменено владельцем) Статус: **BACKLOG**, поручение владельца 04.11.2026. Ответственный: General / проверка Apollo.
+- В сверке 43 выбранных raw-вариантов вложенных компонентов TitleView настоящий V3 reader восстановил деревья, но в них отсутствуют direction, axis alignment и sizing. Размеры, padding и itemSpacing присутствуют частично; это отдельные факты, не признак отсутствия всего эталона.
+- При реализации сначала сверить актуальные raw-поля, V3 normalizer и контрактные факты. Переиспользовать существующие данные; расширять экспорт Athena только для подтверждённых недостающих полей, без дублирующих снимков/файлов.
+- Закрытие: корректно различаются Horizontal/Vertical, выравнивание по обеим осям и Hug/Fill/Fixed; допустимое состояние проходит, изменение обнаруживается. Отсутствующий факт даёт UNKNOWN только соответствующему условию; остальные проверки продолжаются. Установку и ручные тесты выполняет владелец.
+
+## Архив · AP-CATALOG-EXPLICIT-MODES-01 — явные режимы экземпляров
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
+
+- (Отменено владельцем) Статус: **BACKLOG**, поручение владельца 04.11.2026. Ответственный: General / проверка Apollo и чтение ресурсов Proxy.
+- В выбранных raw-вариантах не записаны явные режимы конкретных экземпляров. Существующие token-каталоги уже содержат домены Font/Theme и значения/aliases, но наличие режима в коллекции не доказывает его выбор у исходного экземпляра.
+- Различать explicit, inherited и resolved mode; сопоставлять коллекции по устойчивым ключам и подтверждённым доменам, не по одному file-local ID или имени. Сначала использовать имеющиеся источники; дополнительные поля запрашивать только после проверки конкретного пробела.
+- Закрытие: отдельно проверены явный режим, наследование, смена режима у родителя и переопределение у ребёнка; неоднозначное/неизвестное соответствие не даёт ложный PASS и не отменяет другие проверки. Новые выгрузки и публикация этим пунктом не запускаются.
+
+## AP-LOCAL-RESOURCE-CLASSIFICATION-01 — локальные компоненты, стили и токены по принципу V3
+
+- [ ] Статус: **BACKLOG**, добавлено по поручению владельца 03.11.2026.
+- Приоритет: P1. Ответственный: General / нативная проверка Apollo; каталожные
+  данные Proxy — по необходимости после разбора существующей реализации V3.
+- Проблема со слов владельца: при проверке
+  [области 9172:48255](https://www.figma.com/design/I3MsagXR8Tz2eZcGtIgUk8/?node-id=9172-48255)
+  [компонент 9172:48260](https://www.figma.com/design/I3MsagXR8Tz2eZcGtIgUk8/?node-id=9172-48260)
+  пропускается, хотя не относится ни к одной из библиотек и должен отображаться
+  в категории «Локальные». Агентом этот конкретный прогон не воспроизводился.
+- Требование: переиспользовать фактический принцип V3 для компонентов, стилей
+  и токенов, которых нет среди известных ресурсов библиотек или контрактов.
+  Такие ресурсы должны попадать в соответствующую вкладку «Локальные»,
+  учитываться в счётчиках и иметь переход к использующему их слою.
+- Перед реализацией сопоставить код классификации V3 с текущими читателями
+  Apollo и индексами Proxy. Проверять устойчивые идентификаторы и принадлежность
+  ресурса, не подменять их совпадением имени. Отсутствие контракта само по себе
+  не делает ресурс локальным, если он известен подключённой библиотеке.
+  Ошибка чтения или недоступный каталог также не доказывают отсутствие ресурса:
+  непроверенное покрытие сохраняется явно, без ослабления проверок.
+- Критерии закрытия: указанный компонент найден при проверке всей области
+  и отдельно, отображается в «Компоненты → Локальные» и учитывается один раз;
+  аналогичные случаи стилей и токенов отображаются в «Стили и токены → Локальные».
+  Известный библиотечный ресурс без контракта не получает ложную локальную
+  классификацию; сбой чтения не превращается в доказательство локальности.
+  Автоматические регрессии покрывают эти границы, ручной повтор выполняет владелец.
+- Сейчас зафиксирована только задача. Код, данные, сборка и публикация не менялись.
+
+## Архив · AP-TITLEVIEW-SKELETON-UNKNOWN-01 — покрытие Skeleton в двух представлениях
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
+
+- (Отменено владельцем) **BACKLOG**, 03.11.2026, по решению владельца не блокирует выпуск
+  подготовленного пакета пилота. Ответственный: General / контракты и каталоговый
+  читатель; приоритет P1. UNKNOWN сохраняются в результатах и покрытии.
+- Автоматические исходные профили TitleView r4: восемь Skeleton-вариантов
+  Desktop/MobileWeb дают 19–21 `human-review` на профиль. В trace указано
+  `selector evidence is unknown`; точная первопричина ещё не установлена.
+  Это не свидетельство отсутствующего MobileWeb raw и не ручной прогон Figma.
+- Проверить variant/target evidence и применимость правил в обоих механизмах.
+  Не переводить UNKNOWN в PASS/NOT-APPLICABLE без независимого доказательства.
+- Закрытие: парные OFF/ON проверки восьми Skeleton-состояний имеют доказанное
+  одинаковое покрытие, применимые нормы исполняются и обнаруживают нарушения,
+  неприменимость остальных подтверждена конфигурацией. Типы, ownership,
+  source/hash guards и полнота фактов сохранены. Ручной повтор — владелец.
+- Набор: DS `JSONS/web/components/web-corp/TitleView/pilot/test-cases.json`;
+  исходные результаты — `titleview-pilot-suite-2026-11-03/final-check/BASE-CASES.json`
+  в локальных материалах General. Полная приёмка пилота остаётся открытой.
+
+## Архив · AP-TITLEVIEW-MIXED-PAINT-UNKNOWN-01 — смешанная заливка xLarge
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
+
+- (Отменено владельцем) **BACKLOG**, 03.11.2026, по решению владельца не блокирует выпуск
+  подготовленного пакета. Ответственный: General / захват и материализация;
+  приоритет P1. По одному `human-review` в исходных xLarge/Skeleton=False
+  профилях Desktop и MobileWeb; mixed-paint факт сохранён, а не заменён пустой
+  заливкой. Ручная OFF/ON приёмка ещё не выполнена.
+- Установить, достаточно ли независимых сегментных paint/token/style фактов
+  для исполнения конкретной нормы. Проверить равенство результата с библиотечным
+  эталоном; причину нельзя объявлять устранённой по одному улучшению диагностики.
+- Закрытие: неизменённый и намеренно изменённый mixed-текст проверяются по
+  независимому эталону в обоих режимах; утрата нужных фактов по-прежнему даёт
+  неполное покрытие. Проверки не ослабляются.
+
+## Архив · AP-TITLEVIEW-RAW-PROOF-GAPS-01 — оставшиеся доказательства пилота
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
+
+04.11.2026: после принятых исправлений reader сохранены 540 оценок и три
+исходных нарушения. Остались 218 UNKNOWN: 33 неоднозначных сопоставления
+узлов и 185 условий без достаточного доказательства из источника/контекста.
+В read-only разборе новых механических ошибок reader не подтверждено.
+
+- 23 selector-условия и 22 условия Status: не доказаны отдельные исходные
+  поля, режимы или применимость; наличие typed Size/View их не заменяет.
+- 65 условий paints: 46 пропущенных полей не означают пустую заливку;
+  у 19 записанных token-ссылок не доказан ожидаемый mode/alias-контекст.
+  Два инвариантных экспортированных значения оставлены кандидатами на
+  отдельное доказательство, без выбора expected по actual RGB/default.
+- 29 условий применимости, 17 blendMode, 24 axis alignment и 2 text alignment:
+  текущие поля и семантика фактического экспортёра не доказывают результат.
+- 33 неоднозначных siblings, 1 неоднозначность наследования stroke и
+  2 неполных effect-параметра остаются UNKNOWN. Определение style само по себе
+  не доказывает отсутствие переопределений у конкретного экземпляра.
+
+Не снимать UNKNOWN ради счётчика и не выбирать эталон по проверяемому значению.
+Для следующей правки нужны конкретный существующий факт и независимое доказательство
+его соответствия узлу/режиму. Новые снимки и выгрузки не требуются этим пунктом.
+Критерий приёмки: доказанное уменьшение конкретного пробела без потери исходных
+нарушений и остальных оценок. Установка и ручной прогон — владельцу; общая
+сборка и публикация остаются отложены. Связанные пункты —
+AP-CATALOG-AUTOLAYOUT-FACTS-01, AP-CATALOG-EXPLICIT-MODES-01 и
+CC-COMPAT-CATALOG-READONLY-PILOT-01.
+
+04.11.2026, R3G source candidate: общий reader сравнивает отдельный скаляр,
+если он известен и одинаков у всех кандидатов полного независимого domain.
+Скрытые siblings включены; единственная identity и полный baseline не назначаются.
+Для padding допускаются только записанные стороны без raw paddingTokens; режим
+раскладки по padding не выводится. Остальные факты и контейнеры остаются UNKNOWN.
+Сохранённый offline replay: 540 оценок, три прежних полных violation trace,
+218 → 203 UNKNOWN (8 сравнений padding и 7 неприменимых TEXT layout условий).
+Приёмка source General ещё ожидается; опубликованная сборка не менялась.
+
 ## AP-CATALOG-AUDIT-POLICY-404-01 — совместимая поставка каталожных правил
 
 02.11.2026, **код и данные опубликованы; установленная пара и ручной повтор
@@ -32,7 +205,135 @@ Evidence workspace: `.local/catalog-audit-policy-404-2026-11-02/ROOT-CAUSE.*`
 `{PAIRED-READBACK,PUBLIC-ASSETS-READBACK,PUBLICATION-SEAL}.json` (новее).
 Это одна общая задача Apollo/Proxy; нового выпуска при этой сверке не выполнялось.
 
-## Apollo: совместимость с ComponentContract Editor
+## Архив · Apollo: совместимость с ComponentContract Editor
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
+
+R3G, 04.11.2026, Core0.1.25 / Editor0.2.108: Predicate поддерживает точные
+`knownFacts` для доказанных конечных number/boolean под неизвестным предком.
+Явно неизвестный leaf/descendant, родительский контейнер и соседние поля остаются
+UNKNOWN. Core удаляет импортированные whitelist из всех вложенных снимков,
+затем Apollo raw adapter заново выводит только общий скаляр из полного domain
+под текущими source/model/representation/platform pins. Обычный Editor без
+такого derived proof сохраняет прежнее поведение; compiler/schema, нормы,
+экспорты и контрактные данные не меняются. Приёмка: отрицательные проверки
+источника/типов/токенов/полноты и сохранение всех оценок/исходных нарушений;
+General source review и дальнейшая поставка отдельно. Связанный пункт Editor —
+CC-COMPAT-CATALOG-READONLY-PILOT-01, задачи покрытия — AP-TITLEVIEW-RAW-PROOF-GAPS-01.
+
+04.11.2026, producer-semantics correction: R3A padding-only applicability
+inference is withdrawn. Packaged source.exportVersion=0.1.0-rest uses Athena CLI,
+which emits padding even without auto-layout. Existing padding values remain
+data; unknown mode remains UNKNOWN. Explicit mode/non-layout reader is retained.
+Earlier R3A/R3B/R3C counts are historical pending corrected source replay.
+No Editor/schema/norm/export changes; build and delivery remain on owner hold.
+
+04.11.2026, combined R3C correction accepted: raw closed collections retain
+typed Shape/Size assertions; proven members follow actual childIds order.
+Padding-only layout inference is removed. Corrected retained replay preserves
+540 evaluations and three full violation traces; 259 UNKNOWN remain.
+Source review accepted with membership/order/padding regressions. Editor,
+norms and native branch unchanged; manual acceptance and delivery remain open.
+
+04.11.2026, R3D effect style reader: existing Athena singleton effect-style
+arrays now retain validated published identity and resource remap. Legacy object
+form remains supported; ambiguous/invalid identities and unavailable effect
+parameters remain UNKNOWN. Same retained report preserves540 evaluations,259
+UNKNOWN and three original violation traces. Source review accepted; Editor,
+schema and norms unchanged, delivery/manual acceptance still open.
+
+04.11.2026, R3E direct raw owner: existing ownerBaseline now carries an
+independently proved direct contextual raw subtree into late child validation.
+Current parent/child representation, platform, manual/compiled/reference pins,
+genuine captured IDs and closed source graphs are required. Anonymous historical
+keys are not recovered; missing source values remain UNKNOWN. Native paths and
+Editor unchanged; Draft executes only in explicit authoring-preview. Corrected
+retained replay preserves540 evaluations/three full violations; Status UNKNOWN
+63->22 and overall259->218. Source review accepted, remaining218 conditions and
+manual delivery open. Shared build/update planning remain owner-held.
+
+### CC-COMPAT-CATALOG-READONLY-PILOT-01 — недоступный baseline и mode aliases
+
+04.11.2026, Apollo0.4.4 / core0.1.25 (локально): audit adapter удаляет
+authoring self-baseline при недоступности независимого источника. Совпавшие
+значения без такого источника больше не дают compliant. Source collection
+aliases получают общий consumer mode только при согласованных key/domain;
+разные mode choices конкретного узла сохраняют его visual-факты UNKNOWN.
+Изменение затрагивает catalogue helper; обычный Editor authoring продолжает
+инициализировать свой preview baseline прежним способом. Нормы/manual schema
+не меняются. Связанный пункт Editor — CC-COMPAT-CATALOG-READONLY-PILOT-01.
+Приёмка: collector-to-predicate UNKNOWN при потере источника, сохранённое
+независимое нарушение, отрицательные mode-domain/type/collision сценарии.
+Полный native-пилот вложенных компонентов зависит от исходных каталогов;
+полевая приёмка/публикация не заявлены.
+
+
+### CC-COMPAT-CATALOG-READONLY-PILOT-01 — изоляция сравнения и usage-фактов
+
+04.11.2026, Apollo0.4.3 / core0.1.25, локально: независимый source pin и
+существующий native correspondence переиспользуются для отдельных доказанных
+веток. Потеря соседней ветки не стирает их baseline. Для уже объявленного
+`nativeTargetUsageFactsVersion=1` Type/View требуют точной source occurrence,
+владельца, full reference hash, семейства и типов; полный visual baseline
+вложенного варианта им не требуется. Старые visual roles и swap authority
+автоматически не расширяются. Component aliases разрешает только явная
+политика контракта, все aliases получают native key proof; UNKNOWN вложенного
+поля распространяется на составное сравнение, но не на независимое соседнее поле.
+Editor использует тот же core: нужна регрессия partial/native correspondence
+при обновлении его consumer; source, нормы, Draft/Ready и manual schema прежние.
+Связанный пункт Editor: CC-COMPAT-CATALOG-READONLY-PILOT-01 (эта общая запись).
+Критерии: aliases/foreign/source drift/Stop и ресурсный сбой через реальный
+collector, независимое нарушение при UNKNOWN соседа, все отрицательные guards.
+Статус: реализовано локально; полевые тесты и публикация Apollo не выполнены.
+
+
+### CC-COMPAT-CATALOG-READONLY-PILOT-01 — существующие raw вместо нового снимка
+
+04.11.2026: Apollo0.4.5/core0.1.25 читает существующие Athena поля после V3
+resolveStructure Proxy. Manual/compiled schema и нормы не меняются. Editor0.2.108
+не вызывает этот consumer; его совместимость не объявлена без отдельной проверки.
+Raw correspondence получает отдельный provenance; native continuity/hash не
+подделываются. Одинаковые соседи, чужой owner/family, потерянная топология и
+недоступные факты остаются UNKNOWN. Изменённая настройка того же семейства
+проверяется независимо от визуального baseline потомков. Неактивная зависимость
+выводится только из известного VARIANT свойства подтверждённого owner при
+сохранённом dependency pin. Нужны scoped regressions, full validate и retained
+field replay; свежий OFF/ON прогон остаётся за владельцем. Парная запись Editor —
+CC-COMPAT-CATALOG-READONLY-PILOT-01; изменений Editor и публикации нет.
+
+04.11.2026, вложенные части TitleView: Core0.1.25 принимает только raw-only
+`nestedComponentKeys`, связывает выбранные варианты по точным ключам и выдаёт
+owner coverage по действительно выполненным правилам/целям. Полный native
+`variantReference` этим не подменяется. Лимита по числу ключей нет; schema,
+request identity, source hashes и transport byte guards сохранены. Известная
+равномерная толщина обводки сравнивается с каждой стороной; неподтверждённое
+наследование scalar в variant patch остаётся UNKNOWN по данным источника.
+Локальное ревью и регрессии приняты; configured build, доставка и ручной прогон
+ещё не выполнены. Одинаковые siblings без доказанного occurrence, Status Label
+без source key и остальные пробелы фактов остаются открытыми. Manual/compiler
+нормы и Editor не менялись; совместимость Editor отдельно не заявлена.
+Парный пункт Editor — CC-COMPAT-CATALOG-READONLY-PILOT-01.
+
+04.11.2026, R3A source review: Core0.1.25 переносит доказанную rooted visibility
+в raw continuity ledger, вычисляет line-height после восстановления конкретной
+TEXT-цели по тому же manual/reference и читает применимость через существующие
+capability-факты и явный raw padding. Padding не доказывает direction/axis/flow;
+отсутствующие paints не считаются пустыми. Nonraw native порядок сохранён.
+На том же отчёте все540оценок/3нарушения сохранены, UNKNOWN355→316:37условий
+доказанно неприменимы,2проверки получили известные факты. Source/offline review
+принят; прочие316причин/поставка/ручнойпрогон открыты. Editor не изменён;
+связанный пункт CC-COMPAT-CATALOG-READONLY-PILOT-01. Общая сборка отложена владельцем.
+
+04.11.2026, R3B source review: Core 0.1.25 доказывает только неприменимость
+зависимостей в скрытой declared target по текущему raw correspondence и полной
+известной цепочке видимости. Dependency pins, identity/subject guards и native
+resolver сохранены; direct-child и scoped binding не обходятся. На том же
+сохранённом отчёте остаются 540 оценок и три исходных нарушения, UNKNOWN
+снижены с 316 до 264: 52 условия доказанно неприменимы. Новых PASS/complete
+фактов нет. Source review принят; остальные условия, сборка и доставка открыты.
+Editor не изменён, совместимость отдельно не заявлена. Парный пункт —
+CC-COMPAT-CATALOG-READONLY-PILOT-01. Общая сборка отложена владельцем.
 
 ### CC-COMPAT-CATALOG-READONLY-PILOT-01 — подготовленная исходная топология
 
@@ -47,6 +348,48 @@ pristine экземпляры. Без параметра действует пр
 использует ту же подготовленную топологию. Публикация и ручная приёмка не выполнены.
 См. [границы пилота](CATALOG_AUDIT_PILOT.md); автоматические проверки и точные pins
 фиксируются в локальном final handoff после закрытия source/build окна.
+
+Дополнение 03.11.2026, Core 0.1.25 / Editor 0.2.108: каталоговый адаптер Apollo
+поддерживает доказанно неиспользуемые BOOLEAN/TEXT и выбор независимых значений
+переменных по режиму. Изменение метрик шрифта сохраняет UNKNOWN геометрии;
+активный API и неподтверждённые режимы не обходят guard. Editor этот адаптер
+не вызывает; его чтение/компиляция и нормы не меняются. Приёмка: полный replay
+TV-03 (138 оценок и trace) и отрицательные проверки источников/типов/alias;
+полевое время и совместимая поставка проверяются отдельно. Связанный пункт
+Editor — CC-COMPAT-CATALOG-READONLY-PILOT-01.
+
+Полевое исправление 03.11.2026: mode paths привязаны к точному source collectionId.
+Остаточный alias с тем же published key не создаёт ложную неоднозначность. Новый
+replay включает все native key witnesses; действительно неоднозначные активные
+коллекции и неверная modeCatalog identity продолжают отклоняться. Только адаптер
+Apollo; Editor, нормы и формат пакета не меняются.
+
+Расширение 03.11.2026: локальный каталог TitleView дополняет существующие
+Desktop/MobileWeb raw нативными фактами всех 16 вариантов. Читатель поддерживает
+прямую BOOLEAN→visible привязку только с доказанным владельцем и полной
+согласованной wiring; после reflow геометрия не объявляется известной.
+Core 0.1.25 / Editor 0.2.108: Editor не вызывает этот адаптер; schema/compiler,
+нормы и generated facts контракта r4 не меняются. Приёмка: 3072 конечных BOOL
+конфигурации, 84 отрицательных контроля условий и строгие negative guards;
+native OFF/ON сравнение и доставка остаются отдельной приёмкой. Skeleton/mixed
+UNKNOWN сохраняются. Связанный пункт Editor — CC-COMPAT-CATALOG-READONLY-PILOT-01.
+
+03.11.2026, сложный TitleView: Apollo0.4.2 собирает semantic resource witnesses
+без UI label collector. Core0.1.25 / Editor0.2.108 не меняются; TitleView r5
+включает уже существующую alias policy. Native key/set/source-occurrence guards,
+полнота correspondence и UNKNOWN сохраняются. Replay106/130 и3 planned references
+не являются приёмкой24 отсутствующих nested baselines. Полевая приёмка — владелец.
+Парный пункт Editor — CC-COMPAT-CATALOG-READONLY-PILOT-01; изменений Editor нет.
+
+TitleView r5, 03.11.2026: новый explicit opt-in `nativeTargetUsageFactsVersion=1`
+связывает read-only semantic API с уже доказанным native target. Полная
+исходная hash/key/source-occurrence проверка, тип свойства, семейство компонента
+и фактическая цепочка видимости обязательны. Визуальные роли, baseline и
+configured-host acceptance этим чтением не назначаются. Без opt-in прежние65
+compiled projections воспроизводятся без изменений. Core0.1.25 / Editor0.2.108:
+новый consumer поддерживается Apollo0.4.2 / совместимым runtime Proxy1.4.17;
+Editor не объявлен совместимым без отдельной интеграции. Неизвестный opt-in
+отклоняется validator/profile. Исторический API drift остаётся UNKNOWN.
 
 ### CC-COMPAT-CAPABILITY-FACT-ORDER-01 — переносимая сортировка capabilities
 
@@ -766,7 +1109,7 @@ Local acceptance: core **251**, Editor **823**, root **81 regression files** —
 - [x] BenefitCard **r5 Draft**, **21 неизменённое source rule / 37 IR / 4 nonExecutable**, **9 targets / 256 bindings / 32 variants**. Изменены только technical metadata и compiled projection; исходные нормы, разрешения, bindings и факты сохранены. r4 ZIP и manifests сохранены в history; новый ZIP и оба manifests согласованы.
 - [x] **Fresh installed Editor r5, 09.10.2026 16:11–16:14 UTC:** BC4-307–312, BC4-319/320, BC4-V02/V25 и BC4-317/318 — **12/12 целевых результатов совпали**. Exact current ZIP/manual/compiled/runtime/snapshot hashes и engine/Editor replay проверены; Editor 0.2.95, explicit ViewportClass/CardPlacement, Figma parameters и HUG совпадают с планом. Capture complete, warnings=0. В 54 целевых оценках: **6 violation, 32 compliant, 16 not-applicable**; неожиданных violations нет. Это scoped Editor acceptance, source/ZIP/status/pins не изменены. [Live review](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/reading-fix-live-review.r5.2026-10-09.json).
 - [x] **Position negative/reset, installed Editor r5, 09.10.2026 16:46–16:58 UTC:** шесть свежих отчётов BC4-311/312 прошли exact ZIP/manual/compiled/runtime/snapshot hashes и engine/Editor replay на core 0.1.14; capture complete, warnings=0. При сбросе Position=Level 1 на D/M пять surface checks compliant и все девять targets resolved. В desktop reset 16:48 поля контекста пусты, поэтому два контекстных UNKNOWN сохранены; свежий reset 16:58:20 с ViewportClass=desktop / CardPlacement=single даёт ноль violations/UNKNOWN. Повторный Level 2 в 16:58:51 снова обнаружен. В 30 plate оценках: 3 violation, 15 compliant, 12 UNKNOWN по открытому Style gap; в 12 context оценках: 10 compliant и 2 missing-input UNKNOWN. Scoped reset принят на обеих платформах; пакет, нормы и Draft-статусы не менялись. [Negative/reset review](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/position-reset-live-review.r5.2026-10-09.json).
-- [ ] **Position descendant gap, BC4-311/312:** при запрещённом Position=Level 2 прежний Style Level 1 заменён Style Level 2 с другими native source/owner и componentSet. Independent host content matched не предоставляет новой declared target identity: `target.surface` — `native-cardinality-unresolved`. В каждом таком прогоне сохраняются 4 UNKNOWN (Color/Skeleton и два paint binding checks). Reset уже доказан и закрывает исчезновение этих UNKNOWN при возврате исходной конфигурации, но не разрешает identity нового Style. Не превращать их в PASS и не подставлять identity по name/order. Scope новой внутренней подложки требует отдельного BackgroundPlate contract/точного binding.
+- (Отменено владельцем) **Position descendant gap, BC4-311/312:** при запрещённом Position=Level 2 прежний Style Level 1 заменён Style Level 2 с другими native source/owner и componentSet. Independent host content matched не предоставляет новой declared target identity: `target.surface` — `native-cardinality-unresolved`. В каждом таком прогоне сохраняются 4 UNKNOWN (Color/Skeleton и два paint binding checks). Reset уже доказан и закрывает исчезновение этих UNKNOWN при возврате исходной конфигурации, но не разрешает identity нового Style. Не превращать их в PASS и не подставлять identity по name/order. Scope новой внутренней подложки требует отдельного BackgroundPlate contract/точного binding.
 - [x] **Title 60/61, installed Editor 0.2.96 / core 0.1.14, r5, 09.10.2026 17:32 UTC:** BC4-211/212 и BC4-201/202 — 4/4 целевых character outcomes совпали; exact ZIP/manual/compiled/runtime/snapshot hashes и engine/Editor replay проверены. Capture complete, warnings=0, все девять targets resolved, explicit viewport/single/Hug совпадает с условиями. Title=60 проходит D/M; Title=61 нарушает character limit D/M. Desktop BC4-201 дополнительно занимает три строки и нарушает line limit; mobile BC4-202 занимает две строки и проходит его. В 16 целевых оценках: 13 compliant / 3 violation, UNKNOWN=0, неожиданных violations нет. Приёмка ограничена границей символов Title; isolated line limits, Subtitle, alignment, insufficient-fact cases и same-occurrence resets открыты. Нормы, ZIP, policy/producer и Draft-статусы не менялись; runtime импортированного r5 совпал, новый consumer format не создавался. [Title boundary review](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/title-character-boundaries-live-review.r5.2026-10-09.json).
 - [x] **Title 3 строки / Subtitle 121 символ, installed Editor 0.2.96 / core 0.1.14, r5, 09.10.2026 17:37–17:38 UTC:** BC4-203–206 — 4/4 целевых outcomes совпали; exact source/runtime/snapshot hashes и engine/Editor replay проверены, текущий ZIP совпал. Capture complete, warnings=0, все девять targets resolved, explicit viewport/single/Hug задан корректно. Title содержит 20 символов / 3 строки и нарушает только line limit D/M. Subtitle содержит 121 символ: desktop 4 строки нарушает оба лимита, mobile 3 строки нарушает только character limit. В 16 целевых оценках: 11 compliant / 5 violation, UNKNOWN=0, неожиданных violations нет. Открыты Subtitle=120, isolated Subtitle 4 строки, alignment, insufficient-fact cases и same-occurrence resets. Нормы, ZIP, policy/producer и Draft-статусы не менялись; installed Apollo и full text/component acceptance не заявляются. [Text negative review](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/text-limits-negative-live-review.r5.2026-10-09.json).
 - [x] **Subtitle 120 символов / 4 строки, installed Editor 0.2.96 / core 0.1.14, r5, 09.10.2026 17:51–17:52 UTC:** BC4-213/214 и BC4-207/208 — 4/4 целевых outcomes совпали; exact current ZIP/manual/compiled/runtime/snapshot hashes и engine/Editor replay проверены. Capture complete, warnings=0, все девять targets resolved, explicit viewport/single/Hug соответствует условиям. Subtitle=120 / 2 строки проходит оба лимита D/M; Subtitle=27 / 4 строки нарушает только line limit D/M. В 16 целевых оценках: 14 compliant / 2 violation, UNKNOWN=0, неожиданных violations нет. Следующие кейсы — alignment BC4-209/210 и Fixed TEXT / unknown line count BC4-215/216; same-occurrence text resets и отдельная положительная граница трёх строк Subtitle также открыты. Нормы, ZIP и Draft-статусы не менялись; full text/component и installed Apollo acceptance не заявляются. [Subtitle boundary review](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/subtitle-boundaries-live-review.r5.2026-10-09.json).
@@ -777,19 +1120,19 @@ Local acceptance: core **251**, Editor **823**, root **81 regression files** —
 - [x] **BC4-201 context retest / закрытие текстовой матрицы, installed Editor 0.2.98 / core 0.1.14, r5, 09.10.2026 19:43 UTC:** explicit desktop / single убрал два platform/Hug UNKNOWN. Title=60 / 2 строки, Left/Auto height, native source, физический корень, root layout и параметры совпали с сохранённым capture 19:08 UTC. Exact engine/Editor replay обоих captures и ZIP/manual/compiled/runtime/snapshot hashes совпали; complete capture, warnings=0, девять targets resolved. В новом отчёте violations/UNKNOWN=0, шесть целевых оценок compliant. Подготовленная текстовая матрица закрыта: **16/16** ожидаемых результатов и **12/12** сбросов; все 72 целевые reset оценки compliant, SHA всех 12 retained reset captures проверены. Предыдущие boundary/negative results учтены по pinned receipts; отсутствующие raw не проигрывались заново. Pending text reset/context retest списки пусты. Нормы, ZIP и Draft-статусы сохранены; остальные конфигурации, полная карточка, Position=Level2 source gap, зависимости и installed Apollo остаются открыты. [Text cycle review](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/text-context-retest-live-review.r5.2026-10-09.json).
 - [x] **Title / Graphic hidden negatives, installed Editor 0.2.98 / core 0.1.14, r5, 09.10.2026 20:01–20:02 UTC:** BC4-101–104 — **4/4** целевых нарушения обязательной видимости D/M. Quantity count=0 для скрытого элемента; второй обязательный элемент, platform и Hug проходят. В 16 целевых оценках 12 compliant / 4 violation; ровно одно violation на capture, неожиданных violations/human-review нет. Exact engine/Editor replay четырёх отчётов и hashes совпали; capture complete, warnings=0, девять targets resolved, raw copies сохранены с SHA. Отрицательная часть принята; четыре visibility RESET ещё ожидаются. Нормы, ZIP и Draft-статусы сохранены. [Visibility negative review](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/composition-visibility-negative-live-review.r5.2026-10-09.json).
 - [x] **Title / Graphic visibility RESET, installed Editor 0.2.98 / core 0.1.14, r5, 10.10.2026 01:06–01:07 MSK (09.10.2026 22:06–22:07 UTC):** BC4-101–104 — **4/4** сброса. Восемь fresh exact engine/Editor replays новых и сохранённых отрицательных captures совпали; ZIP/manual/compiled/runtime/snapshot hashes проверены. Те же physical roots, explicit context, native source/component identities Title и Graphic, текст/типографика Title, root layout и параметры. Required count=0→1; оба обязательных элемента, platform и Hug compliant, все 16 целевых reset оценок compliant, violations/human-review=0. Capture complete, warnings=0, девять targets resolved. Raw из корня current-contract-packages сохранены копиями с SHA в private BenefitCard reports/live-captures. Цикл обязательной видимости D/M закрыт, pending reset список пуст. Hidden Title diagnostic gap отсутствует в видимых resets, но его кодовое исправление не принято; full component и installed Apollo открыты. Нормы, ZIP и Draft-статусы сохранены. [Visibility reset review](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/composition-visibility-resets-live-review.r5.2026-10-10.json).
-- [ ] **Hidden declared target coverage, повтор family `button-hidden-label-coverage`:** BC4-101/102 доказывают exact resolved/present Title с effectiveVisible=false. Engine исключает оба лимита Title как not-applicable, но Editor coverage добавляет not-executed/unknown «Целевой слой не найден» (четыре notExecuted вместо трёх). Причина в общих validation-report/validation-coverage: пустой visible selector трактуется как missing target без различения доказанного скрытого target. Разделить hidden/inapplicable и missing/unresolved по независимому identity/visibility proof; required visibility продолжает давать violation. Отсутствующий, stale, foreign, ambiguous или incomplete proof сохраняет coverage gap. Нужны D/M hidden→visible RESET и missing-proof regressions, затем отдельная installed Editor/Apollo приёмка. Current negative review фиксирует дефект, не его исправление. Локальное исправление 10.10.2026 сохранено в EDITOR-HIDDEN-TARGET-COVERAGE-001 / CC-COMPAT-HIDDEN-TARGET-COVERAGE-05 выше; installed 0.2.100 ещё не принят.
-- [ ] Установленный Apollo, остальные группы борда, Source Reviewed/Ready, child contracts Link/IconView/BackgroundPlate и release/publication остаются открыты. Число notExecuted зависит от сценария: три context-only gap в обычных captures и дополнительный hidden Title coverage gap в BC4-101/102. Три целевых reading gaps r4 закрыты live в указанной области Editor; полная карточка не принята.
+- (Отменено владельцем) **Hidden declared target coverage, повтор family `button-hidden-label-coverage`:** BC4-101/102 доказывают exact resolved/present Title с effectiveVisible=false. Engine исключает оба лимита Title как not-applicable, но Editor coverage добавляет not-executed/unknown «Целевой слой не найден» (четыре notExecuted вместо трёх). Причина в общих validation-report/validation-coverage: пустой visible selector трактуется как missing target без различения доказанного скрытого target. Разделить hidden/inapplicable и missing/unresolved по независимому identity/visibility proof; required visibility продолжает давать violation. Отсутствующий, stale, foreign, ambiguous или incomplete proof сохраняет coverage gap. Нужны D/M hidden→visible RESET и missing-proof regressions, затем отдельная installed Editor/Apollo приёмка. Current negative review фиксирует дефект, не его исправление. Локальное исправление 10.10.2026 сохранено в EDITOR-HIDDEN-TARGET-COVERAGE-001 / CC-COMPAT-HIDDEN-TARGET-COVERAGE-05 выше; installed 0.2.100 ещё не принят.
+- (Отменено владельцем) Установленный Apollo, остальные группы борда, Source Reviewed/Ready, child contracts Link/IconView/BackgroundPlate и release/publication остаются открыты. Число notExecuted зависит от сценария: три context-only gap в обычных captures и дополнительный hidden Title coverage gap в BC4-101/102. Три целевых reading gaps r4 закрыты live в указанной области Editor; полная карточка не принята.
 - Evidence: [r5 package checks](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/r5-package-checks.2026-10-09.json), [retest plan](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/reading-fix-retest.r5.md). Парная запись **CC-COMPAT-NATIVE-CARD-FACTS-03** сохранена в обоих проектах.
 
 #### Живой цикл BenefitCard r4 · первый столбец · 09.10.2026
 
 - [x] **52 отчёта installed Editor 0.2.94 / core 0.1.13**, BC4-V01–V32 и BC4-301–320: exact source/runtime/snapshot hashes и engine/Editor replay совпали, capture complete, warnings=0. ZIP SHA256 `9854199f6be6335efc9849d4eeca3712015f561beed2ef9ae78824ec79e33ca0`; manual hash `eb25ad722d2f8316fdfcc5dd559d64450923a2f3a418d0e2ca582e6001665082`. **18/24** ожидаемых отрицательных кейсов обнаружены: 8 Compact library drift, 6 ImageView Size/Crop/Grid, 4 token binding. Допустимый Segment D/M проходит три целевые проверки. Все сценарии incomplete; это Editor scoped Draft preview, не installed Apollo acceptance.
-- [ ] **BC4-307–312:** forbidden BackgroundColor/Skeleton/Position native variant switches дают unknown independent correspondence вместо нарушения. Shared runtime должен сохранять исходный pinned baseline и доказывать continuity occurrence по независимому host/source. Новый child baseline не легализует запрещённое изменение. Foreign/stale/incomplete/ambiguous proof остаётся fail-closed; name/order fallback запрещён.
-- [ ] **BC4-319/320:** при доказанном Graphic=Icon три ImageView rules должны стать not-applicable, обязательность Graphic — проверяемой. Сейчас Graphic/image identity и semantic preset unknown. Consumer regressions должны воспроизвести настоящий native key switch, reset и чужой/неподтверждённый preset; scalar mutation при прежнем key не покрывает дефект.
-- [ ] **Background=False D/M:** в 16 baseline кейсах пять surface-checks unknown из-за `selected-binding-unavailable`. Доказанный root guard False должен обеспечить неприменимость, даже если child отсутствует в варианте. При True проверки выполняются; неизвестный Background/source proof сохраняет unknown. Blanket missing-target → not-applicable запрещён.
+- (Отменено владельцем) **BC4-307–312:** forbidden BackgroundColor/Skeleton/Position native variant switches дают unknown independent correspondence вместо нарушения. Shared runtime должен сохранять исходный pinned baseline и доказывать continuity occurrence по независимому host/source. Новый child baseline не легализует запрещённое изменение. Foreign/stale/incomplete/ambiguous proof остаётся fail-closed; name/order fallback запрещён.
+- (Отменено владельцем) **BC4-319/320:** при доказанном Graphic=Icon три ImageView rules должны стать not-applicable, обязательность Graphic — проверяемой. Сейчас Graphic/image identity и semantic preset unknown. Consumer regressions должны воспроизвести настоящий native key switch, reset и чужой/неподтверждённый preset; scalar mutation при прежнем key не покрывает дефект.
+- (Отменено владельцем) **Background=False D/M:** в 16 baseline кейсах пять surface-checks unknown из-за `selected-binding-unavailable`. Доказанный root guard False должен обеспечить неприменимость, даже если child отсутствует в варианте. При True проверки выполняются; неизвестный Background/source proof сохраняет unknown. Blanket missing-target → not-applicable запрещён.
 - [x] **Editor finite context live acceptance D/M:** 09.10.2026 13:55–13:58 UTC, BC4-V01/V17 и BC4-109–118, **12/12** ожидаемых результатов. Exact manual/compiled/runtime/snapshot hashes и engine/Editor replay совпали; capture complete, warnings=0, declared targets resolved. Из 24 целевых оценок: 14 compliant, 4 violation (Fixed single / viewport mismatch), 2 not-applicable (group), 4 ожидаемых UNKNOWN (missing context). Свежий live receipt заменяет необходимость повторять эти Editor проверки; старые 52 captures без inputs сохраняют своё historical состояние. Все полные сценарии incomplete с тремя nonExecutable rules, source/ZIP/Draft activation/status/pins не изменены. [Receipt](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/context-live-review.r4.2026-10-09.json), [кейсы](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/context-live-review.r4.2026-10-09.md).
-- [ ] **Installed Apollo finite context acceptance:** контекст отдельно от observed facts, exact contract/subject proof, отсутствие card-width/single defaults; повторить тот же D/M positive/Fixed/group/mismatch/missing cycle. Shared replay и Editor receipt не подтверждают installed Apollo. Публикация, source/code/native readiness и оставшиеся три reading gaps не закрыты.
-- [ ] После shared исправления: exact bundle rebuild, поддержка policy/producer с сохранением исторических guards, local consumer replay и fresh installed Apollo negative/reset/Background=False/allowed Segment/token controls. Source/code/native/release gates не повышаются replay. Stale-authority build выше — историческое состояние; последующий reader 0.2.94/0.1.13 и полный validate 582 описаны в PARITY-019, но не закрывают найденные live gaps.
+- (Отменено владельцем) **Installed Apollo finite context acceptance:** контекст отдельно от observed facts, exact contract/subject proof, отсутствие card-width/single defaults; повторить тот же D/M positive/Fixed/group/mismatch/missing cycle. Shared replay и Editor receipt не подтверждают installed Apollo. Публикация, source/code/native readiness и оставшиеся три reading gaps не закрыты.
+- (Отменено владельцем) После shared исправления: exact bundle rebuild, поддержка policy/producer с сохранением исторических guards, local consumer replay и fresh installed Apollo negative/reset/Background=False/allowed Segment/token controls. Source/code/native/release gates не повышаются replay. Stale-authority build выше — историческое состояние; последующий reader 0.2.94/0.1.13 и полный validate 582 описаны в PARITY-019, но не закрывают найденные live gaps.
 - Evidence: [52-case review](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/first-column-live-review.r4.2026-10-09.md), [hashes/replay/диагностика](../../../shared/design-system_ab/experiments/current-contract-packages/BenefitCard/reports/first-column-live-review.r4.2026-10-09.json). Private reports не перенесены в source fixtures; нормы, ZIP и registry/Generation/Proxy locks не изменены. Связь с Editor — **CC-COMPAT-NATIVE-CARD-FACTS-03**.
 
 
@@ -909,7 +1252,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
 - [x] Gates: core 76, Editor 820, Generation 49, v4 182, root 81; Chrome passport
   save/ZIP/stale-cache rejection и v4 440/360. Unknown versions, lost identity,
   foreign owner/child, bad receipt/ref/scope и прежний Draft block покрыты.
-- [ ] Критерий полного закрытия: владелец принимает authored fields/passport/native
+- (Отменено владельцем) Критерий полного закрытия: владелец принимает authored fields/passport/native
   recipes и exact Code profile receipts, обновляет registry/locks после exports;
   отдельный live consumer/Proxy/release acceptance. NEXT02-SCOPED-GENERATION-AUTHORITY
   остаётся proposal-only; whole-package Draft bypass не реализован.
@@ -967,7 +1310,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   UI 440/360; changed producer bridge real synthetic tsc/Vite/Chrome run passed.
   Missing/forged metadata, wrong basis/current/scope/code/facts/ref, unknown
   versions, repacked/transitive pins и Draft/profile negatives covered.
-- [ ] Осталось принять BG source scope, exact source/code/frontend profiles,
+- (Отменено владельцем) Осталось принять BG source scope, exact source/code/frontend profiles,
   commands/presentation/width/native recipes, затем actual/live/release receipts.
   Producer refresh уже выполнен владельцем; current consumer compatibility закрыта.
 - [x] 06.10.2026, native recipe/capability research: core **0.1.10** / Editor
@@ -984,7 +1327,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   actual producer CLI вывел три proposed recipes. Capture omission не доказывает
   empty/order. Exact missing inputs и future owner capability checks:
   [GENERATION_NATIVE_RECIPE_PROPOSAL](../docs/GENERATION_NATIVE_RECIPE_PROPOSAL.md).
-- [ ] Acceptance: authoritative SLOT source address/reference typing, BG native
+- (Отменено владельцем) Acceptance: authoritative SLOT source address/reference typing, BG native
   main-component/occurrence proof, accepted recipe/profile/scenario/API runtime
   receipts, complete payload readback и rollback. Live not-run; accepted
   binding/primitive providers null, production execution не разрешено.
@@ -998,7 +1341,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   integrity, shasum и dereferenced official tag/gitHead. Isolated root/v4/core
   type-check passed, но typed slotContentId TS2339 остаётся. Concrete exact
   dependency/type proposal подготовлен; installed 1.121.0/lock/providers прежние.
-- [ ] New runtime actual host/live acceptance и official typed identity input
+- (Отменено владельцем) New runtime actual host/live acceptance и official typed identity input
   ещё required; old receipts не перенесены. [Reproducibility/types handoff и final pins](../docs/GENERATION_BUILD_REPRODUCIBILITY.md).
 - [x] 06.10.2026, NEXT-04 installed types/read-only action: project-local exact
   **@figma/plugin-typings 1.141.0**, only one lock package + root devDependency;
@@ -1014,7 +1357,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   **440/360**, built main/synthetic nodes → actual installed Proxy context;
   no native calls. Three full builds identical; runtime a585… unchanged,
   main/UI/build manifest new pins. Prior host receipts не repinned.
-- [ ] Acceptance: user performs existing-selection read and saves private JSON;
+- (Отменено владельцем) Acceptance: user performs existing-selection read and saves private JSON;
   owner reviews authoritative source/SLOT/BG symbol recipes, runtime mutation/
   readback/rollback and exact profile/scenario/live receipts. Providers null,
   scoped authority proposal-only, BG Draft/profile gates прежние. No normative
@@ -1032,7 +1375,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
 - [x] Latest type-check + synthetic **212/212**, root **81/81**, built v2 UI
   **440/360**, private latest-source VM readonly/invalidation/stale-build guards.
   UI retains v1 compatibility; original reports/accepted providers untouched.
-- [ ] Final standard build blocked **STALE_CONTRACT_PIN buttons-group.desktop**
+- (Отменено владельцем) Final standard build blocked **STALE_CONTRACT_PIN buttons-group.desktop**
   during approved BG authoring refresh. Existing v2 dist snapshot predates final
   empty-declaration guard; latest source/private VM verified separately. Exact
   Contract Creation → Code Connect handoff, one agreed consumer rebuild/verify
@@ -1058,9 +1401,9 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   BG 12 raw typed fields fully observed; CC desktop/mobile bounded SLOT/FRAME/limits
   observed; current-page observer available. Inputs не становятся tracked fixtures
   или accepted recipes. [Review и action points](../docs/GENERATION_NATIVE_V2_USER_REVIEW.md).
-- [ ] Actual export invalidation after selection/page change и close cleanup
+- (Отменено владельцем) Actual export invalidation after selection/page change и close cleanup
   отдельно: три JSON содержат observer snapshot, последующий lifecycle не записан.
-- [ ] Canonical SLOT/owned/symbol/native recipes/profile/scoped authority/mutation/
+- (Отменено владельцем) Canonical SLOT/owned/symbol/native recipes/profile/scoped authority/mutation/
   live/release acceptance remain separate. BG59 Reviewed26, context-only9
   nonExecutable, Source Draft; owner content-only pilot approved, real action/
   loading/width facts not supplied. [Current build/vector](../docs/GENERATION_R59_CONSUMER_READY.md).
@@ -1081,7 +1424,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   handlers/events/transitions не нужны. Null product fields и current mandatory
   eventId retained as explicit CONTENT-ONLY-OWNED-PORT gap; no fake events or
   authority bypass. [Reviewable input/projection design](../docs/GENERATION_STATIC_PILOT_INPUT.md).
-- [ ] Two product ActionIDs/labels/View/disabled/explicit Loading=false,
+- (Отменено владельцем) Two product ActionIDs/labels/View/disabled/explicit Loading=false,
   independent priorityOrder, viewport height и actual BG width-fit; accepted static
   protocol/scoped nine-rule receipts/native recipes/target/profile/live/release.
   Current three applicable + six conditional NotApplicable не являются verdicts;
@@ -1093,7 +1436,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   disabled/Loading=false и independent priorityOrder, без eventId/onClick/no-op.
   Прежний v1 interactive wire/event semantics сохраняется. Shared core **0.1.10** /
   Editor **0.2.91** unchanged; generation-core baseline **0.1.1**, v4 **0.4.0**.
-- [ ] Acceptance этого технического этапа: synthetic compatibility/negative tests,
+- (Отменено владельцем) Acceptance этого технического этапа: synthetic compatibility/negative tests,
   source/profile/canonical/width/target gates остаются blocked, adapters не исполняют
   неподдержанную static version; отдельный exact Code Connect static emit request.
   No arui producer/registry/DS/compiler edits, scoped authority/provider activation,
@@ -1117,7 +1460,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   и runtime parser passed. Final standard v4 manifest/pins after doc edits сохраняются
   отдельно; no browser rerun or actual native/target calls. Existing rollback code,
   installed typings/lock/null providers and historical pinned drafts unchanged.
-- [ ] General technical review / owner product proposal acceptance, будущий static
+- (Отменено владельцем) General technical review / owner product proposal acceptance, будущий static
   producer emit + static target support/canonical/actual-width/profile/scoped receipts;
   source Draft/compiler policy/providers unchanged, no actual target/live/release.
 - [x] 06.10.2026, NEXT-03 / DRAFT-AUTHORING-STATIC-REVIEW — новый consumer
@@ -1139,7 +1482,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   SOURCE_COMPILE. All three frozen producer examples are historical/stale after
   consumer edits; final exact mismatch/vector/rebind request prepared privately.
   Historical drafts/observations preserved, no private captures/norms in fixtures.
-- [ ] General technical review and sequential Code Connect consumer rebind;
+- (Отменено владельцем) General technical review and sequential Code Connect consumer rebind;
   current owner product proposal, source/profile/canonical/width/scoped/native/
   target/live/release remain open. Producer/registry/DS/compiler/primitive policy/
   accepted providers unchanged; no actual Figma/browser/frontend operation.
@@ -1155,7 +1498,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   executionAllowed=false/generationPlanHash=null; execution gates unchanged.
   Core0.1.10/Editor0.2.91/Generation0.1.1/v4 0.4.0 baseline, linked
   [EDITOR-CODE-PASSPORT-001](../../ComponentContractEditor/docs/BACKLOG.ru.md#editor-code-passport-001--next-02-typed-code-evidence-и-bindings).
-- [ ] Acceptance: bounded version/hash/shape transport, server-owned local config,
+- (Отменено владельцем) Acceptance: bounded version/hash/shape transport, server-owned local config,
   missing/unsupported/tamper/path/pin/stale/build/readfail/nohost negatives,
   synthetic controller/HTTP/UI harness and browser smoke if locally available;
   full existing gates, final exact consumer vector + subsequent producer rebind.
@@ -1169,10 +1512,10 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   core25/UI9/HTTP16 plus existing HTTP7 passed. Four browser harnesses at440/360
   passed; actual UI→mounted Proxy route→synthetic reader and two private real
   pinned Node HTTP probes verified separately. No installed process/app changes.
-- [ ] Full Proxy acceptance:391 pass/7 pre-existing legacy catalog/crosswalk
+- (Отменено владельцем) Full Proxy acceptance:391 pass/7 pre-existing legacy catalog/crosswalk
   failures, exact same seven with pre-stage service SHA restored in memory.
   Knowledge check passes. No normative data fabrication, DS edits or silent skip.
-- [ ] General review, subsequent sequential producer rebind/current observations,
+- (Отменено владельцем) General review, subsequent sequential producer rebind/current observations,
   installed/runtime retest and product/source/profile/scoped/native/canonical/
   width/target/live/release acceptance remain open. Prior producer/handoffs immutable;
   current consumer changes explicitly stale. [Route/evidence/limits](../docs/GENERATION_STATIC_REVIEW_ROUTE.md).
@@ -1184,7 +1527,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   Core0.1.10 / Editor0.2.91 / Generation0.1.1 / v4 0.4.0 compatibility versions
   remain unchanged; this is additive review transport, not Editor/source Ready.
   Linked [EDITOR-CODE-PASSPORT-001](../../ComponentContractEditor/docs/BACKLOG.ru.md#editor-code-passport-001--next-02-typed-code-evidence-и-bindings).
-- [ ] Stage1 independent General review, Design Check UI integration, full
+- (Отменено владельцем) Stage1 independent General review, Design Check UI integration, full
   combined source/build review, then V0 freeze and the separately assigned finite
   P/O/B/C1/V1/R/D/G sequence. Preparation does not create those snapshots or
   accept source/API/coverage/native/profile/scoped/live/release. C0 remains
@@ -1214,7 +1557,7 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
 - [x] Contract Creation выполнил authoritative reexport; Code Connect обновил
   registry/lock 1.1.0. 06.10.2026 Generation проверил all-five actual bytes/meta/pins
   и canonical four-Ready subset. Подробные receipts связаны в PARITY-019.
-- [ ] Full BG source Ready и independent live/release acceptance остаются;
+- (Отменено владельцем) Full BG source Ready и independent live/release acceptance остаются;
   producer input lock не является whole-source Ready generation lock.
 - Editor: [EDITOR-LOSSLESS-EXPORT-001](../../ComponentContractEditor/docs/BACKLOG.ru.md#editor-lossless-export-001--historical-projection-и-full-authoring-evidence).
 
@@ -1240,14 +1583,14 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   fresh consumer compatibility 06.10.2026 зафиксирована в PARITY-019.
 - [x] 06.10.2026 registry/lock 1.1.0/current observations и actual installed bridge
   проверены; historical behavior/current freshness раздельны. См. [fresh handoff](../docs/GENERATION_CURRENT_INPUTS.md).
-- [ ] Критерий полной приёмки: принятый source scope, profiles/width/presentation/commands,
+- (Отменено владельцем) Критерий полной приёмки: принятый source scope, profiles/width/presentation/commands,
   native recipes и отдельные actual plan/live/parity/release receipts.
   Immutable basis digest не заменяется current digest; scoped Draft bypass отсутствует.
 - Handoff: [GENERATION_FRONTEND_HOST](../docs/GENERATION_FRONTEND_HOST.md).
 
 ### APOLLO-V4-PARITY-001 — Topology и source identity вложенных instances
 
-- [ ] Проверить новый capture/correspondence через настоящий consumer v4.
+- (Отменено владельцем) Проверить новый capture/correspondence через настоящий consumer v4.
 - Приоритет: P1. Статус: механизм реализован в общем core; отдельная приёмка
   Apollo открыта. Источник: Editor 0.2.71, 0.2.72 и 0.2.73.
 - Capture сохраняет occurrence IDs и parent/child edges один раз; duplicate IDs,
@@ -1283,7 +1626,7 @@ SLOT-нормы и unknown guard сохранены. Требуется отде
 источника или явно доказанного legacy/native binding; data-only нормализация
 эталона FCS не означает закрытие дочернего Select.
 
-- [ ] Подтвердить границы захвата и coverage в component/area audit v4.
+- (Отменено владельцем) Подтвердить границы захвата и coverage в component/area audit v4.
 - Приоритет: P1. Статус: capture plan реализован в shared core (Editor 0.2.71);
   consumer verification открыта.
 - Пропускать payload только доказанного уникального direct-root native SLOT
@@ -1301,7 +1644,7 @@ SLOT-нормы и unknown guard сохранены. Требуется отде
 
 ### APOLLO-V4-PARITY-003 — Stale guard после новых independent references
 
-- [ ] Проверить сравнение фактов при повторном захвате в v4.
+- (Отменено владельцем) Проверить сравнение фактов при повторном захвате в v4.
 - Приоритет: P1. Статус: открыто; это проверка риска, причина BUG-001 не установлена.
 - `checkCapture` повторно вызывает shared `collectNodes`. Сравнивать наблюдаемые
   факты и topology одинаковой области; ephemeral IDs временных pristine/source
@@ -1316,7 +1659,7 @@ SLOT-нормы и unknown guard сохранены. Требуется отде
 
 ### APOLLO-V4-PARITY-004 — Полное Editor coverage поверх compiled predicates
 
-- [ ] Добавить consumer adapter scenario/policy coverage из общего ядра.
+- (Отменено владельцем) Добавить consumer adapter scenario/policy coverage из общего ядра.
 - Приоритет: P1. Статус: открыто; уже предусмотрено этапом 2 `APOLLO_V4_PLAN.md`.
 - Сейчас `auditContractSnapshot` исполняет `evaluateCompiledContract` и сообщает
   scope `compiled-predicate-execution`. PASS исполнимых predicates не равен
@@ -1334,7 +1677,7 @@ SLOT-нормы и unknown guard сохранены. Требуется отде
 
 ### APOLLO-V4-PARITY-005 — Принятый [M] CorporateContent в release Apollo/Proxy
 
-- [ ] Подключить canonical mobile manual r6 как шестой пакет consumer release.
+- (Отменено владельцем) Подключить canonical mobile manual r6 как шестой пакет consumer release.
 - Приоритет: P1. Статус: authoring принят владельцем 01.10.2026; Apollo/Proxy
   каталог и release ещё не расширены.
 - Source: `design-system_ab/experiments/web-corp/CorporateContent/mobile-web/authoring/contract.manual.json`
@@ -1358,7 +1701,7 @@ SLOT-нормы и unknown guard сохранены. Требуется отде
 ### APOLLO-V4-PARITY-006 — Условные ограничения коллекции для ButtonsGroup
 
 - [x] Shared authoring/runtime и локальное чтение в Apollo проверены.
-- [ ] Release/Proxy integration и live acceptance авторского manual.
+- (Отменено владельцем) Release/Proxy integration и live acceptance авторского manual.
 - Приоритет: P1. Editor 0.2.77 / shared core 0.1.3 (02.10.2026):
   `memberCollection`, `memberCollectionsVersion=1`, typed host/member filters,
   count/first-last/domain/mapping/host requirement. `dependency.subjectCondition`
@@ -1438,9 +1781,9 @@ SLOT-нормы и unknown guard сохранены. Требуется отде
 - Обновление core 0.1.3 / Editor 0.2.77: partial source correspondence независимо
   доказывает остальные siblings, не повышая completeness. Missing одного child
   не скрывает violation следующего; targeted Editor/v4 consumer cases пройдены.
-- [ ] Передать core 0.1.3 и capability profile в release/Proxy runtime, проверить
+- (Отменено владельцем) Передать core 0.1.3 и capability profile в release/Proxy runtime, проверить
   новый manual/capture/coverage end-to-end. Текущие выпущенные пакеты не заменены.
-- [ ] Свежие reports D/M всех variants и direct child execution после PARITY-008.
+- (Отменено владельцем) Свежие reports D/M всех variants и direct child execution после PARITY-008.
   Полное закрытие требует consumer release acceptance, не только общей сборки.
 
 - Editor 0.2.78 / core 0.1.3 (core не менялся): новая UI-регистрация target
@@ -1495,7 +1838,7 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
 - Приоритет: P0. Synthetic 4/2 execution, focused child negative/reset, pin/
   platform/stale/unknown, disjoint representations, ZIP/replay и новый capture
   budget проверены. Editor 774/774, core 5/5, v4 103/103.
-- [ ] Новый Button r31 / Spinner r8 authored closure в live D/M reports,
+- (Отменено владельцем) Новый Button r31 / Spinner r8 authored closure в live D/M reports,
   publication/release pins и Proxy capability/source-closure acceptance.
 - План на базе Editor 0.2.74 / core 0.1.0: этап 2,
   BUTTONSGROUP-AUTHORING-002 в
@@ -1560,7 +1903,7 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   exported source и compiled читаются общим compiler без ошибок и с exact
   recompilation match. Подтверждено live authoring/export; actual execution
   и полнота остальных D/M variants этим не подтверждаются.
-- [ ] Принять live D/M runtime reports; включить core 0.1.4 в release/Proxy и подтвердить чтение
+- (Отменено владельцем) Принять live D/M runtime reports; включить core 0.1.4 в release/Proxy и подтвердить чтение
   source manual с alias. Выпущенные пакеты/Proxy в этой задаче не заменялись.
 
 - [x] Shared declared-membership contour и локальный Apollo consumer.
@@ -1572,7 +1915,7 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   проверку при известном нарушении с дополнительным missing evidence.
   Gate version/type/source linkage и shared ↔ consumer parity проверены;
   v4 103/103, Editor 774/774, core 5/5.
-- [ ] Передать capability/runtime в release/Proxy и принять live D/M reports;
+- (Отменено владельцем) Передать capability/runtime в release/Proxy и принять live D/M reports;
   прохождение локальных тестов не закрывает эту приёмку.
 - Источник: BUTTONSGROUP-AUTHORING-004, этап 3 в
   [плане Editor](../../ComponentContractEditor/docs/BUTTONSGROUP_EDITOR_PLAN.ru.md).
@@ -1629,8 +1972,8 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   выявляет typed View violation на точном member, root checks выполняются,
   direct children исполняются; reset проходит, incomplete/stale/foreign evidence
   не становится PASS. Core сборка завершена до consumer parity gate.
-- [ ] Принять свежие Figma negative/reset reports для D/M и оставшихся variants.
-- [ ] Включить core 0.1.5 в published consumer/Proxy и принять release совместимость.
+- (Отменено владельцем) Принять свежие Figma negative/reset reports для D/M и оставшихся variants.
+- (Отменено владельцем) Включить core 0.1.5 в published consumer/Proxy и принять release совместимость.
   Связанные открытые contours: PARITY-007/008/010.
 - Критерий закрытия: обезличенный production-shaped fixture выявляет запрещённый
   typed View на точной occurrence; root checks выполняются; два активных direct
@@ -1671,7 +2014,7 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
 - Legacy Apollo full gate: typecheck/build/runtime-check прошли; прежний
   отсутствующий CardImage compiled fixture блокирует legacy tests. Это отдельный
   existing gate, не свидетельство успешной полной legacy приёмки.
-- [ ] Live authoring acceptance нового picker; release/Proxy consumer acceptance
+- (Отменено владельцем) Live authoring acceptance нового picker; release/Proxy consumer acceptance
   при публикации соответствующей сборки отдельно. Версия Apollo **0.4.0**
   и состав pilot release не изменялись.
 - Критерий закрытия: точные typed/case-sensitive values сохраняются в source
@@ -1781,10 +2124,10 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   issues. Exact engine/Editor/details replay совпадает; snapshot сохранён.
   Это закрывает isolated Editor host gate negative/reset; source review,
   другие Size variants, live Apollo и published consumer acceptance открыты.
-- [ ] Fresh Figma negative/reset во всех consumers; проверить host-context proof и
+- (Отменено владельцем) Fresh Figma negative/reset во всех consumers; проверить host-context proof и
   child execution вместе. Полный legacy `npm run validate`: typecheck/build/parser
   проходят, test gate блокирует существующий отсутствующий CardImage compiled fixture.
-- [ ] Published consumer/Proxy с core 0.1.6: build/release и consumer acceptance
+- (Отменено владельцем) Published consumer/Proxy с core 0.1.6: build/release и consumer acceptance
   принимаются отдельно. Локальные тесты не объявляют опубликованный consumer готовым.
 
 ### APOLLO-V4-PARITY-014 — Variable mode catalog в независимых host stages
@@ -1840,9 +2183,9 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   4 доступных сохранённых ButtonsGroup reports точно воспроизводят persisted
   engine/Editor/details без изменения snapshots или файлов. Private evidence
   в репозитории и test fixtures не копировалось.
-- [ ] Fresh Figma: повторить Primary-second negative и чистый reset в новой
+- (Отменено владельцем) Fresh Figma: повторить Primary-second negative и чистый reset в новой
   локальной сборке; подтвердить полный capture и ожидаемый position violation.
-- [ ] Published consumer/Proxy: совместный source/runtime release и consumer
+- (Отменено владельцем) Published consumer/Proxy: совместный source/runtime release и consumer
   acceptance отдельно. Legacy typecheck/build/Figma parser прошли; полный
   legacy test gate остановлен прежним отсутствующим CardImage compiled fixture.
 - Связь этого дефекта с исходным BUG-001 / PARITY-003 не установлена;
@@ -1879,10 +2222,10 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
 - [x] Fresh Editor reset 0.2.84 r41 19:14:00 UTC: полный PASS, 448 evaluations,
   четыре child runs executed, 0 violations/not-executed/inconclusive, 56/56 matches.
   Тот же instance/manual hash; exact replay подтверждён, snapshot не изменён.
-- [ ] При повторении исключения получить native stage/error evidence для разбора
+- (Отменено владельцем) При повторении исключения получить native stage/error evidence для разбора
   причины. Успешные fresh negative/reset не доказывают исправление прежнего сбоя;
   связь с PARITY-014 не установлена. Live Apollo acceptance остаётся отдельной.
-- [ ] Published consumer/Proxy: сборка/release и consumer acceptance отдельно.
+- (Отменено владельцем) Published consumer/Proxy: сборка/release и consumer acceptance отдельно.
   Критерий закрытия диагностики: точный этап/ошибка в свежем отчёте и сохранение
   incomplete/verdict при отсутствии reference. Private reports/catalogs остаются
   вне Apollo source, fixtures и logs.
@@ -1915,7 +2258,7 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   два dependency runs остаются incomplete; engine совпадает с Editor core.
   Проверка выполнена в памяти, private files не использовались. Новая runtime
   реализация или migration не требуется.
-- [ ] Published consumer/release acceptance отдельно. Критерий закрытия:
+- (Отменено владельцем) Published consumer/release acceptance отдельно. Критерий закрытия:
   status-only review читается в consumer без изменения нормативных bindings/pins;
   отсутствие фактов остаётся явной неполнотой. Editor UI gate не заменяет
   приёмку опубликованного Apollo/Proxy.
@@ -1930,7 +2273,7 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   shared compiler parity и 24 collection controls прошли. Source остаётся Draft;
   свежая r2 live и published consumer приёмка открыты. Применимость desktop
   source требует отдельной сверки, прежняя revision автоматически не изменена.
-- [ ] Mobile swap 15:13:24 UTC: пять unknown в самостоятельных проверках
+- (Отменено владельцем) Mobile swap 15:13:24 UTC: пять unknown в самостоятельных проверках
   pinned Button (asset provenance и связанные размеры) сохраняют неполное
   dependency coverage. Проверить capture/source enrichment в consumer и
   понятную диагностику; не считать отсутствующие факты compliant и не подавлять
@@ -1992,7 +2335,7 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   notExecuted=0 / inconclusive=0; in-memory core replay совпадает с отчётом,
   локальный v4 audit даёт тот же engine result и executionComplete=true. Private
   отчёт/каталог не копировались в Apollo; это не published release acceptance.
-- [ ] Fresh Figma: пользователь проверяет original/swap/reset во всех размерах
+- (Отменено владельцем) Fresh Figma: пользователь проверяет original/swap/reset во всех размерах
   и SingleIcon на другом допустимом Button. Отсутствие привязки/эталона в
   каком-либо размере остаётся неполнотой, не исключением из нормы.
   Reset в Editor 0.2.89 выявил local main ID bug; новый consumer profile и
@@ -2001,7 +2344,7 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   12:12:48 UTC: полный PASS, 452 evaluations, 56/56 matches, четыре child runs.
   Fresh negative 12:33:21 UTC: замена на dots-bracket даёт ровно один icon-lock
   violation при полном coverage, том же instance/r56 и четырёх child runs.
-- [ ] Published consumer/Proxy: сборка/release и приёмка отдельно. Критерий
+- (Отменено владельцем) Published consumer/Proxy: сборка/release и приёмка отдельно. Критерий
   закрытия: свежий authoring package и consumer дают одинаковые identity
   verdicts; partial proof остаётся incomplete, historical replay/pins прежние.
 
@@ -2070,9 +2413,9 @@ representation scope и dedup actual children. Capture/v4 cap 16, legacy cap 8.
   сохранены. Private данные не копировались в Apollo. Это завершает целевую
   Editor reset/negative пару и offline consumer parity Size=56; live Apollo
   audit и published release ещё не приняты.
-- [ ] All-size real-library acceptance остаётся в PARITY-017;
+- (Отменено владельцем) All-size real-library acceptance остаётся в PARITY-017;
   старый negative 0.2.89 сохраняет прежний replay.
-- [ ] Published Apollo/Proxy build/release и consumer acceptance. Критерий
+- (Отменено владельцем) Published Apollo/Proxy build/release и consumer acceptance. Критерий
   закрытия: fresh source/capture в Editor и consumer дают одинаковые полные
   reset/negative verdicts, а missing proof остаётся incomplete; historical
   replay и pins неизменны. Локальные tests/replay не закрывают release acceptance.
@@ -2395,7 +2738,10 @@ Focused regression19/19 PASS; retained owner report даёт0/0/1 по корн�
 - Уточнение пользователя: 4 записи без контрактов — внутренние вложенности AmountStyles; корректировка ownership и лишних предупреждений отслеживается в APOLLO-V4-BUG-002, отображение конкретного отклонения — в APOLLO-V4-BUG-003.
 - Это пользовательский живой прогон; агент проверил сохранённые метаданные и pins, новый живой прогон и вызов Codex не выполнял. Сам отчёт остаётся в игнорируемом `live-tests/`.
 
-## 1. Supporting package field verification (2026-08-29)
+## Архив · 1. Supporting package field verification (2026-08-29)
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
 
 - [x] Complete the Apollo v3 field checks for the three supporting packages:
   - `Amount`, section `12606:59315` — exactly two deterministic violations;
@@ -2407,7 +2753,10 @@ Focused regression19/19 PASS; retained owner report даёт0/0/1 по корн�
 - All three report sets have complete classifications, no unexpected findings
   and stable deterministic output. The supporting-package field gate is closed.
 
-## Architecture reset: deterministic Predicate Engine MVP (2026-08-22)
+## Архив · Architecture reset: deterministic Predicate Engine MVP (2026-08-22)
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
 
 The current Semantic Fact Model / faceted-agent verdict path is frozen as a
 comparison baseline. New component and pattern verdict behavior is implemented
@@ -2423,8 +2772,8 @@ normalizers or agent prompt rules.
 - [x] Draft JSON Schemas for snapshot v2, RuleIR v1, predicate trace, coverage ledger and final result.
 - [x] Ratify the drafted schemas after the plugin-to-engine field contour and
   ten-run repeatability gate passed in Figma on 2026-08-24.
-- [ ] Publish a source-field-to-RuleIR mapping for every structured field used by the pilot component and form rules. Four production waves are published in `docs/PREDICATE_SOURCE_TO_RULE_IR.md`: ButtonsGroup composition, TitleView slot order, required effective baseline and generic token-binding sets now compile without component-specific runtime rule construction; the remaining component and form source shapes are still pending.
-- [ ] Reject unknown predicates, unknown fact readers, ambiguous identities and incomplete active rules at compile time.
+- (Отменено владельцем) Publish a source-field-to-RuleIR mapping for every structured field used by the pilot component and form rules. Four production waves are published in `docs/PREDICATE_SOURCE_TO_RULE_IR.md`: ButtonsGroup composition, TitleView slot order, required effective baseline and generic token-binding sets now compile without component-specific runtime rule construction; the remaining component and form source shapes are still pending.
+- (Отменено владельцем) Reject unknown predicates, unknown fact readers, ambiguous identities and incomplete active rules at compile time.
 
 ### P0: pure predicate engine
 
@@ -2445,14 +2794,14 @@ normalizers or agent prompt rules.
 
 - [x] Audit the current plugin snapshot against the fact-family requirements and add only missing evidence. See `docs/SNAPSHOT_V2_GAP_AUDIT.md`.
 - [x] Exclude hidden layers from selection and aggregates.
-- [ ] Preserve exact effective-baseline value, origin, selected variant and release revision per auditable property. P04 proves `styles.text`; P26 adds observable `appearance.opacity` and `appearance.radius`, uses exact WIP baseline/actual pairs for changed properties, and derives an unchanged baseline only when no matching direct Figma override exists. Paint, layout, effects and complete release-origin metadata remain.
+- (Отменено владельцем) Preserve exact effective-baseline value, origin, selected variant and release revision per auditable property. P04 proves `styles.text`; P26 adds observable `appearance.opacity` and `appearance.radius`, uses exact WIP baseline/actual pairs for changed properties, and derives an unchanged baseline only when no matching direct Figma override exists. Paint, layout, effects and complete release-origin metadata remain.
 - [x] Materialize nested effective baseline with property-level ownership. The
   runtime now merges canonical host and selected nested baselines per property,
   records `referencePropertyOwners`, prefers exact variant-patch provenance and
   does not infer ownership from component names or decorated layer paths.
 - [x] Preserve the selected root width as `context.viewportWidth`; ambiguous
   multi-root selection and missing bounds are explicit `unknown` evidence.
-- [ ] Preserve component/slot ownership, ordered structure, bounds, auto-layout, styles, bindings and explicit overrides. Nearest component owner properties, Figma file/page identity and normalized platform are now preserved; P05 adds resolved padding binding metadata, while slot identity and remaining binding families remain.
+- (Отменено владельцем) Preserve component/slot ownership, ordered structure, bounds, auto-layout, styles, bindings and explicit overrides. Nearest component owner properties, Figma file/page identity and normalized platform are now preserved; P05 adds resolved padding binding metadata, while slot identity and remaining binding families remain.
 - [x] Validate and hash the immutable snapshot before proxy evaluation; unresolved component metadata becomes `unknown` instead of a guessed identity. Per-node collection error production remains part of the next evidence wave.
 
 ### P0: predicate-by-predicate Figma contour
@@ -2500,7 +2849,7 @@ normalizers or agent prompt rules.
 
 ### P1: pilot cutover
 
-- [ ] Compile all observable active deterministic BackgroundPlate, TitleView and ButtonsGroup rules to RuleIR.
+- (Отменено владельцем) Compile all observable active deterministic BackgroundPlate, TitleView and ButtonsGroup rules to RuleIR.
   - [x] Complete the first production package migration on TitleView. All 42
     source rules are closed exactly once across direct predicates, composition,
     delegation, policy and context-only routes. The release loader rejects a
@@ -2594,7 +2943,7 @@ normalizers or agent prompt rules.
     `32 px` insets as compliant and classified the `48 px` right inset as a
     violation. Both reports had zero unclassified/duplicate evaluations and
     stable ten-run hashes.
-  - [ ] Clean the P17/P18 fixture roots so the C06 golden reports contain no
+  - (Отменено владельцем) Clean the P17/P18 fixture roots so the C06 golden reports contain no
     unrelated `База` findings from raw Spacing bindings or non-canonical
     BackgroundPlateSlot sizing.
   - [x] Compile form Rule 9 through the generic source-owned `fact-domain`
@@ -2658,7 +3007,7 @@ normalizers or agent prompt rules.
   - [x] Compile CUTOVER C13 through generic `fact-domain`: source-owned
     Horizontal Compact TableView Body Row selector and exact one-column domain,
     with the former P14 manual factory/runtime registration removed.
-  - [ ] Field-prove CUTOVER C13 on the existing P14 PASS/FAIL TableView roots:
+  - (Отменено владельцем) Field-prove CUTOVER C13 on the existing P14 PASS/FAIL TableView roots:
     exact failing Row focus, `База` routing, published revision `2`, complete
     coverage and a stable ten-run hash.
   - [x] Field-prove generic `fact-domain` portability beyond TableView with
@@ -2795,7 +3144,7 @@ normalizers or agent prompt rules.
       `sourceRuleBalance.traces`. The focused release, balancer and pilot suite
       passes 71/71, including the Benefits -> TabsView cross-family acceptance
       case.
-  - [ ] Add causal finding prioritization after deterministic evaluation and
+  - (Отменено владельцем) Add causal finding prioritization after deterministic evaluation and
     before UI sorting. Preserve every predicate verdict in the debug report,
     but group findings with the same failing object when one violated rule
     explains another observed violation. Render the root cause first and mark
@@ -2811,11 +3160,11 @@ normalizers or agent prompt rules.
       marking downstream rows as consequences. Invalid or implicit relations
       fail closed. Proxy tests pass 255/255 and Apollo validation passes all 80
       regression suites.
-    - [ ] Add the first real source-authored causal edge and field-prove it on a
+    - (Отменено владельцем) Add the first real source-authored causal edge and field-prove it on a
       component where an invalid nested identity deterministically causes a
       downstream structural violation. Confirm exact focus, unchanged coverage,
       stable ten-run output and visible root-before-consequence ordering.
-    - [ ] Add universal applicability suppression for dependent slot predicates.
+    - (Отменено владельцем) Add universal applicability suppression for dependent slot predicates.
       When a public-root / ownership predicate proves that an internal component
       is used standalone, predicates that require its valid owner or slot
       context must be classified `not-applicable` and omitted from the UI. Keep
@@ -2825,17 +3174,20 @@ normalizers or agent prompt rules.
       `public-root-only`, while `addon-uses-final-component` and both
       `addon-geometry` checks are suppressed. This is a generic dependency /
       applicability capability, not a PaymentMaskedNumber-specific exception.
-- [ ] Compile deterministic form rules 1, 4, 5, 6, 7, 9, 12, 13 and 18 to RuleIR.
+- (Отменено владельцем) Compile deterministic form rules 1, 4, 5, 6, 7, 9, 12, 13 and 18 to RuleIR.
 - [x] Pass the P01–P19 mixed canonical-section regression. Public-instance-root
   ownership gates removed 239 inherited implementation evaluations while all
   five page-specific findings and exact report routing remained stable.
-- [ ] Run a curated real-screen regression corpus covering clean, component-error,
+- (Отменено владельцем) Run a curated real-screen regression corpus covering clean, component-error,
   form-pattern-error and mixed pages; record expected finding ids and focus nodes.
-- [ ] Keep prose-only, interaction, red-policy and business-context rules outside the MVP as explicit `not-evaluable` coverage.
-- [ ] Route agent usage to optional explanation only; forbid agent-created or agent-modified verdicts.
-- [ ] Remove the old SFM/faceted-agent verdict path after all cutover gates pass.
+- (Отменено владельцем) Keep prose-only, interaction, red-policy and business-context rules outside the MVP as explicit `not-evaluable` coverage.
+- (Отменено владельцем) Route agent usage to optional explanation only; forbid agent-created or agent-modified verdicts.
+- (Отменено владельцем) Remove the old SFM/faceted-agent verdict path after all cutover gates pass.
 
-## Current execution order
+## Архив · Current execution order
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
 
 The Predicate model is the target architecture. Engine readiness and migrated
 knowledge coverage are tracked separately. The detailed ratification plan,
@@ -2896,12 +3248,15 @@ and fixtures are represented in the canonical Predicate pipeline.
 - [ ] Extend typography remediation with component-reference priority and deliberate mixed rich-text range selection; keep non-uniform rich text fail-closed.
 - [ ] Field-verify override preservation, local-owner dependency updates and stale-action rejection in Figma.
 
-## P0: Contract v2 schema and authoring closure
+## Архив · P0: Contract v2 schema and authoring closure
 
-- [ ] Ratify one versioned Contract v2 schema shared by package authors, Athena and Apollo: package identity, selectors, facts, `when`, assertions, evidence requirements, verdict policy and remediation metadata.
-- [ ] Stabilize capability identifiers and unknown-evidence semantics for the 25-package Ready experiment: 9 selectors, 47 facts, 37 operators and 5 remediations; candidate capabilities are not executable until their exact inputs and outputs are specified.
-- [ ] Normalize the observed 129 structured assertion fields into a compact versioned vocabulary instead of implementing one runtime branch per source field; record aliases and reject ambiguous mappings.
-- [ ] Triage all 315 unsupported deterministic rules across the 25 Ready packages: re-author recurring rule families as typed assertions or explicitly downgrade them to `manual`/`llm`; never infer runtime behavior from `ruleText`.
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
+
+- (Отменено владельцем) Ratify one versioned Contract v2 schema shared by package authors, Athena and Apollo: package identity, selectors, facts, `when`, assertions, evidence requirements, verdict policy and remediation metadata.
+- (Отменено владельцем) Stabilize capability identifiers and unknown-evidence semantics for the 25-package Ready experiment: 9 selectors, 47 facts, 37 operators and 5 remediations; candidate capabilities are not executable until their exact inputs and outputs are specified.
+- (Отменено владельцем) Normalize the observed 129 structured assertion fields into a compact versioned vocabulary instead of implementing one runtime branch per source field; record aliases and reject ambiguous mappings.
+- (Отменено владельцем) Triage all 315 unsupported deterministic rules across the 25 Ready packages: re-author recurring rule families as typed assertions or explicitly downgrade them to `manual`/`llm`; never infer runtime behavior from `ruleText`.
 - [x] Re-audit the original 315 unsupported rules by source shape: 124 already contained structured assertion fields that the compiler did not normalize, while 191 were prose-only. Do not classify runtime gaps from rule-id substrings: the original discovery heuristic confused `border` with `order` and generic `*-required` rules with `requiredChild`.
 - [x] Normalize the first evidence-safe field wave in the isolated compiler: `requiredVariant`, direct variant-only `requiredState`, direct `requiredLayout`, `requiredOrder`, `forbiddenWidthOverride` and `*-component-property`. This promotes 14 deterministic rules without new runtime operators, raising coverage from 161/476 (33.82%) to 175/476 (36.76%) and reducing unsupported rules from 315 to 301.
 - [x] Replace the proposed bulk normalization step with a source-authority
@@ -2912,54 +3267,57 @@ and fixtures are represented in the canonical Predicate pipeline.
   versioned capability. See `docs/CONTRACT_V2_READY_RULE_CLASSIFICATION.md`;
   no prose-only rule was promoted from its text and `authority` metadata alone
   is not treated as an executable assertion.
-- [ ] Re-author the 20 prose-only rules that conservatively map to existing operators; require explicit selectors, facts, assertion parameters, unknown-evidence behavior and source-rule traceability.
-- [ ] Specify the 15 currently identifiable runtime-operator gaps as versioned contracts and fixtures before implementation: 7 already have structured fields and 8 remain prose-only. Define exact inputs, pass/fail/unknown semantics, evidence requirements and remediation boundaries for `statePolicy`, `numericFormat` and `visibilityPolicy`.
-- [ ] Add generic conditional RuleIR composition (`when -> assert`) rather than component-specific state branches; conditions must support fact-to-value and fact-to-fact comparison with three-valued unknown propagation.
-- [ ] Extend selectors with typed `where` predicates and ancestry constraints, then add filtered aggregates such as `countWhere`; use them for rules including one active sorting column and at least one visible table column.
-- [ ] Classify the remaining 160 unclassified prose-only deterministic rules as `typed-authoring`, `missing-capability`, `manual` or `llm`; prohibit `checkType=deterministic` when no executable assertion can be authored.
-- [ ] Use `ready-package-rule-profile.json` saturation data to define operator fixtures; require explicit coverage for state, structure/order, content, responsive context, token/paint, numeric formatting and interaction families before schema ratification.
-- [ ] Require every `checkType=deterministic` rule to compile as `executable` or publish as `unsupported`; unknown selector, condition, assertion or remediation fields must fail closed instead of broadening a match.
-- [ ] Prevent unsupported component rules from promoting an atomic customization diff to `violation`.
-- [ ] Add schema fixtures for conditional variants, structure/count/order, token binding, paint state, layout/baseline, text/numeric formatting and unsupported-rule behavior.
+- (Отменено владельцем) Re-author the 20 prose-only rules that conservatively map to existing operators; require explicit selectors, facts, assertion parameters, unknown-evidence behavior and source-rule traceability.
+- (Отменено владельцем) Specify the 15 currently identifiable runtime-operator gaps as versioned contracts and fixtures before implementation: 7 already have structured fields and 8 remain prose-only. Define exact inputs, pass/fail/unknown semantics, evidence requirements and remediation boundaries for `statePolicy`, `numericFormat` and `visibilityPolicy`.
+- (Отменено владельцем) Add generic conditional RuleIR composition (`when -> assert`) rather than component-specific state branches; conditions must support fact-to-value and fact-to-fact comparison with three-valued unknown propagation.
+- (Отменено владельцем) Extend selectors with typed `where` predicates and ancestry constraints, then add filtered aggregates such as `countWhere`; use them for rules including one active sorting column and at least one visible table column.
+- (Отменено владельцем) Classify the remaining 160 unclassified prose-only deterministic rules as `typed-authoring`, `missing-capability`, `manual` or `llm`; prohibit `checkType=deterministic` when no executable assertion can be authored.
+- (Отменено владельцем) Use `ready-package-rule-profile.json` saturation data to define operator fixtures; require explicit coverage for state, structure/order, content, responsive context, token/paint, numeric formatting and interaction families before schema ratification.
+- (Отменено владельцем) Require every `checkType=deterministic` rule to compile as `executable` or publish as `unsupported`; unknown selector, condition, assertion or remediation fields must fail closed instead of broadening a match.
+- (Отменено владельцем) Prevent unsupported component rules from promoting an atomic customization diff to `violation`.
+- (Отменено владельцем) Add schema fixtures for conditional variants, structure/count/order, token binding, paint state, layout/baseline, text/numeric formatting and unsupported-rule behavior.
 
-## P0: Athena and Athena CLI executable package generation
+## Архив · P0: Athena and Athena CLI executable package generation
 
-- [ ] Re-audit the complete Athena CLI and Athena pipeline from raw Figma
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
+
+- (Отменено владельцем) Re-audit the complete Athena CLI and Athena pipeline from raw Figma
   catalog to published component package. Document which fields are generated,
   copied, merged, validated and indexed; remove any implicit policy inference
   from display names, prose or rule-id substrings.
-- [ ] Ratify a structural boundary between generated evidence and authored
+- (Отменено владельцем) Ratify a structural boundary between generated evidence and authored
   `manual` policy. Catalog rebuilds may replace generated anatomy and baseline
   data, but must preserve manual rules, predicate contours, composition
   contracts, execution routing, authority, presentation and explicit evidence
   gaps.
-- [ ] Implement a deterministic manual-layer merge in Athena CLI and Athena.
+- (Отменено владельцем) Implement a deterministic manual-layer merge in Athena CLI and Athena.
   Fail the build on an orphaned manual rule, duplicate rule id, stale source
   anchor, unknown component identity, unsupported contour/operator or manual
   content loss; never silently drop or rewrite authored policy.
-- [ ] Generate and validate `manual.executionPolicy` closure for every migrated
+- (Отменено владельцем) Generate and validate `manual.executionPolicy` closure for every migrated
   package. Every source rule must be exactly one of `predicate`, `composition`,
   `delegated`, `policy` or `context-only`; deterministic rules without an
   executable route or explicit non-executable classification block
   publication.
-- [ ] Generate a per-package coverage artifact containing source-rule totals,
+- (Отменено владельцем) Generate a per-package coverage artifact containing source-rule totals,
   execution route, required facts, missing capabilities, authority revision and
   compiled RuleIR ids. Use the TitleView 42/42 closure as the reference fixture.
-- [ ] Publish generated artifacts, preserved manual layer, compiled coverage,
+- (Отменено владельцем) Publish generated artifacts, preserved manual layer, compiled coverage,
   component indexes, manifests, capability versions and checksums atomically.
   A partial or stale package must not become visible to Apollo.
-- [ ] Add regeneration fixtures proving that repeated Athena/Athena CLI runs are
+- (Отменено владельцем) Add regeneration fixtures proving that repeated Athena/Athena CLI runs are
   byte-stable for generated output and do not modify manual policy. Include
   source/generated/manual drift detection and a reviewable diff gate.
-- [ ] Revisit existing raw-package enrichment so stable identities, desktop/
+- (Отменено владельцем) Revisit existing raw-package enrichment so stable identities, desktop/
   mobile counterparts, effective baseline provenance, semantic anatomy,
   declared component properties and ownership boundaries are available before
   Apollo compilation. Missing evidence must be published explicitly as unknown,
   not synthesized from names.
-- [ ] Preserve compatible package semantics across `design-system_ab`,
+- (Отменено владельцем) Preserve compatible package semantics across `design-system_ab`,
   `ds-ai-hub` and split repositories; source routing may differ, predicate
   meaning and capability versions may not.
-- [ ] Introduce stable descendant identity for the `ds-ai-hub -> Athena ->
+- (Отменено владельцем) Introduce stable descendant identity for the `ds-ai-hub -> Athena ->
   Apollo` conversion pipeline. This is the canonical solution for renamed
   Figma layers; do not accumulate component-specific name aliases in runtime:
   - Athena must publish an authored `semanticRole` or generated
@@ -2984,30 +3342,36 @@ and fixtures are represented in the canonical Predicate pipeline.
     only the visible layer name must not change the verdict; removing the role
     mapping must fail compilation/publication rather than suppress a finding.
 
-## P0: Contract v2 compiler and publication
+## Архив · P0: Contract v2 compiler and publication
 
-- [ ] Promote the isolated Contract v2 experiment into one production compiler; generated output must consume the complete component package while keeping raw/generated anatomy as evidence rather than implicit policy.
-- [ ] Compile `contract.generated.json`, structured `rules.json`, `composition-contract.json` and enforceable ownership from `contract.overrides.json` into one deterministic RuleIR artifact with source-rule traceability.
-- [ ] Generate a per-package coverage report with `executable | unsupported | manual | llm` status and block publication when an executable rule is invalid, ambiguous or references an undeclared capability.
-- [ ] Make Athena publish Contract v2 artifacts, schemas, coverage, capability versions and checksums atomically with `componentContractIndex.json` and the catalog manifest.
-- [ ] Add CI gates for deterministic output, source-copy integrity, source/compiled drift, duplicate identities, unsupported-capability regressions and release-snapshot completeness.
-- [ ] Preserve split-repository routing so `design-system_ab` and `desing-system_abm` can publish compatible Contract v2 packages without changing Apollo semantics.
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
 
-## P0: Apollo Contract v2 runtime and parity
+
+- (Отменено владельцем) Promote the isolated Contract v2 experiment into one production compiler; generated output must consume the complete component package while keeping raw/generated anatomy as evidence rather than implicit policy.
+- (Отменено владельцем) Compile `contract.generated.json`, structured `rules.json`, `composition-contract.json` and enforceable ownership from `contract.overrides.json` into one deterministic RuleIR artifact with source-rule traceability.
+- (Отменено владельцем) Generate a per-package coverage report with `executable | unsupported | manual | llm` status and block publication when an executable rule is invalid, ambiguous or references an undeclared capability.
+- (Отменено владельцем) Make Athena publish Contract v2 artifacts, schemas, coverage, capability versions and checksums atomically with `componentContractIndex.json` and the catalog manifest.
+- (Отменено владельцем) Add CI gates for deterministic output, source-copy integrity, source/compiled drift, duplicate identities, unsupported-capability regressions and release-snapshot completeness.
+- (Отменено владельцем) Preserve split-repository routing so `design-system_ab` and `desing-system_abm` can publish compatible Contract v2 packages without changing Apollo semantics.
+
+## Архив · P0: Apollo Contract v2 runtime and parity
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
 
 - [x] Add a default-off, non-persistent Contract v2 test-contour toggle and lazy-load only experimental packages required by the selected component keys.
 - [x] Implement the first fail-closed generic selector/fact/operator evaluator driven only by trusted versioned capabilities; component packages provide data, never executable code.
 - [x] Exclude legacy component-contract verdicts from customization output while the test contour is enabled; keep the default production path unchanged while the toggle is off.
 - [x] Classify non-executable, unsupported and evidence-incomplete rules as diagnostic `unknown`; never promote them to violations or infer semantics from prose.
-- [ ] Stop computing discarded schema-v1 customization decisions inside the v2 contour after parity instrumentation no longer needs them.
-- [ ] Complete runtime support for the ratified selector/fact/operator vocabulary; each added capability requires pass/fail/unknown fixtures before activation.
-- [ ] Extend the audit snapshot only with facts required by ratified contracts, including non-variant component properties, ancestry/order, token bindings, prototype reactions and explicit page/frame/viewport context.
-- [ ] Emit every result through `CustomizationAssessment` as `expected | allowed | violation | unknown`, with evidence-complete messages and stale-safe remediation actions.
-- [ ] Store machine-comparable Contract v2 versus schema-v1 verdict, evidence and remediation deltas without exposing discarded legacy findings in the test-contour UI.
-- [ ] Require release fixtures and field reports to reach category, verdict, baseline-label and reset-action parity before enabling Contract v2 enforcement package by package.
-- [ ] Separate Contract v2 runtime into explicit raw baseline, variant baseline, effective host baseline, user mutation and UI presentation/remediation stages. Every violation must retain typed source evidence and its baseline origin; relational operators must not replace paint/style bindings with display-only values, exact component assertions must override raw baseline defaults, and reset actions must restore the contract target rather than a visually equivalent RGBA or stale catalog value. Cover this boundary with real report fixtures for BodyCell padding, Amount token reset/alignment and nested PaintMe overrides.
+- (Отменено владельцем) Stop computing discarded schema-v1 customization decisions inside the v2 contour after parity instrumentation no longer needs them.
+- (Отменено владельцем) Complete runtime support for the ratified selector/fact/operator vocabulary; each added capability requires pass/fail/unknown fixtures before activation.
+- (Отменено владельцем) Extend the audit snapshot only with facts required by ratified contracts, including non-variant component properties, ancestry/order, token bindings, prototype reactions and explicit page/frame/viewport context.
+- (Отменено владельцем) Emit every result through `CustomizationAssessment` as `expected | allowed | violation | unknown`, with evidence-complete messages and stale-safe remediation actions.
+- (Отменено владельцем) Store machine-comparable Contract v2 versus schema-v1 verdict, evidence and remediation deltas without exposing discarded legacy findings in the test-contour UI.
+- (Отменено владельцем) Require release fixtures and field reports to reach category, verdict, baseline-label and reset-action parity before enabling Contract v2 enforcement package by package.
+- (Отменено владельцем) Separate Contract v2 runtime into explicit raw baseline, variant baseline, effective host baseline, user mutation and UI presentation/remediation stages. Every violation must retain typed source evidence and its baseline origin; relational operators must not replace paint/style bindings with display-only values, exact component assertions must override raw baseline defaults, and reset actions must restore the contract target rather than a visually equivalent RGBA or stale catalog value. Cover this boundary with real report fixtures for BodyCell padding, Amount token reset/alignment and nested PaintMe overrides.
 - [x] Fix the `Benefits` aggregate parity regression: evaluate `GraphicPosition` independently from root sizing and nested `Title`, compare every visible direct `BenefitCard`, and report the exact outlier card when values differ. Acceptance fixture: `[Right, Left, Right, Right]` produces one `GraphicPosition` violation for the second card while the existing `FILL -> FIXED` and `Title Secondary -> Primary` findings remain unchanged in UI, full statistics and agent report.
-- [ ] Reject unknown capability versions and incomplete required packages without falling back to component-specific or prose-derived behavior.
+- (Отменено владельцем) Reject unknown capability versions and incomplete required packages without falling back to component-specific or prose-derived behavior.
 
 ## P1: module boundaries
 
@@ -3028,39 +3392,45 @@ and fixtures are represented in the canonical Predicate pipeline.
 - [x] Introduce one explicit lifecycle state machine for reference and contract caches.
 - [x] Add release-fixture integration tests covering manifest, indexes and contract packages as one snapshot.
 
-## P1: Contract v2 component migration
+## Архив · P1: Contract v2 component migration
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
 
 - [x] Load package `contract.generated.json` as the target Component API, validate all published packages and emit deterministic violations for unknown variant properties, invalid values and invalid allowed combinations through the standard assessment/report pipeline.
 - [x] Move all executable composition rules to package-level `manual.contracts`, migrate ButtonsGroup, and remove the global `compositionContracts.json` bootstrap/runtime fallback.
 - [x] Add a trusted composition contract engine with remote declarative config and a pure function registry instead of component-specific runtime branches. Schema v1 covers count, property domain, value position, member-to-host equality, first-member equality and subtree paint policies; additional operators remain explicit code changes.
 - [x] Add the first evidence-safe relational predicates: ButtonsGroup member Size follows host Size and TitleStatus Type follows visible StatusPreset Type. Missing source evidence remains non-enforcing.
 - [x] Migrate and regression-test the schema-v1-safe packages: ButtonsGroup, BackgroundPlate and TitleView.
-- [ ] Complete the Contract v2 pilot wave for TitleView, BackgroundPlate, ButtonsGroup and AmountStyles after the P0 parity gate; preserve their existing Figma-visible behavior and agent-report evidence.
+- (Отменено владельцем) Complete the Contract v2 pilot wave for TitleView, BackgroundPlate, ButtonsGroup and AmountStyles after the P0 parity gate; preserve their existing Figma-visible behavior and agent-report evidence.
 - [x] Select the first migration wave by computed capability coverage, not
   component popularity. `migration-wave-1.json` contains Ready packages with
   100% deterministic compilation and zero unsupported rules: Benefits,
   BackgroundPlate and ButtonStack. Core Amount, TagGroup and
   PaymentMaskedNumber are tracked separately as supporting packages. The wave
   remains default-off and `ready-for-shadow-parity`, not production-enforcing.
-- [ ] Migrate Button, CardImage, FAQ and TableBulkActions only when their host-dependent selectors and evidence are represented exactly; advisory guidance must not become a hard violation.
-- [ ] Publish a migration dashboard with package schema version, deterministic coverage, unsupported rules, last parity result and legacy dependency count.
-- [ ] Forbid new component-name conditionals in Apollo runtime; a missing capability becomes an explicit engine task or leaves the rule `unsupported`.
+- (Отменено владельцем) Migrate Button, CardImage, FAQ and TableBulkActions only when their host-dependent selectors and evidence are represented exactly; advisory guidance must not become a hard violation.
+- (Отменено владельцем) Publish a migration dashboard with package schema version, deterministic coverage, unsupported rules, last parity result and legacy dependency count.
+- (Отменено владельцем) Forbid new component-name conditionals in Apollo runtime; a missing capability becomes an explicit engine task or leaves the rule `unsupported`.
 
-## P1: reusable Core boundary contracts
+## Архив · P1: reusable Core boundary contracts
 
-- [ ] Publish Contract v2 packages for reusable Core component boundaries before encoding more host-specific nested-component heuristics. Prioritize `IconView`, `Button`, `Text`, `StatusPreset`/`Status`, then inventory the remaining Core components that expose Slot, instance-swap or nested component properties.
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
+
+- (Отменено владельцем) Publish Contract v2 packages for reusable Core component boundaries before encoding more host-specific nested-component heuristics. Prioritize `IconView`, `Button`, `Text`, `StatusPreset`/`Status`, then inventory the remaining Core components that expose Slot, instance-swap or nested component properties.
   - [x] Core `Button`: source-rule closure and field parity published.
   - [x] Core `IconView`: package, release compilation, synthetic
     PASS/FAIL/UNKNOWN and Figma field parity are complete as C23. The final
     field run preserved public paint permissions, detected root layout,
     internal Shape radius and Content opacity overrides with exact focus, and
     passed zero-duplicate/unclassified plus ten-run repeatability gates.
-  - [ ] Core `Text`.
-  - [ ] `StatusPreset`/`Status` boundary extraction from the proven host-baseline implementation.
-- [ ] Require every Core boundary contract to describe stable component families and keys, semantic slot anatomy, public variant/component properties, effective baseline by selected variant, allowed instance replacements and ownership of nested visual/text/layout evidence.
-- [ ] Let host contracts express contextual policy against nested semantic facts instead of Figma storage details. Example: `CorporateSystemMessage` owns the rule “`Graphic.icon` may be replaced only when `View=Base`”, while `IconView` owns how the icon slot and its `component.identity` are resolved.
-- [ ] Keep native `directOverrides`/`componentProperties` interpretation as a fail-closed transitional fallback for a nested component without a contract. Once its Core contract is published and parity-proven, route evaluation through that contract and remove the corresponding heuristic path.
-- [ ] Add cross-boundary parity fixtures. Minimum acceptance: TC-11 reports an icon replacement in `CorporateSystemMessage View=Error`, permits the same replacement in `View=Base`, invalid Button views are evaluated through the Button contract, parent-authored variant propagation remains clean, and every finding retains the nested contract, host rule and native override evidence without component-name runtime branches.
+  - (Отменено владельцем) Core `Text`.
+  - (Отменено владельцем) `StatusPreset`/`Status` boundary extraction from the proven host-baseline implementation.
+- (Отменено владельцем) Require every Core boundary contract to describe stable component families and keys, semantic slot anatomy, public variant/component properties, effective baseline by selected variant, allowed instance replacements and ownership of nested visual/text/layout evidence.
+- (Отменено владельцем) Let host contracts express contextual policy against nested semantic facts instead of Figma storage details. Example: `CorporateSystemMessage` owns the rule “`Graphic.icon` may be replaced only when `View=Base`”, while `IconView` owns how the icon slot and its `component.identity` are resolved.
+- (Отменено владельцем) Keep native `directOverrides`/`componentProperties` interpretation as a fail-closed transitional fallback for a nested component without a contract. Once its Core contract is published and parity-proven, route evaluation through that contract and remove the corresponding heuristic path.
+- (Отменено владельцем) Add cross-boundary parity fixtures. Minimum acceptance: TC-11 reports an icon replacement in `CorporateSystemMessage View=Error`, permits the same replacement in `View=Base`, invalid Button views are evaluated through the Button contract, parent-authored variant propagation remains clean, and every finding retains the nested contract, host rule and native override evidence without component-name runtime branches.
 
 ## P1: reference index performance
 
@@ -3262,7 +3632,10 @@ compatibility projections only until parity is proven.
   данные, producer/V0/repin/Ready/live/release не меняются этим UI этапом.
 
 
-## CC-COMPAT-DEPENDENCY-USAGE-01 — parent usage rules на fixed child (12.10.2026)
+## Архив · CC-COMPAT-DEPENDENCY-USAGE-01 — parent usage rules на fixed child (12.10.2026)
+
+> **Отменено владельцем 06.11.2026.** Историческая очередь контрактного/Predicate-пилота. Раздел исключён из активного бэклога; прежние результаты и критерии сохранены как история.
+
 
 **20.10.2026 — перенос в общий Core 0.1.21 / Editor 0.2.107.**
 Общая реализация компилирует и материализует opt-in `editorDependencyUsages`

@@ -336,7 +336,7 @@ function validateRule(rule) {
 
 function unknownFactMatches(unknownFacts, factPath) {
   return (unknownFacts || []).some((unknownPath) => (
-    unknownPath === factPath || factPath.startsWith(`${unknownPath}.`)
+    unknownPath === factPath || factPath.startsWith(`${unknownPath}.`) || unknownPath.startsWith(`${factPath}.`)
   ));
 }
 
@@ -448,6 +448,14 @@ function resolveValue(valueRef, subject, snapshot) {
   }
   const factPath = valueRef.fact;
   if (unknownFactMatches(subject.unknownFacts, factPath)) {
+    const resolved = readObjectPath(subject, factPath);
+    const explicitlyUnknown = (subject.unknownFacts || []).some(path => path === factPath || path.startsWith(`${factPath}.`));
+    // A proved scalar refines an unknown ancestor, never a container or an explicit gap.
+    if (Array.isArray(subject.knownFacts) && subject.knownFacts.includes(factPath) && !explicitlyUnknown
+      && resolved.state === 'known' && (typeof resolved.value === 'boolean'
+        || typeof resolved.value === 'number' && Number.isFinite(resolved.value))) {
+      return Object.assign({}, resolved, { factPaths: [factPath] });
+    }
     return { state: 'unknown', value: undefined, factPaths: [factPath] };
   }
   if (factPath.startsWith('page.context.')) {

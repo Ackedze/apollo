@@ -6,6 +6,7 @@ import { captureVariantReference } from './variant-facts';
 import { resolveFixedNestedBinding } from './component-dependencies';
 import { collectionPropertyMatches, typedCollectionValue } from './member-collections';
 import type { DependencyOwnerBaseline } from './component-dependencies';
+import { rawHiddenDeclaredTarget } from './raw-catalog-reference';
 
 const record = (v: unknown): Record<string, any> => v && typeof v === 'object' && !Array.isArray(v) ? v as Record<string, any> : {};
 const propertyName = (name: string) => name.replace(/#[^#]+$/, '');
@@ -165,6 +166,7 @@ export function materializeDependencyFacts(snapshot: PreviewSnapshot, contract: 
       for (const dim of ['width','height']) if (typeof record(node.bounds)[dim]==='number' && Number.isFinite(record(node.bounds)[dim])) f[dim]=record(node.bounds)[dim];
       continue;
     }
+    if(rawHiddenDeclaredTarget(snapshot,contract,b.targetRole)){f.applicable=false;f.reason='target-hidden';continue;}
     if (root.length !== 1 || !paths || snapshot.source?.truncated || !comparison?.complete) { f.reason = 'reference-or-topology-unavailable'; continue; }
     const availability = record(record(root[0].variantAvailability).targets)[b.targetRole];
     if (availability?.present === false) { f.applicable = false; f.reason = 'target-absent-in-variant'; continue; }

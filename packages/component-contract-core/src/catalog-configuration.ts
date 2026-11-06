@@ -44,15 +44,23 @@ export function configureCatalogReference(reference: PreparedCatalogReference, w
     // An export may retain other local IDs for the same published collection.
     const matches = witnesses.filter(w => w.kind === 'collection' && w.consumerId === consumerId
       && reference.modePaths.some(path => path.collectionId === w.sourceId));
-    if (matches.length !== 1) fail('CATALOG_MODE_CONFIGURATION_UNSUPPORTED', { collectionId: consumerId });
-    const witness = matches[0], source = resources.collection[witness.sourceId];
-    const selected = witness.consumerModes?.filter(m => m.modeId === modeId);
-    const mode = selected?.length === 1 && source?.modes?.filter((m: any) => m.name === selected[0].name);
-    if (!mode || mode.length !== 1 || !source.modes.every((m: any) => typeof m.modeId === 'string' && typeof m.name === 'string')
-      || new Set(source.modes.map((m: any) => m.modeId)).size !== source.modes.length
-      || new Set(source.modes.map((m: any) => m.name)).size !== source.modes.length)
-      fail('CATALOG_MODE_IDENTITY_AMBIGUOUS');
-    requested.set(witness.sourceId, mode[0].modeId);
+    if (!matches.length) fail('CATALOG_MODE_CONFIGURATION_UNSUPPORTED', { collectionId: consumerId });
+    const first = matches[0];
+    for (const witness of matches) {
+      // One published collection may have several independently exported IDs.
+      // The consumer key/mode domain must agree before projecting each alias.
+      if (witness.consumerKey !== first.consumerKey || stableHash(witness.consumerModes) !== stableHash(first.consumerModes))
+        fail('CATALOG_MODE_IDENTITY_AMBIGUOUS');
+      const source = resources.collection[witness.sourceId];
+      const selected = witness.consumerModes?.filter(m => m.modeId === modeId);
+      const mode = selected?.length === 1 && source?.modes?.filter((m: any) => m.name === selected[0].name);
+      if (Array.isArray(mode) && !mode.length) fail('CATALOG_MODE_CONFIGURATION_UNSUPPORTED', {collectionId:consumerId, sourceId:witness.sourceId});
+      if (!mode || mode.length !== 1 || !source.modes.every((m: any) => typeof m.modeId === 'string' && typeof m.name === 'string')
+        || new Set(source.modes.map((m: any) => m.modeId)).size !== source.modes.length
+        || new Set(source.modes.map((m: any) => m.name)).size !== source.modes.length)
+        fail('CATALOG_MODE_IDENTITY_AMBIGUOUS');
+      requested.set(witness.sourceId, mode[0].modeId);
+    }
   }
   if (!requested.size && !metricChanges.size) return;
   const pairKnown = (family: string, style: string) => reference.fontPairs.some(p => p.family === family && p.style === style);
@@ -77,7 +85,10 @@ export function configureCatalogReference(reference: PreparedCatalogReference, w
       bindings[id] = { collectionId: collection.id, collectionKey: collection.key, referencedVariableIds: alias ? [value.id] : [] };
       const result = alias ? resolve(value.id, modes, bindings, visiting) : value;
       visiting.delete(id);
-      if (variable.resolvedType === 'FLOAT' && (typeof result !== 'number' || !Number.isFinite(result))
+      const color = variable.resolvedType === 'COLOR' && result && typeof result === 'object'
+        && ['r','g','b'].every(k => typeof result[k] === 'number' && Number.isFinite(result[k]) && result[k] >= 0 && result[k] <= 1)
+        && (result.a === undefined || typeof result.a === 'number' && Number.isFinite(result.a) && result.a >= 0 && result.a <= 1);
+      if (variable.resolvedType === 'COLOR' && !color || variable.resolvedType === 'FLOAT' && (typeof result !== 'number' || !Number.isFinite(result))
         || variable.resolvedType === 'STRING' && typeof result !== 'string' || variable.resolvedType === 'BOOLEAN' && typeof result !== 'boolean')
         fail('CATALOG_VARIABLE_TYPE_MISMATCH');
       return result;
@@ -94,6 +105,11 @@ export function configureCatalogReference(reference: PreparedCatalogReference, w
         } else if (field === 'letterSpacing' && typeof value === 'number' && node.type === 'TEXT'
           && node.text.letterSpacing?.unit === 'PIXELS' && node.text.letterSpacing.value === oldValue) {
           node.text.letterSpacing.value = value; metricChanges.add(node.id);
+        } else if (['fills','strokes'].includes(field) && resources.variable[id]?.resolvedType === 'COLOR') {
+          // Colour/range rendering is not reconstructed from observed paints.
+          // Keep this independent field UNKNOWN without discarding other facts.
+          node.unknownFacts = Array.from(new Set((node.unknownFacts || []).concat(
+            field === 'fills' ? ['appearance.fill','textFillEvidenceV1'] : ['appearance.stroke'])));
         } else fail('CATALOG_MODE_BINDING_UNSUPPORTED', { field, nodeId: node.id });
       }
     }

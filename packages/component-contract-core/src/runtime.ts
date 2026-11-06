@@ -9,6 +9,7 @@ import { representationEvidenceErrors, representationFeatureFlags, contractRepre
 import { evaluateRules, snapshotHash } from '../predicate/index.js';
 import type { CompiledContract, PreviewSnapshot } from './types';
 import { materializeSemanticFacts } from './semantic-facts';
+import { materializeRawCatalog } from './raw-catalog-reference';
 import { materializeValidationIntent } from './validation-intent';
 import { materializeValidationMode } from './validation-mode';
 import { materializeComponentFacts } from './component-facts';
@@ -50,7 +51,13 @@ export function prepareValidationSnapshot(source: PreviewSnapshot, contract: Com
     if((contract.runtimePolicy.representationEvidenceVersion!==undefined&&contract.runtimePolicy.representationEvidenceVersion!==1)||contract.runtimePolicy.crossRepresentationBindingsVersion!==flags.bindingVersion||representationEvidenceErrors(shape).length||flags.evidence!==(contract.runtimePolicy.representationEvidenceVersion===1))throw new Error('REPRESENTATION_RUNTIME_UNSUPPORTED');
     if(flags.scopedDependencies&&validateComponentDependencies({component:contract.facts.component,targets:contract.facts.targets,representations:contract.facts.representations,componentDependencies:contract.componentDependencies}).length)throw new Error('COMPONENT_DEPENDENCY_RUNTIME_UNSUPPORTED');
   }
-  const snapshot = JSON.parse(JSON.stringify(source)) as PreviewSnapshot & { snapshotHash?: string };
+  // Recompute derived scalar proofs, including every nested capture/reference.
+  const capturedNodes=new WeakSet<object>();
+  const snapshot = JSON.parse(JSON.stringify(source, function(key, value) {
+    if(key==='nodes'&&Array.isArray(value))for(const node of value)
+      if(node&&typeof node==='object')capturedNodes.add(node);
+    return key==='knownFacts'&&capturedNodes.has(this)?undefined:value;
+  })) as PreviewSnapshot & { snapshotHash?: string };
   delete snapshot.snapshotHash;
   const mainAliases=contract.runtimePolicy.instanceMainComponentAliasesVersion===1 || inheritedMainAliases===1;
   configureInstanceMainAliases(snapshot,mainAliases);
@@ -107,6 +114,12 @@ export function prepareValidationSnapshot(source: PreviewSnapshot, contract: Com
   if (contract.runtimePolicy.paintBindingFactsVersion === 1) materializePaintBindings(snapshot);
   materializeTextStyleBindings(snapshot, contract);
   materializeTextBindingIdentities(snapshot, contract, ownerBaseline);
+  const rawReference = (snapshot as any).rawCatalogueReference;
+  if (rawReference?.base?.source?.rawCatalogue) {
+    materializeRawCatalog(snapshot, rawReference.base, contract, ownerBaseline);
+    materializeLineHeightReferences(snapshot, contract);
+    if (contract.package.snapshotProfile === 'dependency-facts-v5') materializeDependencyFacts(snapshot, contract, ownerBaseline);
+  }
   if (contract.runtimePolicy.ruleScopeFactsVersion === 1) materializeRuleScopeFacts(snapshot, contract);
   materializeTargetSemanticFacts(snapshot, contract);
   materializeStructuralOrder(snapshot, contract);

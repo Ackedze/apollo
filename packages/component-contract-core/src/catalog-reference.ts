@@ -5,6 +5,7 @@ import { snapshotPaths } from './snapshot-topology';
 import { materializeEffectiveBaseline } from './instance-validation';
 import { matchesCaptureRepresentation } from './capture-representation';
 import { configureCatalogReference } from './catalog-configuration';
+import { buildRawCatalogReference, materializeRawCatalog } from './raw-catalog-reference';
 import type { CompiledContract, PreviewSnapshot } from './types';
 import type { PreparedSourceTopology } from './prepared-source-identity';
 
@@ -82,7 +83,11 @@ export function buildCatalogReference(response: any, contract: CompiledContract,
     || !/^[a-f0-9]{64}$/.test(response.provenance?.contract?.sha256)
     || response.completeness?.structure !== 'assembled' || !Array.isArray(response.completeness.issues)
     || response.completeness.issues.length || !Array.isArray(response.structure) || !response.structure.length) fail('CATALOG_SOURCE_INCOMPLETE');
-  if (s.hostContext && Object.keys(s.hostContext).length) fail('CATALOG_HOST_CONTEXT_UNSUPPORTED');
+  if (s.hostContext && Object.keys(s.hostContext).length && !(response.provenance.assembler === 'apollo-v3.resolveStructure'
+    && Object.keys(s.hostContext).join(',') === 'nestedComponentKeys' && Array.isArray(s.hostContext.nestedComponentKeys)
+    && new Set(s.hostContext.nestedComponentKeys).size === s.hostContext.nestedComponentKeys.length
+    && s.hostContext.nestedComponentKeys.every(key))) fail('CATALOG_HOST_CONTEXT_UNSUPPORTED');
+  if (response.provenance.assembler === 'apollo-v3.resolveStructure') return indexCatalogResources(buildRawCatalogReference(response, contract));
   const rawById = new Map<any, any>(), bySource = new Map<string, any>();
   const resources: Record<ResourceKind, Record<string, any>> = { style: {}, variable: {}, collection: {}, component: {} };
   for (const row of response.structure) {
@@ -231,7 +236,13 @@ function indexCatalogResources(result: PreparedCatalogReference): PreparedCatalo
 
 /** Reuse the engine's selectors/applicability/missing policy. Preserve source
  * uncertainty on the matched baseline instead of interpreting the rules twice. */
-export function materializeCatalogBaseline(actual: PreviewSnapshot, reference: PreviewSnapshot) {
+export function materializeCatalogBaseline(actual: PreviewSnapshot, reference: PreviewSnapshot, contract?: CompiledContract) {
+  if ((reference.source as any)?.rawCatalogue && contract) {
+    const snapshot = clone(actual);
+    materializeRawCatalog(snapshot, reference, contract);
+    const unmatchedNodeIds = snapshot.nodes.filter(n => (n.baselineProvenance as any)?.status !== 'matched').map(n => String(n.id));
+    return {snapshot, unmatchedNodeIds, matchedNodes:snapshot.nodes.length - unmatchedNodeIds.length};
+  }
   const result = materializeEffectiveBaseline(actual, reference, true), paths = snapshotPaths(reference);
   const byPath = new Map(reference.nodes.map(node => [paths?.get(String(node.id)), node]));
   for (const node of result.snapshot.nodes) {
@@ -249,7 +260,7 @@ export function materializeCatalogBaseline(actual: PreviewSnapshot, reference: P
  * non-native IDs so a detached actual style/token remains a detectable difference. */
 export function applyCatalogResourceRemap(reference: PreparedCatalogReference, witnesses: CatalogResourceWitness[]): PreparedCatalogReference {
   const result = clone(reference), used = new Set<CatalogResourceWitness>(), replacements = new Map<string, string>();
-  configureCatalogReference(result, witnesses);
+  if (!(result.snapshot.source as any)?.rawCatalogue) configureCatalogReference(result, witnesses);
   indexCatalogResources(result);
   const modeMaps = new Map<string, Map<string, string>>();
   for (const requirement of result.resourceRequirements) {
@@ -282,7 +293,21 @@ export function applyCatalogResourceRemap(reference: PreparedCatalogReference, w
   }
   const keys = result.resourceRequirements.flatMap(r => r.keyPaths.map(path => ({ path, id: replacements.get(r.kind + ':' + r.sourceId)! }))).sort((a, b) => b.path.length - a.path.length);
   for (const { path, id } of keys) { const owner = at(result, path.slice(0, -1)), field = path[path.length - 1];
-    if (id !== field) { if (Object.prototype.hasOwnProperty.call(owner, id)) fail('CATALOG_RESOURCE_REMAP_COLLISION'); owner[id] = owner[field]; delete owner[field]; } }
+    if (id !== field) {
+      if (Object.prototype.hasOwnProperty.call(owner, id) && stableHash(owner[id]) !== stableHash(owner[field])) {
+        const node = path[0] === 'snapshot' && path[1] === 'nodes' && typeof path[2] === 'number'
+          && ['resolvedModes','explicitModes'].includes(String(path[3])) ? result.snapshot.nodes[path[2]] : undefined;
+        if (!node) fail('CATALOG_RESOURCE_REMAP_COLLISION', {path, sourceId:field, consumerId:id});
+        // Different mode choices of proven aliases cannot supply this node's
+        // visual baseline. Preserve independent API/other-node proofs only.
+        node.unknownFacts = Array.from(new Set((Array.isArray(node.unknownFacts) ? node.unknownFacts : []).concat(
+          ['layout','appearance','variable','text','bounds','visible','resolvedModes','explicitModes','hostVariableUsageV1'])));
+        delete owner[id]; delete owner[field]; continue;
+      }
+      owner[id] = owner[field]; delete owner[field];
+    }
+  }
+  if ((result.snapshot.source as any)?.rawCatalogue) return result;
   const root = result.snapshot.nodes[0], properties = (root.component as any).properties;
   for (const [name, value] of Object.entries(result.configuration.config || {})) if (stableHash(properties[name]) !== stableHash(value)) fail('CATALOG_CONFIGURATION_UNSUPPORTED', { property: name });
   for (const [id, mode] of Object.entries(result.configuration.modes || {})) if ((root.resolvedModes as any)?.[id] !== mode) fail('CATALOG_MODE_CONFIGURATION_UNSUPPORTED', { collectionId: id });

@@ -61,3 +61,28 @@ test('execution index is reused across rules but never retained across audits',(
  snapshot.nodes=[{id:'root',type:'INSTANCE',visible:true,opacity:.5}];
  const next=engine.evaluateRules({snapshot,rules:[rule]});assert.equal(first.evaluations[0].classification,'compliant');assert.equal(next.evaluations[0].classification,'violation');
 });
+
+test('unread child facts make aggregate comparison UNKNOWN while independent rules still run', () => {
+ const subject={id:'root',type:'INSTANCE',visible:true,unknownFacts:['appearance.typography.styleId'],
+  appearance:{typography:{styleId:'unread',fontSize:18}},baseline:{effective:{appearance:{typography:{styleId:'expected',fontSize:16}}}}};
+ const snapshot={schemaVersion:'apollo.predicate-snapshot.v2',selection:['root'],nodes:[subject],context:{}};
+ const rule=(id,fact)=>({schemaVersion:'apollo.rule-ir.v1',ruleId:id,revision:1,source:{path:'fixture',checksum:'a'.repeat(64),anchor:'fixture'},
+  authority:{status:'active',provenance:'test'},effect:'require',scope:{},select:{from:'selection-root',traverse:'self'},
+  assert:{predicate:'equals',actual:{fact},expected:{fact:'baseline.effective.'+fact},missingPolicy:'unknown'},severity:'error',unknownPolicy:'human-review'});
+ const result=engine.evaluateRules({snapshot,rules:[rule('whole','appearance.typography'),rule('font','appearance.typography.fontSize')]});
+ assert.equal(result.evaluations.find(e=>e.ruleId==='whole').classification,'human-review');
+ assert.equal(result.evaluations.find(e=>e.ruleId==='font').classification,'violation');
+});
+
+test('exact proved finite scalars refine only ancestor UNKNOWN and preserve all other gaps',()=>{
+ const rule=fact=>({schemaVersion:'apollo.rule-ir.v1',ruleId:'partial',revision:1,source:{path:'fixture',checksum:'a'.repeat(64),anchor:'fixture'},
+  authority:{status:'active'},effect:'require',scope:{},select:{from:'selection-root',traverse:'self'},
+  assert:{predicate:'equals',actual:{fact},expected:{literal:0},missingPolicy:'unknown'},severity:'error',unknownPolicy:'human-review'});
+ const n={id:'root',type:'INSTANCE',visible:true,unknownFacts:['baseline.effective'],knownFacts:['baseline.effective.padding'],baseline:{effective:{padding:0,other:0}}};
+ const run=(fact='baseline.effective.padding')=>engine.evaluateRules({snapshot:{schemaVersion:'apollo.predicate-snapshot.v2',selection:['root'],nodes:[n],context:{}},rules:[rule(fact)]}).evaluations[0].classification;
+ assert.equal(run(),'compliant');assert.equal(run('baseline.effective'),'human-review');assert.equal(run('baseline.effective.other'),'human-review');
+ for(const path of ['baseline.effective.padding','baseline.effective.padding.child']){n.unknownFacts.push(path);assert.equal(run(),'human-review');n.unknownFacts.pop();}
+ for(const value of [undefined,null,{},[],NaN,Infinity,'0']){n.baseline.effective.padding=value;assert.equal(run(),'human-review');}
+ n.baseline.effective.padding=false;assert.equal(run(),'violation');
+ n.baseline.effective.padding=0;delete n.knownFacts;assert.equal(run(),'human-review');
+});

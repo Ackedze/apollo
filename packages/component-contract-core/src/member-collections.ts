@@ -2,6 +2,7 @@ import type { CollectionFilter, CollectionProperty, CompiledContract, ManualSour
 import { diagnosticStructure, selectedTargetPathHint } from './occurrence-address';
 import { matchesCaptureRepresentation } from './capture-representation';
 import { stableHash } from './stable';
+import { rawCatalogCorrespondence } from './raw-catalog-reference';
 
 const record = (v: unknown): Record<string, any> => v && typeof v === 'object' && !Array.isArray(v) ? v as Record<string, any> : {};
 const parent = (path: string) => path.split(' / ').slice(0, -1).join(' / ');
@@ -95,6 +96,70 @@ function referenceMatchesCatalog(snapshot: PreviewSnapshot, contract: CompiledCo
 
 type Member = { role: string; node: Record<string, any>; sourceNodeId: string };
 type Resolution = { owner?: Record<string, any>; members?: Member[]; issues?: Array<Record<string, unknown>>; missing: string[]; actualCount?: number };
+
+function rawCollectionContext(snapshot:PreviewSnapshot,contract:CompiledContract) {
+  if(snapshot.variantReference?.complete)return;
+  const base=(snapshot as any).rawCatalogueReference?.base as PreviewSnapshot|undefined;
+  const source=(base?.source as any)?.rawCatalogue,ledger=(snapshot as any).declaredTargetIdentitiesV1,graph=completeGraph(snapshot);
+  if(!base||!source||!graph||source.manualSourceHash!==contract.package.manualSourceHash
+    ||ledger?.schemaVersion!=='apollo.declared-target-identities.v1'||ledger.basis!=='pinned-raw-catalogue'
+    ||ledger.manualSourceHash!==contract.package.manualSourceHash||ledger.referenceHash!==source.referenceHash||!Array.isArray(ledger.targets)
+    ||snapshot.source?.captureTopology?.complete!==true||snapshot.source.captureTopology.limitReached||snapshot.source.captureTopology.issues?.length
+    ||snapshot.source.componentKey!==base.source?.componentKey||(snapshot.source.componentSetKey||'')!==(base.source?.componentSetKey||'')
+    ||snapshot.source.representationId!==base.source?.representationId
+    ||snapshot.context.unknownFacts?.some(p=>['platform','context.platform','environment.platform'].includes(p))
+    ||[...graph.values()].some(n=>['type','parentId','childIds'].some(p=>unknown(n,p))))return;
+  const reps=contract.facts.representations.filter(r=>r.id===base.source?.representationId&&r.kind==='figma'&&r.status!=='deprecated'
+    &&['universal',snapshot.context.platform].includes(r.platform)&&matchesCaptureRepresentation(r,base.source?.componentKey||'',base.source?.componentSetKey||''));
+  const {matches}=rawCatalogCorrespondence(snapshot,base,contract);
+  if(reps.length!==1||!matches.has(snapshot.selection[0]))return;
+  return {base,source,ledger,graph,matches,representation:reps[0]};
+}
+
+/** Raw topology has no native source IDs. Prove each closed member by its
+ * independent keyed correspondence instead of fabricating a complete reference. */
+function resolveRawCollection(snapshot:PreviewSnapshot,contract:CompiledContract,c:MemberCollection,raw:NonNullable<ReturnType<typeof rawCollectionContext>>):Resolution {
+  const result:Resolution={missing:[]};
+  if(c.slotContent){result.missing.push('collection-slot-boundary-unproven');return result;}
+  const pathFor=(role:string)=>{
+    const targets=contract.facts.targets.filter(t=>t.semanticRole===role&&t.resolution==='resolved');
+    return targets.length===1?selectedTargetPathHint(targets[0],raw.representation.id,raw.base.source!.componentKey!,contract.facts.variantEvidence?.occurrenceAddressVersion===1)?.split(' / ').slice(1).join(' / '):undefined;
+  };
+  const ownerPath=pathFor(c.ownerTargetRole),memberPaths=c.memberTargetRoles.map(pathFor);
+  if(ownerPath===undefined||memberPaths.some(p=>!p||parent(p)!==ownerPath)||new Set(memberPaths).size!==memberPaths.length){result.missing.push('collection-bindings-unresolved');return result;}
+  const actualFor=(path:string,role?:string)=>{
+    const candidates=[...raw.matches.entries()].filter(([,m])=>m.referencePath===path);
+    if(candidates.length!==1)return;
+    const node=raw.graph.get(candidates[0][0]);
+    if(role){
+      const target=contract.facts.targets.find(t=>t.semanticRole===role)!;
+      const claims=raw.ledger.targets.filter((t:any)=>t.targetId===target.id);
+      if(claims.length!==1||claims[0].status!=='resolved'||claims[0].nodeId!==node?.id||claims[0].referencePath!==path)return;
+    }
+    return node;
+  };
+  const owners=raw.base.nodes.filter(n=>raw.source.paths[String(n.id)]===ownerPath),owner=actualFor(ownerPath,c.ownerTargetRole);
+  if(owners.length!==1||!owner||owner.type!=='INSTANCE'){result.missing.push('collection-owner-identity-unproven');return result;}
+  result.owner=owner;result.actualCount=owner.childIds.length;
+  const referenceChildren=raw.base.nodes.filter(n=>n.parentId===owners[0].id);
+  const nonMembers=referenceChildren.filter(n=>c.nonMemberReferenceTypes?.includes(n.type as 'FRAME'|'GROUP'));
+  const original=referenceChildren.filter(n=>!nonMembers.includes(n));
+  if(original.length!==memberPaths.length||original.some(n=>n.type!=='INSTANCE'||!memberPaths.includes(raw.source.paths[String(n.id)]))){result.missing.push('collection-members-do-not-cover-reference');return result;}
+  const members:Member[]=[],claimed=new Set<string>();result.members=members;result.issues=[];
+  for(let i=0;i<memberPaths.length;i++) {
+    const node=actualFor(memberPaths[i]!,c.memberTargetRoles[i]);
+    if(!node||node.type!=='INSTANCE'||node.parentId!==owner.id||claimed.has(node.id)){result.missing.push('collection-member-lineage-unavailable');return result;}
+    claimed.add(node.id);members.push({role:c.memberTargetRoles[i],node,sourceNodeId:node.id});
+  }
+  members.sort((a,b)=>owner.childIds.indexOf(a.node.id)-owner.childIds.indexOf(b.node.id));
+  for(const expected of nonMembers){
+    const node=actualFor(raw.source.paths[String(expected.id)]);
+    if(!node||node.type!==expected.type||node.parentId!==owner.id||claimed.has(node.id)){result.missing.push('collection-non-member-lineage-unavailable');return result;}
+    claimed.add(node.id);
+  }
+  if(owner.childIds.length!==claimed.size||owner.childIds.some((id:string)=>!claimed.has(id))){result.missing.push('collection-membership-unproven');return result;}
+  result.members=members;result.issues=[];return result;
+}
 
 function resolveCollection(snapshot: PreviewSnapshot, contract: CompiledContract, c: MemberCollection, representationId: string): Resolution {
   const result: Resolution = {missing: []}, ref = snapshot.variantReference!, graph = completeGraph(snapshot);
@@ -256,14 +321,14 @@ export function memberCollectionSummary(fact: Record<string, any>): string {
  * or an independently proved membership violation. */
 export function materializeMemberCollections(snapshot: PreviewSnapshot, contract: CompiledContract): void {
   if (contract.runtimePolicy.memberCollectionsVersion !== 1 || !contract.facts.memberCollections?.length) return;
-  const all: Record<string, unknown> = {}, ref = snapshot.variantReference;
+  const all: Record<string, unknown> = {}, ref = snapshot.variantReference, raw=rawCollectionContext(snapshot,contract);
   for (const entry of contract.facts.memberCollections) {
     const c = entry.collection, fact: Record<string, any> = {assertionKind: entry.collection.assertion.kind, missing: [], evidence: []}; all[entry.id] = fact;
-    const reps = ref && contract.facts.representations.filter(r => r.kind === 'figma' && r.status !== 'deprecated'
+    const reps = raw ? [raw.representation] : ref && contract.facts.representations.filter(r => r.kind === 'figma' && r.status !== 'deprecated'
       && ['universal', snapshot.context.platform].includes(r.platform) && matchesCaptureRepresentation(r, ref.componentKey, ref.componentSetKey));
     if (!reps || reps.length !== 1) { fact.missing.push('collection-representation-unresolved'); continue; }
     if (!c.representationIds.includes(reps[0].id)) { fact.active = false; continue; }
-    const resolution = resolveCollection(snapshot, contract, c, reps[0].id);
+    const resolution = raw ? resolveRawCollection(snapshot,contract,c,raw) : resolveCollection(snapshot, contract, c, reps[0].id);
     fact.missing.push(...resolution.missing); fact.evidence = resolution.issues || [];
     if (resolution.actualCount !== undefined) fact.actualCount = resolution.actualCount;
     if (!resolution.owner || !resolution.members || !resolution.issues) continue;

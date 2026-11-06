@@ -259,11 +259,13 @@ export function materializeNativeTargetProperties(snapshot: PreviewSnapshot, con
   const root = topology.root, identity = record(record(root.component).identity);
   const reps = contract.facts.representations.filter(r => r.kind === 'figma' && r.status !== 'deprecated'
     && r.platform === snapshot.context.platform && matchesCaptureRepresentation(r, ref.componentKey, ref.componentSetKey));
-  if (reps.length !== 1 || unknown(root, 'component.identity') || identity.componentKey !== ref.componentKey
-    || identity.componentSetKey !== ref.componentSetKey || identity.mainComponentId !== ref.nodeProperties?.['']?.identity?.mainComponentId
+  if (reps.length !== 1 || unknown(root, 'component.identity')
+    || ['componentKey','componentSetKey','mainComponentId'].some(key => unknown(root, 'component.identity.' + key))
+    || !text(identity.mainComponentId) || !text(ref.nodeProperties?.['']?.identity?.mainComponentId) || identity.componentKey !== ref.componentKey
+    || identity.componentSetKey !== ref.componentSetKey || identity.mainComponentId !== ref.nodeProperties?.['']?.identity?.mainComponentId && snapshot.source?.instanceMainComponentAliasesVersion !== 1
     || snapshot.source?.componentKey !== ref.componentKey || snapshot.source?.componentSetKey !== ref.componentSetKey) return;
   const comparison = compareInstanceBoundaries(snapshot, ref), facts: Record<string, any> = {}, proven = new Map<string, string>();
-  if (!comparison.complete) return;
+  if (!comparison.complete && contract.runtimePolicy.nativeTargetUsageFactsVersion !== 1) return;
   for (const target of contract.facts.targets) {
     if (target.resolution !== 'resolved') continue;
     const bindings = target.identityBindingsV1?.filter(b => b.representationId === reps[0].id && b.componentKey === ref.componentKey && b.componentSetKey === ref.componentSetKey) || [];
@@ -276,9 +278,16 @@ export function materializeNativeTargetProperties(snapshot: PreviewSnapshot, con
     const candidates = snapshot.nodes.filter(n => referencePath === '' ? n === root : sourceMatches(n, referencePath, b, snapshot, topology, portable));
     if (candidates.length !== 1 || candidates[0].type !== b.nodeType) continue;
     const node = candidates[0], path = paths.get(String(node.id));
-    if (path === undefined || comparison.referencePaths?.[path] !== referencePath) continue;
-    const key = declaredTargetMembershipKey(target.id), component = record(node.component), props: Record<string, unknown> = {};
-    const original = ref.nodeProperties[referencePath];
+    if (path === undefined) continue;
+    const component = record(node.component), original = ref.nodeProperties[referencePath];
+    const parent = (p: string) => p.split(' / ').slice(0,-1).join(' / ');
+    const sameFamily = text(original?.identity?.componentSetKey)
+      && record(component.identity).componentSetKey === original?.identity?.componentSetKey
+      && !unknown(node, 'component.identity.componentSetKey');
+    const independentUsage = contract.runtimePolicy.nativeTargetUsageFactsVersion === 1 && sameFamily
+      && (path === '' ? referencePath === '' : comparison.referencePaths?.[parent(path)] === parent(referencePath));
+    if (comparison.referencePaths?.[path] !== referencePath && !independentUsage) continue;
+    const key = declaredTargetMembershipKey(target.id), props: Record<string, unknown> = {};
     for (const [name, value] of Object.entries(record(component.properties))) {
       const type = record(component.propertyTypes)[name];
       if (original?.propertyTypes[name] === type && !unknown(node, `component.properties.${name}`) && !unknown(node, `component.propertyTypes.${name}`)
@@ -329,9 +338,11 @@ export function materializeDeclaredTargetIdentities(snapshot: PreviewSnapshot, c
     && matchesCaptureRepresentation(r,ref.componentKey,ref.componentSetKey)) : [];
   const identity = record(record(topology?.root.component).identity);
   const identityKnown = !!(topology && ref?.complete && !unknown(topology.root,'component.identity')
+    && ['componentKey','componentSetKey','mainComponentId'].every(key => !unknown(topology.root,'component.identity.' + key))
+    && text(identity.mainComponentId) && text(ref.nodeProperties?.['']?.identity?.mainComponentId)
     && snapshot.source?.componentKey === ref.componentKey && (snapshot.source.componentSetKey || '') === ref.componentSetKey
     && identity.componentKey === ref.componentKey && (identity.componentSetKey || '') === ref.componentSetKey
-    && identity.mainComponentId === ref.nodeProperties?.['']?.identity?.mainComponentId && reps.length === 1);
+    && (identity.mainComponentId === ref.nodeProperties?.['']?.identity?.mainComponentId || snapshot.source?.instanceMainComponentAliasesVersion === 1) && reps.length === 1);
   const paths = topology && snapshotPaths(snapshot), comparison = identityKnown ? compareInstanceBoundaries(snapshot,ref!) : undefined;
   const availability = identityKnown ? variantAvailability(snapshot,contract) : undefined;
   const refHash = ref ? stableHash(ref) : undefined; ledger.referenceHash = refHash;
@@ -381,7 +392,10 @@ export function materializeDeclaredTargetIdentities(snapshot: PreviewSnapshot, c
       alternative=candidates.length>0;
     }
     if (candidates.length !== 1) {fact.status=candidates.length>1?'ambiguous':'unknown';fact.reason='native-cardinality-unresolved';continue;}
-    if (!comparison?.complete || availability?.status === 'unknown') {fact.reason='independent-correspondence-unavailable';continue;}
+    // A pinned root API does not depend on the visual anatomy of a sibling.
+    const independentRoot = contract.runtimePolicy.nativeTargetUsageFactsVersion === 1 && referencePath === ''
+      && candidates[0] === topology!.root && comparison?.referencePaths?.[''] === '';
+    if (!independentRoot && (!comparison?.complete || availability?.status === 'unknown')) {fact.reason='independent-correspondence-unavailable';continue;}
     const node = candidates[0], actualPath = paths.get(String(node.id));
     const boundaries = comparison.boundaries.filter(boundary => withinBoundary(referencePath,boundary.referencePath) || actualPath !== undefined && withinBoundary(actualPath,boundary.actualPath));
     const configured = contract.runtimePolicy.declaredTargetIdentityVersion === 3 && boundaries.length === 1
@@ -392,6 +406,12 @@ export function materializeDeclaredTargetIdentities(snapshot: PreviewSnapshot, c
     Object.assign(fact,{status:'resolved',reason:alternative?'exact-independent-declared-variant-alternative':'exact-independent-native-identity',nodeId:String(node.id),nodeType:node.type,present:true,referencePath:referencePath});
     const visible = effectiveVisibility(node,topology!); if (visible !== undefined) fact.effectiveVisible = visible;
   }
+  projectDeclaredTargetLedger(snapshot, contract, ledger);
+}
+
+/** Native and independently pinned raw proofs share projection, not identity evidence. */
+export function projectDeclaredTargetLedger(snapshot: PreviewSnapshot, contract: CompiledContract, ledger: Ledger): void {
+  const topology = rootedTopology(snapshot);
   for (const fact of ledger.targets) if (fact.nodeId) {
     const claims = ledger.targets.filter(t => t.nodeId === fact.nodeId);
     const rootAliases = claims.every(t => isDeclaredRootTarget(contract.facts.targets.find(x => x.id === t.targetId)))

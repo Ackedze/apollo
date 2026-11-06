@@ -53,6 +53,9 @@ export function materializeRuleScopeFacts(snapshot: PreviewSnapshot, contract: C
     for (const dependency of contract.componentDependencies || []) {
       if (dependency.issue || dependencyPinIssue(dependency, dependency.contract)) { ownershipUnknown = true; continue; }
       for (const binding of dependency.bindings) {
+        const raw = (snapshot as any).rawCatalogueReference?.base?.source?.rawCatalogue;
+        if (raw?.manualSourceHash === contract.package.manualSourceHash
+          && (snapshot as any).rawCatalogueInactiveDependencies?.includes(dependency.componentId + ':' + binding.id)) continue;
         const resolved = resolveFixedNestedBinding(snapshot, dependency, binding, false, contract);
         if (resolved.status === 'inactive') continue;
         if (resolved.status !== 'active' || !resolved.nodeId || !resolved.identityValid

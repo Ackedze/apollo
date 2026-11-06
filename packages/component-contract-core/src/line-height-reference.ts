@@ -7,12 +7,26 @@ export function materializeLineHeightReferences(snapshot:PreviewSnapshot,contrac
     .map(f=>f.slice('lineHeightReferenceV1.'.length)))];
   if(!roles.length)return;
   const roots=snapshot.nodes.filter(n=>snapshot.selection.includes(String(n.id))),values:Record<string,number>={};
+  const raw=record(record((snapshot as any).rawCatalogueReference).base),source=record(record(raw.source).rawCatalogue);
+  const ledger=record((snapshot as any).declaredTargetIdentitiesV1);
+  const actualIdentity=record(record(roots[0]?.component).identity);
+  const rawProven=roots.length===1&&actualIdentity.componentKey===record(raw.source).componentKey
+    &&(actualIdentity.componentSetKey||'')===(record(raw.source).componentSetKey||'')
+    &&known(roots[0],'component.identity.componentKey')&&known(roots[0],'component.identity.componentSetKey')
+    &&source.manualSourceHash===contract.package.manualSourceHash
+    &&ledger.schemaVersion==='apollo.declared-target-identities.v1'&&ledger.basis==='pinned-raw-catalogue'
+    &&ledger.manualSourceHash===contract.package.manualSourceHash&&/^[a-f0-9]{64}$/.test(source.referenceHash||'')
+    &&ledger.referenceHash===source.referenceHash;
   for(const role of roles){
-    if(roots.length!==1||!['verified','partial'].includes(record(roots[0].variantAvailability).status))continue;
+    if(roots.length!==1)continue;
+    const native=['verified','partial'].includes(record(roots[0].variantAvailability).status);
     const targets=contract.facts.targets.filter(t=>t.semanticRole===role&&t.resolution==='resolved');
     const nodes=snapshot.nodes.filter(n=>n.type==='TEXT'&&record(n.semantic).role===role);
     if(targets.length!==1||nodes.length!==1)continue;
     const n=nodes[0],proof=record(n.baselineProvenance),text=record(record(record(n.baseline).effective).text),lh=record(text.lineHeight);
+    if(!native&&(!rawProven||!Array.isArray(ledger.targets)||ledger.targets.filter((t:any)=>t.targetId===targets[0].id
+      &&t.status==='resolved'&&t.nodeId===n.id&&t.nodeType==='TEXT'&&t.referencePath===proof.referencePath).length!==1
+      ||!['pinned-raw-catalogue','pinned-raw-nested-variant'].includes(proof.basis)))continue;
     if(proof.status!=='matched'||!known(n,'baseline.effective.text.lineHeight')||!known(n,'baselineProvenance'))continue;
     const pixels=lh.unit==='PIXELS'?lh.value:lh.unit==='PERCENT'&&known(n,'baseline.effective.text.fontSize')
       &&typeof text.fontSize==='number'&&Number.isFinite(text.fontSize)&&text.fontSize>0?text.fontSize*lh.value/100:undefined;

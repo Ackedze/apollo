@@ -111,3 +111,35 @@ for(const [name,mutate]of[
  ['unknown-visibility',s=>s.nodes[3].unknownFacts=['visible']],
  ['unknown-property',s=>s.nodes[3].unknownFacts=['component.properties.Title']],
 ])test('usage facts preserve UNKNOWN for '+name,()=>{const f=usageFixture();mutate(f.snapshot);assert(run(f).evaluations.some(e=>e.classification==='human-review'));});
+
+test('a failed sibling correspondence cannot cancel a proven usage violation',()=>{
+ const f=usageFixture();
+ f.snapshot.nodes[1].component.sourceIdentity.sourceNodeId='unavailable-source';
+ const c=core.prepareAuthoringPreviewContract(f.compile().contract), prepared=core.prepareValidationSnapshot(f.snapshot,c);
+ assert.equal(prepared.nodes[0].semanticApi['part-type'],'Secondary');
+ assert.equal(prepared.nodes[0].semanticApi['part-visible'],true);
+ assert(core.evaluateCompiledContract(f.snapshot,c).evaluations.some(e=>e.classification==='violation'));
+ assert.notEqual(prepared.nodes[3].baselineProvenance?.status,'matched');
+});
+test('lost target source remains UNKNOWN even when a sibling is independently known',()=>{
+ const f=usageFixture();f.snapshot.nodes[1].component.sourceIdentity.sourceNodeId='unavailable-source';
+ f.snapshot.nodes[3].component.sourceIdentity.sourceNodeId='foreign';
+ assert(run(f).evaluations.some(e=>e.classification==='human-review'));
+});
+test('stale independent reference pin cannot authorize usage facts after partial matching',()=>{
+ const f=usageFixture(),c=core.prepareAuthoringPreviewContract(f.compile().contract);
+ f.snapshot.nodes[1].component.sourceIdentity.sourceNodeId='unavailable-source';
+ f.snapshot.variantReference.nodeProperties.Part.propertyTypes.Title='TEXT';
+ assert(core.evaluateCompiledContract(f.snapshot,c).evaluations.some(e=>e.classification==='human-review'));
+});
+
+test('published root aliases require explicit policy, full pinned reference and known identity',()=>{
+ const f=usageFixture();f.manual.metadata.instanceMainComponentAliasesVersion=1;f.manual.metadata.declaredTargetIdentityVersion=2;
+ for(const t of f.manual.targets)for(const b of t.identityBindingsV1)b.portableReferenceHash=core.portableDeclaredTargetReferenceHash(f.snapshot.variantReference);
+ f.snapshot.nodes[0].component.identity.mainComponentId='consumer-root-alias';
+ for(const n of f.snapshot.nodes)if(n.component?.sourceIdentity?.ownerMainComponentId==='synthetic-main')n.component.sourceIdentity.ownerMainComponentId='consumer-root-alias';
+ const c=core.prepareAuthoringPreviewContract(f.compile().contract);
+ assert(core.evaluateCompiledContract(f.snapshot,c).evaluations.some(e=>e.classification==='violation'));
+ f.snapshot.nodes[0].unknownFacts=['component.identity.mainComponentId'];
+ assert(core.evaluateCompiledContract(f.snapshot,c).evaluations.some(e=>e.classification==='human-review'));
+});

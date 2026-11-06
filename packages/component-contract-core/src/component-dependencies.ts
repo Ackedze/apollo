@@ -8,6 +8,7 @@ import { effectiveFacts, materializeEffectiveBaseline } from './instance-validat
 import { materializeInstanceContentReferences } from './instance-content-reference';
 import { selectedTargetPathHint } from './occurrence-address';
 import { matchesCaptureRepresentation } from './capture-representation';
+import { rawCatalogCorrespondence, rawHiddenDeclaredTarget } from './raw-catalog-reference';
 
 const record = (v: unknown): Record<string, any> => v && typeof v === 'object' && !Array.isArray(v) ? v as Record<string, any> : {};
 export const COMPONENT_DEPENDENCY_CAPTURE_LIMIT = 8;
@@ -124,6 +125,14 @@ export type FixedNestedResolution = { status:'active'|'inactive'|'unknown'; reas
 export function resolveFixedNestedBinding(snapshot: PreviewSnapshot, d: CompiledComponentDependency, b: ComponentDependencyBinding, strictCompositionEvidence = false, hostContract?:CompiledContract): FixedNestedResolution {
   if(b.kind==='direct-child')return resolveDirectChildBinding(snapshot,d,b,hostContract);
   const unknown = (reason:string):FixedNestedResolution=>({status:'unknown',reason});
+  const declared=hostContract?.componentDependencies?.find(entry=>entry.id===d.id&&entry.compiledHash===d.compiledHash
+    &&entry.manualSourceHash===d.manualSourceHash&&entry.componentId===d.componentId);
+  if(hostContract&&declared&&!d.issue&&!declared.issue&&rawHiddenDeclaredTarget(snapshot,hostContract,b.targetRole)&&!dependencyPinIssue(d,d.contract)
+    &&(b.kind===undefined||b.kind==='fixed-nested')&&declared.bindings.some(binding=>stableHash(binding)===stableHash(b))
+    &&pathValid(b.relativePath)&&pathValid(b.childPath)&&Boolean(b.childPath)&&b.ownerComponentSetKeys?.length
+    &&typeof b.activeVariant?.property==='string'&&Boolean(b.activeVariant.property.trim())
+    &&Array.isArray(b.activeVariant.values)&&b.activeVariant.values.length&&b.activeVariant.values.every(value=>typeof value==='string'&&Boolean(value))
+    )return {status:'inactive',reason:'target-hidden'};
   const root = snapshot.nodes.filter(n=>snapshot.selection.includes(String(n.id)));
   const paths = snapshotPaths(snapshot), ref = snapshot.variantReference;
   const comparison = ref && compareInstanceBoundaries(snapshot,ref);
@@ -311,11 +320,11 @@ function projectDependencyEvidencePlatform(snapshot: PreviewSnapshot, capturedPl
   return true;
 }
 
-export function validatedDependencyCapture(snapshot: PreviewSnapshot, nodeId: string, childContract: CompiledContract): {snapshot?:PreviewSnapshot;nodeMap?:Record<string,string>;ownerBaseline?:DependencyOwnerBaseline;reason?:string} {
+function validateCapturedActual(snapshot: PreviewSnapshot, nodeId: string, childContract: CompiledContract, rawOwner=false): {snapshot?:PreviewSnapshot;nodeMap?:Record<string,string>;ownerBaseline?:DependencyOwnerBaseline;reason?:string} {
   const captures=snapshot.componentDependencyCaptures?.filter(c=>c.nodeId===nodeId)||[];
   if (captures.length!==1 || !captures[0].snapshot || !captures[0].nodeMap || captures[0].failure) return {reason:captures[0]?.failure || 'dependency-reference-not-captured'};
   const capture=captures[0], child=JSON.parse(JSON.stringify(capture.snapshot)) as PreviewSnapshot, nodeMap=capture.nodeMap!;
-  if (child.source?.truncated || !child.variantReference?.complete || child.selection.length!==1 || nodeMap[child.selection[0]]!==nodeId
+  if (child.source?.truncated || !rawOwner && !child.variantReference?.complete || child.selection.length!==1 || nodeMap[child.selection[0]]!==nodeId
     || !snapshot.nodes.find(n=>n.id===nodeId)?.resolvedModes
     || stableHash(child.context.modes)!==stableHash(snapshot.nodes.find(n=>n.id===nodeId)!.resolvedModes)) return {reason:'dependency-capture-incomplete'};
   const paths=snapshotPaths(snapshot), prefix=paths?.get(nodeId);
@@ -359,7 +368,96 @@ export function validatedDependencyCapture(snapshot: PreviewSnapshot, nodeId: st
   if (contextual && capturedPlatform !== platform && (platform !== 'universal' || !sameCapturedChannel
     || !projectDependencyEvidencePlatform(child, capturedPlatform, platform))) return {reason:'dependency-reference-context-mismatch'};
   child.context=Object.assign({},snapshot.context,{platform,modes:child.context.modes});
+  return {snapshot:child,nodeMap};
+}
+
+export function validatedDependencyCapture(snapshot: PreviewSnapshot, nodeId: string, childContract: CompiledContract): {snapshot?:PreviewSnapshot;nodeMap?:Record<string,string>;ownerBaseline?:DependencyOwnerBaseline;reason?:string} {
+  const proof=validateCapturedActual(snapshot,nodeId,childContract);
+  if(!proof.snapshot||!proof.nodeMap)return proof;
+  const child=proof.snapshot,nodeMap=proof.nodeMap,contextual=child.source?.occurrenceAddressVersion===1;
   const owner=contextual?dependencyOwnerBaseline(snapshot,nodeMap,child.selection[0],childContract):{};
   if (owner.reason) return {reason:owner.reason};
   return {snapshot:child,nodeMap,ownerBaseline:owner.baseline};
+}
+
+/** Direct closed raw sources only; captured equality never supplies expected values. */
+export function validatedDirectRawOwnerCapture(snapshot:PreviewSnapshot,nodeId:string,parent:CompiledContract,contract:CompiledContract) {
+  const unavailable=()=>({reason:'dependency-raw-owner-unavailable'});
+  const captures=snapshot.componentDependencyCaptures?.filter(c=>c.nodeId===nodeId)||[],actual=captures[0]?.snapshot;
+  if(captures.length!==1||!actual)return unavailable();
+  const base=(snapshot as any).rawCatalogueReference?.base as PreviewSnapshot|undefined;
+  const childBase=(actual as any).rawCatalogueReference?.base as PreviewSnapshot|undefined;
+  const source=(base?.source as any)?.rawCatalogue,childSource=(childBase?.source as any)?.rawCatalogue;
+  const hostCapture=record(snapshot.source).catalogReference,childCapture=record(actual.source).catalogReference;
+  if(!base||!childBase||!source||!childSource||source.manualSourceHash!==parent.package.manualSourceHash
+    ||childSource.manualSourceHash!==contract.package.manualSourceHash||source.compiledContractHash!==stableHash(parent)
+    ||childSource.compiledContractHash!==stableHash(contract)||![source.referenceHash,childSource.referenceHash,source.catalog?.sha256,childSource.catalog?.sha256].every(hash)
+    ||hostCapture?.referenceHash!==source.referenceHash||childCapture?.referenceHash!==childSource.referenceHash
+    ||hostCapture?.failures?.length||childCapture?.failures?.length
+    ||snapshot.source?.representationId!==source.representationId||actual.source?.representationId!==childSource.representationId
+    ||!hostCapture?.releaseId||hostCapture.releaseId!==childCapture?.releaseId
+    ||![base,childBase].every(s=>snapshotPaths(s)&&s.source?.captureTopology?.complete===true&&!s.source.captureTopology.issues?.length)
+    ||![snapshot,actual].every(s=>s.source?.occurrenceAddressVersion===1
+      &&s.source.truncated===false&&s.source.captureTopology?.complete===true&&!s.source.captureTopology.limitReached&&!s.source.captureTopology.issues?.length
+      &&!s.context.unknownFacts?.some(f=>['platform','modes','context.platform','context.modes'].includes(f)))
+    ||!snapshot.source?.fileKey||snapshot.source.fileKey!==actual.source?.fileKey||!snapshot.source.pageId||snapshot.source.pageId!==actual.source.pageId)return unavailable();
+  for(const [captured,reference,current]of [[snapshot,base,parent],[actual,childBase,contract]] as const){
+    const root=captured.nodes.find(n=>n.id===captured.selection[0]),identity=record(record(root?.component).identity);
+    const reps=current.facts.representations.filter(r=>matchesCaptureRepresentation(r,identity.componentKey,identity.componentSetKey||''));
+    if(reps.length!==1)return unavailable();
+    const rep=reps[0];
+    if(typeof rep.platform!=='string'||!rep.platform.trim()||typeof captured.context.platform!=='string'||!captured.context.platform.trim()
+      ||captured.context.platform!==rep.platform&&!(captured===actual&&rep.platform==='universal')||reference.context.platform!==rep.platform
+      ||reference.context.unknownFacts?.some(f=>f==='platform'||f==='context.platform')
+      ||[captured.source?.representationId,reference.source?.representationId,record(reference.source).rawCatalogue?.representationId].some(id=>id!==rep.id)
+      ||![captured,reference].every(s=>{
+        const n=s.nodes.find(n=>n.id===s.selection[0]),key=record(record(n?.component).identity);
+        return n?.type==='INSTANCE'&&key.componentKey===identity.componentKey&&(key.componentSetKey||'')===(identity.componentSetKey||'')
+          &&s.source?.componentKey===identity.componentKey&&(s.source?.componentSetKey||'')===(identity.componentSetKey||'');
+      }))return unavailable();
+  }
+  const proof=validateCapturedActual(snapshot,nodeId,contract,true);
+  if(!proof.snapshot||!proof.nodeMap)return proof;
+  if([snapshot.nodes.find(n=>n.id===nodeId),actual.nodes.find(n=>n.id===actual.selection[0])].some(n=>(n?.unknownFacts as string[]||[]).some(f=>f==='resolvedModes')))return unavailable();
+  const child=proof.snapshot,nodeMap=proof.nodeMap,actualIds=record((actual.source as any).catalogueNodeIds),hostIds=record((snapshot.source as any).catalogueNodeIds);
+  if(rawCatalogCorrespondence(actual,childBase,contract).matches.get(actual.selection[0])?.kind!=='pinned-raw-catalogue')return unavailable();
+  if(hostIds[nodeId]!==actual.source?.rootNodeId||child.nodes.some(n=>typeof actualIds[String(n.id)]!=='string'||!actualIds[String(n.id)]
+    ||hostIds[nodeMap[String(n.id)]]!==actualIds[String(n.id)]||snapshot.nodes.filter(h=>hostIds[String(h.id)]===actualIds[String(n.id)]).length!==1))return unavailable();
+  const {matches}=rawCatalogCorrespondence(snapshot,base,parent),root=matches.get(nodeId),identity=(n:any)=>record(record(n.component).identity);
+  const childRoot=childBase.nodes.find(n=>childBase.selection.includes(String(n.id)));
+  if(!root||root.kind!=='pinned-raw-catalogue'||!childRoot||identity(root.node).componentKey!==identity(childRoot).componentKey
+    ||identity(childRoot).componentKey!==actual.source?.componentKey)return unavailable();
+  const byId=new Map(base.nodes.map(n=>[String(n.id),n])),ownById=new Map(childBase.nodes.map(n=>[String(n.id),n]));
+  const expectedIds=new Set<string>(),visit=(n:any)=>{expectedIds.add(String(n.id));for(const id of n.childIds)visit(byId.get(String(id)));};visit(root.node);
+  const hosts=Object.values(nodeMap),selected=hosts.map(id=>matches.get(id));
+  if(selected.some(m=>!m||m.kind!=='pinned-raw-catalogue')||hosts.length!==expectedIds.size
+    ||new Set(selected.map(m=>m!.node.id)).size!==expectedIds.size||selected.some(m=>!expectedIds.has(m!.node.id)))return unavailable();
+  const bridge=new Map<string,any>();
+  const walk=(a:any,b:any):boolean=>{
+    if(a.type!==b.type||a.type==='SLOT'||identity(a).componentKey&&identity(a).componentKey!==identity(b).componentKey
+      ||identity(a).componentSetKey&&identity(a).componentSetKey!==identity(b).componentSetKey
+      ||a.type==='INSTANCE'&&!/^[a-f0-9]{40}$/i.test(identity(b).componentKey||''))return false;
+    const c=a.childIds.map((id:string)=>ownById.get(id)),p=b.childIds.map((id:string)=>byId.get(id));
+    if(c.length!==p.length)return false;
+    const choices=c.map((n:any)=>p.filter((m:any)=>n.type===m.type&&(!identity(n).componentKey||identity(n).componentKey===identity(m).componentKey)));
+    if(choices.some((v:any[])=>v.length!==1)||new Set(choices.map((v:any[])=>v[0].id)).size!==c.length)return false;
+    bridge.set(String(a.id),b);return c.every((n:any,i:number)=>walk(n,choices[i][0]));
+  };
+  if(!walk(childRoot,root.node)||bridge.size!==childBase.nodes.length||bridge.size!==child.nodes.length)return unavailable();
+  const ownerBaseline:DependencyOwnerBaseline={};
+  for(const [rawId,expected]of bridge){
+    const mapped=Object.entries(nodeMap).filter(([,host])=>matches.get(host)?.node.id===expected.id);
+    if(mapped.length!==1)return unavailable();
+    const [local,host]=mapped[0],observed=child.nodes.find(n=>n.id===local)!;
+    if(observed.type==='INSTANCE'&&(identity(observed).componentKey!==identity(expected).componentKey
+      ||(identity(observed).componentSetKey||'')!==(identity(expected).componentSetKey||''))
+      ||Object.keys(record(record(observed.component).propertyReferenceBindings)).some(k=>['mainComponent','slotContentId'].includes(k)))return unavailable();
+    ownerBaseline[local]={effective:JSON.parse(JSON.stringify(effectiveFacts(expected,true))),
+      unknownFacts:(expected.unknownFacts as string[]||[]).map(f=>'baseline.effective.'+f),provenance:{status:'matched',basis:'pinned-raw-owner-context',
+        referencePath:childSource.paths[rawId],enclosingReferencePath:source.paths[expected.id],referenceHash:source.referenceHash,
+        manualSourceHash:parent.package.manualSourceHash,compiledContractHash:source.compiledContractHash,
+        rawOwnerContextV1:{childRawNodeId:rawId,childReferenceHash:childSource.referenceHash,childManualSourceHash:contract.package.manualSourceHash,
+          childCompiledContractHash:childSource.compiledContractHash,parentNodeId:host,capturedNodeId:actualIds[local]}}};
+  }
+  return {snapshot:child,nodeMap,ownerBaseline};
 }

@@ -2,6 +2,7 @@
  * The native comparator never compiles policies or reads author checkouts.
  */
 import * as references from './reference/referenceList';
+import { lifecycleUrls } from './component-lifecycle';
 import { validateRemoteContractIndex, type RemoteContractPackage } from './rules/contractIndex';
 import * as artifacts from './rules/contractArtifactCompiler';
 import type { NormalizedAuditPolicyPackage } from './rules/runtimeContractRegistry';
@@ -62,6 +63,7 @@ export async function describeSources(readJson:ReadJson) {
     }
   }
   await manifest(entryUrl,['Desktop','MobileWeb']);
+  for (const url of lifecycleUrls) add(url,'component-lifecycle-index',['Desktop','MobileWeb','iOS','Android']);
   if (policyIndexes.size !== 1) throw Error('AUDIT_RULE_INDEX_AMBIGUOUS');
   return {entryUrl,policyIndexUrl:Array.from(policyIndexes)[0],sources:Array.from(sources.values()).sort((a,b)=>a.url.localeCompare(b.url))};
 }

@@ -310,6 +310,7 @@ function componentFinding(
     comparisonIssues: item.comparisonIssues,
     updateReasons: item.updateReasons,
     libraryFreshness: item.libraryFreshness,
+    catalogLifecycle: item.catalogLifecycle,
     localComponentOwner: item.localComponentOwner,
   };
 }

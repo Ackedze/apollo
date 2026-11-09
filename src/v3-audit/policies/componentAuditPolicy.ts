@@ -8,12 +8,6 @@ const TECHNICAL_LIBRARY_NAMES = [
   'Web :: Corp Helpers',
 ];
 
-const DEPRECATED_LIBRARY_NAMES = [
-  'Web :: Old Core Default Components',
-  'Web :: DEPRECATED CORP (не подключать)',
-  '❌ Web :: DEPRECATED CORP (не подключать)',
-];
-
 function normalizeLibraryName(value: string | null | undefined): string {
   return String(value ?? '')
     .trim()
@@ -26,10 +20,6 @@ const TECHNICAL_LIBRARY_NAME_SET = new Set(
   TECHNICAL_LIBRARY_NAMES.map(normalizeLibraryName),
 );
 
-const DEPRECATED_LIBRARY_NAME_SET = new Set(
-  DEPRECATED_LIBRARY_NAMES.map(normalizeLibraryName),
-);
-
 export function getForcedAuditCategory(
   component: LibraryComponent | null | undefined,
 ): ForcedAuditCategory | null {
@@ -37,10 +27,6 @@ export function getForcedAuditCategory(
 
   if (TECHNICAL_LIBRARY_NAME_SET.has(libraryName)) {
     return 'technical';
-  }
-
-  if (DEPRECATED_LIBRARY_NAME_SET.has(libraryName)) {
-    return 'deprecated';
   }
 
   return null;

@@ -1,3 +1,4 @@
+import { getComponentLifecycle, componentRelevance } from '../component-lifecycle';
 import {
   ensureReferenceCatalogsForKeys,
   findComponent,
@@ -640,7 +641,6 @@ export async function classifyComponentNode(
     getReferenceStructureCached,
     isInsideLocalComponentContext,
     isPaintToken,
-    normalizeRelevanceStatus,
     reportMissingReference,
     resolveTokenLabel,
     resolveVariableCollectionMetadata,
@@ -682,6 +682,19 @@ export async function classifyComponentNode(
     displayName: ref?.displayName, sourceFile: ref?.sourceFile,
   }]);
 
+  const catalogLifecycle = getComponentLifecycle(componentKey, node.id);
+  const libraryFreshness =
+    node.type === 'INSTANCE'
+      ? await libraryComponentFreshnessChecker.check(
+          node as InstanceNode,
+          getLibraryComponentFreshnessScope(node),
+        )
+      : null;
+  throwIfCancelled();
+  const updateReasons: UpdateReason[] = [];
+  if (catalogLifecycle.status === 'scheduled') updateReasons.push('catalog-lifecycle');
+  if (libraryFreshness?.status === 'update-available') updateReasons.push('library-update-available');
+
   if (!componentKey || !ref) {
     reportMissingReference(node.name, componentKey);
 
@@ -689,7 +702,8 @@ export async function classifyComponentNode(
       id: node.id,
       name: node.name,
       nodeType: node.type,
-      relevance: 'unknown',
+      relevance: componentRelevance(catalogLifecycle, libraryFreshness, false, false),
+      catalogLifecycle, libraryFreshness, updateReasons,
       pageName,
       pathSegments,
       fullPath,
@@ -704,14 +718,6 @@ export async function classifyComponentNode(
     }
   }
 
-  const libraryFreshness =
-    node.type === 'INSTANCE'
-      ? await libraryComponentFreshnessChecker.check(
-          node as InstanceNode,
-          getLibraryComponentFreshnessScope(node),
-        )
-      : null;
-  throwIfCancelled();
 
   const comparisonIssues: string[] = [];
   const instanceVariantProperties =
@@ -1147,19 +1153,7 @@ export async function classifyComponentNode(
     });
   }
 
-  const catalogRelevance = normalizeRelevanceStatus(ref.status);
-  const updateReasons: UpdateReason[] = [];
-  if (catalogRelevance === 'update') {
-    updateReasons.push('catalog-lifecycle');
-  }
-  if (libraryFreshness?.status === 'update-available') {
-    updateReasons.push('library-update-available');
-  }
-  const relevance =
-    forcedCategory ??
-    (libraryFreshness?.status === 'update-available'
-      ? 'update'
-      : catalogRelevance);
+  const relevance = componentRelevance(catalogLifecycle, libraryFreshness, forcedCategory === 'technical', true);
 
   if (libraryFreshness && libraryFreshness.status !== 'not-applicable') {
     traceAudit('library-component-freshness', {
@@ -1192,6 +1186,7 @@ export async function classifyComponentNode(
     comparisonIssues,
     updateReasons,
     libraryFreshness,
+    catalogLifecycle,
     forcedCategory,
     forcedCategoryReason,
     resolvedReferenceVariantKey,

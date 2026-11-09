@@ -4,7 +4,7 @@ const groups=[{id:'styles',title:'Стили и токены',tabs:['customStyle
 function classification(diffs){return diffs.some(diff=>diff.assessment?.verdict==='violation')?'violation':diffs.some(diff=>!diff.assessment||diff.assessment.verdict==='unknown')?'unknown':'allowed';}
 function location(item){return item.fullPath||item.path||item.name||'Слой';}
 function source(item){return item.librarySource||item.libraryName||item.sourceLibrary||item.resource?.library||item.reference?.source||null;}
-function row(id,item,status,title,extra={}){return Object.assign({id,item,incomplete:item.status==='incomplete'||(item.gaps||[]).length>0,classification:status,title,location:location(item),library:source(item),focusActionId:item.focusActionId||null,actions:item.actions||[]},extra);}
+function row(id,item,status,title,extra={}){return Object.assign({id,item,incomplete:item.status==='incomplete'||item.catalogLifecycle?.status==='unknown'||(item.gaps||[]).length>0,classification:status,title,location:location(item),library:source(item),focusActionId:item.focusActionId||null,actions:item.actions||[]},extra);}
 function value(detail){
  if(!detail)return null;
  for(const candidate of [detail.displayName,detail.binding?.name,detail.resource?.name,detail.value]){
@@ -59,23 +59,25 @@ function customizationItems(views,relevance){
 }
 function buildV3Groups(result,settings={},state={}){
  const views=result?.visibleViews||{},relevance=views.relevance||{},all=Object.values(relevance).flat(),unknown=[];
- const local=Array.from(new Map((views.local||[]).concat(all.filter(item=>item.relevance==='unknown')).filter(item=>!item.reference&&typeof item.componentKey==='string'&&item.componentKey.trim()&&!(item.comparisonIssues||[]).length&&!(item.gaps||[]).length&&item.status!=='incomplete').map(item=>[item.id,item])).values());
+ const local=Array.from(new Map((views.local||[]).concat(all).filter(item=>!item.reference&&!item.catalogLifecycle?.checks?.some(check=>check.recordKeys.length)&&typeof item.componentKey==='string'&&item.componentKey.trim()&&!(item.comparisonIssues||[]).length&&!(item.gaps||[]).length&&item.status!=='incomplete').map(item=>[item.id,item])).values());
  for(const item of all){
   const reasons=(item.comparisonIssues||[]).slice();
-  if(item.relevance==='unknown')reasons.push('Не удалось сопоставить компонент с подключённым каталогом.');
+  if(item.relevance==='unknown'||item.catalogLifecycle&&!item.reference)reasons.push(item.reference?'Не удалось подтвердить актуальность компонента.':'Не удалось сопоставить компонент с подключённым каталогом.');
+  if(item.catalogLifecycle?.status==='unknown')reasons.push('Статус компонента в реестрах Athena не подтверждён.');
+  if(!item.reference&&item.catalogLifecycle?.checks?.some(check=>check.recordKeys.length))reasons.push('Компонент найден в реестре Athena, но эталон для сравнения недоступен.');
   if(item.libraryFreshness?.status==='unknown')reasons.push('Не удалось подтвердить опубликованную версию компонента.');
   if(reasons.length)unknown.push(row('coverage:'+item.id,item,'unknown','Проверка компонента неполная.',{messages:Array.from(new Set(reasons))}));
  }
  const data={
   changes:changedRows(customizationItems(views,relevance),false,settings.showExpectedCustomizations!==false),unknown,
   changesWip:changedRows(views.changesWip||[],true),
-  deprecated:(relevance.deprecated||[]).filter(item=>!['update','changed'].includes(item.reference?.status)).map(item=>row('deprecated:'+item.id,item,'violation','Используется устаревший компонент.')),
-  update:(relevance.update||[]).concat((relevance.deprecated||[]).filter(item=>['update','changed'].includes(item.reference?.status))).map(item=>row('update:'+item.id,item,'warning','Пора заменить компонент актуальной версией.')),
+  deprecated:(relevance.deprecated||[]).map(item=>row('deprecated:'+item.id,item,'violation','Используется устаревший компонент.')),
+  update:(relevance.update||[]).map(item=>row('update:'+item.id,item,'warning',item.updateReasons?.includes('library-update-available')?'Доступна новая версия компонента.':'Компонент устаревает. Пора выбрать замену.')),
   current:(relevance.current||[]).map(item=>row('current:'+item.id,item,'compliant','Компонент найден в библиотечном каталоге.')),
   technical:(relevance.technical||[]).map(item=>row('technical:'+item.id,item,'warning','Проверь применение технического компонента.')),
   presets:(views.presets||[]).map(item=>row('preset:'+item.id,item,'warning','Проверь применение пресета.')),
   detached:(views.detached||[]).map(item=>row('detached:'+item.id,item,'warning',item.componentName?`Компонент ${item.componentName} раздетачен.`:'Компонент раздетачен.')),
-  local:local.map(item=>row('local:'+item.id,item,'warning','Компонент вне подключённых каталогов DS.',{incomplete:item.relevance==='unknown'||item.status==='incomplete'||(item.gaps||[]).length>0})),
+  local:local.map(item=>row('local:'+item.id,item,'warning','Компонент вне подключённых каталогов DS.',{incomplete:item.relevance==='unknown'||Boolean(item.catalogLifecycle&&!item.reference)||item.status==='incomplete'||(item.gaps||[]).length>0})),
   wrongChannel:(views.wrongChannel||[]).map(item=>row('channel:'+item.id,item,'violation','Компонент не соответствует выбранной платформе.')),
   deprecatedStyles:(views.deprecatedStyles||[]).map(item=>row('deprecated-style:'+item.id+':'+item.reason,item,'violation','Используется устаревший стиль.',{messages:[item.styleLabel||'Название стиля недоступно']})),
   customStyles:(views.customStyles||[]).filter(item=>item.resource?.type!=='raw-value').map(item=>row('style:'+item.id+':'+item.reason,item,'violation','Стиль или токен вне подключённой библиотеки.',{messages:item.resource?.name?[item.resource.name]:[]})),

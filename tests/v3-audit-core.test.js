@@ -122,6 +122,7 @@ function syntheticData(packages,defaultPolicy='none') {
   [base+'components/example.json',{meta:{fileName:'example.json',library:'Synthetic Library'},components:[{key,name:'Example',status:'current',platform:'Desktop',role:'Main',structure:[{id:1,parentId:null,path:'Example',name:'Example',type:'COMPONENT',visible:true,componentInstance:{componentKey:key,variantProperties:{View:'Forbidden'}}}]}]}],
   [policyUrl,{schemaVersion:'apollo.v3-audit-policies.v1',coverage:{defaultPolicy},packages}]
  ];
+ for(const category of ['deprecated','scheduled','parts'])documents.push([base+'indexes/lifecycle/'+category+'.index.json',{kind:'component-lifecycle-index',version:1,category,count:0,components:[],warnings:[]}]);
  const assets=new Map(),files=documents.map(([url,value])=>{const text=JSON.stringify(value),id=hash(url);assets.set(id,text);return{id,sha256:hash(text),bytes:Buffer.byteLength(text),urls:[url]};});
  const body={schemaVersion:protocol.SCHEMA,entryUrl,policyFileId:hash(policyUrl),files},manifest=Object.assign({},body,{dataId:hash(protocol.canonical(body))});
  return load('data-client.ts').createAuditDataClient({hashText:hash,loadManifest:async()=>structuredClone(manifest),readAsset:async(dataId,fileId)=>({dataId,fileId,sha256:hash(assets.get(fileId)),text:assets.get(fileId)})});

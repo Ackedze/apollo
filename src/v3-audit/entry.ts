@@ -1,4 +1,6 @@
 import { createCheckState } from './create-check-state';
+import { prepareComponentLifecycle, getComponentLifecycle } from './component-lifecycle';
+import { reconcileLibraryUpdateResults, excludeLibraryUpdatesFromCurrent } from './services/libraryUpdateResults';
 import { ensureReferenceCatalogsForChannel, ensureReferenceCatalogsForKeys, ensureReferenceCatalogsLoaded, findComponent, getTokenCatalogs, reportMissingReference, resolveStructure, resolveStructureForInstance } from './reference/library';
 import type { LibraryComponent } from './reference/libraryTypes';
 import type { DSStructureNode } from './types/structures';
@@ -51,6 +53,7 @@ async function prepareData(options:V3AuditOptions,components:boolean) {
   const policies=await options.data.readPolicies();guard();setNormalizedAuditPolicies(policies);assertAuditPoliciesReady();
   activeDataId=manifest.dataId;
   if(components) {
+    await prepareComponentLifecycle(options.data,manifest,guard);guard();
     options.onProgress({stage:'indexes',message:'Подготавливаем индексы, стили и токены…'});
     await ensureReferenceCatalogsForChannel(options.channel);guard();
     options.onProgress({stage:'tokens',message:'Подготавливаем токены…'});
@@ -110,6 +113,23 @@ export async function runV3Audit(options:V3AuditOptions) {
     resolveVariableMetadata:resolveVariableMetadataForDiff,resolveVariableCollectionMetadata:resolveVariableCollectionMetadataForDiff,
     normalizeRelevanceStatus,reportMissingReference,debugDiffPipeline:()=>{},throwIfCancelled:guard,
     getNodeById:async id=>{guard();const node=await figma.getNodeByIdAsync(id);guard();return node;}});
+  // Source-definition updates bypass the rendered classifier; retain the same lifecycle priority.
+  for (const item of state.relevanceBuckets.update.slice()) {
+    if (item.catalogLifecycle) continue;
+    item.catalogLifecycle = getComponentLifecycle(item.componentKey, item.id);
+    if (item.catalogLifecycle.status === 'scheduled' && !item.updateReasons?.includes('catalog-lifecycle')) {
+      item.updateReasons = (item.updateReasons ?? []).concat('catalog-lifecycle');
+    }
+    const updates = reconcileLibraryUpdateResults(state.relevanceBuckets.update, [], [item]);
+    state.relevanceBuckets.update = updates.currentItems.concat(updates.updateItems);
+    state.relevanceBuckets.unknown = excludeLibraryUpdatesFromCurrent(state.relevanceBuckets.unknown, [item]);
+    if (item.catalogLifecycle.status === 'deprecated') {
+      item.relevance = 'deprecated';
+      state.relevanceBuckets.update = state.relevanceBuckets.update.filter(candidate => candidate !== item);
+      const reconciled = reconcileLibraryUpdateResults(state.relevanceBuckets.deprecated, [], [item]);
+      state.relevanceBuckets.deprecated = reconciled.currentItems.concat(reconciled.updateItems);
+    }
+  }
   guard();options.onProgress({stage:'base',message:'Проверяем тему и шрифт страницы…'});
   const rootIds=new Set(options.selection.map(node=>node.id)),selectedNodes:SceneNode[]=[],checkpoint=createCooperativeYield(guard);
   for(const node of traversal.sceneNodeById.values()){

@@ -1,3 +1,4 @@
+import type { ComponentLifecycle } from '../component-lifecycle';
 import type { LibraryComponent } from '../reference/libraryTypes';
 import type { LibraryComponentFreshness } from '../services/libraryComponentFreshness';
 import type { DiffEntry } from '../structure/diff';
@@ -55,6 +56,7 @@ export interface AuditItem {
   comparisonIssues?: string[];
   updateReasons?: UpdateReason[];
   libraryFreshness?: LibraryComponentFreshness | null;
+  catalogLifecycle?: ComponentLifecycle;
   focusNodeId?: string | null;
   sourceOwnerOccurrenceIds?: string[];
   sourceOwnerKind?: 'local' | 'remote';

@@ -307,6 +307,7 @@ function componentItem(item: AuditItem): StatsComponentItem {
     comparisonIssues: item.comparisonIssues ?? [],
     updateReasons: item.updateReasons ?? [],
     libraryFreshness: item.libraryFreshness ?? null,
+    catalogLifecycle: item.catalogLifecycle ?? null,
     localComponentOwner: item.localComponentOwner
       ? {
           id: item.localComponentOwner.id,
@@ -333,6 +334,7 @@ function customizationItem(
     comparisonIssues: component.comparisonIssues,
     updateReasons: component.updateReasons,
     libraryFreshness: component.libraryFreshness,
+    catalogLifecycle: component.catalogLifecycle,
     localComponentOwner: component.localComponentOwner,
     changes: (item.diffs ?? []).map((diff) =>
       customizationChange(diff, item, input, includeInterpretation),

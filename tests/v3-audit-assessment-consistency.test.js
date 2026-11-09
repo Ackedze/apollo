@@ -66,6 +66,7 @@ function data(api,baselineStyle=style){
   [base+'components/sample.json',{meta:{fileName:'sample.json',library:'Synthetic'},components:[{key,name:'SampleHeading',status:'current',platform:'Desktop',role:'Main',structure:[{id:1,parentId:null,path:'SampleHeading',name:'SampleHeading',type:'COMPONENT',visible:true,componentInstance:{componentKey:key,variantProperties:{}}},{id:2,parentId:1,path:'SampleHeading / Title',name:'Title',type:'TEXT',visible:true,styles:baselineStyle?{text:{styleKey:baselineStyle}}:{}}]}]}],
   [policyUrl,{schemaVersion:'apollo.v3-audit-policies.v1',coverage:{defaultPolicy:'none'},packages:[policy()]}],
  ];
+ for(const category of ['deprecated','scheduled','parts'])documents.push([base+'indexes/lifecycle/'+category+'.index.json',{kind:'component-lifecycle-index',version:1,category,count:0,components:[],warnings:[]}]);
  const assets=new Map(),files=documents.map(([url,value])=>{const text=JSON.stringify(value),id=hash(url);assets.set(id,text);return {id,sha256:hash(text),bytes:Buffer.byteLength(text),urls:[url]};}),body={schemaVersion:protocol.SCHEMA,entryUrl,policyFileId:hash(policyUrl),files},manifest=Object.assign({},body,{dataId:hash(protocol.canonical(body))});
  return api.createAuditDataClient({hashText:hash,loadManifest:async()=>structuredClone(manifest),readAsset:async(dataId,fileId)=>({dataId,fileId,sha256:hash(assets.get(fileId)),text:assets.get(fileId)})});
 }

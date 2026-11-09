@@ -1,3 +1,4 @@
+import type { ComponentLifecycle } from '../component-lifecycle';
 import type {
   AuditItem,
   CustomStyleEntry,
@@ -84,6 +85,7 @@ export type StatsComponentItem = {
   comparisonIssues: string[];
   updateReasons: UpdateReason[];
   libraryFreshness: LibraryComponentFreshness | null;
+  catalogLifecycle?: ComponentLifecycle | null;
   localComponentOwner: StatsNode | null;
 };
 
@@ -255,6 +257,7 @@ export type ApolloAgentFinding = {
   comparisonIssues?: string[];
   updateReasons?: UpdateReason[];
   libraryFreshness?: LibraryComponentFreshness | null;
+  catalogLifecycle?: ComponentLifecycle | null;
   localComponentOwner?: StatsNode | null;
   changes?: Array<{
     node: StatsNode;

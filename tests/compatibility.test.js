@@ -1,9 +1,18 @@
 const test = require('node:test'), assert = require('node:assert/strict');
 const { assessCompatibility, compare, createCompatibilityClient } = require('../src/compatibility');
 const { createDesignCheckController } = require('../src/design-check/controller');
+const requirements = require('../src/compatibility-requirements.json');
 const health = () => ({ ok: true, proxy: { version: '1.4.24' }, compatibility: { protocolVersion: 1,
   data: { state: 'ready', version: 'a'.repeat(64), schemaVersion: 'apollo.proxy-data-release.v1',
-    profileVersion: '0.4.1', deliveryProfile: 'checking-ask-figma-mcp', generatedAt: '2026-11-05T00:00:00.000Z' } } });
+    profileVersion: '0.4.1', deliveryProfile: 'checking-ask-figma-mcp', generatedAt: requirements.minDataGeneratedAt } } });
+
+test('the previous data release without lifecycle declarations requires an update', () => {
+  const previous = health(); previous.compatibility.data.generatedAt = '2026-11-09T11:22:12.210Z';
+  assert.equal(assessCompatibility(previous).state, 'update-data');
+  const boundary = health(); boundary.compatibility.data.generatedAt = new Date(Date.parse(requirements.minDataGeneratedAt) - 1).toISOString();
+  assert.equal(assessCompatibility(boundary).state, 'update-data');
+  assert.equal(assessCompatibility(health()).state, 'compatible');
+});
 
 for (const proxyVersion of ['1.4.24', '1.4.25', '1.5.0', '1.10.0']) test('compatible stable Proxy ' + proxyVersion, () => {
   const value = health(); value.proxy.version = proxyVersion;

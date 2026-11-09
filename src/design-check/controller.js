@@ -84,6 +84,7 @@ function createDesignCheckController(options = {}) {
   function updateSetting(key, value) {
     if (!validSetting(key, value) || state.documentAction.busy || state.auditBusy || ['loading','cancelling'].includes(state.documentAudit.status) || destroyed) return false;
     if (['shellAuditEnabled', 'experimentalContractV2Enabled', 'showExpectedCustomizations'].includes(key) && settingCapabilities[key] !== true) return false;
+    if (key === 'pickerLabel' && value !== state.settings.pickerLabel && activeChat) cancelChat();
     revisions[key] = (revisions[key] || 0) + 1;
     const settings = Object.assign({}, state.settings); settings[key] = value;
     emit({ settings, selectedTab: selectVisibleTab(settings), settingsNotice: CONTEXT_FIELDS.has(key)
@@ -198,6 +199,7 @@ function createDesignCheckController(options = {}) {
     setChat({ busy: true, error: '', messages: state.chat.messages.concat({ role: 'user', text, requestId, source }) });
     try {
       const response = await options.dialogue.send({ requestId, source, question: text, dialogue: history,
+        dialoguePlatform: state.settings.pickerLabel,
         context: null, signal: abort.signal });
       if (destroyed || activeChat?.requestId !== requestId || activeChat.contextKey !== state.contextKey) return true;
       if (response?.source !== undefined && response.source !== source) throw new Error('Источник ответа агента не совпал с запросом.');

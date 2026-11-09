@@ -161,9 +161,10 @@ for (const completedBeforeRestore of [false, true]) {
     const load = deferred(), firstReply = deferred(), requests = []; let sessions = 0;
     const dialogue = createExistingDialoguePort({ endpoint: 'http://localhost:3001/analyze', createSessionId: () => `synthetic-session-${++sessions}`,
       request: async (_url, request) => {
+        if (request.method === 'GET') return {ok: true, json: async () => ({ok:true,capabilities:{dialoguePlatformRouting:true}})};
         const body = JSON.parse(request.body); requests.push(body);
         if (requests.length === 1) await firstReply.promise;
-        return { ok: true, status: 200, json: async () => ({ success: true, source: body.source, result: 'Synthetic Langflow answer' }) };
+        return { ok: true, status: 200, json: async () => ({ success: true, source: body.source, dialogueLibrary: ['iOS','Android'].includes(body.dialoguePlatform)?'abm':'ab', result: 'Synthetic Langflow answer' }) };
       } });
     const controller = createDesignCheckController({ tabs, dialogue, preferences: { load: () => load.promise, save: async () => {} } });
     controller.setAgentSource('langflow');

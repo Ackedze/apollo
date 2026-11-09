@@ -17,17 +17,26 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
       const body = await response.json();
       return { available: response.ok && body.ok === true, version: typeof body.proxy?.version === 'string' ? body.proxy.version : null };
     },
-    async send({ source, question, dialogue, context, signal }) {
+    async send({ source, question, dialogue, dialoguePlatform, context, signal }) {
       if (!['langflow', 'codex'].includes(source) || typeof question !== 'string' || !question.trim() || question.length > 8000
+        || dialoguePlatform !== undefined && !['Desktop', 'MobileWeb', 'iOS', 'Android'].includes(dialoguePlatform)
         || context !== null || !Array.isArray(dialogue) || dialogue.length > 12
         || dialogue.some(entry => !['user', 'assistant'].includes(entry.role) || typeof entry.text !== 'string' || !entry.text.trim() || entry.text.length > 8000)) throw new TypeError('Unsupported dialogue input; frozen audit context requires a separate v4 protocol.');
+      if (dialoguePlatform !== undefined) {
+        const health = await request(new URL('/health', url).href, { method: 'GET', signal });
+        const state = await health.json();
+        if (!health.ok || state.ok !== true || state.capabilities?.dialoguePlatformRouting !== true)
+          throw new Error('Для выбора библиотеки по платформе обнови Apollo Proxy и повтори запрос.');
+      }
       const text = JSON.stringify({ schemaVersion: 1, mode: 'design-dialogue', question: question.trim(),
         context: { selection: null, finding: null, auditReport: null, componentContext: null } });
       const response = await request(url.href, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal,
         body: JSON.stringify({ component: 'apollo-agent-report', action: 'user-question', session_id: session(), source,
-          dialogue: dialogue.map(entry => ({ role: entry.role, text: entry.text })), text }) });
+          dialoguePlatform, dialogue: dialogue.map(entry => ({ role: entry.role, text: entry.text })), text }) });
       const body = await response.json();
       if (!response.ok || body.success !== true) throw new Error(body.error || `Apollo proxy error ${response.status}`);
+      if (dialoguePlatform !== undefined && body.dialogueLibrary !== (['iOS', 'Android'].includes(dialoguePlatform) ? 'abm' : 'ab'))
+        throw new Error('Apollo Proxy не подтвердил библиотеку выбранной платформы. Обнови Proxy и повтори запрос.');
       if (body.source !== undefined && body.source !== source) throw new Error('Источник ответа агента не совпал с запросом.');
       if (body.provider !== undefined && !['codex', 'claude', 'alfagen'].includes(body.provider)) throw new Error('Прокси вернул неизвестный AI-агент.');
       if (typeof body.result !== 'string' || !body.result.trim()) throw new Error('Агент вернул пустой ответ.');

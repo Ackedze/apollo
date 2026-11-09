@@ -15,9 +15,10 @@ for (const saved of [null, 'langflow', 'codex']) {
     client = createUiClient(message => bridge.accept(message));
     const dialogue = createExistingDialoguePort({ endpoint: 'http://localhost:3001/analyze', createSessionId: () => `owned-session-${++sessions}`,
       request: async (_url, options) => {
+        if (options.method === 'GET') return {ok: true, json: async () => ({ok:true,capabilities:{dialoguePlatformRouting:true}})};
         const body = JSON.parse(options.body); wire.push(body);
         if (body.source === 'codex') localCalls++; else remoteCalls++;
-        return { ok: true, json: async () => ({ success: true, source: body.source, result: 'Owned synthetic answer' }) };
+        return { ok: true, json: async () => ({ success: true, source: body.source, dialogueLibrary: ['iOS','Android'].includes(body.dialoguePlatform)?'abm':'ab', result: 'Owned synthetic answer' }) };
       } });
     const controller = createDesignCheckController({ preferenceScope: 'agent-source', preferences: client.preferences, dialogue });
     await controller.restorePreferences(); await controller.flushPreferences();
@@ -35,8 +36,9 @@ for (const provider of ['codex', 'claude', 'alfagen']) {
   test(`Ask preserves actual ${provider} provenance across the legacy codex wire`, async () => {
     const dialogue = createExistingDialoguePort({endpoint: 'http://localhost:3001/analyze', createSessionId: () => 'provider-session',
       request: async (_url, options) => {
+        if (options.method === 'GET') return {ok: true, json: async () => ({ok:true,capabilities:{dialoguePlatformRouting:true}})};
         assert.equal(JSON.parse(options.body).source, 'codex');
-        return {ok: true, json: async () => ({success: true, source: 'codex', provider, result: 'Fixture answer'})};
+        return {ok: true, json: async () => ({success: true, source: 'codex', dialogueLibrary: 'ab', provider, result: 'Fixture answer'})};
       }});
     const controller = createDesignCheckController({dialogue});
     await controller.sendChat('Fixture question');

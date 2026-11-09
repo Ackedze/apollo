@@ -13,7 +13,7 @@ export type Preferences = { schemaVersion: 'apollo.design-check-ui-preferences.v
   settings: Partial<UISettings>; agentSource: 'langflow' | 'codex' };
 export type DialoguePort = { cancelScope: 'client-only';
   send(input: { requestId: string; source: string; question: string; dialogue: { role: string; text: string }[];
-    context: null; signal: AbortSignal }): Promise<{ text: string; source?: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown }>;
+    dialoguePlatform: 'Desktop' | 'MobileWeb' | 'iOS' | 'Android'; context: null; signal: AbortSignal }): Promise<{ text: string; source?: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown }>;
   status?(): Promise<{ available: boolean; version: string | null }>;
   resetSession?(): void;
 };

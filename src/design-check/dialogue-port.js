@@ -40,7 +40,18 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
       if (body.source !== undefined && body.source !== source) throw new Error('Источник ответа агента не совпал с запросом.');
       if (body.provider !== undefined && !['codex', 'claude', 'alfagen'].includes(body.provider)) throw new Error('Прокси вернул неизвестный AI-агент.');
       if (typeof body.result !== 'string' || !body.result.trim()) throw new Error('Агент вернул пустой ответ.');
-      return { text: body.result, source: body.source || source, returnedSource: body.source ?? null, provider: body.provider ?? null, knowledgeRelease: body.knowledgeRelease ?? null };
+      let answerBlocks;
+      if (body.answerBlocks !== undefined) {
+        if (!Array.isArray(body.answerBlocks) || !body.answerBlocks.length || body.answerBlocks.length > 256
+          || body.answerBlocks.some(block => !block || !['text','guide'].includes(block.kind) || typeof block.text !== 'string' || !block.text.trim()
+            || block.kind === 'guide' && (!['hig','material2','material3'].includes(block.family) || block.question !== undefined && (typeof block.question !== 'string' || block.question.length > 8000))
+            || block.kind === 'text' && block.questionHeading !== undefined && block.questionHeading !== true)
+          || body.answerBlocks.map(block => block.text).join('\n\n') !== body.result)
+          throw new Error('Apollo Proxy вернул некорректные блоки ответа. Повтори запрос.');
+        answerBlocks = body.answerBlocks.map(block => block.kind === 'guide'
+          ? {kind:'guide',family:block.family,text:block.text, ...(block.question !== undefined ? {question:block.question} : {})} : {kind:'text',text:block.text, ...(block.questionHeading ? {questionHeading:true} : {})});
+      }
+      return { answerBlocks, text: body.result, source: body.source || source, returnedSource: body.source ?? null, provider: body.provider ?? null, knowledgeRelease: body.knowledgeRelease ?? null };
     } };
 }
 module.exports = { createExistingDialoguePort };

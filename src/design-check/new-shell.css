@@ -183,3 +183,20 @@
 
 
 .apollo-new #generation-panel .apollo-generation-options button:disabled { color:#62626b; cursor:default; }
+
+/* Same surface, radius and inset as overview cards in this shell. */
+.apollo-new .apollo-guide-recommendations { box-sizing:border-box; background:rgba(0,0,0,.04); border-radius:24px; padding:20px; margin:16px 0; overflow-wrap:anywhere; min-width:0; }
+.apollo-new .apollo-guide-recommendations__summary { display:flex; align-items:center; gap:16px; list-style:none; cursor:pointer; color:var(--apollo-text); }
+.apollo-new .apollo-guide-recommendations__summary::-webkit-details-marker { display:none; }
+.apollo-new .apollo-guide-recommendations__summary:focus-visible { outline:2px solid #267aff; outline-offset:6px; border-radius:8px; }
+.apollo-new .apollo-guide-recommendations__heading { flex:1; min-width:0; }
+.apollo-new .apollo-guide-recommendations__title { display:block; font:600 16px/24px "Apollo Alfa",sans-serif; }
+.apollo-new .apollo-guide-recommendations__families { display:block; color:var(--apollo-muted); font:400 14px/20px "Apollo Alfa",sans-serif; margin-top:2px; }
+.apollo-new .apollo-guide-recommendations__chevron { flex:0 0 7px; width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); margin:0 3px 4px; }
+.apollo-new .apollo-guide-recommendations[open] .apollo-guide-recommendations__chevron { transform:rotate(225deg); margin-bottom:-4px; }
+.apollo-new .apollo-guide-recommendations__content { padding-top:16px; }
+.apollo-new .apollo-guide-recommendations__family { margin:16px 0 8px; font:600 14px/20px "Apollo Alfa",sans-serif; }
+.apollo-new .apollo-guide-recommendations__content > div:first-child .apollo-guide-recommendations__family { margin-top:0; }
+.apollo-new .apollo-guide-recommendations__question { margin:16px 0 8px; }
+.apollo-new .apollo-guide-recommendations .markdown-root > .md-block:first-child { margin-top:0; }
+.apollo-new .apollo-guide-recommendations .markdown-root > .md-block:last-child { margin-bottom:0; }

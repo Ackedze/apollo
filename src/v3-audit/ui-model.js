@@ -60,6 +60,9 @@ function customizationItems(views,relevance){
 }
 function buildV3Groups(result,settings={},state={}){
  const views=result?.visibleViews||{},relevance=views.relevance||{},all=Object.values(relevance).flat(),unknown=[];
+ const fixedPaints=new Set((state.paintFixes||[]).map(fix=>fix.nodeId+'/'+fix.field));
+ const unfixedPaint=item=>item.token||!fixedPaints.has(item.id+'/'+item.reason);
+ const customStyles=(views.customStyles||[]).filter(unfixedPaint);
  const local=Array.from(new Map((views.local||[]).concat(all).filter(item=>!item.reference&&!item.catalogLifecycle?.checks?.some(check=>check.recordKeys.length)&&typeof item.componentKey==='string'&&item.componentKey.trim()&&!(item.comparisonIssues||[]).length&&!(item.gaps||[]).length&&item.status!=='incomplete').map(item=>[item.id,item])).values());
  for(const item of all){
   const reasons=(item.comparisonIssues||[]).slice();
@@ -86,9 +89,9 @@ function buildV3Groups(result,settings={},state={}){
    'typography-channel:'+item.id+':'+item.resource.type+':'+item.resource.key,item,'violation',
    item.resource.type==='token'?'Токен типографики не соответствует выбранному каналу.':'Стиль типографики не соответствует выбранному каналу.',
    {messages:[item.resource.name,`Каналы: ${item.channels.map(channelLabel).join(', ')}. Выбран: ${channelLabel(item.selectedChannel)}.`]})),
-  deprecatedStyles:(views.deprecatedStyles||[]).map(item=>row('deprecated-style:'+item.id+':'+item.reason+(item.token?':'+item.styleKey:''),item,item.scheduled?'warning':'violation',item.token?(item.scheduled?'Токен пора менять.':'Используется устаревший токен.'):(item.scheduled?'Стиль пора менять.':'Используется устаревший стиль.'),{messages:[item.styleLabel||'Название недоступно']})),
-  customStyles:(views.customStyles||[]).filter(item=>item.resource?.type!=='raw-value').map(item=>row('style:'+item.id+':'+item.reason,item,'violation','Стиль или токен вне подключённой библиотеки.',{messages:item.resource?.name?[item.resource.name]:[]})),
-  detachedStyles:(views.customStyles||[]).filter(item=>item.resource?.type==='raw-value').map(item=>row('style:'+item.id+':'+item.reason,item,'violation',item.reason==='typography'?'Типографика без стиля.':item.reason==='fill'?'Заливка без стиля или токена.':item.reason==='stroke'?'Обводка без стиля или токена.':'Эффект без стиля.',{messages:item.resource?.name&&!/^Raw /.test(item.resource.name)?[item.resource.name]:[]})),
+  deprecatedStyles:(views.deprecatedStyles||[]).filter(unfixedPaint).map(item=>row('deprecated-style:'+item.id+':'+item.reason+(item.token?':'+item.styleKey:''),item,item.scheduled?'warning':'violation',item.token?(item.scheduled?'Токен пора менять.':'Используется устаревший токен.'):(item.scheduled?'Стиль пора менять.':'Используется устаревший стиль.'),{messages:[item.styleLabel||'Название недоступно']})),
+  customStyles:customStyles.filter(item=>item.resource?.type!=='raw-value').map(item=>row('style:'+item.id+':'+item.reason,item,'violation','Стиль или токен вне подключённой библиотеки.',{messages:item.resource?.name?[item.resource.name]:[]})),
+  detachedStyles:customStyles.filter(item=>item.resource?.type==='raw-value').map(item=>row('style:'+item.id+':'+item.reason,item,'violation',item.reason==='typography'?'Типографика без стиля.':item.reason==='fill'?'Заливка без стиля или токена.':item.reason==='stroke'?'Обводка без стиля или токена.':'Эффект без стиля.',{messages:item.resource?.name&&!/^Raw /.test(item.resource.name)?[item.resource.name]:[]})),
   themization:(result?.baseChecks||[]).filter(item=>!final.has(item.classification)).map(item=>row('base:'+item.id,item,item.classification,item.message,{displayName:item.id==='font'?'Шрифт страницы':'Темизация страницы',messages:item.status==='incomplete'||(item.gaps||[]).length?['Часть данных не удалось подтвердить. Проверка неполная.']:[]})).concat((views.themization||[]).map(item=>row('theme:'+item.id,item,'violation',item.recommendation?`Замени на ${item.recommendation}`:'Используется компонент со старой темизацией.',{displayName:item.name}))),
  };
  const categories=Object.fromEntries(Object.keys(titles).map(id=>[id,category(id,data[id]||[],!!result)]));

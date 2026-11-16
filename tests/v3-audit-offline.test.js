@@ -531,7 +531,7 @@ test('Design returns paint previews for raw and local findings without changing 
  assert.deepEqual(h.calls,[]);
 });
 
-test('Design offers only active BlueTint migrations and applies the picked variable with stale-style protection',async t=>{
+test('Design fixes one confirmed color field without rerunning or rewriting the accepted audit',async t=>{
  const payload=structuredClone(embedded.payload),collection=payload.tokenCatalogs[0].collections[0];
  const migration=require('../src/v3-audit/remediation/blue-tint-migration.json');
  const link='182feecc4124025888d1b3a12e64b2fff6dfd481', opaque='e4ba6dbc4798f1b6feac19a65dea6f835e139f2f', inverted='a5c552b018c9ee0c261e1c445eb393b20a47fca1';
@@ -554,29 +554,90 @@ test('Design offers only active BlueTint migrations and applies the picked varia
  const node=(id,key,field)=>({id,type:'RECTANGLE',name:id,parent:h.page,visible:true,opacity:1,
   resolvedVariableModes:{[collection.id]:'dark'},[field+'StyleId']:ids.get(key),[field==='fill'?'fills':'strokes']:raw()});
  const fill=node('1:3',link,'fill'),stroke=node('1:4',inverted,'stroke'),noReplacement=node('1:5',opaque,'fill');
+ stroke.fills=raw();stroke.fillStyleId=ids.get(link);
  const multiple=node('1:6',link,'fill');multiple.fills=raw().concat(raw());
- h.page.children=[fill,stroke,noReplacement,multiple];h.page.selection=h.page.children;
+ const rawLayer=node('1:7',null,'fill');
+ h.page.children=[fill,stroke,noReplacement,multiple,rawLayer];h.page.selection=h.page.children;
  const imported=[];
  h.figma.variables.importVariableByKeyAsync=async key=>{imported.push(key);return{key,id:'VariableID:'+key,resolvedType:'COLOR'};};
  h.figma.variables.setBoundVariableForPaint=(paint,property,variable)=>Object.assign({},paint,{boundVariables:{[property]:{type:'VARIABLE_ALIAS',id:variable.id}}});
+ let afterPaintWrite=false,peerReads=0;
+ const peerPaints=noReplacement.fills;
+ Object.defineProperty(noReplacement,'fills',{get:()=>{if(afterPaintWrite)peerReads++;return peerPaints;}});
  let strokes=stroke.strokes;
- Object.defineProperty(stroke,'strokes',{get:()=>strokes,set:value=>{strokes=value;stroke.strokeStyleId='';}});
+ Object.defineProperty(stroke,'strokes',{get:()=>strokes,set:value=>{
+  strokes=value;stroke.strokeStyleId='';afterPaintWrite=true;
+  h.observeChange({nodeChanges:[{id:stroke.id,type:'PROPERTY_CHANGE',properties:['strokes','strokeStyleId']}]});
+ }});
+ let fills=stroke.fills;
+ Object.defineProperty(stroke,'fills',{get:()=>fills,set:value=>{fills=value;stroke.fillStyleId='';}});
  const result=await h.run();
  assert(result.hasAcceptedResult,result.lastAttempt?.error);
  const styles=result.originalPayload.visibleViews.deprecatedStyles;
- const finding=id=>styles.find(row=>row.id===id);
+ const finding=(id,reason='fill')=>styles.find(row=>row.id===id&&row.reason===reason);
  assert.deepEqual(finding(fill.id).actions.map(a=>[a.kind,a.label,a.targetName,a.targetColor]),[['bind-variable','Заменить','text/info','#000080ff']]);
- assert.deepEqual(finding(stroke.id).actions.map(a=>[a.targetGroup,a.targetName]),[['Поверхность компонента','neutral_inverted/100']]);
+ assert.deepEqual(finding(stroke.id,'stroke').actions.map(a=>[a.targetGroup,a.targetName]),[['Поверхность компонента','neutral_inverted/100']]);
  for(const skipped of [noReplacement,multiple]) assert.equal(finding(skipped.id).actions,undefined);
  fill.fillStyleId='changed';
  assert.equal(await h.ui.action(finding(fill.id).actions[0].id),false);
  assert.deepEqual(imported,[]);
  const refreshed=await h.run();
- const strokeAction=refreshed.originalPayload.visibleViews.deprecatedStyles.find(row=>row.id===stroke.id).actions[0];
+ const baseline=JSON.stringify(refreshed.originalPayload);
+ const countResults=()=>h.posts.filter(m=>m.type==='v3-audit-result').length;
+ const results=countResults(),progress=h.posts.filter(m=>m.type==='v3-audit-progress').length;
+ const actionsFor=field=>refreshed.originalPayload.visibleViews.deprecatedStyles.find(row=>row.id===stroke.id&&row.reason===field).actions;
+ const visible=()=>{const state=h.ui.getState();return buildV3Groups(state.result,{},state).groups[0].categories.find(c=>c.id==='deprecatedStyles').entries;};
+ const strokeAction=actionsFor('stroke')[0];
  assert.equal(await h.ui.action(strokeAction.id),true);
  assert.deepEqual(imported,[active]);
  assert.equal(stroke.strokes[0].boundVariables.color.id,'VariableID:'+active);
- await until(()=>!h.ui.busy());
- assert(!h.ui.snapshot().originalPayload.visibleViews.deprecatedStyles.some(row=>row.id===stroke.id));
+ assert.equal(h.ui.busy(),false);
+ assert.equal(peerReads,0);
+ afterPaintWrite=false;
+ assert(!visible().some(row=>row.item.id===stroke.id&&row.item.reason==='stroke'));
+ assert(visible().some(row=>row.item.id===stroke.id&&row.item.reason==='fill'));
+ assert(visible().some(row=>row.item.id===noReplacement.id));
+ assert.equal(await h.ui.action(strokeAction.id),false);
+ assert.equal(await h.ui.action(actionsFor('fill')[0].id),true);
+ assert.deepEqual(imported,[active,linkToken]);
+ assert(!visible().some(row=>row.item.id===stroke.id));
+ const rawAction=refreshed.originalPayload.visibleViews.customStyles.find(row=>row.id===rawLayer.id).actions.find(action=>action.kind==='bind-variable');
+ assert.equal(await h.ui.action(rawAction.id),true);
+ const state=h.ui.getState();
+ assert(!buildV3Groups(state.result,{},state).groups[0].categories.find(c=>c.id==='detachedStyles').entries.some(row=>row.item.id===rawLayer.id));
+ const after=h.ui.snapshot();
+ assert.equal(after.runId,refreshed.runId);
+ assert.equal(after.stale,false);
+ assert.equal(JSON.stringify(after.originalPayload),baseline);
+ assert.deepEqual(after.paintFixes,[{nodeId:stroke.id,field:'stroke'},{nodeId:stroke.id,field:'fill'},{nodeId:rawLayer.id,field:'fill'}]);
+ assert.equal(countResults(),results);
+ assert.equal(h.posts.filter(m=>m.type==='v3-audit-progress').length,progress);
  assert.deepEqual(h.calls,[]);
+});
+
+for(const external of [false,true])test('Color binding keeps original findings and skips full recheck when '+(external?'another layer changed':'the binding cannot be confirmed'),async t=>{
+ const payload=structuredClone(embedded.payload),token=payload.tokenCatalogs[0].collections[0].variables[0];
+ token.actualValuesByMode={mode:[{r:1,g:0,b:0}]};
+ const audit=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
+ const layer={id:'1:3',type:'RECTANGLE',name:'Цвет',parent:audit.page,visible:true},peer={id:'1:4',type:'RECTANGLE',name:'Соседний слой',parent:audit.page,visible:true};
+ audit.page.children=[layer,peer];audit.page.selection=audit.page.children;
+ let current=[{type:'SOLID',color:{r:1,g:0,b:0}}];
+ Object.defineProperty(layer,'fills',{get:()=>current,set:value=>{
+  if(!external)return;
+  current=value;
+  peer.name='Новое имя слоя';
+  audit.observeChange({nodeChanges:[{id:peer.id,type:'PROPERTY_CHANGE',properties:['name']}]});
+ }});
+ audit.figma.variables.importVariableByKeyAsync=async key=>({id:'VariableID:'+key,key,resolvedType:'COLOR'});
+ audit.figma.variables.setBoundVariableForPaint=(paint,field,variable)=>Object.assign({},paint,{boundVariables:{[field]:{type:'VARIABLE_ALIAS',id:variable.id}}});
+ const first=await audit.run();
+ const finding=first.originalPayload.visibleViews.customStyles.find(row=>row.reason==='fill');
+ assert(finding?.actions?.some(action=>action.kind==='bind-variable'));
+ assert.equal(await audit.ui.action(finding.actions.find(action=>action.kind==='bind-variable').id),false);
+ const after=audit.ui.snapshot();
+ assert.equal(after.stale,true);
+ assert.equal(after.paintFixes,undefined);
+ assert.deepEqual(after.originalPayload,first.originalPayload);
+ assert.equal(audit.posts.filter(m=>m.type==='v3-audit-result').length,1);
+ assert.equal(audit.posts.find(m=>m.type==='v3-audit-operation-error').code,external?'AUDIT_SOURCE_CHANGED':'AUDIT_ACTION_UNCONFIRMED');
 });

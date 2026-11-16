@@ -124,9 +124,15 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
   if(!scope){post({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:message.requestId,runId:message.runId,code:'AUDIT_SESSION_UNAVAILABLE'});return;}
   let reject!:(error:Error)=>void;const cancelled=new Promise<never>((_,fail)=>{reject=fail;});
   const task:any={scope,requestId:message.requestId,cancelled:false,started:false,readonly:message.type==='v3-audit-focus',reject,stage:message.type.replace('v3-audit-',''),trace:createRunTrace({requestId:message.requestId,runId:scope.message.requestId,kind:scope.message.kind,side:'native',pluginVersion:options.pluginVersion})};operation=task;scope.ownerRequestId=task.requestId;
+  const paint=scope.offlineIndex&&message.type==='v3-audit-action'?scope.session.paintAction(message.actionId):null;
+  if(paint)task.paintEvents=[];
   task.trace.add('operation-start',context(scope));
   const guard=traceGuard(scope,()=>{if(closed||operation!==task||task.cancelled)throw Error('AUDIT_CANCELLED');if((figma.fileKey||null)!==scope.fileKey){task.trace.add('guard-refused',{stage:task.stage,reason:'file-changed',code:'AUDIT_SOURCE_CHANGED'},true);throw Error('AUDIT_SOURCE_CHANGED');}if(figma.currentPage.id!==scope.pageId){task.trace.add('guard-refused',{stage:task.stage,reason:'page-changed',code:'AUDIT_SOURCE_CHANGED'},true);throw Error('AUDIT_SOURCE_CHANGED');}if(!task.started&&!task.readonly)sourceGuard(scope);},task.trace,task.stage);
   scope.guard=guard;scope.checkpoint=createCooperativeYield(guard);notifyBusy();
+  const paintGuard=()=>{
+   guard();
+   if(task.started&&(task.paintInterrupted||options.readRevision()!==task.paintRevision))throw Error('AUDIT_SOURCE_CHANGED');
+  };
   let outcome:any=null,error:any=null;
   const work=async()=>{
    // Navigation uses only the held opaque target and its original page, never current selection.
@@ -137,9 +143,31 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
    if(message.type==='v3-audit-verify')return{};
    if(message.type==='v3-audit-focus'){await scope.session.focus(message.focusActionId,guard);guard();return{};}
    if(!options.canMutate())throw Error('AUDIT_OBSERVER_UNAVAILABLE');
-   return scope.session.execute(message.actionId,{assertCurrent:guard,beforeWrite:()=>{guard();if(!task.started)assertReady(scope);if(!task.started){task.trace.add('mutation-start',context(scope));task.started=true;scope.invalidated=true;options.onMutation();}}});
+   const beforeWrite=()=>{
+    guard();if(task.started)return;
+    assertReady(scope);
+    if(paint)scope.observation.assertNodeCurrent(paint.nodeId);
+    task.trace.add('mutation-start',context(scope));task.started=true;scope.invalidated=true;
+    task.announcingMutation=true;
+    try{options.onMutation();}finally{task.announcingMutation=false;}
+    if(paint)task.paintRevision=options.readRevision();
+   };
+   if(!paint)return scope.session.execute(message.actionId,{assertCurrent:guard,beforeWrite});
+   const applied=await scope.session.applyPaint(message.actionId,{assertCurrent:paintGuard,beforeWrite});
+   paintGuard();
+   scope.observation.recordPaintChange(paint.nodeId,paint.styleField);
+   for(const event of task.paintEvents){
+    if(!await scope.observation.unchanged(event))throw Error('AUDIT_SOURCE_CHANGED');
+    paintGuard();
+   }
+   task.paintEventsChecked=task.paintEvents.length;
+   return applied;
   };
-  try{outcome=await Promise.race([work(),cancelled]);guard();}
+  try{
+   outcome=await Promise.race([work(),cancelled]);
+   if(paint){paintGuard();if(task.paintEventsChecked!==task.paintEvents.length)throw Error('AUDIT_SOURCE_CHANGED');}
+   else guard();
+  }
   catch(value){error=value;}
   finally{
    abortData(task.requestId,task.cancelled?'AUDIT_CANCELLED':'AUDIT_SOURCE_CHANGED');
@@ -147,8 +175,12 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
     operation=null;
     const code=error?/^AUDIT_[A-Z_]+$/.test(error.message)?error.message:'AUDIT_ACTION_FAILED':null;
     const type=task.cancelled?'v3-audit-operation-cancelled':error?'v3-audit-operation-error':'v3-audit-operation-result';
-    const recheckId=task.started&&!closed&&figma.currentPage.id===scope.pageId?'v3-recheck-'+(++seq):null;
-    actionReply(task,type,Object.assign({code,message:outcome?.message||'',mutationStarted:task.started,recheckRequestId:recheckId},code==='AUDIT_SOURCE_CHANGED'?{sourceChange:sourceChange(scope,'operation')}:{}));
+    const recheckId=!paint&&task.started&&!closed&&figma.currentPage.id===scope.pageId?'v3-recheck-'+(++seq):null;
+    const paintFix=paint&&type==='v3-audit-operation-result'?outcome?.paintFix:null;
+    if(paintFix){scope.revision=task.paintRevision;scope.invalidated=false;}
+    actionReply(task,type,Object.assign({code,message:outcome?.message||'',mutationStarted:task.started,recheckRequestId:recheckId},
+     paintFix?{paintFix}:paint&&task.started?{stale:true}:{},
+     code==='AUDIT_SOURCE_CHANGED'?{sourceChange:sourceChange(scope,'operation')}:{}));
     if(recheckId){
      captureRun(Object.assign({},scope.message,{requestId:recheckId}),true,scope.rootIds);
     }else notifyBusy();
@@ -160,7 +192,13 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
   observeChange(event:NodeChangeEvent){
    const scopes=new Set<any>(Array.from(accepted.values()).concat(capture?[capture]:[],operation?[operation.scope]:[]));
    for(const scope of scopes){
-    if(scope.invalidated)continue;
+    if(scope.invalidated){
+     if(operation?.scope===scope&&operation.paintEvents){
+      if(operation.paintEvents.length<32)operation.paintEvents.push(event);
+      else operation.paintInterrupted=true;
+     }
+     continue;
+    }
     scope.notificationSerial++;
     const serial=scope.notificationSerial,trace=traceFor(scope);trace.add('notification',Object.assign(context(scope),{changes:event?.nodeChanges,totalChanges:Array.isArray(event?.nodeChanges)?event.nodeChanges.length:0}));
     // First-write safety retains the prior conservative event barrier.
@@ -170,6 +208,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
    }
   },
   invalidate(callsite='native-invalidate'){
+   if(operation?.paintEvents&&operation.started&&!operation.announcingMutation)operation.paintInterrupted=true;
    const scopes=new Set<any>(Array.from(accepted.values()).concat(capture?[capture]:[]));for(const scope of scopes){const afterWrite=operation?.scope===scope&&operation.started===true;traceFor(scope).add('context-invalidated',Object.assign(context(scope),{callsite,outcome:afterWrite?'refresh-required':'refused'}),!afterWrite);}
    for(const scope of accepted.values())if(!scope.invalidated){scope.invalidated=true;post({type:'v3-audit-invalidated',schemaVersion:p.BRIDGE,runId:scope.message.requestId,sourceChange:sourceChange(scope),trace:scope.traceSnapshot()});}
    if(capture)capture.bridge.invalidate();

@@ -1,5 +1,6 @@
 import { FindingActionRegistry } from './findingActionRegistry';
 import { executeFindingAction,type MutationControl } from '../actions/findingAction';
+import { applyVariableBindingAction } from '../actions/variableBindingAction';
 import { applyComponentFindingReplacement } from '../actions/corporateComponentAction';
 import { createCustomizationResetAction,type CustomizationResetPayload } from '../actions/customizationResetAction';
 import { createCustomizationResetMutations } from '../actions/customizationResetMutations';
@@ -57,8 +58,26 @@ export async function createAuditSession(result:any,registry:FindingActionRegist
  for(const fact of result.textReport?.facts?.texts||[]){await checkpoint();const id=target(fact.node?.id);if(id)textTargets.push({nodeId:fact.node.id,focusActionId:id});}
  result.textTargets=textTargets;guard();
  async function scene(id:string,operationGuard:()=>void){operationGuard();const node=await resolveSceneNodeById(id);operationGuard();if(!node||node.removed||pageOf(node)?.id!==pageId)throw Error('AUDIT_SCOPE_UNAVAILABLE');return node;}
+ function paintAction(id:string){
+  const descriptor=actions.get(id);
+  const action=descriptor?.kind==='registry'?registry.get(descriptor.id):null;
+  return action?.kind==='bind-variable'?action:null;
+ }
  return{
   hasFocus:(id:string)=>focus.has(id),hasAction:(id:string)=>actions.has(id),
+  paintAction,
+  async applyPaint(id:string,mutation:MutationControl){
+   const action=paintAction(id);
+   if(!action)throw Error('AUDIT_ACTION_UNAVAILABLE');
+   const applied=await applyVariableBindingAction(action,registry.getRuntimeNode(id),mutation,true);
+   mutation.assertCurrent();
+   if(!applied.ok)throw Error('AUDIT_ACTION_FAILED');
+   for(const [actionId,descriptor] of actions){
+    const candidate=descriptor.kind==='registry'?registry.get(descriptor.id):null;
+    if((candidate?.kind==='bind-variable'||candidate?.kind==='bind-style')&&candidate.nodeId===action.nodeId&&candidate.styleField===action.styleField)actions.delete(actionId);
+   }
+   return {message:'Библиотечный токен привязан.',paintFix:{nodeId:action.nodeId,field:action.styleField}};
+  },
   async focus(id:string,operationGuard:()=>void){const nodeId=focus.get(id);if(!nodeId)throw Error('AUDIT_FOCUS_UNAVAILABLE');const node=await scene(nodeId,operationGuard);operationGuard();figma.currentPage.selection=[node];figma.viewport.scrollAndZoomIntoView([node]);},
   async execute(id:string,mutation:MutationControl){
    mutation.assertCurrent();const descriptor=actions.get(id);if(!descriptor)throw Error('AUDIT_ACTION_UNAVAILABLE');let message='';

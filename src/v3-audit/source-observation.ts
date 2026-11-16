@@ -16,6 +16,7 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
  const textOnly=kind==='texts',textRoots=new Set<string>();
  const nodes=new Map<string,Observation>();let ready=false,diagnostic:any=null;const queued:NodeChangeEvent[]=[];
  const excluded=new Set<string>();
+ const ownPaintChanges=new Map<string,Set<string>>();
  function refuse(reason:string,nodeId?:string,fields:string[]=[]){if(!diagnostic)diagnostic={reason,nodeId:nodeId?.slice(0,200),fields:fields.slice(0,32).map(field=>String(field).slice(0,80))};return false;}
  function textEvidence(node:BaseNode):Record<string,unknown>{
   const value:Record<string,unknown>={id:node.id,type:node.type,name:node.name,removed:!!node.removed,parent:node.parent?.id??null};
@@ -58,30 +59,63 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
    return {main,identity:JSON.stringify({id:main.id,key:main.key,name:main.name,type:main.type,remote:main.remote,ancestry})};
   }catch{return null;}
  }
- function related(event:NodeChangeEvent):Observation[]|null{
+ function assertNodeCurrent(id:string){
+  const record=nodes.get(id);
+  if(!record||!stable(record))throw Error('AUDIT_SOURCE_CHANGED');
+ }
+ function recordPaintChange(id:string,field:'fill'|'stroke'){
+  const record=nodes.get(id),current=record&&read(record.node);
+  if(!record?.value||!current?.value)throw Error('AUDIT_SOURCE_CHANGED');
+  const paint=field==='fill'?'fills':'strokes';
+  const style=field==='fill'?'fillStyleId':'strokeStyleId';
+  const fields=new Set([paint,style,'boundVariables']);
+  if(field==='fill'&&record.node.type==='TEXT')fields.add('textSegments');
+  const before=JSON.parse(record.value),after=JSON.parse(current.value);
+  const otherBindings=(value:Record<string,unknown>|null)=>Object.entries(value||{}).filter(([key])=>key!==paint);
+  const changed=Array.from(new Set(Object.keys(before).concat(Object.keys(after)))).filter(key=>
+   !fields.has(key)&&JSON.stringify(before[key])!==JSON.stringify(after[key]));
+  if(JSON.stringify(otherBindings(before.boundVariables))!==JSON.stringify(otherBindings(after.boundVariables)))changed.push('boundVariables');
+  if(changed.length){
+   refuse('observed-facts-changed',id,changed);
+   throw Error('AUDIT_SOURCE_CHANGED');
+  }
+  record.value=current.value;
+  record.fields=current.fields;
+  for(const key of ownPaintChanges.get(id)??[])fields.add(key);
+  ownPaintChanges.set(id,fields);
+ }
+ function related(event:NodeChangeEvent):Map<Observation,boolean>|null{
   if(!event||!Array.isArray(event.nodeChanges)||!event.nodeChanges.length){refuse('notification-unavailable');return null;}
-  const records=new Set<Observation>();
+  const records=new Map<Observation,boolean>();
   for(const change of event.nodeChanges){
    const record=nodes.get(change.id);
    if(change.type!=='PROPERTY_CHANGE'){refuse('topology-notification',change.id);return null;}
    if(!record){refuse('outside-observation',change.id);return null;}
    if(!Array.isArray(change.properties)||!change.properties.length||!textOnly&&!change.properties.every(field=>record.fields.has(field))){refuse('unobserved-property',change.id,Array.isArray(change.properties)?change.properties:[]);return null;}
+   const ownFields=ownPaintChanges.get(change.id);
+   const ownPaint=Boolean(ownFields&&change.properties.every(field=>ownFields.has(field)));
    let node:BaseNode|null=record.node;const seen=new Set<string>();
-   while(node&&!seen.has(node.id)){seen.add(node.id);const observed=nodes.get(node.id);if(!observed||!stable(observed))return null;records.add(observed);node=node.parent;}
+   while(node&&!seen.has(node.id)){
+    seen.add(node.id);
+    const observed=nodes.get(node.id);
+    if(!observed||!stable(observed))return null;
+    records.set(observed,ownPaint&&records.get(observed)!==false);
+    node=node.parent;
+   }
   }
-  return Array.from(records);
+  return records;
  }
  async function unchanged(event:NodeChangeEvent,allowAsyncIdentity=false):Promise<boolean>{
   if(!ready){queued.push(event);return true;}
   const records=related(event);if(!records)return false;
-  for(const record of records)if(record.node.type==='INSTANCE'&&(!textOnly||record.mainCaptured)){
-   // An accepted report is invalidated conservatively rather than re-reading instance identities.
-   if(!allowAsyncIdentity)return refuse('identity-unconfirmed',record.node.id);
+  for(const [record,ownPaint] of records)if(record.node.type==='INSTANCE'&&(!textOnly||record.mainCaptured)){
+   // Limit post-write identity reads to the modified layer and its ancestors.
+   if(!allowAsyncIdentity&&!ownPaint)return refuse('identity-unconfirmed',record.node.id);
    const current=(await readInstance(record.node))?.identity??null;
    if(record.identity===null||current===null)return refuse('identity-unavailable',record.node.id);
    if(current!==record.identity)return refuse('main-component-changed',record.node.id);
   }
-  return records.every(stable);
+  return Array.from(records.keys()).every(stable);
  }
  async function verify(guard:()=>void){
   const checkpoint=createCooperativeYield(guard);
@@ -124,7 +158,7 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
   async getMainComponent(node,readMain){const record=nodes.get(node.id);if(record?.mainCaptured)return record.main;return record?.main??(readMain?readMain(node):node.getMainComponentAsync());},
  };
  return{
-  unchanged,verify,snapshot,diagnostic:()=>diagnostic,
+  unchanged,verify,snapshot,assertNodeCurrent,recordPaintChange,diagnostic:()=>diagnostic,
   async prepare(roots:SceneNode[],guard:()=>void,verifyBeforeUse=true,isSharedKey?:(key:string)=>boolean){
    if(textOnly)for(const root of roots)textRoots.add(root.id);
    const checkpoint=createCooperativeYield(guard),expanded=new Set<string>();

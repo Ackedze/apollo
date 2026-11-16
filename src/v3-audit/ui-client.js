@@ -8,6 +8,7 @@ const messages={UX_WRITER_SKILL_UNAVAILABLE:'Обнови данные Proxy д�
 const uncertain=new Set(['node-unreadable','notification-unavailable','outside-observation','unobserved-property','identity-unconfirmed','identity-unavailable','topology-notification']);
 function sourceChange(value){if(!value||typeof value.reason!=='string'||!/^[-a-z]{1,80}$/.test(value.reason))return null;return{reason:value.reason,stage:['capture','operation','retained'].includes(value.stage)?value.stage:null,nodeId:typeof value.nodeId==='string'?value.nodeId.slice(0,200):null,fields:Array.isArray(value.fields)?value.fields.filter(field=>typeof field==='string').slice(0,32).map(field=>field.slice(0,80)):[]};}
 const indexMessages={
+ AUDIT_ACTION_UNCONFIRMED:'Не удалось подтвердить привязку токена. Проверь слой и повтори проверку.',
  AUDIT_ATHENA_INDEX_UNAVAILABLE:'Не удалось загрузить индексы Athena. Проверь подключение и повтори проверку.',
  AUDIT_ATHENA_INDEX_INVALID:'Данные Athena не прошли проверку. Обнови пакет данных Proxy или повтори проверку позже.',
 };
@@ -46,7 +47,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
  let pluginBuildId=null;
  function nativeTrace(message,kind,requestId,runId){const trace=readTrace(message.trace);if(trace?.side==='native'&&trace.kind===kind&&trace.requestId===requestId&&trace.runId===runId){const entry=traceEntry(kind,requestId,runId);if(entry)entry.native=trace;if(trace.pluginBuildId)pluginBuildId=trace.pluginBuildId;}}
  function relayTrace(ownerId){for(const kind of ['components','texts']){const entry=traces[kind].find(v=>v.requestId===ownerId);if(entry?.ui)return entry.ui;}return null;}
- let state={result:null,runId:null,stale:false,texts:{result:null,capture:null,runId:null,stale:false},agentInput:{available:false,loading:false,error:''},attempts:{components:null,texts:null},busy:false,stopping:false,kind:null,progress:'',error:'',notice:'',sourceChange:null,operation:{busy:false,status:'idle',message:''}};
+ let state={result:null,runId:null,stale:false,paintFixes:[],texts:{result:null,capture:null,runId:null,stale:false},agentInput:{available:false,loading:false,error:''},attempts:{components:null,texts:null},busy:false,stopping:false,kind:null,progress:'',error:'',notice:'',sourceChange:null,operation:{busy:false,status:'idle',message:''}};
  const emit=patch=>{if(closed)return;state=Object.assign({},state,patch);onChange(state);for(const listener of listeners)listener();};
  const id=prefix=>prefix+'-'+(++sequence);
  async function json(path,options){const response=await request(endpoint+path,options),value=await response.json();if(!response.ok||value?.success===false||value?.error)throw Error(value?.error||'AUDIT_DATA_UNAVAILABLE');return value;}
@@ -171,7 +172,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     pending:work?{requestId:work.requestId,phase:work.phase,settings:work.settings,stopping:!!work.cancelled}:null,
     error:state.kind===kind?state.error:'',notice:state.kind===kind?state.notice:'',operation:Object.assign({},state.operation,{runId:operation?.runId||null}),
     lastAttempt:attempt?{requestId:attempt.requestId,phase:attempt.phase,cancelled:attempt.cancelled,error:attempt.error}:null,
-    originalPayload,sourceChange:state.sourceChange,trace:{droppedSessions:droppedTraces[kind],sessions:traces[kind].map(entry=>({requestId:entry.requestId,runId:entry.runId,ui:entry.ui?.snapshot()||null,native:entry.native}))},diagnosticCapture:saved?null:work?.capture||attempt?.capture||null}));
+    originalPayload,paintFixes:kind==='components'&&state.paintFixes.length?state.paintFixes:undefined,sourceChange:state.sourceChange,trace:{droppedSessions:droppedTraces[kind],sessions:traces[kind].map(entry=>({requestId:entry.requestId,runId:entry.runId,ui:entry.ui?.snapshot()||null,native:entry.native}))},diagnosticCapture:saved?null:work?.capture||attempt?.capture||null}));
   },
   download(kind='components'){
    const snapshot=api.snapshot(kind),name='apollo-v3-'+kind+'-'+(snapshot.runId||'diagnostic').replace(/[^a-zA-Z0-9_-]/g,'-')+'.json';
@@ -222,8 +223,14 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
    const task={runId};operation=task;emit({operation:{busy:true,status:'applying',message:type==='v3-audit-focus'?'Переходим к слою…':'Применяем исправление…'}});
    try{const reply=await rpc(type,runId,payload);if(operation!==task)return false;
     if(reply.recheckRequestId){operation=null;begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}
-    else{operation=null;emit({operation:{busy:false,status:'success',message:reply.message||''}});}return true;
-   }catch(error){if(operation===task){operation=null;const reply=error.reply;if(reply?.recheckRequestId){begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}else emit({operation:{busy:false,status:'error',message:readable(error.message)}});}return false;}
+    else{
+     operation=null;
+     const paintFix=reply.paintFix;
+     const paintFixes=type==='v3-audit-action'&&runId===state.runId&&typeof paintFix?.nodeId==='string'&&['fill','stroke'].includes(paintFix.field)
+      ?state.paintFixes.concat({nodeId:paintFix.nodeId,field:paintFix.field}):state.paintFixes;
+     emit({paintFixes,operation:{busy:false,status:'success',message:reply.message||''}});
+    }return true;
+   }catch(error){if(operation===task){operation=null;const reply=error.reply;if(reply?.recheckRequestId){begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}else emit({stale:state.stale||reply?.stale===true,operation:{busy:false,status:'error',message:readable(error.message)}});}return false;}
   },
   accept(message){
    if(closed)return!!message?.type?.startsWith('v3-audit-');
@@ -256,7 +263,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     nativeTrace(message,work.kind,work.requestId,work.requestId);work.trace.add('native-result',{stage:'capture',dataId:result.dataId});
     work.capture=result;
     if(work.kind==='texts')void analyze(work,result);
-    else{statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));emit({result,runId:work.requestId,resultSettings:work.settings,stale:false});finish(work);}return true;
+    else{statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));emit({result,runId:work.requestId,resultSettings:work.settings,stale:false,paintFixes:[]});finish(work);}return true;
    }
    return true;
   },

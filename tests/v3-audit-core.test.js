@@ -27,6 +27,30 @@ test('the transferred token index reads actualValuesByMode for aliased values',(
  const index=__test_buildColorTokenValueIndex([{meta:{library:'Example',fileName:'tokens/example.json'},collections:[{name:'Colors',variables:[{key,name:'neutral/700',resolvedType:'COLOR',scopes:['ALL_SCOPES'],valuesByMode:{light:{type:'VARIABLE_ALIAS',id:'leaf'}},actualValuesByMode:{light:[{r:0.1,g:0.2,b:0.3,a:1}]}}]}]}]);
  assert.equal(index.get('0.1:0.2:0.3:1')[0].key,key);assert.deepEqual(index.get('0.1:0.2:0.3:1')[0].matchedModeIds,['light']);
 });
+test('color previews use the effective collection mode without changing token matches',()=>{
+ const {createColorTokenValueReader,readActualColorPreview}=load('services/colorTokenValueIndex.ts');
+ const red={r:1,g:0,b:0},blue={r:0,g:0,b:1,a:.5},white={r:1,g:1,b:1};
+ const solid=(color,opacity=1)=>({type:'SOLID',color,opacity});
+ const collection={id:'VariableCollectionId:2:1',key:'c'.repeat(40),defaultModeId:'light',modes:[{modeId:'light'},{modeId:'dark'}],
+  variables:[{key,resolvedType:'COLOR',actualValuesByMode:{light:[red],dark:[blue]}},
+   {key:other,resolvedType:'COLOR',actualValuesByMode:{light:[red],dark:[blue,white]}},
+   {key:'partial',resolvedType:'COLOR',actualValuesByMode:{light:[red],dark:[blue]},resolutionByMode:{dark:{status:'partial'}}}]};
+ const reader=createColorTokenValueReader([{collections:[collection]}],()=>true);
+ const layer=node({fills:[solid(red)],strokes:[solid(blue,.5)],resolvedVariableModes:{[`VariableCollectionId:${collection.key}/2:1`]:'dark'}});
+ const preview=(modes,token=key)=>reader.readColorTokenPreview(Object.assign({},layer,{resolvedVariableModes:modes}),token);
+ assert.deepEqual(reader.findColorTokenValueCandidates(layer,'fill').map(item=>item.key),[key,other,'partial']);
+ assert.equal(reader.readColorTokenPreview(layer,key),'#0000ff80');
+ assert.equal(preview({[collection.id]:'dark'}),'#0000ff80');
+ assert.equal(preview({}),'#ff0000ff');
+ assert.equal(preview(undefined),null);
+ assert.equal(preview({[collection.id]:'unlisted'}),null);
+ assert.equal(preview({[collection.id]:'dark'},other),null);
+ assert.equal(preview({[collection.id]:'dark'},'partial'),null);
+ assert.equal(readActualColorPreview(layer,'fill'),'#ff0000ff');
+ assert.equal(readActualColorPreview(layer,'stroke'),'#0000ff80');
+ assert.equal(readActualColorPreview(node({fills:[solid(red),solid(blue)]}),'fill'),null);
+ assert.equal(readActualColorPreview(node({fills:[{type:'GRADIENT_LINEAR'}]}),'fill'),null);
+});
 test('V3 text capture preserves owner context and skips hidden descendants',async()=>{
  const {collectApolloTextFacts}=load('stats/textReport.ts');
  const page={id:'0:1',type:'PAGE',name:'Page',parent:null},root={id:'1:1',type:'INSTANCE',name:'Button',visible:true,parent:page,componentProperties:{View:{value:'Primary'}},children:[]};

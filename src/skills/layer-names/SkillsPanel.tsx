@@ -74,8 +74,11 @@ export function SkillsPanel({client,children}: {client:any;children?:React.React
     : `Переименовано слоёв: ${changes.length}. Открыть результат.`;
   return <div className="apollo-skills">
     <div className="apollo-skills-catalog">
-      <button ref={cardRef} className="apollo-skill-card" type="button" aria-label="Переназвать слои" aria-describedby={`${titleId}-description`} aria-haspopup="dialog" onClick={()=>setDetailOpen(true)}>
-        <span className="apollo-skill-copy"><strong>Переназвать слои</strong><span id={`${titleId}-description`}>{cardDescription}</span></span>
+      <button ref={cardRef} className="apollo-skill-card" type="button" aria-label="Переназвать слои" aria-describedby={`${titleId}-agent ${titleId}-description`} aria-haspopup="dialog" onClick={()=>setDetailOpen(true)}>
+        <span className="apollo-skill-copy">
+          <span className="apollo-skill-title"><strong>Переназвать слои</strong><span id={`${titleId}-agent`} className="apollo-skill-agent-label">Агент</span></span>
+          <span id={`${titleId}-description`}>{cardDescription}</span>
+        </span>
         <img className="apollo-skill-chevron" src={icons['chevron-right']} alt="" aria-hidden="true" />
       </button>
       {children}

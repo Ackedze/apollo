@@ -55,7 +55,10 @@ export function applyCustomStyleFilters(
 
 export async function shouldIgnorePaintCustomStyle(
   node: SceneNode,
+  lookup?: typeof findComponent,
+  resolveComponentKey?: typeof getNodeComponentKey,
 ): Promise<boolean> {
+  if (lookup || resolveComponentKey) return resolveIgnoredPaintBoundary(node,lookup,resolveComponentKey);
   const cached = paintLibraryIgnoreCache.get(node.id);
   if (cached) {
     return cached;
@@ -68,7 +71,10 @@ export async function shouldIgnorePaintCustomStyle(
 
 export async function shouldIgnoreTypographyCustomStyle(
   node: SceneNode,
+  matcher?: typeof shouldIgnoreRawTypography,
+  resolveComponentKey?: typeof getNodeComponentKey,
 ): Promise<boolean> {
+  if (matcher || resolveComponentKey) return resolveIgnoredTypographyBoundary(node,matcher,resolveComponentKey);
   const cached = typographyIgnoreCache.get(node);
   if (cached) return cached;
 
@@ -98,13 +104,13 @@ function isIconViewBgColorNode(node: SceneNode): boolean {
   );
 }
 
-async function resolveIgnoredPaintBoundary(node: SceneNode): Promise<boolean> {
+async function resolveIgnoredPaintBoundary(node: SceneNode,lookup = findComponent,resolveComponentKey = getNodeComponentKey): Promise<boolean> {
   let current: BaseNode | null = node;
 
   while (current && current.type !== 'PAGE' && current.type !== 'DOCUMENT') {
-    const componentKey = await getNodeComponentKey(current);
+    const componentKey = await resolveComponentKey(current);
     if (componentKey) {
-      const ref = findComponent(componentKey);
+      const ref = lookup(componentKey);
       const source = String(ref?.source ?? '').trim();
       if (PAINT_IGNORED_LIBRARY_SOURCES.has(source)) {
         return true;
@@ -119,6 +125,8 @@ async function resolveIgnoredPaintBoundary(node: SceneNode): Promise<boolean> {
 
 async function resolveIgnoredTypographyBoundary(
   node: SceneNode,
+  matcher = shouldIgnoreRawTypography,
+  resolveComponentKey = getNodeComponentKey,
 ): Promise<boolean> {
   const ancestorNames: string[] = [];
   const componentKeys: string[] = [];
@@ -126,12 +134,12 @@ async function resolveIgnoredTypographyBoundary(
 
   while (current && current.type !== 'PAGE' && current.type !== 'DOCUMENT') {
     ancestorNames.push(current.name);
-    const componentKey = await getNodeComponentKey(current);
+    const componentKey = await resolveComponentKey(current);
     if (componentKey) componentKeys.push(componentKey);
     current = current.parent ?? null;
   }
 
-  return shouldIgnoreRawTypography({
+  return matcher({
     componentKeys,
     nodeName: node.name,
     ancestorNames,

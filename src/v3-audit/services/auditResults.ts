@@ -26,6 +26,7 @@ export interface AuditResultViews {
     relevance: CheckState['relevanceBuckets'];
     themization: CheckState['themizationEntries'];
     wrongChannel: CheckState['wrongChannelEntries'];
+    wrongChannelTypography: CheckState['wrongChannelTypographyEntries'];
     local: CheckState['localLibraryItems'];
     deprecatedStyles: CheckState['deprecatedStyleEntries'];
     customStyles: CheckState['customStyleEntries'];
@@ -122,6 +123,7 @@ export function buildAuditResultViews(checkState: CheckState): AuditResultViews 
       relevance: checkState.relevanceBuckets,
       themization: checkState.themizationEntries,
       wrongChannel: checkState.wrongChannelEntries,
+      wrongChannelTypography: checkState.wrongChannelTypographyEntries,
       local,
       deprecatedStyles: checkState.deprecatedStyleEntries,
       customStyles: checkState.customStyleEntries,
@@ -147,9 +149,7 @@ export function buildAuditResultViews(checkState: CheckState): AuditResultViews 
   };
 }
 
-export async function prepareAuditReport<TNode extends AuditReportSelectionNode>(
-  input: PrepareAuditReportInput<TNode>,
-): Promise<AuditReportBundle> {
+async function buildStatsInput<TNode extends AuditReportSelectionNode>(input:PrepareAuditReportInput<TNode>) {
   const selection = await Promise.all(
     input.selection.map(async (node) => ({
       nodeId: node.id,
@@ -162,7 +162,7 @@ export async function prepareAuditReport<TNode extends AuditReportSelectionNode>
           : null,
     })),
   );
-  const report = buildApolloStatsReport({
+  return {
     pluginVersion: input.pluginVersion,
     user: input.user,
     figma: input.figma,
@@ -181,33 +181,20 @@ export async function prepareAuditReport<TNode extends AuditReportSelectionNode>
     views: input.views.statsViews,
     resolveStyleResource: input.resolveStyleResource,
     resolveTokenResource: input.resolveTokenResource,
-  });
+  };
+}
 
+export async function prepareStatsAuditReport<TNode extends AuditReportSelectionNode>(input:PrepareAuditReportInput<TNode>) {
+  return buildApolloStatsReport(await buildStatsInput(input));
+}
+
+export async function prepareAuditReport<TNode extends AuditReportSelectionNode>(
+  input: PrepareAuditReportInput<TNode>,
+): Promise<AuditReportBundle> {
+  const statsInput = await buildStatsInput(input);
+  const report = buildApolloStatsReport(statsInput);
   const agentReport = buildApolloAgentReport(report);
-  const baselineCustomizationReport = buildApolloBaselineCustomizationReport(
-    report,
-    input.views.visibleViews.changesWip,
-    {
-      pluginVersion: input.pluginVersion,
-      user: input.user,
-      figma: input.figma,
-      scan: {
-        channel: input.scan.channel,
-        pageType: input.scan.pageType,
-        startedAt: input.scan.startedAt,
-        finishedAt: input.scan.finishedAt,
-        selection,
-        settings: {
-          shellAuditEnabled: input.scan.shellAuditEnabled,
-          experimentalContractV2Enabled: input.scan.experimentalContractV2Enabled,
-        },
-        scannedComponents: input.checkState.totalItems,
-      },
-      views: input.views.statsViews,
-      resolveStyleResource: input.resolveStyleResource,
-      resolveTokenResource: input.resolveTokenResource,
-    },
-  );
+  const baselineCustomizationReport = buildApolloBaselineCustomizationReport(report,input.views.visibleViews.changesWip,statsInput);
   const patternReport = buildApolloPatternAuditReport(
     report,
     baselineCustomizationReport,

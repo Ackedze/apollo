@@ -1,6 +1,6 @@
 'use strict';
 const p=require('./protocol'),{createReport}=require('./report'),{createOpaqueId}=require('../design-check/opaque-id');
-function createStatisticsClient({send,request=(...args)=>fetch(...args),hash=null,versions={},userName=()=>null,now=Date.now,sessionId=createOpaqueId(),retryMs=30000,timeoutMs=5000,onError=code=>console.warn('[Apollo][audit-statistics]',code)}){
+function createStatisticsClient({send,request=(...args)=>fetch(...args),hash=null,canDeliver=()=>true,versions={},userName=()=>null,now=Date.now,sessionId=createOpaqueId(),retryMs=30000,timeoutMs=5000,onError=code=>console.warn('[Apollo][audit-statistics]',code)}){
  const pending=new Map(),unsaved=new Map(),runs=new Map(),completed=new Map();let seq=0,flushing=false,again=false,timer=null,closed=false;
  const retry=()=>{if(!closed&&!timer){timer=setTimeout(()=>{timer=null;void flush();},retryMs);timer.unref?.();}};
  function arm(work,requestId){clearTimeout(work.t);work.t=setTimeout(()=>{pending.delete(requestId);work.reject(Error('AUDIT_STATISTICS_NATIVE_TIMEOUT'));},timeoutMs);}
@@ -12,9 +12,11 @@ function createStatisticsClient({send,request=(...args)=>fetch(...args),hash=nul
    if(!response.ok||receipt?.accepted!==true||receipt.reportId!==report.reportId||receipt.payloadHash!==payloadHash||!['proxy-durable','repository-saved'].includes(receipt.state))throw Error('AUDIT_STATISTICS_RECEIPT_INVALID');})(),new Promise((_,reject)=>{t=setTimeout(()=>{abort.abort();reject(Error('AUDIT_STATISTICS_HTTP_TIMEOUT'));},timeoutMs);})]);}finally{clearTimeout(t);}}
  async function flush(){if(closed)return;if(flushing){again=true;return;}flushing=true;again=false;let remaining=false;
   const reported=new Set(),warn=message=>{if(!reported.has(message)){reported.add(message);onError(message);}};
+  let deliveryReady;
   async function drain(){
    const rows=await rpc('pending');if(!rows||!Array.isArray(rows.reports)||!rows.reports.every(p.valid)||!hash&&(!Array.isArray(rows.payloadHashes)||rows.payloadHashes.length!==rows.reports.length||!rows.payloadHashes.every(v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v))))throw Error('AUDIT_STATISTICS_NATIVE_REPLY_INVALID');
    if(rows.unreadable){warn('AUDIT_STATISTICS_UNREADABLE');remaining=true;}
+   if(rows.reports.length&&!(await (deliveryReady??=canDeliver()))){remaining=true;return;}
    for(let i=0;i<rows.reports.length&&!closed;i++){const report=rows.reports[i];try{await deliver(report,hash?await hash(report):rows.payloadHashes[i]);await rpc('ack',report);}catch(e){remaining=true;warn(e.message);if(e.message!=='AUDIT_STATISTICS_RECEIPT_INVALID')break;}}
   }
   try{

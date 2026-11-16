@@ -5,11 +5,18 @@ import { FindingActionRegistry } from './remediation/findingActionRegistry';
 import { createAuditSession } from './remediation/session';
 import { createCooperativeYield } from './utils/promisePool';
 import { sha256Hex } from './utils/sha256';
+import { readOfflineAuditIndex, type OfflineAuditIndex } from './embedded-data';
+import {createComponentTimings} from './component-timings';
+declare const __APOLLO_NATIVE_BUILD_INPUTS_SHA__: string;
 const p=require('./transport');
 const {createRunTrace}=require('./run-trace');
+const pluginBuildId=typeof __APOLLO_NATIVE_BUILD_INPUTS_SHA__==='string'?__APOLLO_NATIVE_BUILD_INPUTS_SHA__:null;
+const athenaIndexProgress=(source:string)=>source==='proxy'
+ ?'Подготавливаем индексы Athena из Proxy…':'Подготавливаем индексы Athena с GitHub Pages…';
 
-export function createV3NativePort(options:{post(message:any):void;readRevision():number;isUnavailable():boolean;canMutate():boolean;onBusy(busy:boolean):void;onMutation():void;pluginVersion:string}){
+export function createV3NativePort(options:{post(message:any):void;readRevision():number;isUnavailable():boolean;canMutate():boolean;onBusy(busy:boolean):void;onMutation():void;pluginVersion:string;useCompactIndex?:boolean;offlineIndex?:()=>OfflineAuditIndex}){
  let seq=0,closed=false,capture:any=null,operation:any=null;
+ let compactIndex:Awaited<ReturnType<typeof readOfflineAuditIndex>>|null=null;
  const accepted=new Map<string,any>(),pending=new Map<string,any>();
  const busy=()=>Boolean(capture||operation);
  const post=(message:any)=>{if(!closed)options.post(message);};
@@ -33,7 +40,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
  function sourceGuard(scope:any){if(closed||scope.invalidated||figma.currentPage.id!==scope.pageId||options.readRevision()!==scope.revision)throw Error('AUDIT_SOURCE_CHANGED');}
  function invalidateScope(scope:any){
   const details=Object.assign({},sourceChange(scope),context(scope));scope.trace.add('source-invalidated',details,true);if(traceFor(scope)!==scope.trace)traceFor(scope).add('source-invalidated',details,true);
-  if(!scope.invalidated){scope.invalidated=true;if(accepted.has(scope.message.requestId))post({type:'v3-audit-invalidated',schemaVersion:p.BRIDGE,runId:scope.message.requestId,sourceChange:sourceChange(scope),trace:scope.trace.snapshot()});}
+  if(!scope.invalidated){scope.invalidated=true;if(accepted.has(scope.message.requestId))post({type:'v3-audit-invalidated',schemaVersion:p.BRIDGE,runId:scope.message.requestId,sourceChange:sourceChange(scope),trace:scope.traceSnapshot()});}
   if(capture===scope)capture.bridge.invalidate();
   if(operation?.scope===scope&&!operation.started&&!operation.readonly){operation.reject(Error('AUDIT_SOURCE_CHANGED'));abortData(operation.requestId,'AUDIT_SOURCE_CHANGED');}
  }
@@ -43,15 +50,33 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
  function captureRun(message:any,internal=false,rootIds?:string[]){
   if(closed||capture||operation&&!internal||!internal&&options.isUnavailable()){post({type:'v3-audit-error',schemaVersion:p.BRIDGE,requestId:message.requestId,code:'AUDIT_BUSY'});return;}
   const ids=rootIds||Array.from(figma.currentPage.selection.length?figma.currentPage.selection:figma.currentPage.children).map(node=>node.id);
-  const scope:any={message,rootIds:ids,fileKey:figma.fileKey||null,pageId:figma.currentPage.id,revision:options.readRevision(),invalidated:false,ownerRequestId:message.requestId,session:null,notificationSerial:0,notifications:new Set<Promise<unknown>>(),observation:createV3SourceObservation()};
-  scope.stage='roots';scope.trace=createRunTrace({requestId:message.requestId,runId:message.requestId,kind:message.kind,side:'native',pluginVersion:options.pluginVersion});scope.trace.add('capture-start',{rootCount:ids.length});
+  const textOnly=message.kind==='texts';
+  const scope:any={message,rootIds:ids,fileKey:figma.fileKey||null,pageId:figma.currentPage.id,revision:options.readRevision(),invalidated:false,ownerRequestId:message.requestId,session:null,notificationSerial:0,notifications:new Set<Promise<unknown>>(),observation:createV3SourceObservation(textOnly?'texts':'components')};
+  scope.stage='roots';scope.trace=createRunTrace({requestId:message.requestId,runId:message.requestId,kind:message.kind,side:'native',pluginVersion:options.pluginVersion,pluginBuildId});scope.trace.add('capture-start',{rootCount:ids.length});
   scope.guard=traceGuard(scope,()=>sourceGuard(scope));scope.checkpoint=createCooperativeYield(scope.guard);
-  scope.data=createAuditDataClient({loadManifest:()=>request(scope,'manifest'),readAsset:(id,file)=>request(scope,'asset',id,file),hashText:text=>sha256Hex(text,scope.guard),yieldControl:()=>scope.checkpoint()});
+  scope.offlineIndex=message.kind==='components'?(options.offlineIndex||(options.useCompactIndex?async()=>{
+   if(!compactIndex){
+    const loaded=await readOfflineAuditIndex(await request(scope,'compact-index'),scope.guard);
+    scope.guard();compactIndex=loaded;
+   }
+   scope.guard();scope.compactSummary=compactIndex.summary;
+   scope.trace.add('data-index-ready',{dataId:compactIndex.summary.dataId,resource:compactIndex.summary.source});
+   post({type:'v3-audit-progress',schemaVersion:p.BRIDGE,requestId:scope.ownerRequestId,
+    progress:{stage:'data',message:athenaIndexProgress(compactIndex.summary.source)}});
+   return compactIndex.index;
+  }:undefined)):undefined;
+  const componentTimings=scope.offlineIndex?createComponentTimings():undefined;
+  scope.traceSnapshot=()=>{
+   const trace=scope.trace.snapshot(),timings=componentTimings?.snapshot();
+   if(timings)trace.componentTimings=timings;
+   return trace;
+  };
+  scope.data=scope.offlineIndex?null:createAuditDataClient({loadManifest:()=>request(scope,'manifest'),readAsset:(id,file)=>request(scope,'asset',id,file),hashText:text=>sha256Hex(text,scope.guard),yieldControl:()=>scope.checkpoint()});
   scope.registry=new FindingActionRegistry();scope.registry.reset();
-  scope.bridge=createV3AuditBridge({data:scope.data,pluginVersion:options.pluginVersion,findingActions:scope.registry,
+  scope.bridge=createV3AuditBridge({data:scope.data,offlineIndex:scope.offlineIndex,snapshot:scope.offlineIndex||textOnly?scope.observation.snapshot:undefined,pluginVersion:options.pluginVersion,findingActions:scope.registry,componentTimings,
    isUnavailable:()=>false,readRevision:options.readRevision,
    onGuard:guard=>{scope.guard=traceGuard(scope,guard);scope.checkpoint=createCooperativeYield(scope.guard);},onBusy:()=>notifyBusy(),
-   prepareRoots:async(roots,guard)=>{scope.stage='observation';scope.trace.add('observation-start',context(scope));await scope.observation.prepare(roots,guard);scope.trace.add('observation-ready',context(scope));},
+   prepareRoots:async(roots,guard,isSharedKey)=>{scope.stage='observation';scope.trace.add('observation-start',context(scope));const included=await scope.observation.prepare(roots,guard,!scope.offlineIndex&&!textOnly,isSharedKey);scope.trace.add('observation-ready',context(scope));return included;},
    assertPublishReady:()=>assertReady(scope),
    finish:async(guard,publish)=>{
     scope.stage='publish';let round=0;
@@ -59,7 +84,11 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
      scope.trace.add('publish-barrier',Object.assign(context(scope),{round:++round}));
      await scope.checkpoint();await settleNotifications(scope,guard);
      const serial=scope.notificationSerial;
-     await scope.observation.verify(guard);guard();
+     // Offline findings describe the captured snapshot. Writes verify the live scene in act().
+     if(!scope.offlineIndex){
+      await scope.observation.verify(guard);
+      guard();
+     }
      if(scope.notifications.size||scope.notificationSerial!==serial){scope.trace.add('publish-retry',Object.assign(context(scope),{previousSerial:serial}));continue;}
      scope.trace.add('publish-ready',context(scope));
      publish();return;
@@ -79,7 +108,12 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
      accepted.set(scope.message.requestId,scope);capture=null;
     }else if(['v3-audit-error','v3-audit-cancelled'].includes(message.type)){abortData(scope.ownerRequestId,message.code);capture=null;}
     const reply=message.code==='AUDIT_SOURCE_CHANGED'?Object.assign({},message,{sourceChange:sourceChange(scope,'capture')}):Object.assign({},message);
-    if(terminal)reply.trace=scope.trace.snapshot();post(reply);notifyBusy();
+    if(message.type==='v3-audit-progress'&&message.progress.stage==='indexes'&&scope.compactSummary){
+     reply.progress=Object.assign({},message.progress,{message:athenaIndexProgress(scope.compactSummary.source)});
+    }
+    if(terminal)reply.trace=scope.traceSnapshot();
+    if(message.type==='v3-audit-result'&&scope.compactSummary)reply.result.athenaIndex=scope.compactSummary;
+    post(reply);notifyBusy();
    }});
   capture=scope;notifyBusy();scope.bridge.accept(Object.assign({},message,{rootIds:ids}));
  }
@@ -97,7 +131,9 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
   const work=async()=>{
    // Navigation uses only the held opaque target and its original page, never current selection.
    if(task.readonly){guard();await scope.session.focus(message.focusActionId,guard);guard();return{};}
-   guard();await settleNotifications(scope,guard);await scope.observation.verify(guard);guard();await scope.data.open(guard);guard();await settleNotifications(scope,guard);
+   guard();await settleNotifications(scope,guard);await scope.observation.verify(guard);guard();
+   if(scope.data)await scope.data.open(guard);
+   guard();await settleNotifications(scope,guard);
    if(message.type==='v3-audit-verify')return{};
    if(message.type==='v3-audit-focus'){await scope.session.focus(message.focusActionId,guard);guard();return{};}
    if(!options.canMutate())throw Error('AUDIT_OBSERVER_UNAVAILABLE');
@@ -135,7 +171,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
   },
   invalidate(callsite='native-invalidate'){
    const scopes=new Set<any>(Array.from(accepted.values()).concat(capture?[capture]:[]));for(const scope of scopes){const afterWrite=operation?.scope===scope&&operation.started===true;traceFor(scope).add('context-invalidated',Object.assign(context(scope),{callsite,outcome:afterWrite?'refresh-required':'refused'}),!afterWrite);}
-   for(const scope of accepted.values())if(!scope.invalidated){scope.invalidated=true;post({type:'v3-audit-invalidated',schemaVersion:p.BRIDGE,runId:scope.message.requestId,sourceChange:sourceChange(scope),trace:scope.trace.snapshot()});}
+   for(const scope of accepted.values())if(!scope.invalidated){scope.invalidated=true;post({type:'v3-audit-invalidated',schemaVersion:p.BRIDGE,runId:scope.message.requestId,sourceChange:sourceChange(scope),trace:scope.traceSnapshot()});}
    if(capture)capture.bridge.invalidate();
    if(operation&&!operation.started){operation.reject(Error('AUDIT_SOURCE_CHANGED'));abortData(operation.requestId,'AUDIT_SOURCE_CHANGED');}
   },

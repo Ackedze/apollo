@@ -1,6 +1,8 @@
 import type { CheckState } from '../create-check-state';
-import type { AuditItem, ThemeAuditEntry } from '../types/audit';
+import type { AuditItem, ThemeAuditEntry, WrongChannelTypographyEntry } from '../types/audit';
 import type { AuditTraversalContext } from './auditTraversalContext';
+import type { AuditSceneSnapshot } from '../source-observation';
+import { untimed, type createComponentTimings } from '../component-timings';
 import {
   classifyComponentNode,
   type ComponentClassifierDependencies,
@@ -30,16 +32,27 @@ import {
   isShellDetachedEntryExcluded,
 } from '../policies/shellComponentAuditPolicy';
 import { traceAudit } from '../utils/auditInstrumentation';
+import { getDetachedLibraryComponentKey } from './detachedComponentSource';
 
 export interface AuditTargetCollectorOptions {
   shellAuditEnabled: boolean;
   dependencyConcurrency: number;
 }
 
-export interface AuditTargetCollectorDependencies
-  extends ComponentClassifierDependencies {
+type IndexedAudit = {
+  snapshot?:AuditSceneSnapshot;
+  timings?:ReturnType<typeof createComponentTimings>;
+  getMainComponent(node:InstanceNode):Promise<ComponentNode|null>;
+  isSharedShellKey?(key:string):boolean;
+  classifyComponent(node:SceneNode, definition:ComponentNode|null):Promise<AuditItem>;
+  wrongChannel(item:AuditItem):boolean;
+  wrongChannelTypography?(node:TextNode):Promise<WrongChannelTypographyEntry[]>;
+  themization(node:SceneNode,item:AuditItem):ThemeAuditEntry|null;
+  referenceByKey: typeof import('../reference/library').findComponent;
+};
+type AuditTargetCollectorDependencies = Pick<ComponentClassifierDependencies,'getComponentKeyCached'|'buildNodeSegments'|'throwIfCancelled'> & {
   getNodeById(nodeId: string): Promise<BaseNode | null>;
-}
+} & ({indexed:IndexedAudit}|(ComponentClassifierDependencies & {indexed?:undefined}));
 
 export interface AuditCategoryAggregationOptions {
   wrongChannel: boolean;
@@ -85,21 +98,8 @@ export async function collectAuditTargets(
     dependencyConcurrency,
     shellAuditEnabled,
   } = options;
-  const {
-    buildNodeSegments,
-    debugDiffPipeline,
-    getComponentKeyCached,
-    getNodeById,
-    getReferenceStructureCached,
-    isInsideLocalComponentContext,
-    isPaintToken,
-    normalizeRelevanceStatus,
-    reportMissingReference,
-    resolveTokenLabel,
-    resolveVariableCollectionMetadata,
-    resolveVariableMetadata,
-    throwIfCancelled,
-  } = dependencies;
+  const {buildNodeSegments,getComponentKeyCached,getNodeById,throwIfCancelled,indexed} = dependencies;
+  const auditTypography = indexed?.wrongChannelTypography;
   const {
     componentKeyCache,
     customStyleOptions: customStyleReasonOptions,
@@ -111,8 +111,15 @@ export async function collectAuditTargets(
   const sourceComponentFocusNodeIds = new Map<string, Set<string>>();
   const resolvedFlattenedSourceIds = new Set<string>();
   const rejectedFlattenedSourceIds = new Set<string>();
+  const snapshot=indexed?.snapshot;
+  const measure=indexed?.timings?.measure??untimed;
+  const measureSync=indexed?.timings?.measureSync??untimed;
+  const classify = dependencies.indexed
+    ? dependencies.indexed.classifyComponent
+    : (node:SceneNode,definition:ComponentNode|null)=>classifyComponentNode(node,definition,traversalContext,dependencies);
   const isNodeVisibleSafe = (candidate: SceneNode): boolean => {
     try {
+      if(snapshot)return snapshot.isVisible(candidate);
       return 'visible' in candidate
         ? (candidate as SceneNode & { visible: boolean }).visible !== false
         : true;
@@ -120,61 +127,51 @@ export async function collectAuditTargets(
       return false;
     }
   };
+  const getChildren=(node:SceneNode)=>snapshot?.getChildren(node)??('children'in node?Array.from(node.children):[]);
+  const getMainComponent=async(node:SceneNode)=>node.type==='INSTANCE'
+    ? await (indexed?indexed.getMainComponent(node):node.getMainComponentAsync())
+    : null;
+  const isSharedKey=indexed?.isSharedShellKey;
+  const skipLegacyShell=!indexed&&!shellAuditEnabled;
+  const directSharedKey=(node:SceneNode)=>node.type==='COMPONENT'||node.type==='COMPONENT_SET'
+    ? node.key : getDetachedLibraryComponentKey(node);
 
-  await traverseAuditTree(selection, {
+  await measure('renderedTree',()=>traverseAuditTree(selection, {
     throwIfCancelled,
+    timings: indexed?.timings,
     isVisible: isNodeVisibleSafe,
-    getChildren: (node) =>
-      'children' in node ? Array.from(node.children) as SceneNode[] : [],
+    getChildren,
     visit: async (node) => {
-      traversalContext.sceneNodeById.set(node.id, node);
-      const nodeIsComponent =
-        node.type === 'INSTANCE' || node.type === 'COMPONENT';
-      let subtreeForcedCategory: 'technical' | 'deprecated' | null = null;
+      if(isSharedKey&&!snapshot?.shouldSkipShared){
+        const key=node.type==='INSTANCE'?(await getMainComponent(node))?.key:directSharedKey(node);
+        if(key&&isSharedKey(key))return {skipChildren:true};
+      }
+      const nodeIsComponent = measureSync('visitNodeRegistration', () => {
+        traversalContext.sceneNodeById.set(node.id, node);
+        return node.type === 'INSTANCE' || node.type === 'COMPONENT';
+      });
 
       if (nodeIsComponent) {
-        const freshnessScope = getLibraryComponentFreshnessScope(node);
-        const localDefinition = await resolveLocalComponentDefinition<
+        const freshnessScope = measureSync('visitFreshnessScope', () => getLibraryComponentFreshnessScope(node));
+        const localDefinition = await measure('resolveLocalDefinition',()=>resolveLocalComponentDefinition<
           SceneNode,
           ComponentNode
         >(node, {
           getNodeType: (candidate) => candidate.type,
-          getMainComponent: async (candidate) =>
-            candidate.type === 'INSTANCE'
-              ? await (candidate as InstanceNode).getMainComponentAsync()
-              : null,
+          getMainComponent,
           isRemoteComponent: (component) => component.remote,
-        });
+        }));
         if (localDefinition) {
-          registerComponentDefinition(
+          measureSync('visitLocalDefinitionRegistration', () => registerComponentDefinition(
             sourceComponentDefinitions,
             sourceComponentFocusNodeIds,
             localDefinition,
             node.id,
-          );
+          ));
         }
 
-        const item = await classifyComponentNode(
-          node,
-          localDefinition,
-          traversalContext,
-          {
-            getComponentKeyCached,
-            buildNodeSegments,
-            getReferenceStructureCached,
-            isInsideLocalComponentContext,
-            resolveTokenLabel,
-            isPaintToken,
-            resolveVariableMetadata,
-            resolveVariableCollectionMetadata:
-              resolveVariableCollectionMetadata,
-            normalizeRelevanceStatus,
-            reportMissingReference,
-            debugDiffPipeline,
-            throwIfCancelled,
-          },
-        );
-        throwIfCancelled();
+        const item = await measure('classifyComponent',()=>classify(node,localDefinition));
+        measureSync('visitGuard', throwIfCancelled);
 
         if (item.isLocal) {
           checkState.localLibraryItems.push(item);
@@ -184,73 +181,76 @@ export async function collectAuditTargets(
           node.type === 'INSTANCE' &&
           freshnessScope === 'instance-sublayer'
         ) {
-          await registerFlattenedLocalComponentDefinition(
+          await measure('resolveFlattenedSource',()=>registerFlattenedLocalComponentDefinition(
             node,
             sourceComponentDefinitions,
             sourceComponentFocusNodeIds,
             resolvedFlattenedSourceIds,
             rejectedFlattenedSourceIds,
             getNodeById,
-          );
+          ));
         }
 
-        if (!shellAuditEnabled && isShellComponentAuditExcluded(item)) {
-          traceAudit('shell-subtree-skipped', {
-            nodeId: node.id,
-            nodeName: node.name,
-            libraryName: item.librarySource ?? null,
-            componentName:
-              item.reference?.displayName ?? item.reference?.name ?? item.name,
-            categoryDecision: 'skipped-check',
-            matchedRule: 'shell-audit-disabled',
-            property: null,
-            expected: null,
-            actual: null,
-            reason: getShellComponentAuditReason(item),
+        const skipChildren = measureSync('visitComponentGrouping', () => {
+          if (skipLegacyShell && isShellComponentAuditExcluded(item)) {
+            traceAudit('shell-subtree-skipped', {
+              nodeId: node.id,
+              nodeName: node.name,
+              libraryName: item.librarySource ?? null,
+              componentName:
+                item.reference?.displayName ?? item.reference?.name ?? item.name,
+              categoryDecision: 'skipped-check',
+              matchedRule: 'shell-audit-disabled',
+              property: null,
+              expected: null,
+              actual: null,
+              reason: getShellComponentAuditReason(item),
+            });
+            return true;
+          }
+
+          const subtreeForcedCategory = item.forcedCategory ?? null;
+
+          const wrongChannel =
+            item.reference != null && (indexed ? indexed.wrongChannel(item) : isWrongChannelComponent(item.reference, selectedChannel));
+          const themizationEntry =
+            !subtreeForcedCategory && item.reference && themizationEnabled
+              ? indexed ? indexed.themization(node,item) : buildCorporateThemizationEntry(node, item.reference)
+              : null;
+          aggregateAuditComponent(checkState, item, {
+            wrongChannel,
+            themizationEntry,
+            preset: !subtreeForcedCategory && isPresetCandidate(item),
           });
-          return { skipChildren: true };
-        }
 
-        subtreeForcedCategory = item.forcedCategory ?? null;
-
-        const wrongChannel =
-          item.reference != null &&
-          isWrongChannelComponent(item.reference, selectedChannel);
-        const themizationEntry =
-          !subtreeForcedCategory && item.reference && themizationEnabled
-            ? buildCorporateThemizationEntry(node, item.reference)
-            : null;
-        aggregateAuditComponent(checkState, item, {
-          wrongChannel,
-          themizationEntry,
-          preset: !subtreeForcedCategory && isPresetCandidate(item),
+          if (subtreeForcedCategory) {
+            traceAudit('category-subtree-skipped', {
+              nodeId: node.id,
+              nodeName: node.name,
+              libraryName: item.librarySource ?? null,
+              componentName:
+                item.reference?.displayName ?? item.reference?.name ?? item.name,
+              categoryDecision: subtreeForcedCategory,
+              matchedRule: subtreeForcedCategory,
+              property: null,
+              expected: null,
+              actual: null,
+              reason:
+                item.forcedCategoryReason ??
+                'component subtree is excluded from deep audit by policy',
+            });
+          }
+          return Boolean(subtreeForcedCategory);
         });
-
-        if (subtreeForcedCategory) {
-          traceAudit('category-subtree-skipped', {
-            nodeId: node.id,
-            nodeName: node.name,
-            libraryName: item.librarySource ?? null,
-            componentName:
-              item.reference?.displayName ?? item.reference?.name ?? item.name,
-            categoryDecision: subtreeForcedCategory,
-            matchedRule: subtreeForcedCategory,
-            property: null,
-            expected: null,
-            actual: null,
-            reason:
-              item.forcedCategoryReason ??
-              'component subtree is excluded from deep audit by policy',
-          });
-          return { skipChildren: true };
-        }
+        if (skipChildren) return { skipChildren: true };
       }
 
-      if (node.type === 'FRAME' || node.type === 'GROUP') {
-        const item = collectDetachedEntry(node);
+      const skipDetachedChildren = measureSync('visitDetached', () => {
+        if (node.type !== 'FRAME' && node.type !== 'GROUP') return false;
+        const item = collectDetachedEntry(node,indexed?.referenceByKey);
 
         if (item) {
-          if (!shellAuditEnabled && isShellDetachedEntryExcluded(item)) {
+          if (skipLegacyShell && isShellDetachedEntryExcluded(item)) {
             traceAudit('shell-detached-subtree-skipped', {
               nodeId: node.id,
               nodeName: node.name,
@@ -264,23 +264,30 @@ export async function collectAuditTargets(
               actual: null,
               reason: `detached component ${item.componentName ?? item.componentKey} is excluded by Apollo shell settings`,
             });
-            return { skipChildren: true };
+            return true;
           }
 
           checkState.detachedEntries.push(item);
         }
-      }
+        return false;
+      });
+      if (skipDetachedChildren) return { skipChildren: true };
 
       if (node.type !== 'SECTION') {
-          const customStyleReasons = await collectCustomStyles(
-            node,
-            customStyleReasonOptions,
-          );
-          const deprecatedStyleEntries = await collectDeprecatedStyleUsages(
-            node,
-            deprecatedStyleOptions,
-          );
+        if (node.type === 'TEXT' && auditTypography) {
+          const findings = await auditTypography(node);
+          checkState.wrongChannelTypographyEntries.push(...findings);
+        }
+        const customStyleReasons = await measure('customStyles',()=>collectCustomStyles(
+          node,
+          customStyleReasonOptions,
+        ));
+        const deprecatedStyleEntries = await measure('deprecatedStyles',()=>collectDeprecatedStyleUsages(
+          node,
+          deprecatedStyleOptions,
+        ));
 
+        measureSync('visitStyleGrouping', () => {
           if (customStyleReasons.length) {
             checkState.customStyleEntries = [
               ...checkState.customStyleEntries,
@@ -293,14 +300,13 @@ export async function collectAuditTargets(
               ...checkState.deprecatedStyleEntries,
               ...deprecatedStyleEntries,
             ];
-        }
+          }
+        });
       }
-
-      return subtreeForcedCategory ? { skipChildren: true } : undefined;
     },
-  });
+  }));
 
-  const localDependencyResult = await auditLocalComponentDependencies<
+  const localDependencyResult = await measure('localDependencies',()=>auditLocalComponentDependencies<
     SceneNode,
     ComponentNode
   >(
@@ -310,14 +316,14 @@ export async function collectAuditTargets(
     {
       getNodeId: (node) => node.id,
       getNodeType: (node) => node.type,
-      getChildren: (node) =>
-        'children' in node
-          ? Array.from(node.children) as SceneNode[]
-          : [],
-      getMainComponent: async (node) =>
-        node.type === 'INSTANCE'
-          ? await (node as InstanceNode).getMainComponentAsync()
-          : null,
+      getChildren:node=>{
+        const key=isSharedKey&&directSharedKey(node);
+        return key&&isSharedKey?.(key)?[]:getChildren(node);
+      },
+      getMainComponent:async node=>{
+        const main=await getMainComponent(node);
+        return main&&isSharedKey?.(main.key)?null:main;
+      },
       isRemoteComponent: (component) => component.remote,
       isVisible: isNodeVisibleSafe,
       componentFocusNodeIds: sourceComponentFocusNodeIds,
@@ -333,6 +339,7 @@ export async function collectAuditTargets(
           owner,
           {
             componentKeyCache,
+            referenceByKey:indexed?.referenceByKey,
             freshnessChecker: libraryComponentFreshnessChecker,
             observedComponentKeys,
             focusNodeIds,
@@ -342,12 +349,12 @@ export async function collectAuditTargets(
           },
         ),
       shouldExclude: (item) =>
-        !shellAuditEnabled && isShellComponentAuditExcluded(item),
+        skipLegacyShell && isShellComponentAuditExcluded(item),
       freshnessChecker: libraryComponentFreshnessChecker,
       dependencyConcurrency,
       throwIfCancelled,
     },
-  );
+  ));
   checkState.relevanceBuckets.current = localDependencyResult.currentItems;
   checkState.relevanceBuckets.update = localDependencyResult.updateItems;
 }

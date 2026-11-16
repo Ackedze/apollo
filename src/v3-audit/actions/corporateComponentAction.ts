@@ -67,6 +67,7 @@ export async function applyComponentFindingReplacement(input: {
   nodeId: string;
   expectedComponentKey: string;
   targetComponentKey: string;
+  exactTarget?: boolean;
   mutation?:MutationControl;
 }): Promise<CorporateComponentActionResult> {
   input.mutation?.assertCurrent();
@@ -83,6 +84,27 @@ export async function applyComponentFindingReplacement(input: {
       ok: false,
       message: 'Компонент изменился после проверки. Запустите проверку ещё раз.',
     };
+  }
+
+  if(input.exactTarget){
+    const sourceProperties = snapshotInstanceComponentProperties(node);
+    let target:ComponentNode|null=null;
+    try{target=await figma.importComponentByKeyAsync(input.targetComponentKey);}catch{}
+    input.mutation?.assertCurrent();
+    if(!target||target.key!==input.targetComponentKey) return {ok:false,message:'Не удалось подтвердить вариант для замены.'};
+    const attempts:CorporateReplacementAttempt[]=[];
+    const swapped=await swapCorporateTarget(node,target,sourceProperties,'indexed-variant',attempts,input.mutation,input.expectedComponentKey);
+    if(!swapped)return {ok:false,message:'Замена компонента не подтверждена.'};
+    const applied=await node.getMainComponentAsync();input.mutation?.assertCurrent();
+    const current=snapshotInstanceComponentProperties(node);
+    const preserved=sourceProperties.every(source=>{
+      const candidates=current.filter(actual=>actual.type===source.type&&actual.canonicalName===source.canonicalName);
+      const exact=candidates.find(actual=>actual.sourceKey===source.sourceKey);
+      const actual=exact??(candidates.length===1?candidates[0]:null);
+      return actual&&JSON.stringify(actual.value)===JSON.stringify(source.value);
+    });
+    if(applied?.key!==input.targetComponentKey||!preserved)return {ok:false,message:'Не удалось подтвердить сохранение свойств после замены.'};
+    return {ok:true,node};
   }
 
   const replaced = await replaceCorporateInstance(

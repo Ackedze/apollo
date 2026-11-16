@@ -5,7 +5,7 @@ const exact=(value,keys)=>value&&typeof value==='object'&&!Array.isArray(value)&
 function dataRequest(message){
  const keys=['type','schemaVersion','requestId','ownerRequestId','operation'];
  return message?.schemaVersion===VERSION&&id(message.requestId)&&id(message.ownerRequestId)&&message.type==='v3-audit-data-request'&&
-  (message.operation==='manifest'?exact(message,keys):message.operation==='asset'&&exact(message,keys.concat('dataId','fileId'))&&hash(message.dataId)&&hash(message.fileId));
+  (['manifest','compact-index'].includes(message.operation)?exact(message,keys):message.operation==='asset'&&exact(message,keys.concat('dataId','fileId'))&&hash(message.dataId)&&hash(message.fileId));
 }
 function command(message){
  if(!message||message.schemaVersion!==BRIDGE||!id(message.requestId))return false;

@@ -30,6 +30,10 @@ import {
 } from '../utils/nodeHelpers';
 
 export interface CustomStyleCollectionOptions {
+  referenceByKey?: typeof findComponent;
+  resolveComponentKey?: (node:BaseNode)=>Promise<string|null>;
+  readStyleByIdAsync?: PluginAPI['getStyleByIdAsync'];
+  ignoreRawTypography?: typeof import('../policies/auditPolicyConfig').shouldIgnoreRawTypography;
   tokenLabelMap: Map<
     string,
     { label: string; library?: string; sourceFile?: string }
@@ -49,13 +53,15 @@ export async function collectCustomStyles(
 ): Promise<CustomStyleEntry[]> {
   const entries: CustomStyleEntry[] = [];
 
-    if (await shouldIgnoreNodeDiagnostics(node)) {
+    if (await shouldIgnoreNodeDiagnostics(node,options.resolveComponentKey)) {
       return entries;
     }
 
     if (node.type === 'SECTION') return entries;
 
-    const reasons = await describeCustomStyleReasons(node, options);
+  const reasons = await describeCustomPaintAndEffectReasons(node, options);
+  const typography = node.type === 'TEXT' ? await describeCustomTypography(node, options) : null;
+  if (typography) reasons.push('typography');
 
     if (reasons.length) {
       for (const reason of reasons) {
@@ -67,7 +73,9 @@ export async function collectCustomStyles(
           path: buildNodePath(node),
           visible: isNodeVisible(node),
           reason,
-          resource: await resolveCustomStyleResource(node, reason, options),
+          resource: reason === 'typography' && typography
+            ? typography
+            : await resolveCustomStyleResource(node, reason, options),
         });
       }
     }
@@ -117,15 +125,6 @@ async function resolveCustomStyleResource(
     };
   }
 
-  if (reason === 'typography' && node.type === 'TEXT') {
-    return {
-      type: 'raw-value',
-      name: getNodeTypographyDisplayValue(node) ?? 'Типографика',
-      key: null,
-      library: null,
-    };
-  }
-
   return {
     type: 'raw-value',
     name: reason || 'Custom style',
@@ -145,7 +144,7 @@ async function resolveStyleResource(
   options: CustomStyleCollectionOptions,
 ): Promise<AuditResource> {
   const metadata = await options.resolveStyleMetadata(styleId);
-  const style = await getStyleById(styleId);
+  const style = await getStyleById(styleId, options.readStyleByIdAsync);
   return {
     type: 'style',
     name: metadata?.label ?? style?.name ?? fallbackName,
@@ -156,8 +155,9 @@ async function resolveStyleResource(
   };
 }
 
-async function getStyleById(styleId: string): Promise<BaseStyle | null> {
+async function getStyleById(styleId: string, readStyleByIdAsync?: PluginAPI['getStyleByIdAsync']): Promise<BaseStyle | null> {
   try {
+    if (readStyleByIdAsync) return await readStyleByIdAsync(styleId);
     return typeof figma.getStyleByIdAsync === 'function'
       ? await figma.getStyleByIdAsync(styleId)
       : null;
@@ -206,12 +206,13 @@ function resolvePaintTokenResource(
  */
 export function collectDetachedEntry(
   node: SceneNode,
+  lookup = findComponent,
 ): DetachedEntry | null {
   if (node.type === 'FRAME' || node.type === 'GROUP') {
     const componentKey = getDetachedLibraryComponentKey(node);
 
     if (componentKey) {
-      const componentRef = findComponent(
+      const componentRef = lookup(
         componentKey,
       );
 
@@ -393,12 +394,12 @@ function baselineEvidenceScore(diff: DiffEntry): number {
   return score;
 }
 
-export async function describeCustomStyleReasons(
+async function describeCustomPaintAndEffectReasons(
   node: SceneNode,
   options: CustomStyleCollectionOptions,
 ): Promise<Array<CustomStyleEntry['reason']>> {
   const reasons: Array<CustomStyleEntry['reason']> = [];
-  const ignorePaintReason = await shouldIgnorePaintCustomStyle(node);
+  const ignorePaintReason = await shouldIgnorePaintCustomStyle(node,options.referenceByKey,options.resolveComponentKey);
   if (!ignorePaintReason && (await hasCustomPaints(node, 'fills', 'fillStyleId', options))) {
     reasons.push('fill');
   }
@@ -407,52 +408,37 @@ export async function describeCustomStyleReasons(
   }
   const effectReasons = await describeCustomEffects(node, options);
   reasons.push(...effectReasons);
-  const typographyReasons = await describeCustomTypography(node, options);
-  reasons.push(...typographyReasons);
   return reasons;
 }
 
 async function describeCustomTypography(
-  node: SceneNode,
-  options: CustomStyleCollectionOptions,
-): Promise<string[]> {
-  if (
-    node.type !== 'TEXT' ||
-    (await shouldIgnoreTypographyCustomStyle(node)) ||
-    (await hasKnownTextStyle(node, options))
-  ) {
-    return [];
-  }
-  return getNodeTypographyFingerprint(node) ? ['typography'] : [];
-}
-
-async function hasKnownTextStyle(
   node: TextNode,
   options: CustomStyleCollectionOptions,
-): Promise<boolean> {
-  if (
-    typeof node.textStyleId === 'string' &&
-    node.textStyleId &&
-    (await options.isKnownStyleId(node.textStyleId))
-  ) {
-    return true;
+): Promise<AuditResource | null> {
+  if (await shouldIgnoreTypographyCustomStyle(node, options.ignoreRawTypography, options.resolveComponentKey)) {
+    return null;
   }
-  if (typeof node.getStyledTextSegments !== 'function') {
-    return false;
+
+  const nodeStyleId = readStyleId(node, 'textStyleId');
+  if (!nodeStyleId && node.textStyleId === figma.mixed && typeof node.getStyledTextSegments !== 'function') {
+    return null;
   }
-  const styleIds = Array.from(
-    new Set(
-      node
-        .getStyledTextSegments(['textStyleId'])
-        .map((segment) => segment.textStyleId)
-        .filter((styleId): styleId is string => Boolean(styleId)),
-    ),
-  );
-  if (!styleIds.length) return false;
-  const known = await Promise.all(
-    styleIds.map((styleId) => options.isKnownStyleId(styleId)),
-  );
-  return known.every(Boolean);
+  const styleIds = nodeStyleId ? [nodeStyleId] : Array.from(new Set(
+    (node.getStyledTextSegments?.(['textStyleId']) ?? [])
+      .map(segment => segment.textStyleId)
+      .filter((id): id is string => typeof id === 'string' && id.length > 0),
+  ));
+  const known = await Promise.all(styleIds.map(id => options.isKnownStyleId(id)));
+  const unindexedStyleId = styleIds.find((_, index) => !known[index]);
+  if (unindexedStyleId) return resolveStyleResource(unindexedStyleId, 'Текстовый стиль', options);
+  if (styleIds.length || !getNodeTypographyFingerprint(node)) return null;
+
+  return {
+    type: 'raw-value',
+    name: getNodeTypographyDisplayValue(node) ?? 'Типографика',
+    key: null,
+    library: null,
+  };
 }
 
 async function describeCustomEffects(

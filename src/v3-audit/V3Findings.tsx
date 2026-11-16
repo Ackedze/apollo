@@ -1,5 +1,5 @@
 import React from 'react';
-import {FindingActionMenu} from '../design-check/FindingActionMenu';
+import {FindingActionMenu,FindingColorSwatch} from '../design-check/FindingActionMenu';
 import {FindingInformation} from '../design-check/FindingCard';
 import {ResultCard} from '../design-check/v3/ui-app/components/ResultCard';
 import {ResultSubCard} from '../design-check/v3/ui-app/components/ResultSubCard';
@@ -18,7 +18,8 @@ function DiffInfo({diff}:{diff:any}){
 function FindingActions({actions=[],disabled,onAction}:{actions?:any[];disabled:boolean;onAction:(id:string)=>void}){
  if(!actions.length)return null;
  const binding=actions.some(action=>['bind-variable','bind-style'].includes(action.kind));
- if(binding||actions.length>1)return <FindingActionMenu actions={actions} label={binding?'Привязать':'Выбрать'} disabled={disabled} onAction={onAction}/>;
+ const replacement=actions.some(action=>action.kind==='bind-variable'&&action.scope==='deprecatedStyles');
+ if(binding||actions.length>1)return <FindingActionMenu actions={actions} label={replacement?'Заменить':binding?'Привязать':'Выбрать'} disabled={disabled} onAction={onAction}/>;
  return <SmallButton label={actions[0].label} disabled={disabled} singleIcon={false} onPress={()=>onAction(actions[0].id)}/>;
 }
 function FocusIcon(){return <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
@@ -26,10 +27,12 @@ export function V3Findings({category,client,runId,stale,busy,mutationAvailable}:
  if(!category?.connected)return <p className="placeholder">Запусти проверку выбранной области.</p>;
  if(!category.entries.length)return <p className="placeholder">В этой категории замечаний нет.</p>;
  const disabled=stale||busy||!mutationAvailable||!runId;
+ const deprecatedStyles=category.id==='deprecatedStyles';
  return <div className="apollo-findings apollo-v3-findings">
   {category.entries.map((row:any)=>{
    const tone=row.classification==='violation'?'violation':['compliant','allowed','not-applicable'].includes(row.classification)?'current':'warning';
    const actions=(items:any[])=><FindingActions actions={items} disabled={disabled} onAction={id=>void client.action(id)}/>;
+   const swatch=<FindingColorSwatch color={row.item.actualColor} describe/>;
    return <ResultCard key={row.id} title={row.displayName||row.item.name||row.title} caption={row.library||undefined} onFocus={row.focusActionId&&!busy&&runId?()=>void client.focus(runId,row.focusActionId):undefined}
     indicator={<span className={`apollo-finding-status ${tone}`} role="img" aria-label={tone==='violation'?'Нарушение':tone==='warning'?'Замечание':'Соответствует'}>{tone==='current'?<span/>:<img src={tone==='warning'?assets.imgStatusWarning:assets.imgStatusCircle} width={36} height={36} alt=""/>}</span>}
     actions={<>{row.focusActionId&&<span><SmallButton focusTarget ariaLabel="Показать в макете" title={row.location} disabled={busy||!runId} icon={<FocusIcon/>} onPress={()=>void client.focus(runId,row.focusActionId)}/></span>}
@@ -39,7 +42,12 @@ export function V3Findings({category,client,runId,stale,busy,mutationAvailable}:
      valueLines={comparisons(diff).map((value:any)=>({label:value.property,values:[value.before,value.after]}))}>
       {!comparisons(diff).length&&diff.message&&diff.message!==diff.assessment?.message&&<p>{diff.message}</p>}
       <p className={"apollo-v3-finding-message "+(diff.assessment?.verdict==='violation'?'is-violation':'is-warning')}>{labels[diff.assessment?.verdict]||'Требует проверки'}</p>
-     </ResultSubCard>):<ResultSubCard name={row.title} actionSlot={actions(row.actions)}>{row.messages?.map((message:string,index:number)=><p key={index}>{message}</p>)}</ResultSubCard>}
+     </ResultSubCard>):<ResultSubCard name={row.title} nameLeading={deprecatedStyles?undefined:swatch} actionSlot={actions(row.actions)}>
+       {row.messages?.map((message:string,index:number)=>{
+        const styleName=deprecatedStyles&&index===0;
+        return <p key={index} className={styleName?'apollo-deprecated-style-name':undefined}>{styleName?<>{swatch}<span>{message}</span></>:message}</p>;
+       })}
+     </ResultSubCard>}
    </ResultCard>;
   })}
  </div>;

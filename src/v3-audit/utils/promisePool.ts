@@ -1,12 +1,16 @@
 /** Let native UI messages run even when every awaited read is already cached. */
-export function createCooperativeYield(guard: () => void = () => {}) {
+export function createCooperativeYield(
+  guard: () => void = () => {},
+  measureWait?: (wait: () => Promise<void>) => Promise<void>,
+) {
   let resumedAt = Date.now();
   let visited = 0;
+  const wait = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
   return async (): Promise<void> => {
     guard();
     visited += 1;
     if (visited < 256 && Date.now() - resumedAt < 8) return;
-    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await (measureWait ? measureWait(wait) : wait());
     guard();
     resumedAt = Date.now();
     visited = 0;

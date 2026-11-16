@@ -64,3 +64,14 @@ test('statistics retries offline and incompatible Proxy automatically without a 
  f.online(false);f.client.begin('check').finish('completed');await until(()=>f.pending().some(x=>x.status==='completed'));f.online(true);await until(()=>f.client.diagnostics().rejected.length>0);compatible=true;
  await until(()=>f.pending().length===0);assert.equal(f.client.getState().error,false);assert.equal(new Set(f.sent.map(x=>x.id)).size,1);
 });
+
+test('unavailable Proxy keeps the operation durable without POST until health recovers',async t=>{
+ let available=false;const f=fixture({client:{canDeliver:async()=>available,retryMs:20}});t.after(()=>f.client.close());
+ f.client.begin('check').finish('completed');
+ await until(()=>f.pending().some(record=>record.status==='completed')&&f.client.getState().pending>0);
+ await f.client.flush();
+ assert.deepEqual(f.sent,[]);
+ available=true;
+ await until(()=>f.sent.length===1&&f.pending().length===0);
+ assert.equal(f.sent[0].status,'completed');
+});

@@ -37,6 +37,7 @@ export function filterIgnoredLocalLibraryItems(items: AuditItem[]): AuditItem[] 
 
 export async function shouldIgnoreNodeDiagnostics(
   node: SceneNode,
+  resolveComponentKey = getNodeComponentKey,
 ): Promise<boolean> {
   let current: BaseNode | null = node;
 
@@ -45,7 +46,7 @@ export async function shouldIgnoreNodeDiagnostics(
       return true;
     }
 
-    const componentKey = await getNodeComponentKey(current);
+    const componentKey = await resolveComponentKey(current);
     if (componentKey && SANDBOX_COMPONENT_KEYS.has(componentKey)) {
       return true;
     }

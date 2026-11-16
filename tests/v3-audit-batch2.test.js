@@ -104,7 +104,35 @@ test('failed attempts and actions export correlated UI/native traces beside the 
  client.accept({type:'v3-audit-error',schemaVersion:p.BRIDGE,requestId:'failed',code:'AUDIT_SOURCE_CHANGED',trace:failed.snapshot()});snapshot=client.snapshot();assert.deepEqual(snapshot.originalPayload,result);assert.equal(snapshot.lastAttempt.requestId,'failed');assert.equal(snapshot.trace.sessions.at(-1).native.firstFailure.reason,'observed-facts-changed');assert.equal(snapshot.trace.sessions.at(-1).ui.events.at(-1).outcome,'error');
  const componentTraces=JSON.stringify(snapshot.trace);client.start({requestId:'text-failed',kind:'texts',uiPreferences:{pickerLabel:'Desktop'}});client.accept({type:'v3-audit-error',schemaVersion:p.BRIDGE,requestId:'text-failed',code:'AUDIT_FAILED',trace:native('text-failed','texts').snapshot()});assert.equal(JSON.stringify(client.snapshot().trace),componentTraces);assert.equal(client.snapshot('texts').trace.sessions[0].requestId,'text-failed');
  for(let i=0;i<6;i++){const id='bounded-'+i;client.start({requestId:id,uiPreferences:{pickerLabel:'Desktop'}});client.accept({type:'v3-audit-error',schemaVersion:p.BRIDGE,requestId:id,code:'AUDIT_FAILED',trace:native('foreign').snapshot()});}
- snapshot=client.snapshot();assert.equal(snapshot.trace.sessions.length,MAX_SESSIONS);assert.equal(snapshot.trace.droppedSessions,5);assert.equal(snapshot.trace.sessions.at(-1).native,null);assert.deepEqual(snapshot.originalPayload,result);client.close();
+ snapshot=client.snapshot();assert.equal(snapshot.trace.sessions.length,MAX_SESSIONS);assert.equal(snapshot.trace.droppedSessions,5);assert.equal(snapshot.trace.sessions.at(-1).native,null);assert.deepEqual(snapshot.originalPayload,result);assert.deepEqual(snapshot.trace.sessions[0].native,good.snapshot());client.close();
+});
+test('ten focus actions leave the accepted component timing trace in the bounded diagnostic export',async()=>{
+ const {createRunTrace,MAX_SESSIONS}=require('../src/v3-audit/run-trace');
+ const sent=[],client=createV3UiClient({send:message=>sent.push(message)});
+ const runId='landing-audit',dataId='a'.repeat(64);
+ const result={runId,dataId,visibleViews:{},textReport:{facts:{texts:[]}}};
+ const trace=createRunTrace({requestId:runId,runId,kind:'components',side:'native',pluginBuildId:'b'.repeat(64)});
+ trace.add('capture-terminal',{outcome:'success'});
+ const componentTimings={elapsedMs:80,finished:true,calls:{renderedTree:{count:1,completed:1,failed:0,totalMs:80,maxMs:80}}};
+ try{
+  client.start({requestId:runId,uiPreferences:{pickerLabel:'Desktop'}});
+  client.accept({type:'v3-audit-result',schemaVersion:p.BRIDGE,requestId:runId,kind:'components',result,
+   trace:Object.assign(trace.snapshot(),{componentTimings})});
+  for(let i=0;i<10;i++){
+   const focus=client.focus(runId,'opaque');
+   const {requestId}=sent.at(-1);
+   client.accept({type:'v3-audit-operation-result',schemaVersion:p.BRIDGE,requestId,runId});
+   assert.equal(await focus,true);
+  }
+  const report=client.snapshot();
+  assert.equal(report.trace.sessions.length,MAX_SESSIONS);
+  assert.equal(report.trace.droppedSessions,7);
+  const capture=report.trace.sessions.find(session=>session.requestId===runId);
+  assert.ok(capture,'accepted audit trace must survive follow-up actions');
+  assert.deepEqual(capture.native.componentTimings,componentTimings);
+  assert.equal(report.pluginBuildId,capture.native.pluginBuildId);
+  assert.equal(report.trace.sessions.at(-1).requestId,sent.at(-1).requestId);
+ }finally{client.close();}
 });
 test('failed capture keeps bounded source cause in exported diagnostic and distinguishes missing proof from a real edit',()=>{
  for(const reason of ['unobserved-property','observed-facts-changed']){

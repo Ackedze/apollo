@@ -19,6 +19,7 @@ type ResultValueLine = {
 
 type ResultSubCardProps = {
   name: string;
+  nameLeading?: React.ReactNode;
   hovered?: boolean;
   showFocus?: boolean;
   onFocus?: () => void;
@@ -112,6 +113,7 @@ function RuleInfo({ text }: { text: string }): React.JSX.Element {
 
 export function ResultSubCard({
   name,
+  nameLeading,
   hovered = false,
   showFocus = false,
   onFocus,
@@ -157,6 +159,7 @@ export function ResultSubCard({
     <div className={className} {...interactiveProps}>
       <div className={styles.topLine}>
         <div className={styles.nameWrap}>
+          {nameLeading}
           <span className={styles.name}>{name}</span>
           {showFocus ? (
             <div className={styles.focusAction}>

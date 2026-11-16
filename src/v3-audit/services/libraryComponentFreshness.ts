@@ -12,6 +12,7 @@ export type LibraryComponentFreshnessReason =
   | 'main-component-unavailable'
   | 'component-key-missing'
   | 'component-import-failed'
+  | 'publication-unconfirmed'
   | 'component-key-mismatch';
 
 export type LibraryComponentFreshnessScope =

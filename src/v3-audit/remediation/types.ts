@@ -17,6 +17,7 @@ export interface ComponentFindingAction {
   nodeId: string;
   expectedComponentKey: string;
   targetComponentKey: string;
+  exactTarget?: boolean;
   targetName: string;
   targetLibrary?: string | null;
   reason: ComponentActionReason;
@@ -41,6 +42,8 @@ export interface VariableFindingAction {
   targetVariableKey: string;
   targetName: string;
   targetLibrary?: string | null;
+  targetGroup?: string;
+  targetColor?: string;
   styleField: 'fill' | 'stroke';
   expectedFingerprint: string;
 }

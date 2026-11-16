@@ -3,8 +3,10 @@ import type {
   ApolloTextAuditReport,
   ApolloTextComponentContext,
   ApolloTextFact,
+  ApolloTextScope,
 } from './types';
 import { createCooperativeYield } from '../utils/promisePool';
+import type { AuditSceneSnapshot } from '../source-observation';
 
 type ResolveComponentKey = (node: SceneNode) => Promise<string | null>;
 
@@ -13,18 +15,64 @@ export async function collectApolloTextFacts(
   resolveNodePath: (node: SceneNode) => string,
   resolveComponentKey: ResolveComponentKey,
   throwIfCancelled: () => void = () => {},
+  snapshot?:AuditSceneSnapshot,
+  scopes?: ApolloTextScope[],
 ): Promise<ApolloTextFact[]> {
   const facts: ApolloTextFact[] = [];
   const checkpoint = createCooperativeYield(throwIfCancelled);
 
-  async function visit(node: SceneNode, inheritedVisible: boolean): Promise<void> {
-    await checkpoint();
-    const visible = inheritedVisible && node.visible !== false;
-    if (!visible) return;
+  const seen = new Set<string>();
+  const identities = new Map<string, Promise<{key: string | null; name: string}>>();
+  const duplicateChildNames = new Map<string, Set<string>>();
 
-    if (node.type === 'TEXT') {
-      const ancestors = await collectComponentContexts(node, resolveComponentKey);
-      facts.push({
+  function readComponentPath(node: TextNode, rootId: string): ApolloTextFact['componentPath'] {
+    const path: NonNullable<ApolloTextFact['componentPath']> = [];
+    for (let current: BaseNode | null = node; current; current = current.parent) {
+      if (current.id === rootId) {
+        path.push({ nodeId: current.id, name: current.name, uniqueName: true });
+        return path.reverse();
+      }
+      const parent: (BaseNode & ChildrenMixin) | null = current.parent;
+      if (!parent || parent.type === 'DOCUMENT' || parent.type === 'PAGE') return;
+      let duplicates = duplicateChildNames.get(parent.id);
+      if (!duplicates) {
+        duplicates = new Set<string>();
+        const names = new Set<string>();
+        for (const name of snapshot?.getChildNames(parent) ?? parent.children.map(child => child.name)) {
+          if (names.has(name)) duplicates.add(name);
+          names.add(name);
+        }
+        duplicateChildNames.set(parent.id, duplicates);
+      }
+      path.push({ nodeId: current.id, name: current.name, uniqueName: !duplicates.has(current.name) });
+    }
+  }
+
+  function identity(node: SceneNode): Promise<{key: string | null; name: string}> {
+    if (!scopes) return resolveComponentKey(node).then(key => ({key, name: node.name}));
+    let existing = identities.get(node.id);
+    if (!existing) {
+      existing = (async () => {
+        const main = node.type === 'INSTANCE' ? await (snapshot?.getMainComponent(node) ?? node.getMainComponentAsync())
+          : node.type === 'COMPONENT' ? node : null;
+        throwIfCancelled();
+        return {key: main?.key ?? null, name: main?.parent?.type === 'COMPONENT_SET' ? main.parent.name : main?.name ?? node.name};
+      })();
+      identities.set(node.id, existing);
+    }
+    return existing;
+  }
+
+  async function visit(node: SceneNode, inheritedVisible: boolean, inheritedOpacity: number, scope?: ApolloTextScope): Promise<void> {
+    await checkpoint();
+    const visible = inheritedVisible && (snapshot?snapshot.isVisible(node):node.visible!==false);
+    if (!visible) return;
+    const opacity = inheritedOpacity * ('opacity' in node && typeof node.opacity === 'number' ? node.opacity : 1);
+    if (scope && node.id !== scope.nodeId && node.type !== 'TEXT' && /overlay|scrim|затемнен|оверлей/i.test(node.name) && opacity > 0) scope.overlay = true;
+
+    if (node.type === 'TEXT' && (!scope || !seen.has(node.id))) {
+      const ancestors = await collectComponentContexts(node, identity);
+      const fact: ApolloTextFact = {
         node: {
           id: node.id,
           name: node.name,
@@ -34,29 +82,45 @@ export async function collectApolloTextFacts(
           visible: true,
           ancestorNodeIds: ancestors.map((context) => context.nodeId),
         },
-        text: node.characters,
+        text: snapshot?snapshot.getText(node):node.characters,
         owner: ancestors.length ? ancestors[ancestors.length - 1] : null,
         ancestors,
         documentOrder: facts.length,
-      });
+      };
+      if (scope) {
+        fact.scopeNodeId = scope.nodeId;
+        fact.effectiveOpacity = opacity;
+        if (ancestors.length) fact.componentPath = readComponentPath(node, ancestors[0].nodeId);
+        seen.add(node.id);
+      }
+      facts.push(fact);
     }
 
-    if ('children' in node) {
-      for (const child of node.children) {
-        await visit(child, visible);
-      }
+    for (const child of snapshot?.getChildren(node)??('children'in node?node.children:[])) {
+      await visit(child, visible, opacity, scope);
     }
   }
 
   for (const root of roots) {
-    await visit(root, true);
+    let scope: ApolloTextScope | undefined;
+    let visible = true;
+    let opacity = 1;
+    if (scopes) {
+      scope = {nodeId: root.id, name: root.name, width: root.width, overlay: false};
+      scopes.push(scope);
+      for (let parent = root.parent; parent && parent.type !== 'PAGE' && parent.type !== 'DOCUMENT'; parent = parent.parent) {
+        if ('visible' in parent && parent.visible === false) visible = false;
+        if ('opacity' in parent && typeof parent.opacity === 'number') opacity *= parent.opacity;
+      }
+    }
+    await visit(root, visible, opacity, scope);
   }
   throwIfCancelled();
   return facts;
 }
 
 export function buildApolloTextAuditReport(
-  report: ApolloStatsReport,
+  report: Pick<ApolloStatsReport,'reportId'|'generatedAt'|'suggestedFileName'|'user'|'plugin'|'figma'|'scan'>,
   texts: ApolloTextFact[],
 ): ApolloTextAuditReport {
   return {
@@ -79,7 +143,7 @@ export function buildApolloTextAuditReport(
 
 async function collectComponentContexts(
   node: SceneNode,
-  resolveComponentKey: ResolveComponentKey,
+  resolveIdentity: (node: SceneNode) => Promise<{key: string | null; name: string}>,
 ): Promise<ApolloTextComponentContext[]> {
   const contextNodes: SceneNode[] = [];
   let cursor: BaseNode | null = node.parent;
@@ -90,13 +154,16 @@ async function collectComponentContexts(
     cursor = cursor.parent;
   }
 
-  return Promise.all(contextNodes.map(async (contextNode) => ({
-    nodeId: contextNode.id,
-    name: contextNode.name,
-    componentName: contextNode.name,
-    componentKey: await resolveComponentKey(contextNode),
-    variantProperties: readVariantProperties(contextNode),
-  })));
+  return Promise.all(contextNodes.map(async contextNode => {
+    const component = await resolveIdentity(contextNode);
+    return {
+      nodeId: contextNode.id,
+      name: contextNode.name,
+      componentName: component.name,
+      componentKey: component.key,
+      variantProperties: readVariantProperties(contextNode),
+    };
+  }));
 }
 
 function readVariantProperties(node: SceneNode): Record<string, string> {

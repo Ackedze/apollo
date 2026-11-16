@@ -9,10 +9,10 @@ function createDesignCheckController(options = {}) {
   const listeners = new Set(), revisions = {}, settingCapabilities = options.settingCapabilities || {};
   let destroyed = false, sequence = 0, loadSequence = 0, saveQueue = Promise.resolve();
   let activeChat = null, activeAudit = null, proxySequence = 0, pendingCheck=null, preflightPending=false;
-  async function prepareOperation() {
+  async function prepareOperation(before = options.beforeOperation) {
     if (preflightPending) return false;
     preflightPending=true;
-    try { await options.beforeOperation(); return !destroyed; }
+    try { await before(); return !destroyed; }
     catch { return false; }
     finally { preflightPending=false; }
   }
@@ -195,7 +195,8 @@ function createDesignCheckController(options = {}) {
   }
   async function startAudit(kind='components') {
     if (!state.auditReady || state.auditBusy || !options.onAudit) return false;
-    if (options.beforeOperation && !await prepareOperation()) return false;
+    const before = options.beforeAudit ? () => options.beforeAudit(kind) : options.beforeOperation;
+    if (before && !await prepareOperation(before)) return false;
     if (!state.auditReady || state.auditBusy) return false;
     const requestId = `design-check-audit-${++sequence}`;
     if(options.auditEngine==='v3'){

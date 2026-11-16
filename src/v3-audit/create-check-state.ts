@@ -5,12 +5,14 @@ import type {
   DeprecatedStyleEntry,
   DetachedEntry,
   ThemeAuditEntry,
+  WrongChannelTypographyEntry,
 } from './types/audit'
 
 export interface CheckState {
     relevanceBuckets: Record<RelevanceStatus, AuditItem[]>
     themizationEntries: ThemeAuditEntry[]
     wrongChannelEntries: AuditItem[]
+    wrongChannelTypographyEntries: WrongChannelTypographyEntry[]
     localLibraryItems: AuditItem[]
     presetItems: AuditItem[]
     detachedEntries: DetachedEntry[]
@@ -31,6 +33,7 @@ export const createCheckState = (): CheckState => {
           },
           themizationEntries: [],
           wrongChannelEntries: [],
+          wrongChannelTypographyEntries: [],
           localLibraryItems: [],
           presetItems: [],
           detachedEntries: [],

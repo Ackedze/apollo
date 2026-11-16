@@ -1,5 +1,6 @@
 'use strict';
 const {id}=require('./transport');
+const {readComponentTimings}=require('./component-timings');
 const VERSION='apollo.v3-audit-trace.v1',MAX_EVENTS=64,MAX_SESSIONS=4;
 const word=v=>typeof v==='string'&&/^[a-z][-a-z]{0,79}$/.test(v);
 const count=v=>Number.isSafeInteger(v)&&v>=0;
@@ -28,6 +29,10 @@ function readTrace(value){
  const out={schemaVersion:VERSION,requestId:value.requestId,runId:value.runId,kind:value.kind,side:value.side,
   dropped:(count(value.dropped)?value.dropped:0)+Math.max(0,value.events.length-MAX_EVENTS),firstFailure:event(value.firstFailure),events};
  if(typeof value.pluginVersion==='string'&&/^[a-zA-Z0-9._-]{1,80}$/.test(value.pluginVersion))out.pluginVersion=value.pluginVersion;
+ if(value.side==='native'&&typeof value.pluginBuildId==='string'&&/^[a-f0-9]{64}$/.test(value.pluginBuildId))out.pluginBuildId=value.pluginBuildId;
+ if(value.side==='native'&&value.kind==='components'){
+  const timings=readComponentTimings(value.componentTimings);if(timings)out.componentTimings=timings;
+ }
  return out;
 }
 function createRunTrace(context,now=()=>typeof performance!=='undefined'&&typeof performance.now==='function'?performance.now():Date.now()){

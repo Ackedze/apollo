@@ -45,9 +45,10 @@ export function FindingComparison({ property, before, after, beforeLabel, afterL
   </div>;
 }
 
-export function FindingInformation({children}:{children:React.ReactNode}) {
+export function FindingInformation({children, label}:{children:React.ReactNode; label?:string}) {
   const [expanded, setExpanded] = useState(false), informationId = useId();
   const dialog = useRef<HTMLDialogElement>(null), trigger = useRef<HTMLButtonElement>(null);
+  const title = label ?? 'Сведения проверки';
   useEffect(() => {
     if (!expanded || !dialog.current) return;
     const modal = dialog.current, opener = trigger.current;
@@ -55,14 +56,15 @@ export function FindingInformation({children}:{children:React.ReactNode}) {
     return () => { modal.close(); if (opener?.isConnected) opener.focus(); };
   }, [expanded]);
   return <>
-        <button ref={trigger} className="apollo-finding-info-toggle" type="button" aria-label="Сведения проверки" title="Сведения проверки"
+        <button ref={trigger} className={label ? 'apollo-finding-info-text' : 'apollo-finding-info-toggle'}
+          type="button" aria-label={title} title={title}
           aria-haspopup="dialog" aria-controls={expanded ? informationId : undefined} onClick={() => setExpanded(true)}>
-          <img src={assets.imgFixer} width={16} height={16} alt="" />
+          {label ?? <img src={assets.imgFixer} width={16} height={16} alt="" />}
         </button>
     {expanded && createPortal(<dialog ref={dialog} className="apollo-finding-dialog" id={informationId} role="dialog" aria-modal="true" aria-labelledby={`${informationId}-title`}
       onCancel={event => { event.preventDefault(); setExpanded(false); }} onClick={event => { event.stopPropagation(); if (event.target === event.currentTarget) setExpanded(false); }}>
       <div className="apollo-finding-dialog-content">
-        <header><h2 id={`${informationId}-title`}>Сведения проверки</h2><button type="button" aria-label="Закрыть сведения проверки" onClick={() => setExpanded(false)}>
+        <header><h2 id={`${informationId}-title`}>{title}</h2><button type="button" aria-label={label ? 'Закрыть' : 'Закрыть сведения проверки'} onClick={() => setExpanded(false)}>
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="m6 6 12 12M18 6 6 18" /></svg>
         </button></header>
         <section className="apollo-finding-information-body">{children}</section>

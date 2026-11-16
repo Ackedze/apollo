@@ -1,6 +1,7 @@
 const final=new Set(['compliant','allowed','not-applicable']);
-const titles={changes:'Кастомы',unknown:'Не удалось проверить',deprecated:'Устаревшие',update:'Пора менять',detached:'Детач',local:'Локальные',wrongChannel:'Не тот канал',presets:'Пресеты',technical:'Технические',current:'В каталоге',changesWip:'Все отличия от эталона',customStyles:'Локальные',detachedStyles:'Без стиля или токена',deprecatedStyles:'Устаревшие',themization:'База'};
-const groups=[{id:'styles',title:'Стили и токены',tabs:['customStyles','detachedStyles','deprecatedStyles'],description:'Стили, цвета и привязки к токенам.'},{id:'components',title:'Компоненты',tabs:['changes','deprecated','update','detached','local','wrongChannel'],description:'Библиотечные связи, версии и правила компонентов.'},{id:'patterns',title:'Паттерны',tabs:[],description:'Сочетание компонентов и проектировочные паттерны.'}];
+const titles={changes:'Кастомы',unknown:'Не удалось проверить',deprecated:'Устаревшие',update:'Пора менять',detached:'Детач',local:'Локальные',wrongChannel:'Не тот канал',wrongChannelTypography:'Не тот канал',presets:'Пресеты',technical:'Технические',current:'В каталоге',changesWip:'Все отличия от эталона',customStyles:'Локальные',detachedStyles:'Без стиля или токена',deprecatedStyles:'Устаревшие',themization:'База'};
+const groups=[{id:'styles',title:'Стили и токены',tabs:['customStyles','detachedStyles','deprecatedStyles','wrongChannelTypography'],description:'Стили, цвета и привязки к токенам.'},{id:'components',title:'Компоненты',tabs:['changes','deprecated','update','detached','local','wrongChannel'],description:'Библиотечные связи, версии и правила компонентов.'},{id:'patterns',title:'Паттерны',tabs:[],description:'Сочетание компонентов и проектировочные паттерны.'}];
+const channelLabel=channel=>channel==='MobileWeb'?'Mobile Web':channel;
 function classification(diffs){return diffs.some(diff=>diff.assessment?.verdict==='violation')?'violation':diffs.some(diff=>!diff.assessment||diff.assessment.verdict==='unknown')?'unknown':'allowed';}
 function location(item){return item.fullPath||item.path||item.name||'Слой';}
 function source(item){return item.librarySource||item.libraryName||item.sourceLibrary||item.resource?.library||item.reference?.source||null;}
@@ -65,7 +66,9 @@ function buildV3Groups(result,settings={},state={}){
   if(item.relevance==='unknown'||item.catalogLifecycle&&!item.reference)reasons.push(item.reference?'Не удалось подтвердить актуальность компонента.':'Не удалось сопоставить компонент с подключённым каталогом.');
   if(item.catalogLifecycle?.status==='unknown')reasons.push('Статус компонента в реестрах Athena не подтверждён.');
   if(!item.reference&&item.catalogLifecycle?.checks?.some(check=>check.recordKeys.length))reasons.push('Компонент найден в реестре Athena, но эталон для сравнения недоступен.');
-  if(item.libraryFreshness?.status==='unknown')reasons.push('Не удалось подтвердить опубликованную версию компонента.');
+  if(item.libraryFreshness?.status==='unknown'&&item.libraryFreshness.reason!=='publication-unconfirmed'){
+   reasons.push('Не удалось подтвердить опубликованную версию компонента.');
+  }
   if(reasons.length)unknown.push(row('coverage:'+item.id,item,'unknown','Проверка компонента неполная.',{messages:Array.from(new Set(reasons))}));
  }
  const data={
@@ -79,17 +82,26 @@ function buildV3Groups(result,settings={},state={}){
   detached:(views.detached||[]).map(item=>row('detached:'+item.id,item,'warning',item.componentName?`Компонент ${item.componentName} раздетачен.`:'Компонент раздетачен.')),
   local:local.map(item=>row('local:'+item.id,item,'warning','Компонент вне подключённых каталогов DS.',{incomplete:item.relevance==='unknown'||Boolean(item.catalogLifecycle&&!item.reference)||item.status==='incomplete'||(item.gaps||[]).length>0})),
   wrongChannel:(views.wrongChannel||[]).map(item=>row('channel:'+item.id,item,'violation','Компонент не соответствует выбранной платформе.')),
-  deprecatedStyles:(views.deprecatedStyles||[]).map(item=>row('deprecated-style:'+item.id+':'+item.reason,item,'violation','Используется устаревший стиль.',{messages:[item.styleLabel||'Название стиля недоступно']})),
+  wrongChannelTypography:(views.wrongChannelTypography||[]).map(item=>row(
+   'typography-channel:'+item.id+':'+item.resource.type+':'+item.resource.key,item,'violation',
+   item.resource.type==='token'?'Токен типографики не соответствует выбранному каналу.':'Стиль типографики не соответствует выбранному каналу.',
+   {messages:[item.resource.name,`Каналы: ${item.channels.map(channelLabel).join(', ')}. Выбран: ${channelLabel(item.selectedChannel)}.`]})),
+  deprecatedStyles:(views.deprecatedStyles||[]).map(item=>row('deprecated-style:'+item.id+':'+item.reason+(item.token?':'+item.styleKey:''),item,item.scheduled?'warning':'violation',item.token?(item.scheduled?'Токен пора менять.':'Используется устаревший токен.'):(item.scheduled?'Стиль пора менять.':'Используется устаревший стиль.'),{messages:[item.styleLabel||'Название недоступно']})),
   customStyles:(views.customStyles||[]).filter(item=>item.resource?.type!=='raw-value').map(item=>row('style:'+item.id+':'+item.reason,item,'violation','Стиль или токен вне подключённой библиотеки.',{messages:item.resource?.name?[item.resource.name]:[]})),
   detachedStyles:(views.customStyles||[]).filter(item=>item.resource?.type==='raw-value').map(item=>row('style:'+item.id+':'+item.reason,item,'violation',item.reason==='typography'?'Типографика без стиля.':item.reason==='fill'?'Заливка без стиля или токена.':item.reason==='stroke'?'Обводка без стиля или токена.':'Эффект без стиля.',{messages:item.resource?.name&&!/^Raw /.test(item.resource.name)?[item.resource.name]:[]})),
-  themization:(result?.baseChecks||[]).filter(item=>!final.has(item.classification)).map(item=>row('base:'+item.id,item,item.classification,item.message,{displayName:item.id==='font'?'Шрифт страницы':'Темизация страницы',messages:item.status==='incomplete'||(item.gaps||[]).length?['Часть данных не удалось подтвердить. Проверка неполная.']:[]})).concat((views.themization||[]).map(item=>row('theme:'+item.id,item,'violation',item.recommendation?`Замени на ${item.recommendation}`:'Компонент для выбранной темы.',{displayName:item.name}))),
+  themization:(result?.baseChecks||[]).filter(item=>!final.has(item.classification)).map(item=>row('base:'+item.id,item,item.classification,item.message,{displayName:item.id==='font'?'Шрифт страницы':'Темизация страницы',messages:item.status==='incomplete'||(item.gaps||[]).length?['Часть данных не удалось подтвердить. Проверка неполная.']:[]})).concat((views.themization||[]).map(item=>row('theme:'+item.id,item,'violation',item.recommendation?`Замени на ${item.recommendation}`:'Используется компонент со старой темизацией.',{displayName:item.name}))),
  };
  const categories=Object.fromEntries(Object.keys(titles).map(id=>[id,category(id,data[id]||[],!!result)]));
- const visible=groups.map(group=>Object.assign({},group,{categories:group.tabs.filter(id=>!(settings.hideCustomizations&&['changes','changesWip'].includes(id))).map(id=>categories[id]),connected:!!result&&group.tabs.length>0}));
+ const visible=groups.map(group=>Object.assign({},group,{categories:group.tabs.filter(id=>{
+  if(id==='wrongChannelTypography')return Array.isArray(views.wrongChannelTypography);
+  return !(settings.hideCustomizations&&['changes','changesWip'].includes(id));
+ }).map(id=>categories[id]),connected:!!result&&group.tabs.length>0}));
  for(const group of visible)group.count=group.connected?new Set(group.categories.flatMap(category=>category.issues.map(row=>row.id))).size:null;
  const theme=['iOS','Android'].includes(settings.pickerLabel)?null:categories.themization;
  const active=visible.flatMap(group=>group.categories).concat(theme?[theme]:[]),issues=active.flatMap(category=>category.issues),coverage=active.concat(categories.unknown);
- return{groups:visible,theme,total:result?new Set(issues.map(row=>row.id)).size:null,stale:!!state.stale,unconfirmed:categories.unknown,incomplete:coverage.some(category=>category.incomplete),coverageDetails:coverage.filter(category=>category.incomplete).map(category=>({id:category.id,title:category.id==='unknown'?'Компоненты':category.title,reason:category.id==='unknown'?'Не удалось подтвердить часть компонентов. Причины сохранены в диагностике проверки.':'Есть изменения, для которых пока не удалось подтвердить правило. Подробности — в карточках.'}))};
+ const coverageDetails=coverage.filter(category=>category.incomplete).map(category=>({id:category.id,title:category.id==='unknown'?'Компоненты':category.title,reason:category.id==='unknown'?'Не удалось подтвердить часть компонентов. Причины сохранены в диагностике проверки.':'Есть изменения, для которых пока не удалось подтвердить правило. Подробности — в карточках.'}));
+ if(result?.offlineCoverage?.gaps?.includes('component-index-coverage-partial'))coverageDetails.push({id:'athena-index',title:'Индексы Athena',reason:'Часть подключённых источников не покрыта индексом.'});
+ return{groups:visible,theme,total:result?new Set(issues.map(row=>row.id)).size:null,stale:!!state.stale,unconfirmed:categories.unknown,incomplete:coverageDetails.length>0,coverageDetails};
 }
 function nativeMetrics(result,settings){const summary=buildV3Groups(result,settings),categories=summary.groups.flatMap(group=>group.categories).concat(summary.theme?[summary.theme]:[],summary.unconfirmed?[summary.unconfirmed]:[]);return{checks:categories.filter(category=>category.id!=='changesWip').map(category=>({id:'v3:'+category.id,status:category.incomplete?'incomplete':'complete',checked:category.entries.length,gaps:Array.from(new Set(category.entries.flatMap(row=>row.item.gaps||[]))),findings:category.entries.map(row=>({status:row.classification,componentKey:row.item.componentKey||null}))}))};}
 module.exports={buildV3Groups,nativeMetrics,comparisons,titles};

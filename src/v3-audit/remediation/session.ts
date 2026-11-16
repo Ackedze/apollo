@@ -8,7 +8,7 @@ import { ensureReferenceCatalogsLoaded } from '../reference/library';
 import { resolveSceneNodeById } from '../actions/sceneNodeResolver';
 import { createCooperativeYield } from '../utils/promisePool';
 
-type Descriptor={kind:'registry';id:string}|{kind:'reset';payload:CustomizationResetPayload}|{kind:'theme';evidence:any}|{kind:'font';evidence:any}|{kind:'component';nodeId:string;expectedComponentKey:string;targetComponentKey:string};
+type Descriptor={kind:'registry';id:string}|{kind:'reset';payload:CustomizationResetPayload}|{kind:'theme';evidence:any}|{kind:'font';evidence:any}|{kind:'component';nodeId:string;expectedComponentKey:string;targetComponentKey:string;exactTarget?:boolean};
 function pageOf(node:BaseNode):PageNode|null{let n:BaseNode|null=node;const seen=new Set<string>();while(n&&!seen.has(n.id)){if(n.type==='PAGE')return n;seen.add(n.id);n=n.parent;}return null;}
 
 /** Only IDs/descriptors produced by the accepted native run cross this boundary. */
@@ -37,7 +37,7 @@ export async function createAuditSession(result:any,registry:FindingActionRegist
    for(const choice of resetChoices(item.id,diff,rawDiffs.has(diff)))action(diff,{kind:'reset',payload:choice.payload},choice.label,'reset');
   }
   if(item.kind==='corporateComponent'&&item.nodeId&&item.replacementComponentKey&&byNode.get(item.nodeId)?.componentKey){
-   action(item,{kind:'component',nodeId:item.nodeId,expectedComponentKey:byNode.get(item.nodeId).componentKey,targetComponentKey:item.replacementComponentKey},'Заменить','swap-component');
+   action(item,{kind:'component',nodeId:item.nodeId,expectedComponentKey:byNode.get(item.nodeId).componentKey,targetComponentKey:item.replacementComponentKey,exactTarget:item.exactReplacement===true},'Заменить','swap-component');
   }
   if(item.id==='theme'&&item.classification==='violation'&&item.status==='complete'&&item.evidence?.collectionRemote===true&&item.evidence.collectionKey&&item.evidence.collectionId&&item.evidence.expectedModeId){
    action(item,{kind:'theme',evidence:JSON.parse(JSON.stringify(item.evidence))},'Выбрать Corp','theme');
@@ -63,7 +63,13 @@ export async function createAuditSession(result:any,registry:FindingActionRegist
   async execute(id:string,mutation:MutationControl){
    mutation.assertCurrent();const descriptor=actions.get(id);if(!descriptor)throw Error('AUDIT_ACTION_UNAVAILABLE');let message='';
    const notify=(text:string)=>{message=text;};
-   if(descriptor.kind==='registry')await executeFindingAction(descriptor.id,{registry,mutation,notify,rerunAudit:async()=>{}});
+   if(descriptor.kind==='registry'){
+    const indexed=registry.get(descriptor.id);
+    if(indexed?.kind==='swap-component'&&indexed.exactTarget){
+     const applied=await applyComponentFindingReplacement(Object.assign({},indexed,{mutation}));
+     if(!applied.ok)throw Error(applied.message);message='Компонент заменён.';
+    }else await executeFindingAction(descriptor.id,{registry,mutation,notify,rerunAudit:async()=>{}});
+   }
    else if(descriptor.kind==='component'){
     const applied=await applyComponentFindingReplacement(Object.assign({},descriptor,{mutation}));if(!applied.ok)throw Error(applied.message);message='Компонент заменён.';
    }else if(descriptor.kind==='theme'||descriptor.kind==='font'){

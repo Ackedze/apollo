@@ -6,10 +6,20 @@ import {OptionListCell} from './v3/ui-app/components/OptionListCell';
 import {OptionListHeader} from './v3/ui-app/components/OptionListHeader';
 import styles from './v3/ui-app/components/TopSection.module.css';
 
+const isPreviewColor=(color:unknown):color is string=>typeof color==='string'&&/^#[0-9a-f]{8}$/i.test(color);
+
+export function FindingColorSwatch({color, describe = false}: {color?: string; describe?: boolean}) {
+ if(!isPreviewColor(color))return null;
+ const label=describe?`Фактический цвет ${color}`:undefined;
+ return <span className="apollo-finding-color" role={describe?'img':undefined} aria-label={label} aria-hidden={describe?undefined:true} title={color}>
+  <span style={{backgroundColor:color}}/>
+ </span>;
+}
+
 export function FindingActionMenu({actions,label,disabled,onAction}:{actions:any[];label:string;disabled:boolean;onAction:(id:string)=>void}){
  const [open,setOpen]=useState(false),wrap=useRef<HTMLSpanElement>(null),menu=useRef<HTMLDivElement>(null);
- const libraries=new Map<string,any[]>();
- for(const action of actions){const library=action.targetLibrary||'';if(!libraries.has(library))libraries.set(library,[]);libraries.get(library)!.push(action);}
+ const groups=new Map<string,any[]>();
+ for(const action of actions){const group=action.targetGroup||action.targetLibrary||'';if(!groups.has(group))groups.set(group,[]);groups.get(group)!.push(action);}
  const close=(focus=false)=>{setOpen(false);if(focus)wrap.current?.querySelector('button')?.focus();};
  const focusOption=(last=false)=>requestAnimationFrame(()=>{const buttons=menu.current?.querySelectorAll<HTMLButtonElement>('button');(last?buttons?.[buttons.length-1]:buttons?.[0])?.focus();});
  useEffect(()=>{if(disabled)setOpen(false);},[disabled]);
@@ -32,9 +42,12 @@ export function FindingActionMenu({actions,label,disabled,onAction}:{actions:any
  }}>
   <PickerButton compact label={label} open={open} disabled={disabled} onPress={()=>{if(open)close();else{setOpen(true);focusOption();}}}/>
   {open&&!disabled&&createPortal(<div ref={menu} className={styles.pickerOverlay+' apollo-finding-action-popup'} role="group" aria-label={label==='Привязать'?'Привязать стиль или токен':'Выбрать исправление'}>
-   <OptionList className={styles.pickerMenu}>{Array.from(libraries,([library,items])=><React.Fragment key={library}>
-    {library&&<OptionListHeader label={library}/>}
-    {items.map(action=><OptionListCell key={action.id} label={action.targetName||action.label} showLeadingIcon={false} onPress={()=>{if(disabled)return;close(true);onAction(action.id);}}/>)}
+   <OptionList className={styles.pickerMenu}>{Array.from(groups,([group,items])=><React.Fragment key={group}>
+    {group&&<OptionListHeader label={group}/>}
+    {items.map(action=>{
+     const hasColor=action.kind==='bind-variable'&&isPreviewColor(action.targetColor);
+     return <OptionListCell key={action.id} label={action.targetName||action.label} showLeadingIcon={hasColor} leadingIcon={hasColor?<FindingColorSwatch color={action.targetColor}/>:undefined} onPress={()=>{if(disabled)return;close(true);onAction(action.id);}}/>;
+    })}
    </React.Fragment>)}</OptionList>
   </div>,document.body)}
  </span>;

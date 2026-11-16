@@ -14,11 +14,21 @@ const { createOpaqueId } = require("./design-check/opaque-id");
 require("./design-check/legacy.css");
 const BASE = 'http://localhost:3001';
 console.info('[Apollo] build',JSON.stringify({version:require('../package.json').version,buildId:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__}));
+let retryStatisticsHealthAt=0;
 const compatibility = require('./compatibility').createCompatibilityClient({ request: (url, options) => fetch(url, options),
-  endpoint: BASE + '/health', onChange: value => designCheck.setProxyStatus(value) });
-const tokenJournalClient = require('./token-journal-client').createTokenJournalClient({send:value=>parent.postMessage({pluginMessage:value},'*')});
+  endpoint: BASE + '/health', onChange: value => {
+    const reconnected=value.available&&retryStatisticsHealthAt!==0;
+    retryStatisticsHealthAt=value.available?0:Date.now()+30000;
+    designCheck.setProxyStatus(value);
+    if(reconnected){
+      void tokenJournalClient.flush(true);
+      void auditStatisticsClient.flush();
+    }
+  } });
+const canDeliverStatistics=async()=>Date.now()>=retryStatisticsHealthAt&&(await compatibility.refresh()).available;
+const tokenJournalClient = require('./token-journal-client').createTokenJournalClient({canDeliver:canDeliverStatistics,send:value=>parent.postMessage({pluginMessage:value},'*')});
 let statisticsUserName=null;
-const auditStatisticsClient=require('./audit-statistics/client').createStatisticsClient({userName:()=>statisticsUserName,send:value=>parent.postMessage({pluginMessage:value},'*'),versions:{plugin:require('../package.json').version,build:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,runtime:require('../packages/component-contract-core/package.json').version}});
+const auditStatisticsClient=require('./audit-statistics/client').createStatisticsClient({canDeliver:canDeliverStatistics,userName:()=>statisticsUserName,send:value=>parent.postMessage({pluginMessage:value},'*'),versions:{plugin:require('../package.json').version,build:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,runtime:require('../packages/component-contract-core/package.json').version}});
 const { SOURCE_SCHEMA, sourceFromFiles, linkSourcePackages } = require("./authoring-source");
 const { readZip, zipEntryText } = require('@apollo/component-contract-zip');
 const {renderContractFindings}=require("./design-check/ContractFindings");
@@ -41,6 +51,7 @@ const dialogue = createExistingDialoguePort({ request: (url, options) => fetch(u
 let pendingContractDelivery=null,pendingNativeDelivery=null,contractContext=null;
 let lastCompact = false, contractStopping=false, currentPageId='';
 const designCheck = createDesignCheckController({ auditEngine:'v3', settingCapabilities:{shellAuditEnabled:true,showExpectedCustomizations:true}, tabs: tabDefinitions, preferenceScope:'agent-source',preferences:uiClient.preferences,dialogue,beforeOperation:compatibility.ensure,
+  beforeAudit:kind=>kind==='texts'?compatibility.ensure():undefined,
   onSettingChange:key=>{if(['pickerLabel','channelId','pageTypeId','shellAuditEnabled'].includes(key))v3Client?.invalidate();},
   onStopAudit:()=>v3Client.stop(),
   onAudit:input=>v3Client.start(input)
@@ -306,7 +317,17 @@ window.onmessage = event => {
 controls();
 send({ type: 'ready' });
 landingUi=require('./landing/ui').mountLanding({root:$('generation-panel'),send,beforeOperation:compatibility.ensure,isVisible:()=>designCheck.getState().mode==='generation'&&!designCheck.getState().chat.open,readPlatform:()=>designCheck.getState().settings.pickerLabel,isUnavailable:()=>busy||Boolean(v3Client?.busy())||Boolean(figmaAuditClient?.busy())||contractFocusClient.busy()||Boolean(reglyphClient?.busy())||Boolean(layerNamesClient?.busy())||designCheck.getState().documentAction.busy||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onBusy:value=>{generationBusy=value;controls();}});
-mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { v3Client, readContractData: async()=>{const [auditData,generation]=await Promise.allSettled([v3Client.readData(),contractData.read()]);if(auditData.status==='rejected'&&generation.status==='rejected')throw Error('DATA_UNAVAILABLE');return Object.assign({},generation.status==='fulfilled'?generation.value:{rows:[],sources:{}},{auditDataLoadedId:v3Client.getState().result?.dataId||v3Client.getState().texts.capture?.dataId||null,auditData:auditData.status==='fulfilled'?auditData.value:null,auditDataError:auditData.status==='rejected'?'Данные проверки V3 недоступны. Обнови код и пакет данных Proxy.':''});}, skillsClient: layerNamesClient, reglyphClient, figmaAuditClient, statisticsClient:tokenJournalClient, auditStatisticsClient });
+async function readContractData() {
+  const [auditData,generation] = await Promise.allSettled([v3Client.readData(),contractData.read()]);
+  const state = v3Client.getState();
+  return Object.assign({}, generation.status === 'fulfilled' ? generation.value : {rows:[],sources:{}}, {
+    athenaIndex:state.result?.athenaIndex||null,
+    auditDataLoadedId:state.texts.capture?.dataId||null,
+    auditData:auditData.status==='fulfilled'?auditData.value:null,
+    auditDataError:auditData.status==='rejected'?'Данные проверки текстов в Proxy недоступны.':'',
+  });
+}
+mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { v3Client, readContractData, skillsClient: layerNamesClient, reglyphClient, figmaAuditClient, statisticsClient:tokenJournalClient, auditStatisticsClient });
 void designCheck.restorePreferences();
 designCheck.subscribe(()=>landingUi?.refresh());
 window.addEventListener('pagehide',()=>{v3Client.close();landingUi?.close();});

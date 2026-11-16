@@ -2,6 +2,7 @@ import type { DeprecatedStyleEntry } from '../types/audit';
 import type { StyleMetadataEntry } from './styleMetadata';
 import {
   buildNodePath,
+  extractAliasKey,
   getPageName,
   isNodeVisible,
 } from '../utils/nodeHelpers';
@@ -10,6 +11,7 @@ export interface DeprecatedStyleCollectionOptions {
   resolveStyleMetadata: (
     styleId: string | null | undefined,
   ) => Promise<StyleMetadataEntry | null>;
+  resolveTokenStatus?(id:string):Promise<{key:string;label:string;library?:string;sourceFile?:string;status:'deprecated'|'scheduled'}|null>;
 }
 
 type DeprecatedStyleReason = DeprecatedStyleEntry['reason'];
@@ -28,7 +30,7 @@ export async function collectDeprecatedStyleUsages(
   }
 
   const candidates = collectDeprecatedStyleCandidates(node);
-  if (!candidates.length) {
+  if (!candidates.length && !options.resolveTokenStatus) {
     return [];
   }
 
@@ -39,11 +41,11 @@ export async function collectDeprecatedStyleUsages(
   for (const candidate of candidates) {
     const metadata = await options.resolveStyleMetadata(candidate.styleId);
 
-    if (!metadata?.isDeprecated) {
+    if (!metadata || !metadata.isDeprecated && !metadata.scheduled) {
       continue;
     }
 
-    entries.push({
+    entries.push(Object.assign({
       id: node.id,
       name: node.name,
       nodeType: node.type,
@@ -56,7 +58,34 @@ export async function collectDeprecatedStyleUsages(
       styleLabel: metadata.label,
       sourceFile: metadata.sourceFile ?? 'Unknown style catalog',
       sourceLibrary: metadata.library ?? metadata.sourceFile ?? 'Unknown style catalog',
-    });
+    }, metadata.scheduled && !metadata.isDeprecated ? {scheduled:true as const} : {}));
+  }
+
+  if(options.resolveTokenStatus){
+    const seen = new Set<string>();
+    const queue:unknown[] = ['boundVariables' in node ? node.boundVariables : null];
+    for(const field of ['fills','strokes'] as const){
+      const paints=(node as unknown as Record<string,unknown>)[field];
+      if(Array.isArray(paints))for(const paint of paints)if(paint?.visible!==false)queue.push(paint?.boundVariables);
+    }
+    if(node.type==='TEXT'&&typeof node.getStyledTextSegments==='function'){
+      for(const segment of node.getStyledTextSegments(['fills']))for(const paint of segment.fills)if(paint.visible!==false&&'boundVariables'in paint)queue.push(paint.boundVariables);
+    }
+    for(let i=0;i<queue.length;i++){
+      const value=queue[i];
+      if(!value||typeof value!=='object')continue;
+      if(!('type'in value)||value.type!=='VARIABLE_ALIAS'||!('id'in value)||typeof value.id!=='string'){
+        queue.push(...Object.values(value));continue;
+      }
+      const alias=extractAliasKey(value.id);
+      if(!alias||seen.has(alias))continue;
+      seen.add(alias);
+      const token=await options.resolveTokenStatus(value.id);
+      if(!token)continue;
+      entries.push(Object.assign({id:node.id,name:node.name,nodeType:node.type,pageName,path:buildNodePath(node),visible,
+        reason:'fill' as const,styleId:value.id,styleKey:token.key,styleLabel:token.label,sourceFile:token.sourceFile||'',sourceLibrary:token.library,token:true as const},
+        token.status==='scheduled'?{scheduled:true as const}:{}));
+    }
   }
 
   return dedupeDeprecatedStyleEntries(entries);

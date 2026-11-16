@@ -1,4 +1,5 @@
 import { createCooperativeYield } from '../utils/promisePool';
+import { untimed, type createComponentTimings } from '../component-timings';
 
 export interface AuditTreeVisitResult {
   skipChildren?: boolean;
@@ -9,33 +10,40 @@ export interface AuditTreeTraversalOptions<TNode> {
   getChildren: (node: TNode) => readonly TNode[];
   visit: (node: TNode) => Promise<AuditTreeVisitResult | void>;
   throwIfCancelled: () => void;
+  timings?: ReturnType<typeof createComponentTimings>;
 }
 
 export async function traverseAuditTree<TNode>(
   roots: readonly TNode[],
   options: AuditTreeTraversalOptions<TNode>,
 ): Promise<void> {
-  const checkpoint = createCooperativeYield(options.throwIfCancelled);
+  const measure = options.timings?.measure ?? untimed;
+  const measureSync = options.timings?.measureSync ?? untimed;
+  const checkpoint = createCooperativeYield(
+    () => measureSync('treeCheckpointGuard', options.throwIfCancelled),
+    wait => measure('treeYield', wait),
+  );
+  const guardEdge = () => measureSync('treeEdgeGuard', options.throwIfCancelled);
   const traverseNode = async (node: TNode): Promise<void> => {
-    await checkpoint();
-    if (!options.isVisible(node)) {
+    await measure('treeCheckpoint', checkpoint);
+    if (!measureSync('treeVisibility', () => options.isVisible(node))) {
       return;
     }
 
-    const result = await options.visit(node);
+    const result = await measure('treeVisit', () => options.visit(node));
     if (result?.skipChildren) {
       return;
     }
 
-    const children = options.getChildren(node);
+    const children = measureSync('treeChildren', () => options.getChildren(node));
     for (const child of children) {
-      options.throwIfCancelled();
+      guardEdge();
       await traverseNode(child);
     }
   };
 
   for (const root of roots) {
-    options.throwIfCancelled();
+    guardEdge();
     await traverseNode(root);
   }
 }

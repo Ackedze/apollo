@@ -141,9 +141,9 @@ export function ReglyphSkill({client}:{client:any}) {
     const sections=[
       {id:'unused',title:'Не используются в АБМ',description:'Из сторонних библиотек или устаревшие',rows:state.rows.filter((row:any)=>row.reviewGroup==='unused')},
       {id:'unknown',title:'Этих иконок нет в библиотеках',description:'Выбери замену вручную',rows:state.rows.filter((row:any)=>row.reviewGroup==='unknown')},
+      {id:'unresolved',title:`Этих иконок нет в ${state.scenario==='services'?'Logo-corp':'Glyph 26'}`,description:'Пропусти или выбери другую',rows:state.rows.filter((row:any)=>row.reviewGroup==='unresolved')},
       {id:'native',title:'Оставляем как есть',description:'Нативные иконки и иконки, закреплённые в компонентах',readonly:true,rows:state.observedRows.filter((row:any)=>row.category!=='logo')},
       {id:'logo',title:'Логотипы',description:'Не меняй на Glyph 26',readonly:true,rows:state.observedRows.filter((row:any)=>row.category==='logo')},
-      {id:'unresolved',title:`Этих иконок нет в ${state.scenario==='services'?'Logo-corp':'Glyph 26'}`,description:'Пропусти или выбери другую',rows:state.rows.filter((row:any)=>row.reviewGroup==='unresolved')},
       {id:'ambiguous',title:'Нужно выбрать соответствие',description:'Этим иконкам могут соответствовать несколько вариантов',rows:state.rows.filter((row:any)=>row.reviewGroup==='ambiguous')},
       {id:'ready',title:'Готовы к замене',description:'',rows:state.rows.filter((row:any)=>row.reviewGroup==='ready')},
     ].filter(group=>group.rows.length);

@@ -212,6 +212,47 @@ test('a newer canvas selection supersedes an asynchronous Stay lookup',async()=>
   const latest={id:'latest'};f.api.currentPage.selection=[latest];f.bridge.selectionChanged();release();await decision;
   assert.deepEqual(f.api.currentPage.selection,[latest]);assert.deepEqual(f.swaps,[]);
 });
+async function delayedPageReturn(f,change){
+  f.context();await f.request('scan');const original=f.api.currentPage;
+  f.api.currentPage={id:'away',type:'PAGE',selection:[],findAllWithCriteria:()=>[]};f.bridge.selectionChanged();
+  const token=f.messages.findLast(m=>m.event?.type==='selection-confirmation').event.token;
+  let release;
+  f.api.setCurrentPageAsync=async page=>{f.api.currentPage=page;f.bridge.selectionChanged();await new Promise(resolve=>{release=resolve;});};
+  const result=f.request('selection-decision',{token,decision:'stay'});await new Promise(resolve=>setImmediate(resolve));
+  change(original);release();await result;return{original,token};
+}
+test('Stay preserves a newer frame chosen during page return and prompts again with a fresh token',async()=>{
+  const f=fixture();let latest;
+  const {original,token}=await delayedPageReturn(f,page=>{latest={id:'latest',type:'FRAME',parent:page};page.selection=[latest];f.bridge.selectionChanged();});
+  assert.equal(f.api.currentPage,original);assert.deepEqual(original.selection,[latest]);assert.deepEqual(f.swaps,[]);
+  const repeat=f.messages.findLast(m=>m.event?.type==='selection-confirmation').event;
+  assert.notEqual(repeat.token,token);assert.equal(repeat.reason,'changed-during-restore');
+  f.bridge.selectionChanged();assert.equal(f.messages.findLast(m=>m.event?.type==='selection-confirmation').event.reason,'changed-during-restore');
+  await f.request('selection-decision',{token,decision:'stay'});assert.deepEqual(original.selection,[latest],'the old decision cannot overwrite the new selection');
+  await f.request('selection-decision',{token:repeat.token,decision:'stay'});assert.deepEqual(original.selection,[f.frame]);
+});
+test('the repeated prompt can check the newer frame without replacing it automatically',async()=>{
+  const f=fixture();let latest;
+  await delayedPageReturn(f,page=>{const icon=Object.assign({},f.icon,{id:'latest-icon'});latest={id:'latest',type:'FRAME',name:'Latest',parent:page,findAllWithCriteria:()=>[icon]};icon.parent=latest;page.selection=[latest];f.bridge.selectionChanged();});
+  const repeat=f.messages.findLast(m=>m.event?.type==='selection-confirmation').event;
+  await f.request('selection-decision',{token:repeat.token,decision:'switch'});
+  assert.deepEqual(f.api.currentPage.selection,[latest]);assert.deepEqual(f.messages.findLast(m=>m.event?.type==='scan').event.rows[0].ids,['latest-icon']);assert.deepEqual(f.swaps,[]);
+});
+test('Stay rechecks selection after page return even when the selection event has not arrived',async()=>{
+  const f=fixture();let latest;
+  await delayedPageReturn(f,page=>{latest={id:'latest',type:'FRAME',parent:page};page.selection=[latest];});
+  assert.deepEqual(f.api.currentPage.selection,[latest]);assert.equal(f.messages.findLast(m=>m.event?.type==='selection-confirmation').event.reason,'changed-during-restore');
+});
+test('Stay preserves navigation to another page during return and prompts for its current selection',async()=>{
+  const f=fixture();const newer={id:'newer-page',type:'PAGE',selection:[{id:'newer-frame'}]};
+  await delayedPageReturn(f,()=>{f.api.currentPage=newer;f.bridge.selectionChanged();});
+  assert.equal(f.api.currentPage,newer);assert.equal(newer.selection[0].id,'newer-frame');assert.equal(f.messages.findLast(m=>m.event?.type==='selection-confirmation').event.reason,'changed-during-restore');
+});
+test('the page-change notification from an ordinary Stay does not cause another prompt',async()=>{
+  const f=fixture();const {original}=await delayedPageReturn(f,()=>{});
+  assert.equal(f.api.currentPage,original);assert.deepEqual(original.selection,[f.frame]);assert.equal(f.messages.filter(m=>m.event?.type==='selection-confirmation').length,1);
+  assert.equal(f.messages.findLast(m=>m.event?.type==='selection-confirmation-dismissed').event.type,'selection-confirmation-dismissed');
+});
 test('removed roots, moved sources and changed source components never use a saved plan',async()=>{
   for(const problem of ['removed-root','moved-root','moved-icon','removed-icon','source']){
     const f=fixture();f.context();await f.request('scan');const otherPage={id:'other-page',type:'PAGE'};

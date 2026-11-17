@@ -253,7 +253,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
   let catalog = bundled || { version: 1, oldIcons: [], newIcons: [], mappings: [] };
   let snapshot = null;
   let scanningScope = null;
-  let inspectionSelection = null, pendingSelection = null, selectionPromptSerial = 0, restoringSelection = false;
+  let inspectionSelection = null, pendingSelection = null, selectionPromptSerial = 0, restoringSelection = null;
   let busy = false;
   let revision = 0;
   const components = new Map();
@@ -267,7 +267,8 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
   const previewCacheKey = () => 'apollo-reglyph-abm-v1-preview' + (scenario === 'default' ? '' : '-' + scenario);
   const send = (type, payload = {}) => post(Object.assign({type}, payload));
   const pageOf = node => { for (let part = node; part; part = part.parent) if (part.type === 'PAGE') return part; return null; };
-  const selectionKey = () => figma.currentPage.selection.map(node => node.id).sort().join('|');
+  const pageSelectionKey = page => page.selection.map(node => node.id).sort().join('|');
+  const selectionKey = () => pageSelectionKey(figma.currentPage);
   const rootsAvailable = plan => !!plan && !plan.page.removed && plan.roots.length > 0 && plan.roots.every(root => !root.removed && pageOf(root)?.id === plan.page.id);
   const scopeMatches = plan => {
     try { return rootsAvailable(plan) && plan.page.id === figma.currentPage.id && (!selectionKey() || plan.scope === selectionKey() || inspectionSelection === selectionKey()); }
@@ -482,15 +483,30 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     pendingSelection = null;
     if (notify) send('stale');
   }
+  function promptSelection(reason) {
+    const pageId = figma.currentPage.id, scope = selectionKey();
+    if (reason || !pendingSelection || pendingSelection.plan !== snapshot || pendingSelection.pageId !== pageId || pendingSelection.scope !== scope) {
+      pendingSelection = {token:String(++selectionPromptSerial),plan:snapshot,pageId,scope};
+      if (reason) pendingSelection.reason = reason;
+    }
+    const payload = {token:pendingSelection.token};
+    if (pendingSelection.reason) payload.reason = pendingSelection.reason;
+    send('selection-confirmation', payload);
+  }
   function selectionChanged() {
-    if (!restoringSelection) {
+    if (restoringSelection) {
+      const restore = restoringSelection, pageId = figma.currentPage.id, scope = selectionKey();
+      if (pageId === restore.targetPageId) {
+        restore.arrived = true;
+        if (scope !== restore.targetScope) restore.changed = true;
+      } else if (restore.arrived || pageId !== restore.sourcePageId || scope !== restore.sourceScope) restore.changed = true;
+    } else {
       if (scanningScope && rootsAvailable(scanningScope) && scanningScope.page.id === figma.currentPage.id && scanningScope.scope === selectionKey()) {
         // Apollo may repeat the same selection notification during an async read.
       } else if (snapshot && scopeMatches(snapshot)) {
         if (pendingSelection) { pendingSelection = null; send('selection-confirmation-dismissed'); }
       } else if (snapshot && rootsAvailable(snapshot) && (selectionKey() || snapshot.page.id !== figma.currentPage.id) && (snapshot.rows.length || snapshot.observedRows.length)) {
-        pendingSelection = {token:String(++selectionPromptSerial),plan:snapshot,pageId:figma.currentPage.id,scope:selectionKey()};
-        send('selection-confirmation', {token:pendingSelection.token});
+        promptSelection();
       } else invalidate();
     }
     send('selection', { count: figma.currentPage.selection.length });
@@ -796,16 +812,24 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
             invalidate();
             throw new Error('Исходный макет недоступен. Запустите новую проверку.');
           }
-          restoringSelection = true;
+          const restore = {sourcePageId:pending.pageId,sourceScope:pending.scope,targetPageId:pending.plan.page.id,targetScope:pageSelectionKey(pending.plan.page),arrived:figma.currentPage.id === pending.plan.page.id,changed:false};
+          restoringSelection = restore;
+          let reprompt = false;
           try {
             if (pending.plan.page.id !== figma.currentPage.id) await figma.setCurrentPageAsync(pending.plan.page);
             assertActive();
             if (pendingSelection !== pending || snapshot !== pending.plan) return;
-            inspectionSelection = null;
-            figma.currentPage.selection = nodes;
-            pendingSelection = null;
+            if (restore.changed || figma.currentPage.id !== restore.targetPageId || selectionKey() !== restore.targetScope) reprompt = true;
+            else {
+              if (nodes.some(node => !node || node.removed) || !rootsAvailable(pending.plan)) throw new Error('Исходный макет недоступен. Запустите новую проверку.');
+              inspectionSelection = null;
+              restore.targetScope = pending.plan.scope;
+              figma.currentPage.selection = nodes;
+              pendingSelection = null;
+            }
           } catch (error) { invalidate(); throw error; }
-          finally { restoringSelection = false; }
+          finally { restoringSelection = null; }
+          if (reprompt) { promptSelection('changed-during-restore'); return; }
           send('selection-confirmation-dismissed');
           send('selection', {count:figma.currentPage.selection.length});
         }

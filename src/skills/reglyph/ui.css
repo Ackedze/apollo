@@ -14,10 +14,10 @@
 .apollo-reglyph-dialog[data-closing="true"]::backdrop { animation:rg-backdrop-exit .16s ease-in forwards; }
 @keyframes rg-backdrop-enter { from { opacity:0; } to { opacity:1; } }
 @keyframes rg-backdrop-exit { from { opacity:1; } to { opacity:0; } }
-.apollo-reglyph-dialog .apollo-skill-header { display:flex; align-items:center; justify-content:space-between; gap:24px; flex:0 0 auto; min-height:48px; padding:0; margin:0 0 24px; }
-.apollo-reglyph-dialog .apollo-skill-header h2 { font-size:27px; line-height:32px; font-weight:600; letter-spacing:-.3px; margin:0; color:#000; overflow-wrap:anywhere; }
+.apollo-reglyph-dialog .apollo-skill-header { display:grid; grid-template-columns:minmax(0,1fr) 48px; align-items:center; gap:24px; flex:0 0 auto; min-height:48px; padding:0; margin:0 0 24px; }
+.apollo-reglyph-dialog .apollo-skill-header h2 { min-width:0; font-size:27px; line-height:32px; font-weight:600; letter-spacing:-.3px; margin:0; color:#000; overflow-wrap:anywhere; }
 .apollo-reglyph-dialog .apollo-skill-close { position:static; display:grid; place-items:center; flex:none; width:48px; height:48px; padding:0; border:0; border-radius:50%; background:var(--rg-subtle); }
-.apollo-reglyph-dialog .apollo-skill-close img { width:24px; height:24px; }
+.apollo-reglyph-dialog .apollo-skill-close img { display:block; width:24px; height:24px; }
 .apollo-reglyph-dialog .apollo-skill-content { flex:1; min-width:0; min-height:0; padding:0; border:0; overflow:auto; scrollbar-width:none; }
 .apollo-reglyph-dialog ::-webkit-scrollbar { display:none; width:0; height:0; }
 .apollo-reglyph-dialog .apollo-skills-hint { color:var(--rg-muted); }
@@ -34,7 +34,7 @@
 .apollo-reglyph-dialog .apollo-skills-actions button[class*="primary"]:hover:not(:disabled) { background:#37373b; }
 .apollo-reglyph-dialog .apollo-skills-actions button[class*="secondary"]:hover:not(:disabled),.apollo-reglyph-dialog .apollo-skill-close:hover { background:var(--rg-hover); }
 .apollo-reglyph-dialog.apollo-reglyph-workspace { inset:16px; left:16px; top:16px; translate:none; width:calc(100vw - 32px); height:calc(100dvh - 32px); max-height:none; padding:12px; }
-.apollo-reglyph-workspace .apollo-skill-header { padding:8px 12px 12px 24px; margin:0; }
+.apollo-reglyph-workspace .apollo-skill-header { padding:20px 20px 24px; margin:0; }
 .apollo-reglyph-workspace .apollo-skill-header h2 { font-size:27px; line-height:32px; font-weight:600; letter-spacing:-.3px; }
 .apollo-reglyph-workspace .apollo-reglyph-content { padding:10px 24px 100px; border:1px solid transparent; border-radius:40px; }
 .apollo-reglyph-workspace .apollo-skill-footer { position:absolute; bottom:12px; left:12px; right:12px; width:auto; margin:0; }
@@ -54,7 +54,7 @@
 .apollo-reglyph-row { display:grid; grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr); gap:8px; align-items:stretch; margin-top:12px; }
 .apollo-reglyph-row.is-readonly { grid-template-columns:minmax(0,1fr); }
 .apollo-reglyph-icon-card { min-width:0; min-height:107px; display:flex; align-items:flex-start; gap:12px; padding:16px; border:1px solid transparent; border-radius:28px; background:var(--rg-subtle); text-align:left; }
-.apollo-reglyph-row.is-unused>.apollo-reglyph-icon-card:first-child,.apollo-reglyph-row.is-unknown>.apollo-reglyph-icon-card:first-child { background:#fdf9ec; }
+.apollo-reglyph-row.is-unused>.apollo-reglyph-icon-card:first-child,.apollo-reglyph-row.is-unknown>.apollo-reglyph-icon-card:first-child,.apollo-reglyph-row.is-unresolved>.apollo-reglyph-icon-card:first-child { background:#fdf9ec; }
 .apollo-reglyph-icon-card>div:last-child { display:block; min-width:0; flex:1; }
 .apollo-reglyph-icon-card strong { display:block; padding-top:5px; font-size:15px; line-height:20px; font-weight:600; letter-spacing:.24px; overflow-wrap:anywhere; }
 .apollo-reglyph-icon-card .apollo-skills-hint { display:block; margin-top:2px; font-size:11px; line-height:16px; overflow-wrap:anywhere; }
@@ -105,7 +105,7 @@
 @media(max-width:500px) {
   .apollo-reglyph-dialog.apollo-skill-dialog { padding:24px; border-radius:32px; }
   .apollo-reglyph-dialog.apollo-reglyph-workspace { padding:8px; inset:8px; width:calc(100vw - 16px); height:calc(100dvh - 16px); }
-  .apollo-reglyph-workspace .apollo-skill-header { padding-inline:12px; }
+  .apollo-reglyph-workspace .apollo-skill-header { padding:16px 16px 24px; }
   .apollo-reglyph-workspace .apollo-reglyph-content { padding:10px 12px 100px; }
   .apollo-reglyph-row { grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr); gap:4px; }
   .apollo-reglyph-icon-card { padding:12px; gap:8px; flex-direction:column; }

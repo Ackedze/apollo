@@ -10,7 +10,9 @@
 .apollo-skill-card:hover { background:rgba(0,0,0,.065); }
 .apollo-skill-copy { display:flex; flex:1; min-width:0; flex-direction:column; justify-content:space-between; gap:16px; }
 .apollo-skill-copy strong { font-size:16px; line-height:24px; letter-spacing:-.05px; font-weight:500; }
-.apollo-skill-copy > span { max-width:400px; color:var(--apollo-muted); font-size:14px; line-height:20px; }
+.apollo-skill-copy > span:not(.apollo-skill-title) { max-width:400px; color:var(--apollo-muted); font-size:14px; line-height:20px; }
+.apollo-skill-title { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; }
+.apollo-skill-agent-label { padding:2px 8px; border-radius:8px; background:rgba(4,4,19,.07); color:var(--apollo-text); font-size:12px; line-height:16px; }
 .apollo-skill-chevron { width:24px; height:24px; flex:0 0 24px; }
 .apollo-skill-dialog { --apollo-text:rgba(3,3,6,.88); --apollo-muted:rgba(4,4,19,.55); box-sizing:border-box; position:fixed; inset:8px; margin:0; width:calc(100vw - 16px); height:calc(100dvh - 16px); max-width:none; max-height:none; min-width:0; padding:0; border:0; border-radius:36px; background:#fff; color:var(--apollo-text); font-family:"Apollo Alfa",sans-serif; font-size:14px; line-height:20px; letter-spacing:-.08px; overflow:hidden; }
 .apollo-skill-dialog[open] { display:flex; flex-direction:column; }

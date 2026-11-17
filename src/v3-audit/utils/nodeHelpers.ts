@@ -23,7 +23,7 @@ export function buildNodePath(node: SceneNode): string {
 
 export function isNodeVisible(node: SceneNode): boolean {
   let current: BaseNode | null = node;
-  while (current && current.type !== 'DOCUMENT') {
+  while (current && current.type !== 'PAGE' && current.type !== 'DOCUMENT') {
     if ('visible' in current && (current as SceneNode).visible === false) {
       return false;
     }

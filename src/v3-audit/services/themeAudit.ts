@@ -71,6 +71,7 @@ export async function buildPageThemizationEntry(
 export function buildCorporateThemizationEntry(
   node: SceneNode,
   ref: LibraryComponent,
+  indexedReplacement?: () => {name:string;key:string}|null,
 ): ThemeAuditEntry | null {
   if (ref.role === 'Part') {
     return null;
@@ -81,8 +82,8 @@ export function buildCorporateThemizationEntry(
     return null;
   }
 
-  const counterpart = getCorporateCounterpart(ref);
-  const replacementComponentKey = counterpart?.base?.key ?? null;
+  const replacement = indexedReplacement?.();
+  const replacementComponentKey = indexedReplacement ? replacement?.key ?? null : getCorporateCounterpart(ref)?.base?.key ?? null;
 
   return {
     id: node.id,
@@ -94,10 +95,9 @@ export function buildCorporateThemizationEntry(
     nodeId: node.id,
     nodeType: node.type,
     libraryName: ref.source ?? null,
-    recommendation:
-      stripCorporateMarker(referenceName) ||
-      'Используйте версию компонента без [Corporate]',
+    recommendation: indexedReplacement ? replacement?.name || '' : stripCorporateMarker(referenceName) || 'Используйте версию компонента без [Corporate]',
     replacementComponentKey,
+    exactReplacement: indexedReplacement ? Boolean(replacement) : undefined,
   };
 }
 

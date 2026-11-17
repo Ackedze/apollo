@@ -1,26 +1,90 @@
 'use strict';
 const p=require('./transport'),{nativeMetrics}=require('./ui-model');
 const {createRunTrace,readTrace,MAX_SESSIONS}=require('./run-trace');
-const messages={AUDIT_DATA_CHANGED_RELOAD_REQUIRED:'Данные Proxy изменились. Закрой и заново открой Apollo.',AUDIT_SOURCE_CHANGED:'Макет изменился. Повтори проверку.',AUDIT_SCOPE_UNAVAILABLE:'Проверенная область недоступна. Выбери область и повтори проверку.',AUDIT_DATA_PACKAGE_MISSING:'В Proxy нет пакета данных V3. Обнови данные Proxy.',AUDIT_DATA_READ_TIMEOUT:'Proxy не завершил чтение данных. Проверь подключение и повтори запуск.',AUDIT_OBSERVER_UNAVAILABLE:'Нельзя подтвердить актуальность макета. Повтори проверку перед исправлением.',AUDIT_BUSY:'Дождись завершения текущего действия.',AUDIT_ACTION_SOURCE_CHANGED:'Свойства слоя изменились. Повтори проверку перед исправлением.',AUDIT_CANCELLED:'Проверка остановлена.',AUDIT_ACTION_FAILED:'Исправление не завершено. Проверь повторный результат.',AUDIT_FAILED:'Не удалось завершить проверку.',AUDIT_SESSION_UNAVAILABLE:'Результат больше не доступен. Повтори проверку.'};
+const compactIndexPath='/v1/audit-data/compact-index';
+const compactIndexUrl='https://ackedze.github.io/design-system_ab/JSONS/apollo/indexes/athena-audit.json';
+const maxIndexBytes=32*1024*1024;
+const messages={UX_WRITER_SKILL_UNAVAILABLE:'Обнови данные Proxy до версии с UX-writer.',UX_WRITER_CHECKER_UNAVAILABLE:'Proxy не смог запустить проверку типографики. Проверь установку Proxy.',UX_WRITER_DATA_CHANGED:'Данные UX-writer изменились. Повтори проверку.',UX_WRITER_RESPONSE_INVALID:'Ответ UX-writer не удалось привязать к слоям. Повтори проверку.',AUDIT_DATA_CHANGED_RELOAD_REQUIRED:'Данные Proxy изменились. Закрой и заново открой Apollo.',AUDIT_SOURCE_CHANGED:'Макет изменился. Повтори проверку.',AUDIT_SCOPE_UNAVAILABLE:'Проверенная область недоступна. Выбери область и повтори проверку.',AUDIT_SHARED_SCOPE_EXCLUDED:'Вся выделенная область относится к шареду. Чтобы проверить её, выключи «Пропускать шаред».',AUDIT_DATA_PACKAGE_MISSING:'В Proxy нет пакета данных V3. Обнови данные Proxy.',AUDIT_DATA_READ_TIMEOUT:'Proxy не завершил чтение данных. Проверь подключение и повтори запуск.',AUDIT_OBSERVER_UNAVAILABLE:'Нельзя подтвердить актуальность макета. Повтори проверку перед исправлением.',AUDIT_BUSY:'Дождись завершения текущего действия.',AUDIT_ACTION_SOURCE_CHANGED:'Свойства слоя изменились. Повтори проверку перед исправлением.',AUDIT_CANCELLED:'Проверка остановлена.',AUDIT_ACTION_FAILED:'Исправление не завершено. Проверь повторный результат.',AUDIT_FAILED:'Не удалось завершить проверку.',AUDIT_SESSION_UNAVAILABLE:'Результат больше не доступен. Повтори проверку.'};
 const uncertain=new Set(['node-unreadable','notification-unavailable','outside-observation','unobserved-property','identity-unconfirmed','identity-unavailable','topology-notification']);
 function sourceChange(value){if(!value||typeof value.reason!=='string'||!/^[-a-z]{1,80}$/.test(value.reason))return null;return{reason:value.reason,stage:['capture','operation','retained'].includes(value.stage)?value.stage:null,nodeId:typeof value.nodeId==='string'?value.nodeId.slice(0,200):null,fields:Array.isArray(value.fields)?value.fields.filter(field=>typeof field==='string').slice(0,32).map(field=>field.slice(0,80)):[]};}
-const readable=(code,cause)=>code==='AUDIT_SOURCE_CHANGED'&&uncertain.has(cause?.reason)?'Не удалось подтвердить актуальность области. Повтори проверку.':code==='AUDIT_SOURCE_CHANGED'&&cause?.reason==='context-invalidated'?'Контекст проверки изменился. Запусти проверку заново.':messages[code]||(/^AUDIT_DATA_|^AUDIT_PACKAGE_|^AUDIT_TOKEN_/.test(code||'')?'Не удалось проверить пакет данных V3. Обнови код и данные Proxy, затем повтори запуск.':'Действие не завершено. Повтори проверку.');
+const indexMessages={
+ AUDIT_ACTION_UNCONFIRMED:'Не удалось подтвердить привязку токена. Проверь слой и повтори проверку.',
+ AUDIT_ATHENA_INDEX_UNAVAILABLE:'Не удалось загрузить индексы Athena. Проверь подключение и повтори проверку.',
+ AUDIT_ATHENA_INDEX_INVALID:'Данные Athena не прошли проверку. Обнови пакет данных Proxy или повтори проверку позже.',
+};
+const readable=(code,cause)=>code==='AUDIT_SOURCE_CHANGED'&&uncertain.has(cause?.reason)?'Не удалось подтвердить актуальность области. Повтори проверку.':code==='AUDIT_SOURCE_CHANGED'&&cause?.reason==='context-invalidated'?'Контекст проверки изменился. Запусти проверку заново.':indexMessages[code]||messages[code]||(/^AUDIT_DATA_|^AUDIT_PACKAGE_|^AUDIT_TOKEN_/.test(code||'')?'Не удалось проверить пакет данных V3. Обнови код и данные Proxy, затем повтори запуск.':'Действие не завершено. Повтори проверку.');
+const inputKeyHeader='X-Apollo-Input-Key';
+function createInputKey(){
+ try{return Array.from(globalThis.crypto.getRandomValues(new Uint8Array(32)),byte=>byte.toString(16).padStart(2,'0')).join('');}
+ catch{return null;}
+}
+function downloadJson(name,content){
+ const url=URL.createObjectURL(new Blob([content],{type:'application/json'})),link=document.createElement('a');
+ link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),0);
+}
 function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http://localhost:3001',onChange=()=>{},statistics=null,onStart=()=>{},pollDelay=700}){
  let sequence=0,closed=false,active=null,operation=null;
+ let agentInputAccess=null;
  const listeners=new Set(),reads=new Map(),operations=new Map();
  const traces={components:[],texts:[]},droppedTraces={components:0,texts:0};
  function traceEntry(kind,requestId,runId){
   const history=traces[kind];if(!history)return null;let entry=history.find(v=>v.requestId===requestId&&v.runId===runId);
-  if(!entry){entry={requestId,runId,ui:null,native:null};if(history.length===MAX_SESSIONS){history.shift();droppedTraces[kind]++;}history.push(entry);}return entry;
+  if(!entry){
+   entry={requestId,runId,ui:null,native:null};
+   if(history.length===MAX_SESSIONS){
+    const acceptedRunId=kind==='components'?state.runId:state.texts.runId;
+    const olderOperation=history.findIndex(session=>session.requestId!==session.runId);
+    const evict=olderOperation>=0?olderOperation:history.findIndex(session=>session.requestId!==acceptedRunId);
+    history.splice(evict,1);
+    droppedTraces[kind]++;
+   }
+   history.push(entry);
+  }
+  return entry;
  }
  const kindForRun=runId=>active?.requestId===runId?active.kind:state.runId===runId?'components':state.texts.runId===runId?'texts':null;
  function uiTrace(requestId,runId,kind){const trace=createRunTrace({requestId,runId,kind,side:'ui'});const entry=traceEntry(kind,requestId,runId);if(entry)entry.ui=trace;return trace;}
- function nativeTrace(message,kind,requestId,runId){const trace=readTrace(message.trace);if(trace?.side==='native'&&trace.kind===kind&&trace.requestId===requestId&&trace.runId===runId){const entry=traceEntry(kind,requestId,runId);if(entry)entry.native=trace;}}
+ let pluginBuildId=null;
+ function nativeTrace(message,kind,requestId,runId){const trace=readTrace(message.trace);if(trace?.side==='native'&&trace.kind===kind&&trace.requestId===requestId&&trace.runId===runId){const entry=traceEntry(kind,requestId,runId);if(entry)entry.native=trace;if(trace.pluginBuildId)pluginBuildId=trace.pluginBuildId;}}
  function relayTrace(ownerId){for(const kind of ['components','texts']){const entry=traces[kind].find(v=>v.requestId===ownerId);if(entry?.ui)return entry.ui;}return null;}
- let state={result:null,runId:null,stale:false,texts:{result:null,capture:null,runId:null,stale:false},attempts:{components:null,texts:null},busy:false,stopping:false,kind:null,progress:'',error:'',notice:'',sourceChange:null,operation:{busy:false,status:'idle',message:''}};
+ let state={result:null,runId:null,stale:false,paintFixes:[],texts:{result:null,capture:null,runId:null,stale:false},agentInput:{available:false,loading:false,error:''},attempts:{components:null,texts:null},busy:false,stopping:false,kind:null,progress:'',error:'',notice:'',sourceChange:null,operation:{busy:false,status:'idle',message:''}};
  const emit=patch=>{if(closed)return;state=Object.assign({},state,patch);onChange(state);for(const listener of listeners)listener();};
  const id=prefix=>prefix+'-'+(++sequence);
  async function json(path,options){const response=await request(endpoint+path,options),value=await response.json();if(!response.ok||value?.success===false||value?.error)throw Error(value?.error||'AUDIT_DATA_UNAVAILABLE');return value;}
+ async function loadCompactIndex(signal,onProgress){
+  const local=new AbortController(),abortLocal=()=>local.abort();
+  signal.addEventListener('abort',abortLocal,{once:true});
+  if(signal.aborted)abortLocal();
+  try{
+   let response,source='proxy';
+   const timer=setTimeout(abortLocal,3000);
+   try{response=await request(endpoint+compactIndexPath,{signal:local.signal,cache:'no-store',redirect:'error'});}
+   catch(error){if(signal.aborted)throw error;}
+   finally{clearTimeout(timer);}
+   if(!response||response.status===404)source='repository';
+   else if(!response.ok){
+    const failure=[409,503].includes(response.status)?await response.json().catch(()=>null):null;
+    if(failure?.error==='AUDIT_ATHENA_INDEX_MISSING')source='repository';
+    else if(failure?.error==='AUDIT_ATHENA_INDEX_INVALID'||failure?.error==='AUDIT_DATA_ASSET_MISMATCH')throw Error('AUDIT_ATHENA_INDEX_INVALID');
+    else throw Error('AUDIT_ATHENA_INDEX_UNAVAILABLE');
+   }
+   if(source==='repository'){
+    if(signal.aborted)throw Error('AUDIT_CANCELLED');
+    onProgress('Качаем индексы Athena с GitHub Pages…');
+    try{response=await request(compactIndexUrl,{signal,credentials:'omit',cache:'no-cache',redirect:'error'});}
+    catch{throw Error('AUDIT_ATHENA_INDEX_UNAVAILABLE');}
+   }
+   if(!response.ok)throw Error('AUDIT_ATHENA_INDEX_UNAVAILABLE');
+   if(source==='proxy')onProgress('Читаем индексы Athena из Proxy…');
+   if(Number(response.headers.get('content-length'))>maxIndexBytes)throw Error('AUDIT_ATHENA_INDEX_INVALID');
+   const bytes=await response.arrayBuffer();
+   if(!bytes.byteLength||bytes.byteLength>maxIndexBytes)throw Error('AUDIT_ATHENA_INDEX_INVALID');
+   let text;
+   try{text=new TextDecoder('utf-8',{fatal:true}).decode(bytes);}
+   catch{throw Error('AUDIT_ATHENA_INDEX_INVALID');}
+   return {source,text};
+  }finally{signal.removeEventListener('abort',abortLocal);}
+ }
  function cancelOperations(runId,code){for(const[requestId,task]of operations)if(task.runId===runId){task.trace.add('operation-cancelled',{code},true);operations.delete(requestId);send({type:'v3-audit-cancel',schemaVersion:p.BRIDGE,requestId});task.reject(Error(code));}}
  function current(work){if(closed||active!==work||work.cancelled||work.stale)throw Error(work.stale?'AUDIT_SOURCE_CHANGED':'AUDIT_CANCELLED');}
  function begin(requestId,kind,settings,recheck=false,sourceRunId=null){
@@ -28,6 +92,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
   const work={requestId,kind,settings,cancelled:false,stale:false,phase:'capture',abort:new AbortController(),trace:uiTrace(requestId,requestId,kind)};active=work;work.trace.add(recheck?'recheck-start':'run-start',{stage:work.phase});
   if(kind==='components')statistics?.start(requestId,'native-document',settings.pickerLabel,recheck?'recheck':'check',sourceRunId);
   onStart(requestId,recheck);
+  if(kind==='texts'){agentInputAccess=null;state=Object.assign({},state,{agentInput:{available:false,loading:false,error:''}});}
   emit({stale:kind==='components'&&state.runId?true:state.stale,texts:kind==='texts'?Object.assign({},state.texts,{stale:!!state.texts.runId}):state.texts,busy:true,stopping:false,kind,progress:recheck?'Перепроверяем область…':'Подключаем данные проверки…',error:'',notice:'',sourceChange:null,operation:recheck?{busy:true,status:'refreshing',message:'Перепроверяем область…'}:{busy:false,status:'idle',message:''}});return work;
  }
  function finish(work,error=null,cancelled=false){
@@ -42,8 +107,13 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
   const abort=new AbortController(),task={abort,ownerRequestId:message.ownerRequestId},trace=relayTrace(message.ownerRequestId);reads.set(message.requestId,task);
   trace?.add('data-relay-start',{dataRequestId:message.requestId,resource:message.operation,dataId:message.dataId,assetId:message.fileId});
   try{const path=message.operation==='manifest'?'/v1/audit-data/manifest':`/v1/audit-data/${message.dataId}/assets/${message.fileId}`;
-   const result=await json(path,{signal:abort.signal,cache:'no-store'});if(closed||reads.get(message.requestId)!==task)return;
-   trace?.add('data-relay-result',{dataRequestId:message.requestId,outcome:'success'});
+   const result=message.operation==='compact-index'?await loadCompactIndex(abort.signal,progress=>{
+    const work=active;
+    if(!closed&&reads.get(message.requestId)===task&&work?.kind==='components'&&
+      work.requestId===message.ownerRequestId&&!work.cancelled&&!work.stale)emit({progress});
+   }):await json(path,{signal:abort.signal,cache:'no-store'});
+   if(closed||reads.get(message.requestId)!==task)return;
+   trace?.add('data-relay-result',{dataRequestId:message.requestId,outcome:'success',resource:result.source});
    send({type:'v3-audit-data-response',schemaVersion:p.VERSION,requestId:message.requestId,ownerRequestId:message.ownerRequestId,result});
   }catch(error){if(!closed&&reads.get(message.requestId)===task){const code=/^AUDIT_[A-Z_]+$/.test(error.message)?error.message:'AUDIT_DATA_UNAVAILABLE';trace?.add('data-relay-result',{dataRequestId:message.requestId,outcome:'error',code},true);send({type:'v3-audit-data-response',schemaVersion:p.VERSION,requestId:message.requestId,ownerRequestId:message.ownerRequestId,error:code});}}
   finally{if(reads.get(message.requestId)===task)reads.delete(message.requestId);}
@@ -55,18 +125,30 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
   try{
    current(work);work.phase='model';work.capture=capture;work.trace.add('stage',{stage:work.phase});
    emit({progress:'Проверяем тексты по редакционным правилам…'});
-   // Same report and route as V3. No dialogue/Ask context or contract fallback.
-   let value=await json('/v1/analyze/codex/runs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({report:capture.textReport}),signal:work.abort.signal});current(work);
+   const uxWriter=Array.isArray(capture.textReport.facts.scopes);
+   const report=uxWriter?Object.assign({},capture.textReport,{reportKind:'apollo-ux-writer-report'}):capture.textReport;
+   const inputKey=uxWriter?createInputKey():null;
+   const headers={'Content-Type':'application/json'};
+   if(inputKey)headers[inputKeyHeader]=inputKey;
+   let value=await json('/v1/analyze/codex/runs',{method:'POST',headers,body:JSON.stringify({report}),signal:work.abort.signal});current(work);
    let run=value.run;if(!run||!p.id(run.id))throw Error('AUDIT_FAILED');const remoteId=run.id;
    while(true){
     current(work);
     if(run.id!==remoteId)throw Error('AUDIT_FAILED');
-    if(run.status==='failed')throw Error('AUDIT_FAILED');
+    if(inputKey&&run.agentInputAvailable===true&&!agentInputAccess){
+     agentInputAccess={runId:remoteId,key:inputKey};
+     emit({agentInput:{available:true,loading:false,error:''}});
+    }
+    if(run.status==='failed')throw Error(uxWriter&&messages[run.error?.code]?run.error.code:'AUDIT_FAILED');
     if(run.status==='completed'){
      const validation=run.validation;
-     if(!validation||!Array.isArray(validation.findings)||typeof validation.responseMarkdown!=='string')throw Error('AUDIT_FAILED');
+     if(!validation||!Array.isArray(validation.findings))throw Error('AUDIT_FAILED');
      const nodes=new Set(capture.textReport.facts.texts.map(fact=>fact.node.id));
-     if(validation.findings.some(finding=>finding.nodeId&&!nodes.has(finding.nodeId)))throw Error('AUDIT_FAILED');
+     if(uxWriter){
+       const targets=new Set((capture.textTargets||[]).map(target=>target.nodeId));
+       if(validation.skillId!=='ux-writer-v2'||!Array.isArray(validation.coverageGaps)||!validation.coverageGaps.every(value=>typeof value==='string')
+         ||validation.findings.some(finding=>!nodes.has(finding?.nodeId)||!targets.has(finding.nodeId)||!Array.isArray(finding.sources)))throw Error('UX_WRITER_RESPONSE_INVALID');
+     }else if(typeof validation.responseMarkdown!=='string'||validation.findings.some(finding=>finding.nodeId&&!nodes.has(finding.nodeId)))throw Error('AUDIT_FAILED');
      await rpc('v3-audit-verify',work.requestId);current(work);
      emit({texts:{result:validation,capture,runId:work.requestId,settings:work.settings,stale:false}});finish(work);return;
     }
@@ -85,16 +167,36 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
    const settings=(kind==='components'?state.resultSettings:state.texts.settings)||work?.settings||attempt?.settings||null;
    const stale=kind==='components'?state.stale:state.texts.stale;
    const originalPayload=saved?(kind==='components'?saved:{capture,validation:saved}):null;
-   return JSON.parse(JSON.stringify({engine:'apollo-v3',kind,runId:acceptedRunId||work?.requestId||attempt?.requestId||null,dataId:capture?.dataId||work?.capture?.dataId||attempt?.capture?.dataId||null,settings,
+   return JSON.parse(JSON.stringify({engine:'apollo-v3',kind,runId:acceptedRunId||work?.requestId||attempt?.requestId||null,pluginBuildId,dataId:capture?.dataId||work?.capture?.dataId||attempt?.capture?.dataId||null,settings,
     hasAcceptedResult:!!saved,status:!saved?'diagnostic':work?'checking-with-saved-result':stale?'stale':'accepted',stale:!!stale,
     pending:work?{requestId:work.requestId,phase:work.phase,settings:work.settings,stopping:!!work.cancelled}:null,
     error:state.kind===kind?state.error:'',notice:state.kind===kind?state.notice:'',operation:Object.assign({},state.operation,{runId:operation?.runId||null}),
     lastAttempt:attempt?{requestId:attempt.requestId,phase:attempt.phase,cancelled:attempt.cancelled,error:attempt.error}:null,
-    originalPayload,sourceChange:state.sourceChange,trace:{droppedSessions:droppedTraces[kind],sessions:traces[kind].map(entry=>({requestId:entry.requestId,runId:entry.runId,ui:entry.ui?.snapshot()||null,native:entry.native}))},diagnosticCapture:saved?null:work?.capture||attempt?.capture||null}));
+    originalPayload,paintFixes:kind==='components'&&state.paintFixes.length?state.paintFixes:undefined,sourceChange:state.sourceChange,trace:{droppedSessions:droppedTraces[kind],sessions:traces[kind].map(entry=>({requestId:entry.requestId,runId:entry.runId,ui:entry.ui?.snapshot()||null,native:entry.native}))},diagnosticCapture:saved?null:work?.capture||attempt?.capture||null}));
   },
   download(kind='components'){
-   const snapshot=api.snapshot(kind),blob=new Blob([JSON.stringify(snapshot,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');
-   link.href=url;link.download='apollo-v3-'+kind+'-'+(snapshot.runId||'diagnostic').replace(/[^a-zA-Z0-9_-]/g,'-')+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),0);return snapshot;
+   const snapshot=api.snapshot(kind),name='apollo-v3-'+kind+'-'+(snapshot.runId||'diagnostic').replace(/[^a-zA-Z0-9_-]/g,'-')+'.json';
+   downloadJson(name,JSON.stringify(snapshot,null,2));return snapshot;
+  },
+  async downloadAgentInput(){
+   const access=agentInputAccess;
+   if(closed||!access||!state.agentInput.available||state.agentInput.loading)return;
+   emit({agentInput:{available:true,loading:true,error:''}});
+   let unavailable=false;
+   try{
+    const response=await request(endpoint+'/v1/analyze/codex/runs/'+encodeURIComponent(access.runId)+'/input',{
+     headers:{[inputKeyHeader]:access.key},cache:'no-store',signal:AbortSignal.timeout(15000),
+    });
+    unavailable=response.status===404;
+    if(!response.ok||!response.headers.get('content-type')?.startsWith('application/json'))throw Error('UX_WRITER_INPUT_UNAVAILABLE');
+    const content=await response.text();
+    if(closed||agentInputAccess!==access)return;
+    downloadJson('apollo-ux-writer-input-'+access.runId+'.json',content);
+    emit({agentInput:{available:true,loading:false,error:''}});
+   }catch{
+    if(!closed&&agentInputAccess===access)emit({agentInput:{available:!unavailable,loading:false,
+     error:unavailable?'Исходный JSON больше недоступен. Запусти проверку заново.':'Не удалось скачать исходный JSON. Попробуй ещё раз.'}});
+   }
   },
   async readData(){const value=await json('/v1/audit-data/manifest',{cache:'no-store'});if(value?.schemaVersion!=='apollo.v3-audit-data.v1'||!p.hash(value.dataId)||!Array.isArray(value.files)||!value.files.every(file=>p.hash(file.id)&&Array.isArray(file.roles)))throw Error('AUDIT_DATA_INVALID');return value;},
   start({requestId,kind='components',uiPreferences:settings}){
@@ -121,8 +223,14 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
    const task={runId};operation=task;emit({operation:{busy:true,status:'applying',message:type==='v3-audit-focus'?'Переходим к слою…':'Применяем исправление…'}});
    try{const reply=await rpc(type,runId,payload);if(operation!==task)return false;
     if(reply.recheckRequestId){operation=null;begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}
-    else{operation=null;emit({operation:{busy:false,status:'success',message:reply.message||''}});}return true;
-   }catch(error){if(operation===task){operation=null;const reply=error.reply;if(reply?.recheckRequestId){begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}else emit({operation:{busy:false,status:'error',message:readable(error.message)}});}return false;}
+    else{
+     operation=null;
+     const paintFix=reply.paintFix;
+     const paintFixes=type==='v3-audit-action'&&runId===state.runId&&typeof paintFix?.nodeId==='string'&&['fill','stroke'].includes(paintFix.field)
+      ?state.paintFixes.concat({nodeId:paintFix.nodeId,field:paintFix.field}):state.paintFixes;
+     emit({paintFixes,operation:{busy:false,status:'success',message:reply.message||''}});
+    }return true;
+   }catch(error){if(operation===task){operation=null;const reply=error.reply;if(reply?.recheckRequestId){begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}else emit({stale:state.stale||reply?.stale===true,operation:{busy:false,status:'error',message:readable(error.message)}});}return false;}
   },
   accept(message){
    if(closed)return!!message?.type?.startsWith('v3-audit-');
@@ -155,7 +263,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     nativeTrace(message,work.kind,work.requestId,work.requestId);work.trace.add('native-result',{stage:'capture',dataId:result.dataId});
     work.capture=result;
     if(work.kind==='texts')void analyze(work,result);
-    else{statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));emit({result,runId:work.requestId,resultSettings:work.settings,stale:false});finish(work);}return true;
+    else{statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));emit({result,runId:work.requestId,resultSettings:work.settings,stale:false,paintFixes:[]});finish(work);}return true;
    }
    return true;
   },

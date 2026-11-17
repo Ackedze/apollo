@@ -2,6 +2,10 @@ import {
   ensureReferenceCatalogsLoaded,
   getTokenCatalogs,
 } from '../reference/library';
+import type { TokenCatalog } from '../reference/libraryTypes';
+
+type TokenCollection = NonNullable<NonNullable<TokenCatalog['collections']>[number]>;
+type ColorVariable = NonNullable<TokenCollection['variables']>[number];
 
 export type ColorTokenValueCandidate = {
   key: string;
@@ -16,7 +20,7 @@ type IndexedColorToken = ColorTokenValueCandidate & {
   scopes: string[];
 };
 
-let colorTokenIndex: Map<string, IndexedColorToken[]> | null = null;
+let colorTokenIndex: ReturnType<typeof buildColorTokenValueIndex> | null = null;
 let colorTokenIndexLoadPromise: Promise<void> | null = null;
 
 export async function ensureColorTokenValueIndexLoaded(): Promise<void> {
@@ -29,7 +33,7 @@ export async function ensureColorTokenValueIndexLoaded(): Promise<void> {
   })()
     .catch((error) => {
       console.warn('[Apollo] failed to build color token value index', error);
-      colorTokenIndex = new Map();
+      colorTokenIndex = buildColorTokenValueIndex([]);
     })
     .finally(() => {
       colorTokenIndexLoadPromise = null;
@@ -37,13 +41,24 @@ export async function ensureColorTokenValueIndexLoaded(): Promise<void> {
   return colorTokenIndexLoadPromise;
 }
 
+export function createColorTokenValueReader(catalogs: ReturnType<typeof getTokenCatalogs>, isActive: (key:string)=>boolean) {
+  const index = buildColorTokenValueIndex(catalogs);
+  return {
+    findColorTokenValueCandidates: (node: SceneNode, field: 'fill' | 'stroke') =>
+      findColorTokenValueCandidates(node, field, index).filter(candidate => isActive(candidate.key)),
+    readColorTokenPreview: (node: SceneNode, key: string) =>
+      isActive(key) ? readColorTokenPreview(node, key, index) : null,
+  };
+}
+
 export function findColorTokenValueCandidates(
   node: SceneNode,
   field: 'fill' | 'stroke',
+  index = colorTokenIndex,
 ): ColorTokenValueCandidate[] {
   const colorKey = getNodeUniformColorKey(node, field);
   if (!colorKey) return [];
-  const matches = colorTokenIndex?.get(colorKey) ?? [];
+  const matches = index?.byColor.get(colorKey) ?? [];
   return matches
     .filter((candidate) => scopeSupportsField(candidate.scopes, field))
     .map((candidate) => ({
@@ -59,13 +74,20 @@ export function findColorTokenValueCandidates(
 
 function buildColorTokenValueIndex(
   catalogs: ReturnType<typeof getTokenCatalogs>,
-): Map<string, IndexedColorToken[]> {
-  const index = new Map<string, IndexedColorToken[]>();
+) {
+  const byColor = new Map<string, IndexedColorToken[]>();
+  const byKey = new Map<string, Array<{ collection: TokenCollection; variable: ColorVariable }>>();
+  const collectionKeysById = new Map<string, Set<string>>();
   for (const catalog of catalogs) {
     const library = catalog.meta?.library ?? catalog.meta?.fileName ?? null;
     const sourceFile = catalog.meta?.fileName ?? null;
     for (const collection of catalog.collections ?? []) {
       if (!collection) continue;
+      if (collection.id) {
+        const identities = collectionKeysById.get(collection.id) ?? new Set<string>();
+        identities.add(collection.key ?? collection.id);
+        collectionKeysById.set(collection.id, identities);
+      }
       const collectionName = collection.name ?? library;
       for (const variable of collection.variables ?? []) {
         if (
@@ -75,6 +97,9 @@ function buildColorTokenValueIndex(
         ) {
           continue;
         }
+        const definitions = byKey.get(variable.key) ?? [];
+        definitions.push({ collection, variable });
+        byKey.set(variable.key, definitions);
         const valuesByMode = getConcreteValuesByMode(variable);
         const modeIdsByColor = new Map<string, string[]>();
         for (const [modeId, values] of Object.entries(valuesByMode)) {
@@ -87,7 +112,7 @@ function buildColorTokenValueIndex(
           }
         }
         for (const [colorKey, matchedModeIds] of modeIdsByColor) {
-          const entries = index.get(colorKey) ?? [];
+          const entries = byColor.get(colorKey) ?? [];
           if (!entries.some((entry) => entry.key === variable.key)) {
             entries.push({
               key: variable.key,
@@ -103,12 +128,74 @@ function buildColorTokenValueIndex(
                 : [],
             });
           }
-          index.set(colorKey, entries);
+          byColor.set(colorKey, entries);
         }
       }
     }
   }
-  return index;
+  return { byColor, byKey, collectionKeysById };
+}
+
+export function readColorTokenPreview(
+  node: SceneNode,
+  key: string,
+  index = colorTokenIndex,
+): string | null {
+  if (!index) return null;
+  let resolvedModes: SceneNode['resolvedVariableModes'] | undefined;
+  try { resolvedModes = node.resolvedVariableModes; } catch {}
+  const colors = new Set<string>();
+  for (const { collection, variable } of index.byKey.get(key) ?? []) {
+    const valuesByMode = getConcreteValuesByMode(variable);
+    const declaredModes = collection.modes?.flatMap(mode => mode.modeId ? [mode.modeId] : []) ?? [];
+    const modeIds = new Set(declaredModes.length ? declaredModes
+      : Object.keys(variable.valuesByMode ?? {}).concat(Object.keys(valuesByMode)));
+    const qualifiedId = collection.key && `VariableCollectionId:${collection.key}/`;
+    const qualifiedModes = Object.entries(resolvedModes ?? {})
+      .filter(([id]) => qualifiedId && id.startsWith(qualifiedId)).map(([, mode]) => mode);
+    const localMode = collection.id ? resolvedModes?.[collection.id] : undefined;
+    const uniqueCollectionId = collection.id && index.collectionKeysById.get(collection.id)?.size === 1;
+    const activeModes = new Set(qualifiedModes);
+    if (!activeModes.size && localMode && uniqueCollectionId) activeModes.add(localMode);
+    if (activeModes.size > 1) return null;
+    if (!activeModes.size && resolvedModes && !localMode && collection.defaultModeId) {
+      activeModes.add(collection.defaultModeId);
+    }
+    const candidates = activeModes.size ? activeModes : modeIds;
+    if (!modeIds.size) return null;
+    for (const mode of candidates) {
+      if (!modeIds.has(mode)) return null;
+      const resolution = variable.resolutionByMode?.[mode];
+      if (resolution && (resolution.status !== 'resolved' || resolution.unresolvedAliasIds?.length)) return null;
+      const values = valuesByMode[mode];
+      if (!values?.length) return null;
+      for (const value of values) {
+        const color = previewColorKey(value, value?.a ?? 1);
+        if (!color) return null;
+        colors.add(color);
+      }
+    }
+  }
+  return colors.size === 1 ? cssPreviewColor(Array.from(colors)[0]) : null;
+}
+
+export function readActualColorPreview(node: SceneNode, field: 'fill' | 'stroke'): string | null {
+  try {
+    const key = getNodeUniformColorKey(node, field, true);
+    return key ? cssPreviewColor(key) : null;
+  } catch { return null; }
+}
+
+function previewColorKey(color: RGB | undefined, opacity: number): string | null {
+  if (!color) return null;
+  const values = [color.r, color.g, color.b, opacity];
+  return values.every(value => Number.isFinite(value) && value >= 0 && value <= 1)
+    ? values.join(':') : null;
+}
+
+function cssPreviewColor(key: string): string {
+  const channels = key.split(':').map(Number);
+  return '#' + channels.map(channel => Math.round(channel * 255).toString(16).padStart(2, '0')).join('');
 }
 
 function getConcreteValuesByMode(variable: {
@@ -130,20 +217,22 @@ function getConcreteValuesByMode(variable: {
 function getNodeUniformColorKey(
   node: SceneNode,
   field: 'fill' | 'stroke',
+  preview = false,
 ): string | null {
   const property = field === 'fill' ? 'fills' : 'strokes';
   const paints = (node as any)[property] as
     | readonly Paint[]
     | PluginAPI['mixed']
     | undefined;
-  const direct = getUniformPaintColorKey(paints);
+  const direct = getUniformPaintColorKey(paints, preview);
+  if (preview && typeof paints !== 'symbol') return direct;
   if (direct || node.type !== 'TEXT' || field !== 'fill') return direct;
   if (typeof (node as TextNode).getStyledTextSegments !== 'function') {
     return null;
   }
   const keys = new Set<string>();
   for (const segment of (node as TextNode).getStyledTextSegments(['fills'])) {
-    const key = getUniformPaintColorKey(segment.fills);
+    const key = getUniformPaintColorKey(segment.fills, preview);
     if (!key) return null;
     keys.add(key);
   }
@@ -152,8 +241,15 @@ function getNodeUniformColorKey(
 
 function getUniformPaintColorKey(
   paints: readonly Paint[] | PluginAPI['mixed'] | undefined,
+  preview: boolean,
 ): string | null {
   if (!Array.isArray(paints) || !paints.length) return null;
+  if (preview) {
+    const visible = paints.filter(paint => paint && paint.visible !== false);
+    const paint = visible[0];
+    return visible.length === 1 && paint.type === 'SOLID'
+      ? previewColorKey(paint.color, paint.opacity ?? 1) : null;
+  }
   const keys = new Set<string>();
   for (const paint of paints) {
     if (!paint || paint.visible === false || paint.type !== 'SOLID') return null;
@@ -222,7 +318,7 @@ function isVariableAlias(value: any): boolean {
 export function __test_buildColorTokenValueIndex(
   catalogs: ReturnType<typeof getTokenCatalogs>,
 ): Map<string, IndexedColorToken[]> {
-  return buildColorTokenValueIndex(catalogs);
+  return buildColorTokenValueIndex(catalogs).byColor;
 }
 
 export function __test_getNodeUniformColorKey(

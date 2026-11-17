@@ -100,3 +100,19 @@ test('a report arriving during delivery triggers another pass without waiting fo
  let release,started=false;const delivered=[];const h=harness({retryMs:60000,request:async(_url,o)=>{const r=JSON.parse(o.body);if(!started){started=true;await new Promise(resolve=>release=resolve);}delivered.push(r.reportId);return{ok:true,json:async()=>({accepted:true,reportId:r.reportId,payloadHash:digest(r),state:'proxy-durable'})};}});
  try{h.put(sample('first'));await wait(()=>release);h.put(sample('second'));release();await wait(()=>delivered.includes('second'));await wait(()=>h.map.size===0);}finally{h.client.close();}
 });
+
+test('unavailable Proxy keeps the report durable without POST until health recovers',async t=>{
+ let available=false;const sent=[];
+ const h=harness({canDeliver:async()=>available,request:async(_url,options)=>{
+   const report=JSON.parse(options.body);sent.push(report.reportId);
+   return {ok:true,json:async()=>({accepted:true,reportId:report.reportId,payloadHash:digest(report),state:'proxy-durable'})};
+ }});t.after(()=>h.client.close());
+ h.put(sample('waiting'));
+ await wait(()=>h.map.has(PREFIX+'waiting'));
+ await h.client.flush();
+ assert.deepEqual(sent,[]);
+ assert.deepEqual(h.errors,[]);
+ available=true;
+ await wait(()=>sent.length===1&&h.map.size===0);
+ assert.deepEqual(sent,['waiting']);
+});

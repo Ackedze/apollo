@@ -2,6 +2,54 @@ const test=require('node:test'),assert=require('node:assert/strict'),path=requir
 function load(file,plugins=[]){const built=esbuild.buildSync({entryPoints:[path.join(__dirname,'../src/v3-audit',file)],bundle:true,write:false,platform:'node',format:'cjs',logLevel:'silent'});const module={exports:{}};new Function('require','module','exports',built.outputFiles[0].text)(require,module,module.exports);return module.exports;}
 function scene(){const page={id:'page',type:'PAGE',explicitVariableModes:{},children:[]},root={id:'root',type:'FRAME',name:'Root',visible:true,width:100,children:[],parent:page},child={id:'child',type:'RECTANGLE',visible:true,width:24,parent:root,removed:false,fills:[]};root.children=[child];page.children=[root];return{page,root,child};}
 const event=(node,properties=['width'])=>({nodeChanges:[{type:'PROPERTY_CHANGE',id:node.id,node,origin:'LOCAL',properties}]});
+test('text observation reads text dependencies and ignores presentation-only changes',async()=>{
+ const {createV3SourceObservation}=load('source-observation.ts'),f=scene();
+ let styleReads=0,mainReads=0,irrelevantMainReads=0;
+ const main={id:'main',key:'a'.repeat(40),type:'COMPONENT',name:'Button',remote:true,parent:f.page};
+ const instance={id:'instance',type:'INSTANCE',name:'Action',visible:true,parent:f.root,children:[f.child],
+  componentProperties:{Label:{value:'Before'}},getMainComponentAsync:async()=>{mainReads++;return main;}};
+ const icon={id:'icon',type:'INSTANCE',name:'Icon',visible:true,parent:f.root,children:[],componentProperties:{},
+  getMainComponentAsync:async()=>{irrelevantMainReads++;return main;}};
+ Object.assign(f.child,{type:'TEXT',parent:instance,characters:'Before',opacity:1,
+  getStyledTextSegments(){styleReads++;throw Error('unexpected style read');}});
+ f.root.children=[instance,icon];
+ const proof=createV3SourceObservation('texts');
+ await proof.prepare([f.root],()=>{},false);
+ await proof.verify(()=>{});
+ assert.equal(await proof.snapshot.getMainComponent(instance),main);
+ assert.equal(proof.snapshot.getText(f.child),'Before');
+ assert.equal(mainReads,2);
+ assert.equal(irrelevantMainReads,0);
+ assert.equal(styleReads,0);
+ f.child.fills=[{type:'SOLID'}];
+ assert.equal(await proof.unchanged(event(f.child,['fills']),true),true);
+ for(const [object,key,value] of [[f.child,'characters','After'],[f.child,'opacity',0],[f.root,'width',200],
+  [instance,'componentProperties',{Label:{value:'After'}}],[f.child,'parent',f.root]]){
+  const original=object[key];object[key]=value;
+  await assert.rejects(proof.verify(()=>{}),/AUDIT_SOURCE_CHANGED/,key);
+  object[key]=original;
+ }
+ instance.getMainComponentAsync=async()=>Object.assign({},main,{key:'b'.repeat(40)});
+ await assert.rejects(proof.verify(()=>{}),/AUDIT_SOURCE_CHANGED/);
+});
+test('text verification rejects an edit made while component identity is pending',async()=>{
+ const {createV3SourceObservation}=load('source-observation.ts'),f=scene();
+ const main={id:'main',key:'a'.repeat(40),type:'COMPONENT',name:'Button',remote:true,parent:f.page};
+ Object.assign(f.root,{type:'INSTANCE',componentProperties:{},getMainComponentAsync:async()=>main});
+ Object.assign(f.child,{type:'TEXT',characters:'Before'});
+ const proof=createV3SourceObservation('texts');
+ await proof.prepare([f.root],()=>{},false);
+ let beginIdentity,releaseIdentity;
+ const identityStarted=new Promise(resolve=>{beginIdentity=resolve;});
+ f.root.getMainComponentAsync=()=>new Promise(resolve=>{releaseIdentity=resolve;beginIdentity();});
+ const result=proof.verify(()=>{});
+ await identityStarted;
+ f.child.characters='Edited before notification';
+ releaseIdentity(main);
+ await assert.rejects(result,/AUDIT_SOURCE_CHANGED/);
+ assert.equal(proof.diagnostic().nodeId,f.child.id);
+ assert.deepEqual(proof.diagnostic().fields,['characters']);
+});
 test('same-value native property notifications are redundant; actual fields, topology and unknown events still refuse',async()=>{
  const {createV3SourceObservation}=load('source-observation.ts'),f=scene(),proof=createV3SourceObservation();await proof.prepare([f.root],()=>{});
  assert.equal(await proof.unchanged(event(f.child)),true);f.child.width=32;assert.equal(await proof.unchanged(event(f.child)),false);await assert.rejects(proof.verify(()=>{}),/AUDIT_SOURCE_CHANGED/);f.child.width=24;
@@ -12,6 +60,27 @@ test('queued same-value notifications are verified before audit reads; selected 
  const {createV3SourceObservation}=load('source-observation.ts'),f=scene();let siblingReads=0;const sibling={id:'sibling',get type(){siblingReads++;return'FRAME';},parent:f.page};f.page.children.push(sibling);
  const proof=createV3SourceObservation();assert.equal(await proof.unchanged(event(f.child)),true);await proof.prepare([f.root],()=>{});assert.equal(await proof.unchanged(event(f.child)),true);assert.equal(siblingReads,0);
  const unknown=createV3SourceObservation();unknown.unchanged(event(f.child,['mainComponent']));await assert.rejects(unknown.prepare([f.root],()=>{}),/AUDIT_SOURCE_CHANGED/);
+});
+test('the shared snapshot reads the main once for consumers and verifies it live before publish',async()=>{
+ const {createV3SourceObservation}=load('source-observation.ts'),f=scene(),proof=createV3SourceObservation();
+ const first={id:'main-a',key:'a'.repeat(40),type:'COMPONENT',remote:true,parent:f.page};
+ const second=Object.assign({},first,{id:'main-b',key:'b'.repeat(40)});
+ let current=first,reads=0;
+ f.root.type='INSTANCE';
+ f.root.getMainComponentAsync=async()=>{reads++;return current;};
+ f.child.type='TEXT';f.child.characters='Before';
+ await proof.prepare([f.root],()=>{},false);
+ assert.equal(reads,1);
+ assert.equal(await proof.snapshot.getMainComponent(f.root),first);
+ assert.equal(await proof.snapshot.getMainComponent(f.root),first);
+ assert.equal(reads,1);
+ current=second;
+ await assert.rejects(proof.verify(()=>{}),/AUDIT_SOURCE_CHANGED/);
+ assert.equal(reads,2);
+ f.child.characters='After';f.child.visible=false;f.root.children.length=0;
+ assert.deepEqual(proof.snapshot.getChildren(f.root),[f.child]);
+ assert.equal(proof.snapshot.isVisible(f.child),true);
+ assert.equal(proof.snapshot.getText(f.child),'Before');
 });
 test('observation setup yields for Stop and keeps complete large-scope verification without a new validity cap',async()=>{
  const {createV3SourceObservation}=load('source-observation.ts'),f=scene();f.root.children=Array.from({length:12000},(_,i)=>({id:'node-'+i,type:'RECTANGLE',width:24,visible:true,parent:f.root}));

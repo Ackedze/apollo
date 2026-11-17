@@ -10,6 +10,7 @@ export async function applyVariableBindingAction(
   action: VariableFindingAction,
   runtimeNode: SceneNode | null = null,
   mutation?:MutationControl,
+  confirmBinding = false,
 ): Promise<VariableBindingActionResult> {
   mutation?.assertCurrent();
   const node = isUsableRuntimeNode(runtimeNode, action.nodeId)
@@ -71,6 +72,9 @@ export async function applyVariableBindingAction(
   if (variable.resolvedType !== 'COLOR') {
     return { ok: false, message: 'Выбранный токен не является цветовым.' };
   }
+  if (confirmBinding && (variable.key !== action.targetVariableKey || !variable.id)) {
+    return { ok: false, message: 'Не удалось подтвердить библиотечный токен.' };
+  }
   try {
     mutation?.beforeWrite();
     if (Array.isArray(paints) && paints.length) {
@@ -99,7 +103,24 @@ export async function applyVariableBindingAction(
     });
     return { ok: false, message: 'Figma не смогла привязать библиотечный токен.' };
   }
+  if (confirmBinding && !hasConfirmedBinding(sceneNode, action.styleField, variable.id)) {
+    throw Error('AUDIT_ACTION_UNCONFIRMED');
+  }
   return { ok: true, node: sceneNode };
+}
+
+function hasConfirmedBinding(node: SceneNode, field: 'fill' | 'stroke', variableId: string): boolean {
+  const matches = (paints: readonly Paint[]) => paints.length > 0 && paints.every(paint =>
+    paint.type === 'SOLID' && paint.boundVariables?.color?.id === variableId);
+  const hasStyle = (id: unknown) => typeof id === 'string' && id.length > 0;
+  if (field === 'stroke') {
+    return 'strokes' in node && !hasStyle(node.strokeStyleId) && matches(node.strokes);
+  }
+  if (!('fills' in node)) return false;
+  if (Array.isArray(node.fills) && typeof node.fillStyleId !== 'symbol') return !hasStyle(node.fillStyleId) && matches(node.fills);
+  if (node.type !== 'TEXT') return false;
+  const segments = node.getStyledTextSegments(['fills', 'fillStyleId']);
+  return segments.length > 0 && segments.every(segment => !hasStyle(segment.fillStyleId) && matches(segment.fills));
 }
 
 function bindPaints(

@@ -70,6 +70,7 @@ export interface AuditLocalComponentDependenciesResult {
 }
 
 export interface ClassifyLocalComponentDependencyOptions {
+  referenceByKey?: typeof findComponent;
   componentKeyCache: Map<string, string | null>;
   freshnessChecker: LibraryComponentFreshnessChecker;
   observedComponentKeys: Set<string>;
@@ -97,8 +98,8 @@ export async function classifyLocalComponentDependency(
   if (!componentKey) return null;
   options.observedComponentKeys.add(componentKey);
 
-  let reference = findComponent(componentKey);
-  if (!reference) {
+  let reference = options.referenceByKey ? options.referenceByKey(componentKey) : findComponent(componentKey);
+  if (!reference && !options.referenceByKey) {
     await ensureReferenceCatalogsForKeys([componentKey]);
     reference = findComponent(componentKey);
   }

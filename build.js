@@ -75,8 +75,12 @@ async function build() {
   // Collect actual UI dependencies before sealing the build hash; the UI build uses that seal later.
   const uiOptions = {absWorkingDir: root, entryPoints: ['src/ui.js'], outfile: path.join(dist, 'ui.js'), loader: { '.module.css': 'local-css' }, bundle: true, platform: 'browser', format: 'iife', target: ['es2020'], write: false, alias: aliases, metafile: true, define: {'process.env.NODE_ENV': '"production"', __APOLLO_PLUGIN_VERSION__: JSON.stringify(require('./package.json').version), __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__: '"pending"', __APOLLO_PROGRESSBAR_PILOT__: 'true', __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: JSON.stringify('http://localhost:3001/v1/analyze/codex/runs')}};
   const uiInputs = await esbuild.build(uiOptions);
-  const readPortInputs = ['build.js','src/ui.html','src/design-check/tsconfig.json','tsconfig.json','package.json','instructions/landing/figma-workflow.md','instructions/agent-generation/figma-owned-mapping.json','node_modules/react/package.json','node_modules/react-dom/package.json','node_modules/scheduler/package.json'];
-  const inputs = Array.from(new Set(Object.keys(result.metafile.inputs).concat(Object.keys(main.metafile.inputs), Object.keys(uiInputs.metafile.inputs),Object.keys(auditPreparation.metafile.inputs),Object.keys(agentProtocol.metafile.inputs),Object.keys(agentFigmaProtocol.metafile.inputs),Object.keys(agentFigmaPostconditions.metafile.inputs),readPortInputs))).filter(input => input !== '<define:__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__>' && input !== '<define:__APOLLO_AGENT_NATIVE_SCOPE__>').sort().map((input) => {
+  const readPortInputs = ['build.js','manifest.json','src/ui.html','src/design-check/tsconfig.json','tsconfig.json','package.json','instructions/landing/figma-workflow.md','instructions/agent-generation/figma-owned-mapping.json','node_modules/react/package.json','node_modules/react-dom/package.json','node_modules/scheduler/package.json'];
+  const inlinedInputs = new Set(['<define:__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__>', '<define:__APOLLO_AGENT_NATIVE_SCOPE__>']);
+  if (Object.keys(main.metafile.inputs).concat(Object.keys(uiInputs.metafile.inputs)).some(file => path.basename(file) === 'athena-audit.json')) {
+    throw new Error('The Athena index must be delivered separately from the Figma plugin.');
+  }
+  const inputs = Array.from(new Set(Object.keys(result.metafile.inputs).concat(Object.keys(main.metafile.inputs), Object.keys(uiInputs.metafile.inputs),Object.keys(auditPreparation.metafile.inputs),Object.keys(agentProtocol.metafile.inputs),Object.keys(agentFigmaProtocol.metafile.inputs),Object.keys(agentFigmaPostconditions.metafile.inputs),readPortInputs))).filter(input => !inlinedInputs.has(input)).sort().map((input) => {
     const absolutePath = path.resolve(root, input);
     if (path.relative(repository, absolutePath).startsWith('..')) {
       throw new Error(`Build reads code outside the Apollo repository: ${input}`);
@@ -87,22 +91,27 @@ async function build() {
       sha256: crypto.createHash('sha256').update(bytes).digest('hex'),
     };
   });
-  fs.writeFileSync(path.join(dist, 'build-inputs.json'), JSON.stringify({
+  const buildInputs = JSON.stringify({
     documentType: 'apollo-v4-local-build-inputs',
     runtimeVersion: JSON.parse(fs.readFileSync(path.join(coreRoot, "./package.json"))).version,
     profileVersion: require(path.join(dist, 'runtime.cjs')).RUNTIME_VERSION,
     agentNativeScopeInput:agentScopeInput,
     nativeDiagnosticInputsHash: require(path.join(dist, 'runtime.cjs')).contractHash(diagnosticInputs),
     inputs,
-  }, null, 2) + '\n');
-  const buildInputsHash = crypto.createHash('sha256').update(fs.readFileSync(path.join(dist, 'build-inputs.json'))).digest('hex');
+  }, null, 2) + '\n';
+  const buildInputsHash = crypto.createHash('sha256').update(buildInputs).digest('hex');
   mainOptions.define.__APOLLO_NATIVE_BUILD_INPUTS_SHA__ = JSON.stringify(buildInputsHash);
-  await esbuild.build(mainOptions);
+  const code = (await esbuild.build(Object.assign({}, mainOptions, { write: false }))).outputFiles[0].contents;
   uiOptions.define.__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__ = JSON.stringify(buildInputsHash);
   const ui = await esbuild.build(uiOptions);
-  fs.writeFileSync(path.join(dist, 'ui.html'), fs.readFileSync(path.join(root, "./src/ui.html"), 'utf8')
+  const html = fs.readFileSync(path.join(root, "./src/ui.html"), 'utf8')
     .replace('__APOLLO_UI_CSS__', () => ui.outputFiles.find(file => file.path.endsWith('.css')).text.replace(/<\/style/gi, '<\\/style'))
-    .replace('__APOLLO_UI__', () => ui.outputFiles.find(file => file.path.endsWith('.js')).text.replace(/<\/script/gi, '<\\/script')));
+    .replace('__APOLLO_UI__', () => ui.outputFiles.find(file => file.path.endsWith('.js')).text.replace(/<\/script/gi, '<\\/script'));
+  const pluginBytes = code.length + Buffer.byteLength(html);
+  if (pluginBytes > 15_000_000) throw new Error(`Figma plugin is ${pluginBytes} bytes. The size limit is 15 MB.`);
+  fs.writeFileSync(path.join(dist, 'code.js'), code);
+  fs.writeFileSync(path.join(dist, 'ui.html'), html);
+  fs.writeFileSync(path.join(dist, 'build-inputs.json'), buildInputs);
   console.log('Apollo built from the shared ComponentContract core.');
 }
 

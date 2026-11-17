@@ -39,9 +39,9 @@ export function shouldIgnoreRawTypography(params: {
   componentKeys: Iterable<string>;
   nodeName: string;
   ancestorNames: readonly string[];
-}): boolean {
+}, policy = config): boolean {
   const componentKeys = new Set(params.componentKeys);
-  return config.rawTypography.rules.some((rule) => {
+  return policy.rawTypography.rules.some((rule) => {
     if (rule.nodeName !== params.nodeName) return false;
     if (rule.componentKeys.some((key) => componentKeys.has(key))) return true;
     return matchesAncestorPath(params.ancestorNames, rule.ancestorPath);

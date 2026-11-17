@@ -4,7 +4,7 @@ import { reconcileLibraryUpdateResults, excludeLibraryUpdatesFromCurrent } from 
 import { ensureReferenceCatalogsForChannel, ensureReferenceCatalogsForKeys, ensureReferenceCatalogsLoaded, findComponent, getTokenCatalogs, reportMissingReference, resolveStructure, resolveStructureForInstance } from './reference/library';
 import type { LibraryComponent } from './reference/libraryTypes';
 import type { DSStructureNode } from './types/structures';
-import type { PathSegment, RelevanceStatus } from './types/audit';
+import type { AuditItem, PathSegment, RelevanceStatus } from './types/audit';
 import type { ApolloPageType } from './types/pageContext';
 import type { StatsResource } from './stats/types';
 import type { VariableMetadata } from './structure/diff';
@@ -15,19 +15,30 @@ import { assertAuditPoliciesReady, assertAuditPolicyCoverage, setNormalizedAudit
 import { createCooperativeYield } from './utils/promisePool';
 import { buildNodePath, extractAliasKey } from './utils/nodeHelpers';
 import { getDetachedLibraryComponentKey } from './services/detachedComponentSource';
-import { ensureColorTokenValueIndexLoaded } from './services/colorTokenValueIndex';
+import { createColorTokenValueReader, ensureColorTokenValueIndexLoaded } from './services/colorTokenValueIndex';
 import { ensureStyleMetadataLoaded, isKnownStyleId, resolveStyleMetadata, extractStyleKey, getStyleMetadataFromKnownKey } from './services/styleMetadata';
-import { findExactPaintStyleMatches, findExactTypographyStyleMatches, getNodePaintFingerprint, getNodeTypographyFingerprint, getPaintStyleFingerprint } from './services/styleMetadata';
+import { createStyleCatalogReaders, findExactPaintStyleMatches, findExactTypographyStyleMatches, getNodePaintFingerprint, getNodeTypographyFingerprint, getPaintStyleFingerprint } from './services/styleMetadata';
 import { createAuditTraversalContext } from './services/auditTraversalContext';
 import { collectAuditTargets } from './services/auditTargetCollector';
-import { buildAuditResultViews, prepareAuditReport } from './services/auditResults';
+import { buildAuditResultViews, prepareAuditReport, prepareStatsAuditReport } from './services/auditResults';
 import { collectApolloTextFacts, buildApolloTextAuditReport } from './stats/textReport';
+import type { ApolloTextScope } from './stats/types';
+import { slugifyUserName } from './stats/report';
 import { collectApolloLayoutRelations } from './stats/layoutRelations';
 import { FindingActionRegistry } from './remediation/findingActionRegistry';
 import { attachFindingActions } from './remediation/findingActionResolver';
-import { findColorTokenValueCandidates } from './services/colorTokenValueIndex';
+import { findColorTokenValueCandidates, readColorTokenPreview } from './services/colorTokenValueIndex';
 import { checkPageBase } from './page-font';
+import type { OfflineAuditIndex } from './embedded-data';
+import { getForcedAuditCategory, getForcedAuditCategoryReason } from './policies/componentAuditPolicy';
+import { shouldIgnoreRawTypography } from './policies/auditPolicyConfig';
+import { collectWrongChannelTypography } from './services/typographyChannelAudit';
+import { getLibraryComponentFreshnessScope } from './services/libraryComponentFreshness';
+import { buildCorporateThemizationEntry } from './services/themeAudit';
+import { getPageName } from './utils/nodeHelpers';
 import type { createAuditDataClient } from './data-client';
+import type { AuditSceneSnapshot } from './source-observation';
+import { untimed, type createComponentTimings } from './component-timings';
 
 export type V3AuditProgress = { stage:string; message:string; checked?:number };
 export type V3AuditOptions = {
@@ -41,6 +52,7 @@ export type V3AuditOptions = {
   assertCurrent():void;
   onProgress(progress:V3AuditProgress):void;
   findingActions?:FindingActionRegistry;
+  snapshot?:AuditSceneSnapshot;
 };
 let activeDataId:string|null=null;
 
@@ -65,27 +77,37 @@ async function prepareData(options:V3AuditOptions,components:boolean) {
   return manifest.dataId;
 }
 
-async function reports(options:V3AuditOptions,checkState:ReturnType<typeof createCheckState>,startedAt:Date) {
+export type V3AuditRunOptions = Omit<V3AuditOptions,'data'> & {componentTimings?:ReturnType<typeof createComponentTimings>};
+
+export async function prepareV3AuditReports(
+  options:V3AuditRunOptions,
+  checkState:ReturnType<typeof createCheckState>,
+  startedAt:Date,
+  resources = { resolveStyleResource:resolveStyleStatsResource, resolveTokenResource:resolveTokenStatsResource, resolveComponentKey:getComponentKey },
+  statsOnly = false,
+) {
   const views=buildAuditResultViews(checkState),guard=options.assertCurrent;
-  const layoutRelations=await collectApolloLayoutRelations(options.selection,buildNodePath,guard);guard();
-  const bundle=await prepareAuditReport({
+  const layoutRelations=statsOnly?undefined:await collectApolloLayoutRelations(options.selection,buildNodePath,guard);guard();
+  const input={
     pluginVersion:options.pluginVersion,
     user:{id:figma.currentUser?.id??null,name:figma.currentUser?.name??'Unknown User'},
     figma:{fileKey:figma.fileKey??null,fileName:figma.root.name??null,editorType:figma.editorType},
     scan:{channel:options.channel,pageType:options.pageType,startedAt,finishedAt:new Date(),shellAuditEnabled:options.shellAuditEnabled,experimentalContractV2Enabled:false},
     selection:options.selection,checkState,views,resolveNodePath:buildNodePath,layoutRelations,
-    resolveComponentKey:getComponentKey,resolveStyleResource:resolveStyleStatsResource,resolveTokenResource:resolveTokenStatsResource,
-  });guard();
+    resolveComponentKey:resources.resolveComponentKey,resolveStyleResource:resources.resolveStyleResource,resolveTokenResource:resources.resolveTokenResource,
+  };
+  const report=statsOnly?await prepareStatsAuditReport(input):(await prepareAuditReport(input)).report;guard();
   options.onProgress({stage:'texts',message:'Собираем тексты и контекст компонентов…'});
-  const facts=await collectApolloTextFacts(options.selection,buildNodePath,async node=>{guard();const key=await getComponentKey(node);guard();return key;},guard);guard();
-  const textReport=buildApolloTextAuditReport(bundle.report,facts);
-  await options.data.assertCurrent();guard();
-  return {views,report:bundle.report,textReport};
+  const facts=await collectApolloTextFacts(options.selection,buildNodePath,async node=>{guard();const key=await resources.resolveComponentKey(node);guard();return key;},guard,options.snapshot);guard();
+  const textReport=buildApolloTextAuditReport(report,facts);
+  guard();
+  return {views,report,textReport};
 }
 
-/** Native audit port: the V3 collector and comparators run against packaged data. */
-export async function runV3Audit(options:V3AuditOptions) {
+/** Native component audit entry for the embedded and packaged data readers. */
+export async function runV3Audit(options:V3AuditOptions | (V3AuditRunOptions & {offlineIndex:OfflineAuditIndex})) {
   if(!options.selection.length)throw Error('AUDIT_SELECTION_REQUIRED');
+  if('offlineIndex' in options)return runOfflineComponentAudit(options,options.offlineIndex);
   const startedAt=new Date(),guard=options.assertCurrent;
   const dataId=await prepareData(options,true);guard();
   const traversal=createAuditTraversalContext({
@@ -140,18 +162,207 @@ export async function runV3Audit(options:V3AuditOptions) {
   options.onProgress({stage:'actions',message:'Подготавливаем исправления…'});
   await attachFindingActions(state,options.channel,options.findingActions??new FindingActionRegistry(),{
     getNodeById:async id=>{guard();const node=traversal.sceneNodeById.get(id)??await figma.getNodeByIdAsync(id);guard();return node;},
-    findExactPaintStyleMatches,findExactTypographyStyleMatches,findColorTokenValueCandidates,getNodePaintFingerprint,getNodeTypographyFingerprint,getPaintStyleFingerprint,
+    findExactPaintStyleMatches,findExactTypographyStyleMatches,findColorTokenValueCandidates,readColorTokenPreview,getNodePaintFingerprint,getNodeTypographyFingerprint,getPaintStyleFingerprint,
   },guard);guard();
   options.onProgress({stage:'results',message:'Подготавливаем результаты…'});
-  const result=await reports(options,state,startedAt);guard();
+  const result=await prepareV3AuditReports(options,state,startedAt);guard();await options.data.assertCurrent();guard();
   return Object.assign({schemaVersion:'apollo.v3-audit-result.v1',runId:options.runId,dataId,checkState:state,baseChecks},result);
+}
+
+async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineAuditIndex) {
+  const guard=options.assertCurrent,startedAt=new Date(),state=createCheckState();
+  const snapshot=options.snapshot;
+  const timings=options.componentTimings,measure=timings?.measure??untimed;
+  const measureSync=timings?.measureSync??untimed;
+  const readMain=(node:InstanceNode)=>measure('figmaGetMainComponentAsync',()=>node.getMainComponentAsync());
+  const getMainComponent=(node:InstanceNode)=>snapshot?snapshot.getMainComponent(node,readMain):readMain(node);
+  const resolveComponentKey=(node:BaseNode)=>node.type==='INSTANCE'
+    ?getMainComponent(node).then(main=>main?.key??null)
+    :getComponentKey(node);
+  const checkpoint=createCooperativeYield(guard);
+  guard();options.onProgress({stage:'indexes',message:'Подготавливаем индексы Athena…'});
+  const readStyleByIdAsync=timings&&typeof figma.getStyleByIdAsync==='function'
+    ?(id:string)=>measure('figmaGetStyleByIdAsync',()=>figma.getStyleByIdAsync(id)):undefined;
+  const style=createStyleCatalogReaders(index.styleCatalogs,index.styleStatus,readStyleByIdAsync);
+  const colorTokenReader=createColorTokenValueReader(index.tokenCatalogs,key=>index.tokenStatus(key)==='active');
+  const availableColorKeys = new Set<string>();
+  const labels=new Map<string,TokenLabelEntry>();
+  for(const catalog of index.tokenCatalogs)for(const collection of catalog.collections??[])for(const variable of collection?.variables??[]){
+    await checkpoint();
+    if (variable.key && variable.resolvedType === 'COLOR' && variable.hiddenFromPublishing !== true) availableColorKeys.add(variable.key);
+    const entry:TokenLabelEntry={label:buildTokenLabel(variable.groupName??'Без группы',variable.tokenName??variable.name??''),
+      variableKey:variable.key,variableId:variable.id,library:collection?.name,sourceFile:catalog.meta?.fileName};
+    registerTokenLabelKey(labels,variable.key,entry);registerTokenLabelKey(labels,variable.id,entry);
+  }
+  const tokenById=(id:string)=>labels.get(id)??labels.get(extractAliasKey(id)??'');
+  const tokenByKey=(key:string|null)=>{
+    const resource=key?labels.get(key):undefined;
+    return resource?.variableKey===key?resource:undefined;
+  };
+  const tokenLookups=new Map<string,Promise<TokenLabelEntry|undefined>>();
+  const resolveNativeToken=(id:string)=>{
+    if(typeof figma.variables?.getVariableByIdAsync!=='function') return Promise.resolve(undefined);
+    const cached=tokenLookups.get(id);
+    if(cached) return cached;
+    const lookup=(async()=>{
+      try{
+        const variable=await measure('figmaGetVariableByIdAsync',()=>figma.variables.getVariableByIdAsync(id));
+        return tokenByKey(variable?.key??null);
+      }catch{return undefined;}
+    })();
+    tokenLookups.set(id,lookup);
+    return lookup;
+  };
+  const getReference=(key:string|null)=>{const found=index.find(key);return found.state==='found'?found.reference:null;};
+  const traversal=createAuditTraversalContext({importComponentByKey:key=>measure('figmaImportComponentByKeyAsync',()=>figma.importComponentByKeyAsync(key)),
+    customStyleOptions:{tokenLabelMap:labels,resolveStyleMetadata:style.resolveStyleMetadata,
+      resolveComponentKey:snapshot?resolveComponentKey:undefined,readStyleByIdAsync,
+      isKnownStyleId:async id=>Boolean(await style.resolveStyleMetadata(id)),referenceByKey:getReference,
+      ignoreRawTypography:params=>shouldIgnoreRawTypography(params,index.policy)},
+    deprecatedStyleOptions:{resolveStyleMetadata:style.resolveStyleMetadata,async resolveTokenStatus(id){
+      const resource=tokenById(id)??await resolveNativeToken(id);
+      guard();
+      const key=resource?.variableKey,status=key?index.tokenStatus(key):undefined;
+      return key&&resource&&(status==='deprecated'||status==='scheduled')?{key,label:resource.label,library:resource.library,sourceFile:resource.sourceFile,status}:null;
+    }} });
+  const freshness=traversal.libraryComponentFreshnessChecker;
+  traversal.libraryComponentFreshnessChecker={getStats:()=>freshness.getStats(),async check(instance,scope){
+    const identityReader={getMainComponentAsync:()=>getMainComponent(instance as InstanceNode)};
+    const result=await measure('libraryFreshness',()=>freshness.check(identityReader,scope));guard();
+    if(result.status==='update-available')return Object.assign({},result,{status:'unknown' as const,reason:'publication-unconfirmed' as const});
+    return result;
+  }};
+  const safeKey=async(node:BaseNode)=>{
+    guard();
+    let key=null;
+    try{key=await resolveComponentKey(node);}catch{}
+    guard();
+    return key;
+  };
+  const getKey:typeof getComponentKeyCached=(node,cache,settings)=>resolveCachedComponentKey(node.id,cache,()=>safeKey(node),settings);
+  const getNodeById=async(id:string)=>{guard();const node=traversal.sceneNodeById.get(id)??await measure('figmaGetNodeByIdAsync',()=>figma.getNodeByIdAsync(id));guard();return node;};
+  timings?.start();
+  await collectAuditTargets(options.selection,state,options.channel,traversal,{shellAuditEnabled:options.shellAuditEnabled,dependencyConcurrency:4},{
+    getComponentKeyCached:getKey,buildNodeSegments,getNodeById,throwIfCancelled:guard,indexed:{
+      snapshot,timings,getMainComponent,
+      isSharedShellKey:options.shellAuditEnabled?undefined:index.isSharedShellComponent,
+      referenceByKey:getReference,
+      wrongChannel:item=>{const found=index.find(item.componentKey);return found.state==='found'&&!found.channels.includes(options.channel);},
+      wrongChannelTypography:node=>collectWrongChannelTypography(node,options.channel,async(type,id)=>{
+        if(type==='style'){
+          const metadata=await style.resolveStyleMetadata(id);
+          const channels=metadata&&index.typographyChannels('styles',metadata.key);
+          return metadata&&channels?{channels,resource:{type,key:metadata.key,name:metadata.label,
+            library:metadata.library??null,sourceFile:metadata.sourceFile}}:null;
+        }
+        // A numerical ID from a catalog export is not evidence of the binding in this file.
+        const key=id.startsWith('VariableID:')?extractAliasKey(id):null;
+        const token=tokenByKey(key)??await resolveNativeToken(id);
+        const channels=token?.variableKey&&index.typographyChannels('tokens',token.variableKey);
+        return token?.variableKey&&channels?{channels,resource:{type,key:token.variableKey,name:token.label,
+          library:token.sourceFile??token.library??null,sourceFile:token.sourceFile}}:null;
+      },guard),
+      themization(node,item){
+        const found=index.find(item.componentKey);if(found.state!=='found')return null;
+        return buildCorporateThemizationEntry(node,found.reference,()=>{
+          if(node.type!=='INSTANCE')return null;
+          const target=index.replacement(found.key,found.parentKey,options.channel);
+          return target?{key:target.key,name:target.reference.displayName}:null;
+        });
+      },
+      async classifyComponent(node,definition){
+        const key=await getKey(node,traversal.componentKeyCache,{retryIfMissing:true});
+        const found=index.find(key),reference=found.state==='found'?found.reference:null;
+        const forcedCategory=getForcedAuditCategory(reference);
+        const libraryFreshness=node.type==='INSTANCE'?await traversal.libraryComponentFreshnessChecker.check(node,getLibraryComponentFreshnessScope(node)):null;
+        guard();
+        let parent=node.parent;
+        while(parent&&parent.type!=='PAGE'&&parent.type!=='COMPONENT'&&parent.type!=='INSTANCE')parent=parent.parent;
+        const standalonePart=reference?.role==='Part'&&parent?.type==='PAGE';
+        const relevance=reference?.status==='deprecated'?'deprecated':forcedCategory??(reference?.status==='update'?'update':standalonePart?'technical':found.state==='unknown'?'unknown':'current');
+        const item:AuditItem={id:node.id,name:node.name,nodeType:node.type,pageName:getPageName(node),pathSegments:buildNodeSegments(node),
+          fullPath:buildNodePath(node),componentKey:key,reference,relevance,librarySource:reference?.source??null,librarySourceFile:reference?.sourceFile??null,
+          isLocal:found.state==='outside'&&!!(definition||key),diffs:[],comparisonIssues:found.state==='unknown'?[found.reason]:[],libraryFreshness,forcedCategory,
+          forcedCategoryReason:forcedCategory?getForcedAuditCategoryReason(forcedCategory,reference):null,
+          updateReasons:reference?.status==='update'?['catalog-lifecycle']:[],
+          resolvedReferenceVariantName:found.state==='found'?found.variantName:null,
+          resolvedReferenceVariantKey:found.state==='found'&&found.variantName?key:null};
+        measureSync('componentProgress',()=>options.onProgress({stage:'components',message:`Проверяем ${node.name}`,checked:state.totalItems+1}));
+        return item;
+      },
+    },
+  }).finally(()=>timings?.finish());
+  guard();
+  state.relevanceBuckets.current=state.relevanceBuckets.current.filter(item=>!item.isLocal);
+  options.onProgress({stage:'base',message:'Проверяем тему и шрифт страницы…'});
+  const baseChecks=await checkPageBase(figma,options.channel,options.selection,guard,Array.from(traversal.sceneNodeById.values()),snapshot?.shouldSkipShared);guard();
+  options.onProgress({stage:'actions',message:'Подготавливаем исправления…'});
+  await attachFindingActions(state,options.channel,options.findingActions??new FindingActionRegistry(),{
+    getNodeById,findExactPaintStyleMatches:style.findExactPaintStyleMatches,
+    findExactTypographyStyleMatches:node=>style.findExactTypographyStyleMatches(node).filter(candidate=>
+      index.typographyChannels('styles',candidate.key)?.includes(options.channel)!==false),
+    findColorTokenValueCandidates:colorTokenReader.findColorTokenValueCandidates,readColorTokenPreview:colorTokenReader.readColorTokenPreview,
+    isActiveColorToken:key=>availableColorKeys.has(key)&&index.tokenStatus(key)==='active',
+    getNodePaintFingerprint,getNodeTypographyFingerprint,getPaintStyleFingerprint,
+    channelCounterpart:(key,platform)=>{
+      if(!key)return null;
+      const target=index.counterpart(key,platform==='Mobile Web'?'MobileWeb':'Desktop');
+      return target?{platform,componentKey:target.key,componentName:target.reference.displayName,library:target.reference.source??null}:null;
+    },
+    componentRemediation:key=>key?index.remediations.components[key]??null:null,
+    styleRemediation:key=>key?index.remediations.styles[key]??null:null,
+  },guard);guard();
+  options.onProgress({stage:'results',message:'Подготавливаем результаты…'});
+  const result=await prepareV3AuditReports(options,state,startedAt,{
+    resolveComponentKey:safeKey,
+    resolveStyleResource:(id,name)=>{
+      const key=extractStyleKey(id)??id,metadata=style.byKey(key);
+      return metadata?{type:'style',id,key,name:metadata.label||name||id,library:metadata.library??null,sourceFile:metadata.sourceFile??null}:null;
+    },
+    resolveTokenResource:(id,name)=>{
+      const metadata=tokenById(id);
+      return metadata?{type:'token',id,key:metadata.variableKey??null,name:metadata.label||name||id,library:metadata.library??null,sourceFile:metadata.sourceFile??null}:null;
+    },
+  },true);guard();
+  return Object.assign({schemaVersion:'apollo.v3-audit-result.v1',runId:options.runId,dataId:index.dataId,checkState:state,baseChecks,
+    offlineCoverage:{gaps:index.inventoriesComplete?[]:['component-index-coverage-partial']}},result);
 }
 
 export async function captureV3Texts(options:V3AuditOptions) {
   if(!options.selection.length)throw Error('AUDIT_SELECTION_REQUIRED');
-  const startedAt=new Date(),dataId=await prepareData(options,false);
-  const result=await reports(options,createCheckState(),startedAt);
-  return {runId:options.runId,dataId,textReport:result.textReport};
+  const guard=options.assertCurrent,startedAt=new Date();
+  options.onProgress({stage:'data',message:'Сверяем пакет данных…'});
+  const {dataId}=await options.data.open(guard);guard();
+  options.onProgress({stage:'texts',message:'Собираем тексты и контекст компонентов…'});
+  const scopes:ApolloTextScope[]=[];
+  const componentKey=async (node:SceneNode) => {
+    if(node.type==='INSTANCE'&&options.snapshot)return (await options.snapshot.getMainComponent(node))?.key??null;
+    return getComponentKey(node);
+  };
+  const facts=await collectApolloTextFacts(options.selection,buildNodePath,componentKey,guard,options.snapshot,scopes);
+  const selection=await Promise.all(options.selection.map(async node=>({
+    nodeId:node.id,name:node.name,nodeType:node.type,path:buildNodePath(node),componentKey:await componentKey(node),
+  })));
+  guard();
+  const finishedAt=new Date(),userId=figma.currentUser?.id??null;
+  const name=figma.currentUser?.name?.trim()||'Unknown User',slug=slugifyUserName(name);
+  const pad=(value:number)=>String(value).padStart(2,'0');
+  const date=`${pad(finishedAt.getDate())}-${pad(finishedAt.getMonth()+1)}-${finishedAt.getFullYear()}`;
+  const time=`${pad(finishedAt.getHours())}-${pad(finishedAt.getMinutes())}-${pad(finishedAt.getSeconds())}`;
+  const textReport=buildApolloTextAuditReport({
+    reportId:`apollo-${userId??'anonymous'}-${finishedAt.getTime()}-${Math.random().toString(36).slice(2,10)}`,
+    generatedAt:finishedAt.toISOString(),
+    suggestedFileName:`${slug}_${date}_${time}.json`,
+    user:{id:userId,name,slug},
+    plugin:{name:'Apollo',version:options.pluginVersion},
+    figma:{fileKey:figma.fileKey??null,fileName:figma.root.name??null,editorType:figma.editorType},
+    scan:{channel:options.channel,pageType:options.pageType,startedAt:startedAt.toISOString(),finishedAt:finishedAt.toISOString(),
+      durationMs:Math.max(0,finishedAt.getTime()-startedAt.getTime()),selection,
+      settings:{shellAuditEnabled:options.shellAuditEnabled,experimentalContractV2Enabled:false}},
+  },facts);
+  textReport.facts.scopes=scopes;
+  await options.data.assertCurrent();guard();
+  return {runId:options.runId,dataId,textReport};
 }
 
 // Native helpers retained from the V3 entry point.
@@ -233,7 +444,7 @@ async function collectComponentKeys(
 }
 
 
-async function getComponentKey(node: SceneNode): Promise<string | null> {
+async function getComponentKey(node: BaseNode): Promise<string | null> {
   if (node.type === 'INSTANCE') {
     const mainComponent = await node.getMainComponentAsync();
     return mainComponent ? mainComponent.key : null;

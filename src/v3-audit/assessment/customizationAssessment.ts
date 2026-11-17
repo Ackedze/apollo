@@ -722,8 +722,10 @@ export function assessCustomizationDiffs(
     }
     if (
       existingComponentContractAssessment?.verdict === 'violation' &&
-      existingComponentContractAssessment.reasonCode ===
-        'component-contract-required-paint-state'
+      (existingComponentContractAssessment.reasonCode ===
+        'component-contract-required-paint-state' ||
+       existingComponentContractAssessment.reasonCode ===
+        'component-contract-required-sizing')
     ) {
       return inputDiff;
     }

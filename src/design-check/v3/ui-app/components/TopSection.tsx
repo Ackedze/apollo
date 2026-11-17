@@ -427,11 +427,11 @@ export function TopSection({
             className={styles.switchRow}
             disabled={actionLoading || !controlAvailability.shellAuditEnabled}
             title={!controlAvailability.shellAuditEnabled ? 'Эта настройка ещё не подключена к проверке v4' : undefined}
-            aria-pressed={shellAuditEnabled}
+            aria-pressed={!shellAuditEnabled}
             onClick={onShellAuditToggle}
           >
-            <span className={styles.switchText}>Проверять шаред</span>
-            <span className={[styles.switchTrack, shellAuditEnabled ? styles.switchTrackActive : ''].filter(Boolean).join(' ')}>
+            <span className={styles.switchText}>Пропускать шаред</span>
+            <span className={[styles.switchTrack, !shellAuditEnabled ? styles.switchTrackActive : ''].filter(Boolean).join(' ')}>
               <span className={styles.switchThumb} />
             </span>
           </button>

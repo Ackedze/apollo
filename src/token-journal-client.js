@@ -1,7 +1,7 @@
 'use strict';
 const {createOpaqueId}=require('./design-check/opaque-id');
 const p=require('./token-journal-protocol');
-function createTokenJournalClient({send,request=(...args)=>fetch(...args),endpoint='http://localhost:3001/usage/local',now=Date.now,monotonic=()=>performance.now(),sessionId=createOpaqueId(),rpcTimeoutMs=5000,deliveryTimeoutMs=1500,retryMs=30000,memoryLimit=1024}={}) {
+function createTokenJournalClient({send,request=(...args)=>fetch(...args),endpoint='http://localhost:3001/usage/local',canDeliver=()=>true,now=Date.now,monotonic=()=>performance.now(),sessionId=createOpaqueId(),rpcTimeoutMs=5000,deliveryTimeoutMs=1500,retryMs=30000,memoryLimit=1024}={}) {
   const listeners=new Set(),pending=new Map(),unsaved=new Map(),rejected=new Map();
   let sequence=0,serial=Promise.resolve(),flushing=false,retryTimer=null,current=null,latest=null,scheduled=false,closed=false,recheck=null;
   let state={message:'',pending:0,error:false};let storageError='',overflow=false,lastUnsaved=null,lastSnapshot={records:[],unreadable:0,invalidIds:[]};
@@ -43,7 +43,9 @@ function createTokenJournalClient({send,request=(...args)=>fetch(...args),endpoi
       // Retry in-memory failures after retained records have made room.
       const snapshot=await rpc('pending');
       if(!snapshot || !Array.isArray(snapshot.records) || !snapshot.records.every(p.valid) || !Number.isSafeInteger(snapshot.unreadable) || snapshot.unreadable<0)throw Error('STATISTICS_NATIVE_REPLY_INVALID');
-      for(const record of snapshot.records.filter(record=>!p.same(rejected.get(record.id)?.record,record)).slice(0,32)){
+      const batch=snapshot.records.filter(record=>!p.same(rejected.get(record.id)?.record,record)).slice(0,32);
+      blocked=batch.length>0&&!(await canDeliver());
+      for(const record of blocked?[]:batch){
         try{await deliver(record);await rpc('ack',{record});rejected.delete(record.id);if(record.status!=='running')deliveredAny=true;}
         catch(error){errorCode=error.message;if(error.permanent)rejected.set(record.id,{record,code:error.message});else{blocked=true;break;}}
       }

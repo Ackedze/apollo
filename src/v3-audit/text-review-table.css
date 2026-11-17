@@ -1,0 +1,27 @@
+.apollo-text-review-values {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+.apollo-text-review-values dt { color: #62626b; }
+.apollo-text-review-values dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-weight: 500; }
+.apollo-text-review-sources { margin: 0; padding: 0; list-style: none; }
+.apollo-text-review-sources li + li { border-top: 1px solid #e7e7eb; margin-top: 12px; padding-top: 12px; }
+.apollo-text-review-sources li .apollo-rule-identity { margin: 4px 0 0; }
+.apollo-finding-info-text {
+  min-height: 20px;
+  padding: 2px 6px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(30, 43, 68, .08);
+  color: rgba(3, 3, 6, .88);
+  font: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.apollo-finding-info-text:hover { background: rgba(15, 25, 55, .1); }

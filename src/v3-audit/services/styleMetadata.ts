@@ -10,6 +10,7 @@ export type StyleMetadataEntry = {
   library?: string;
   sourceFile?: string;
   isDeprecated?: boolean;
+  scheduled?: boolean;
 };
 
 export type TypographyStyleCandidate = StyleMetadataEntry & {
@@ -47,68 +48,7 @@ export async function ensureStyleMetadataLoaded(): Promise<void> {
     try {
       await ensureReferenceCatalogsLoaded();
       const catalogs = getStyleCatalogs();
-      const map = new Map<string, StyleMetadataEntry>();
-      const fingerprintMap = new Map<string, StyleMetadataEntry[]>();
-      const typographyFingerprintMap = new Map<
-        string,
-        TypographyStyleCandidate[]
-      >();
-
-      for (const catalog of catalogs) {
-        const libraryName =
-          catalog.meta?.library || catalog.meta?.fileName || '';
-        const sourceFile = catalog.meta?.fileName || '';
-        const isDeprecated = deprecatedStyleSourceFileSet.has(sourceFile);
-        const styles = catalog.styles ?? [];
-
-        for (const style of styles) {
-          if (!style?.key) continue;
-          const label = buildStyleLabel(
-            style.group ?? '',
-            style.name ?? '',
-          );
-
-          const metadata = {
-            key: style.key,
-            label,
-            library: libraryName || undefined,
-            sourceFile: sourceFile || undefined,
-            isDeprecated,
-          };
-          map.set(style.key, metadata);
-
-          const fingerprint = isDeprecated
-            ? null
-            : fingerprintCatalogPaintStyle(style);
-          if (fingerprint) {
-            const entries = fingerprintMap.get(fingerprint) ?? [];
-            if (!entries.some((entry) => entry.key === metadata.key)) {
-              entries.push(metadata);
-            }
-            fingerprintMap.set(fingerprint, entries);
-          }
-
-          const typographyFingerprint = isDeprecated
-            ? null
-            : fingerprintCatalogTypographyStyle(style);
-          if (typographyFingerprint) {
-            const entries =
-              typographyFingerprintMap.get(typographyFingerprint.key) ?? [];
-            if (!entries.some((entry) => entry.key === metadata.key)) {
-              entries.push(
-                Object.assign({}, metadata, {
-                  fontSize: typographyFingerprint.fontSize,
-                  fontStyle: typographyFingerprint.fontStyle,
-                  lineHeight: typographyFingerprint.lineHeight,
-                  numbersStyle: typographyFingerprint.numbersStyle,
-                }),
-              );
-            }
-            typographyFingerprintMap.set(typographyFingerprint.key, entries);
-          }
-        }
-      }
-
+      const { map, fingerprintMap, typographyFingerprintMap } = buildStyleIndexes(catalogs);
       styleLookupCache.clear();
       styleMetadataMap = map;
       paintStyleFingerprintMap = fingerprintMap;
@@ -127,12 +67,92 @@ export async function ensureStyleMetadataLoaded(): Promise<void> {
   return styleMetadataLoadPromise;
 }
 
+function buildStyleIndexes(catalogs: ReturnType<typeof getStyleCatalogs>, statusFor?: (key:string)=>string|undefined) {
+  const map = new Map<string, StyleMetadataEntry>();
+  const fingerprintMap = new Map<string, StyleMetadataEntry[]>();
+  const typographyFingerprintMap = new Map<
+    string,
+    TypographyStyleCandidate[]
+  >();
+
+  for (const catalog of catalogs) {
+    const libraryName =
+      catalog.meta?.library || catalog.meta?.fileName || '';
+    const sourceFile = catalog.meta?.fileName || '';
+    const styles = catalog.styles ?? [];
+
+    for (const style of styles) {
+      if (!style?.key) continue;
+      const status = statusFor?.(style.key);
+      const isDeprecated = status === 'deprecated' || deprecatedStyleSourceFileSet.has(sourceFile);
+      const isCandidate = !isDeprecated && (!statusFor || status === 'active');
+      const label = buildStyleLabel(
+        style.group ?? '',
+        style.name ?? '',
+      );
+
+      const metadata = {
+        key: style.key,
+        label,
+        library: libraryName || undefined,
+        sourceFile: sourceFile || undefined,
+        isDeprecated,
+      };
+      if(status==='scheduled') Object.assign(metadata,{scheduled:true});
+      map.set(style.key, metadata);
+
+      const fingerprint = isCandidate ? fingerprintCatalogPaintStyle(style) : null;
+      if (fingerprint) {
+        const entries = fingerprintMap.get(fingerprint) ?? [];
+        if (!entries.some((entry) => entry.key === metadata.key)) {
+          entries.push(metadata);
+        }
+        fingerprintMap.set(fingerprint, entries);
+      }
+
+      const typographyFingerprint = isCandidate ? fingerprintCatalogTypographyStyle(style) : null;
+      if (typographyFingerprint) {
+        const entries =
+          typographyFingerprintMap.get(typographyFingerprint.key) ?? [];
+        if (!entries.some((entry) => entry.key === metadata.key)) {
+          entries.push(
+            Object.assign({}, metadata, {
+              fontSize: typographyFingerprint.fontSize,
+              fontStyle: typographyFingerprint.fontStyle,
+              lineHeight: typographyFingerprint.lineHeight,
+              numbersStyle: typographyFingerprint.numbersStyle,
+            }),
+          );
+        }
+        typographyFingerprintMap.set(typographyFingerprint.key, entries);
+      }
+    }
+  }
+  return { map, fingerprintMap, typographyFingerprintMap };
+}
+
+export function createStyleCatalogReaders(
+  catalogs: ReturnType<typeof getStyleCatalogs>,
+  statusFor: (key:string)=>string|undefined,
+  readStyleByIdAsync?: PluginAPI['getStyleByIdAsync'],
+) {
+  const { map, fingerprintMap, typographyFingerprintMap } = buildStyleIndexes(catalogs,statusFor);
+  const cache = new Map<string,string>();
+  return {
+    resolveStyleMetadata: (id:string|null|undefined) => resolveStyleMetadata(id,key => map.get(key)??null,cache,readStyleByIdAsync),
+    findExactPaintStyleMatches: (paints:readonly Paint[]|PluginAPI['mixed']|undefined) => findExactPaintStyleMatches(paints,fingerprintMap),
+    findExactTypographyStyleMatches: (node:TextNode) => findExactTypographyStyleMatches(node,typographyFingerprintMap),
+    byKey: (key:string) => map.get(key)??null,
+  };
+}
+
 export function findExactTypographyStyleMatches(
   node: TextNode,
+  index = typographyStyleFingerprintMap,
 ): TypographyStyleCandidate[] {
   const fingerprint = getNodeTypographyFingerprint(node);
   if (!fingerprint) return [];
-  return (typographyStyleFingerprintMap?.get(fingerprint) ?? [])
+  return (index?.get(fingerprint) ?? [])
     .slice()
     .sort((left, right) =>
       [left.library ?? '', left.label, left.key]
@@ -175,12 +195,13 @@ export function getTextStyleTypographyFingerprint(
 
 export function findExactPaintStyleMatches(
   paints: readonly Paint[] | PluginAPI['mixed'] | undefined,
+  index = paintStyleFingerprintMap,
 ): StyleMetadataEntry[] {
   const fingerprint = getPaintStyleFingerprint(paints);
   if (!fingerprint) {
     return [];
   }
-  const matches = paintStyleFingerprintMap?.get(fingerprint) ?? [];
+  const matches = index?.get(fingerprint) ?? [];
   return matches.slice().sort((left, right) =>
     [left.library ?? '', left.label, left.key]
       .join('\u0000')
@@ -519,24 +540,29 @@ export function resolveStyleLabelForDiff(styleKey: string): string | null {
 
 export async function resolveStyleMetadata(
   styleId: string | null | undefined,
+  lookup = getStyleMetadataFromKnownKey,
+  cache = styleLookupCache,
+  readStyleByIdAsync?: PluginAPI['getStyleByIdAsync'],
 ): Promise<StyleMetadataEntry | null> {
   const normalized = normalizeStyleId(styleId);
   if (!normalized) {
     return null;
   }
 
+  const known = lookup(normalized);
+  if (known) return known;
   const directKey = extractStyleKey(normalized);
   if (directKey) {
-    const direct = getStyleMetadataFromKnownKey(directKey);
+    const direct = lookup(directKey);
     if (direct) {
       return direct;
     }
   }
 
-  if (styleLookupCache.has(normalized)) {
-    const cachedKey = styleLookupCache.get(normalized) ?? null;
+  if (cache.has(normalized)) {
+    const cachedKey = cache.get(normalized) ?? null;
     if (cachedKey) {
-      const cached = getStyleMetadataFromKnownKey(cachedKey);
+      const cached = lookup(cachedKey);
       if (cached) {
         return cached;
       }
@@ -550,11 +576,13 @@ export async function resolveStyleMetadata(
 
   try {
     const style =
-      typeof figmaApi.getStyleByIdAsync === 'function'
-        ? await figmaApi.getStyleByIdAsync(normalized)
-        : typeof figmaApi.getStyleById === 'function'
-          ? figmaApi.getStyleById(normalized)
-          : null;
+      readStyleByIdAsync
+        ? await readStyleByIdAsync(normalized)
+        : typeof figmaApi.getStyleByIdAsync === 'function'
+          ? await figmaApi.getStyleByIdAsync(normalized)
+          : typeof figmaApi.getStyleById === 'function'
+            ? figmaApi.getStyleById(normalized)
+            : null;
 
     const resolvedKey =
       style && typeof style.key === 'string' && style.key
@@ -565,8 +593,8 @@ export async function resolveStyleMetadata(
       return null;
     }
 
-    styleLookupCache.set(normalized, resolvedKey);
-    return getStyleMetadataFromKnownKey(resolvedKey);
+    cache.set(normalized, resolvedKey);
+    return lookup(resolvedKey);
   } catch (error) {
     console.warn('[Apollo] failed to resolve style metadata by id', {
       styleId: normalized,

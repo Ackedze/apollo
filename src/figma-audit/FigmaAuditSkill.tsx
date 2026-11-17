@@ -62,7 +62,13 @@ export function FigmaAuditSkill({client}:{client:any}){
  const unplanned=report?(report.snapshot?.nodes||[]).filter((node:any)=>node.type==='INSTANCE'&&!report.checks.some((check:any)=>check.targets.includes(node.id))):progress?.unplannedInstances||[];
  const download=()=>{const data=report||state.run;if(!data)return;const blob=new Blob([JSON.stringify(Object.assign({},data,{viewState:{provisional:!report,stale:state.stale,clientStatus:state.status,error:state.error}}),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ab-audit-'+data.snapshotId+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
  return <>
-  <button ref={card} className="apollo-skill-card" type="button" aria-haspopup="dialog" onClick={()=>setOpen(true)}><span className="apollo-skill-copy"><strong>Проверка по DS AI HUB</strong><span>{busy?'Проверка выполняется. Открыть ход проверки.':state.stale?'Макет изменился. Повторите проверку.':report?'Отчёт готов. Открыть результаты.':preview?'Есть предварительные результаты. Открыть проверку.':'Компоненты и паттерны выбранной области'}</span></span><img className="apollo-skill-chevron" src={icons['chevron-right']} alt="" aria-hidden="true"/></button>
+  <button ref={card} className="apollo-skill-card" type="button" aria-labelledby={`${titleId}-card`} aria-describedby={`${titleId}-agent ${titleId}-description`} aria-haspopup="dialog" onClick={()=>setOpen(true)}>
+   <span className="apollo-skill-copy">
+    <span className="apollo-skill-title"><strong id={`${titleId}-card`}>Проверка по DS AI HUB</strong><span id={`${titleId}-agent`} className="apollo-skill-agent-label">Агент</span></span>
+    <span id={`${titleId}-description`}>{busy?'Проверка выполняется. Открыть ход проверки.':state.stale?'Макет изменился. Повторите проверку.':report?'Отчёт готов. Открыть результаты.':preview?'Есть предварительные результаты. Открыть проверку.':'Компоненты и паттерны выбранной области'}</span>
+   </span>
+   <img className="apollo-skill-chevron" src={icons['chevron-right']} alt="" aria-hidden="true"/>
+  </button>
   {open&&createPortal(<dialog ref={dialog} className="apollo-skill-dialog" aria-labelledby={titleId} onCancel={e=>{e.preventDefault();setOpen(false);}}>
    <header className="apollo-skill-header"><h2 id={titleId}>Проверка по DS AI HUB</h2><button className="apollo-skill-close" type="button" aria-label="Закрыть проверку по DS AI HUB" onClick={()=>setOpen(false)}><img src={icons.close} alt=""/></button></header>
    <section tabIndex={0} className="apollo-figma-audit apollo-skill-content" aria-label="Результаты проверки по DS AI HUB">

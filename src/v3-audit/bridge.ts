@@ -1,6 +1,8 @@
-import { runV3Audit, captureV3Texts, type V3AuditOptions } from './entry';
+import { runV3Audit, captureV3Texts, type V3AuditRunOptions } from './entry';
+import type { OfflineAuditIndex } from './embedded-data';
 import type { createAuditDataClient } from './data-client';
 import type { FindingActionRegistry } from './remediation/findingActionRegistry';
+import type { AuditSceneSnapshot } from './source-observation';
 
 const SCHEMA='apollo.v3-audit-bridge.v1';
 const requestId=(v:any)=>typeof v==='string'&&/^[a-zA-Z0-9:_-]{1,160}$/.test(v);
@@ -24,12 +26,16 @@ export function auditResultForUi(result:any) {
   for(const [key,value]of Object.entries(result.views.visibleViews)) {
     views[key]=Array.isArray(value)?value.map(itemForUi):Object.fromEntries(Object.entries(value as any).map(([k,items])=>[k,(items as any[]).map(itemForUi)]));
   }
-  return {schemaVersion:result.schemaVersion,runId:result.runId,dataId:result.dataId,
-    visibleViews:views,report:result.report,textReport:result.textReport,baseChecks:result.baseChecks||[],textTargets:result.textTargets||[],mutationAvailable:result.mutationAvailable===true};
+  return Object.assign({schemaVersion:result.schemaVersion,runId:result.runId,dataId:result.dataId,
+    visibleViews:views,report:result.report,textReport:result.textReport,baseChecks:result.baseChecks||[],textTargets:result.textTargets||[],mutationAvailable:result.mutationAvailable===true},
+    result.offlineCoverage?{offlineCoverage:result.offlineCoverage}:{});
 }
 
 export function createV3AuditBridge(options:{
-  data:ReturnType<typeof createAuditDataClient>;
+  data:ReturnType<typeof createAuditDataClient>|null;
+  offlineIndex?():OfflineAuditIndex|Promise<OfflineAuditIndex>;
+  snapshot?:AuditSceneSnapshot;
+  componentTimings?:V3AuditRunOptions['componentTimings'];
   pluginVersion:string;
   post(message:any):void;
   readRevision():unknown;
@@ -37,7 +43,7 @@ export function createV3AuditBridge(options:{
   onGuard?(guard:()=>void):void;
   onBusy?(busy:boolean):void;
   findingActions?:FindingActionRegistry;
-  prepareRoots?(roots:SceneNode[],guard:()=>void):Promise<void>;
+  prepareRoots?(roots:SceneNode[],guard:()=>void,isSharedKey?:OfflineAuditIndex['isSharedShellComponent']):Promise<SceneNode[]|void>;
   assertPublishReady?():void;
   finish?(guard:()=>void,publish:()=>void):Promise<void>;
   prepareResult?(result:any,context:{guard:()=>void;rootIds:string[];pageId:string;revision:unknown}):Promise<void>;
@@ -66,12 +72,23 @@ export function createV3AuditBridge(options:{
       const capture=async()=>{
       const roots:SceneNode[]=[];
       for(const id of rootIds) {guard();const n=await figma.getNodeByIdAsync(id);guard();if(!n||!('visible'in n)||n.removed||pageOf(n)?.id!==pageId)throw Error('AUDIT_SCOPE_UNAVAILABLE');roots.push(n as SceneNode);}
-      await options.prepareRoots?.(roots,guard);guard();
-      const runOptions:V3AuditOptions={runId:work.requestId,channel:message.channel,pageType:message.pageType,
-        shellAuditEnabled:message.shellAuditEnabled,pluginVersion:options.pluginVersion,selection:roots,data:options.data,
-        findingActions:options.findingActions,
+      const runOptions:V3AuditRunOptions={runId:work.requestId,channel:message.channel,pageType:message.pageType,
+        shellAuditEnabled:message.shellAuditEnabled,pluginVersion:options.pluginVersion,selection:roots,
+        findingActions:options.findingActions,snapshot:options.snapshot,
         assertCurrent:guard,onProgress:progress=>{guard();options.post({type:'v3-audit-progress',schemaVersion:SCHEMA,requestId:work.requestId,progress});}};
-      const result=await(message.kind==='texts'?captureV3Texts(runOptions):runV3Audit(runOptions));guard();
+      let offlineIndex;
+      if(message.kind==='components'&&options.offlineIndex){
+        runOptions.onProgress({stage:'data',message:'Подключаем данные проверки…'});
+        offlineIndex=await options.offlineIndex();guard();
+      }
+      const isSharedKey=message.shellAuditEnabled?undefined:offlineIndex?.isSharedShellComponent;
+      runOptions.selection=await options.prepareRoots?.(roots,guard,isSharedKey)??roots;guard();
+      const result=await (async()=>{
+        if(offlineIndex) return runV3Audit(Object.assign(runOptions,{offlineIndex,snapshot:options.snapshot,componentTimings:options.componentTimings}));
+        if(!options.data)throw Error('AUDIT_DATA_UNAVAILABLE');
+        const packaged = Object.assign({},runOptions,{data:options.data});
+        return message.kind==='texts'?captureV3Texts(packaged):runV3Audit(packaged);
+      })();guard();
       await options.prepareResult?.(result,{guard,rootIds:rootIds.slice(),pageId,revision});guard();return result;
       };
       // These are reads. Stop abandons waiting; any late continuation still

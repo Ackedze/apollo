@@ -205,7 +205,9 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
     : (state.auditBusy ? state.auditProgress || state.documentAudit.progress : state.documentAudit.progress || state.auditProgress) || 'Проверяем область…';
   const failures=(state.auditFailures||[]).concat(state.documentAudit.failures||[]);
   const toastError=state.auditError&&!proxyError?state.auditError:state.documentAudit.error&&!contextChanged?state.documentAudit.error:state.documentAction.status==='error'?state.documentAction.message:'';
-  const toastMessage=toastError||state.documentAction.message||state.auditNotice||(groupId&&actionBusy?progress:groupId&&summary.stale?`Показаны результаты проверки ${acceptedScope}`:'');
+  const designGroupOpen=activeScreen==='check'&&!!groupId;
+  const toastStop=designGroupOpen&&v3?.busy;
+  const toastMessage=toastError||state.documentAction.message||state.auditNotice||(designGroupOpen&&actionBusy?progress:designGroupOpen&&summary.stale?`Показаны результаты проверки ${acceptedScope}`:'');
   const toastKey=(v3?.runId||'')+':'+(v3?.attempts?.components?.requestId||'')+':'+toastMessage;
   const failureHistory=<>{failures.length>0&&<details className="design-check-note"><summary>Диагностика проверки · {failures.length}</summary><p>История сбоев чтения и перепроверки, включая предыдущие попытки. Итоговое покрытие указано в результатах.</p><ul>{failures.map(f=><li key={f.errorId}>{f.code} · {f.stage} · {f.requestId}{f.read&&<> · {f.read.operation} · {readReasonLabels[f.read.sourceReason]||'причина не определена'}{f.read.sourceCode&&<> ({f.read.sourceCode})</>}{(f.resourceId||f.nodeId)&&<> · <span title={f.resourceId||f.nodeId}>{(f.resourceId||f.nodeId).slice(0,40)}{(f.resourceId||f.nodeId).length>40?'…':''}</span></>}</>}</li>)}</ul></details>}</>;
   return <div className="shell design-check-shell apollo-new" style={v3&&['check','texts'].includes(activeScreen)?{width:'min(800px, 100vw)'}:undefined}>
@@ -227,16 +229,16 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
       </nav>
       <div ref={setSettingsHost} className="apollo-settings-host" />
     </header>
-    <div className={`design-check-background${state.chat.proxy.compatibility && state.chat.proxy.compatibility.state !== 'compatible' ? ' has-compatibility-notice' : ''}`}>
-        {state.chat.proxy.compatibility && state.chat.proxy.compatibility.state !== 'compatible' &&
+    <div className={`design-check-background${activeScreen !== 'check' && state.chat.proxy.compatibility && state.chat.proxy.compatibility.state !== 'compatible' ? ' has-compatibility-notice' : ''}`}>
+        {activeScreen !== 'check' && state.chat.proxy.compatibility && state.chat.proxy.compatibility.state !== 'compatible' &&
           <section className="apollo-compatibility design-check-note" role="status" aria-label="Совместимость Apollo">
             <p>{state.chat.proxy.compatibility.message}</p>
             <button type="button" onClick={() => { void controller.refreshProxyStatus(); }}>Проверить снова</button>
           </section>}
       <div className="design-check-content">
         <h1 className="design-check-sr-only">Apollo</h1>
-        {['check','texts'].includes(activeScreen)&&toastMessage&&<AuditToast key={toastKey} message={toastMessage} error={!!toastError} persistent={!!groupId&&v3?.busy&&!toastError}>
-          {!!groupId&&v3?.busy&&<Button label="Остановить" type="secondary" size="compact" disabled={v3.stopping} onPress={()=>dataOptions.v3Client.stop()}/>}
+        {['check','texts'].includes(activeScreen)&&toastMessage&&<AuditToast key={toastKey} message={toastMessage} error={!!toastError} persistent={toastStop&&!toastError}>
+          {toastStop&&<Button label="Остановить" type="secondary" size="compact" disabled={v3.stopping} onPress={()=>dataOptions.v3Client.stop()}/>}
         </AuditToast>}
         <section className="design-check-check-screen" hidden={activeScreen !== 'check'} aria-label="Проверка макета">
           <div className={`apollo-contextbar${!groupId ? ' is-overview' : ''}`} hidden={!groupId && !scope}>
@@ -281,7 +283,18 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
             {!slots.generation && <p className="placeholder">Генерация недоступна в этом режиме просмотра.</p>}
           </div>
         </section>
-          {v3&&['check','texts'].includes(activeScreen)&&<details className="apollo-sources"><summary>Диагностика проверки</summary>{failureHistory}<Button label="Скачать JSON" type="secondary" size="compact" onPress={()=>dataOptions.v3Client.download(activeScreen==='texts'?'texts':'components')}/></details>}
+          {v3&&['check','texts'].includes(activeScreen)&&<details className="apollo-sources">
+            <summary>Диагностика проверки</summary>
+            {failureHistory}
+            {activeScreen==='texts'?<>
+              <div style={{display:'flex',gap:8}}>
+                <Button label="Скачать отчёт" type="secondary" size="compact" onPress={()=>dataOptions.v3Client.download('texts')}/>
+                <Button label="Исходный JSON" type="secondary" size="compact" disabled={!v3.agentInput?.available||v3.agentInput?.loading}
+                  loading={v3.agentInput?.loading} onPress={()=>void dataOptions.v3Client.downloadAgentInput()}/>
+              </div>
+              {v3.agentInput?.error&&<div role="status">{v3.agentInput.error}</div>}
+            </>:<Button label="Скачать JSON" type="secondary" size="compact" onPress={()=>dataOptions.v3Client.download('components')}/>}
+          </details>}
           <footer className={`apollo-audit-footer${activeScreen === 'texts' ? ' apollo-texts-footer' : ''}`} aria-label="Запуск проверки" hidden={activeScreen !== 'check' && activeScreen !== 'texts' || activeScreen==='check'&&['styles','components','base'].includes(groupId||'')}>          <TopSection title="Apollo" settingsHost={settingsHost} readContractData={dataOptions.readContractData} proxy={state.chat.proxy} proxyError={proxyError} settingsMessage={state.preferenceError || state.settingsNotice} onProxyRefresh={controller.refreshProxyStatus} auditControlsVisible={activeScreen === 'check' || activeScreen === 'texts'} overlayScope={`${state.mode}:${state.chat.open}:${actionBusy}`} pageTypeId={settings.pageTypeId} channelId={settings.channelId} pickerLabel={settings.pickerLabel}
             actionLabel={ state.documentAction.status==='refreshing' ? 'Перепроверяем' : state.documentAction.busy ? 'Выполняем' : state.auditStopping ? 'Останавливаем' : actionBusy ? 'Остановить' : 'Проверить'} actionDisabled={activeScreen === 'texts'&&!v3 || state.documentAction.busy || state.auditStopping || !actionBusy&&!state.auditReady}
             actionLoading={activeScreen === 'check' && state.documentAction.busy} actionType={activeScreen === 'check' && state.documentAction.busy ? 'secondary' : 'primary'} compact={false}

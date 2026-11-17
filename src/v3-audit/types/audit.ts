@@ -1,6 +1,7 @@
 import type { ComponentLifecycle } from '../component-lifecycle';
 import type { LibraryComponent } from '../reference/libraryTypes';
 import type { LibraryComponentFreshness } from '../services/libraryComponentFreshness';
+import type { AuditChannel } from '../services/channelAudit';
 import type { DiffEntry } from '../structure/diff';
 
 export type RelevanceStatus = 'technical' | 'deprecated' | 'update' | 'current' | 'unknown';
@@ -19,6 +20,8 @@ export interface FindingActionSummary {
   label: string;
   targetName: string;
   targetLibrary?: string | null;
+  targetGroup?: string;
+  targetColor?: string;
   scope:
     | 'wrongChannel'
     | 'deprecated'
@@ -96,6 +99,7 @@ export interface CustomStyleEntry {
   visible: boolean;
   reason: string;
   resource: AuditResource;
+  actualColor?: string;
   actions?: FindingActionSummary[];
 }
 
@@ -112,6 +116,9 @@ export interface DeprecatedStyleEntry {
   styleLabel: string;
   sourceFile: string;
   sourceLibrary?: string;
+  token?: true;
+  scheduled?: true;
+  actualColor?: string;
   actions?: FindingActionSummary[];
 }
 
@@ -122,6 +129,15 @@ export interface AuditResource {
   id?: string | null;
   library: string | null;
   sourceFile?: string | null;
+}
+
+export interface WrongChannelTypographyEntry {
+  id: string;
+  name: string;
+  path: string;
+  resource: AuditResource;
+  channels: readonly AuditChannel[];
+  selectedChannel: AuditChannel;
 }
 
 export interface ThemeAuditEntry {
@@ -136,6 +152,7 @@ export interface ThemeAuditEntry {
   libraryName?: string | null;
   recommendation: string;
   replacementComponentKey?: string | null;
+  exactReplacement?: boolean;
   themeCollectionId?: string | null;
   targetModeId?: string | null;
 }

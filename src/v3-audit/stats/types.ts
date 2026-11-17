@@ -430,7 +430,12 @@ export type ApolloTextFact = {
   owner: ApolloTextComponentContext | null;
   ancestors: ApolloTextComponentContext[];
   documentOrder: number;
+  scopeNodeId?: string;
+  effectiveOpacity?: number;
+  componentPath?: Array<{ nodeId: string; name: string; uniqueName: boolean }>;
 };
+
+export type ApolloTextScope = { nodeId: string; name: string; width: number; overlay: boolean };
 
 export type ApolloTextAuditReport = {
   schemaVersion: 1;
@@ -448,5 +453,6 @@ export type ApolloTextAuditReport = {
   };
   facts: {
     texts: ApolloTextFact[];
+    scopes?: ApolloTextScope[];
   };
 };

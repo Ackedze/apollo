@@ -1,5 +1,28 @@
 import type { AuditItem, DetachedEntry } from '../types/audit';
 
+// Exclusion roots verified in Athena catalogs or on library instances in Figma.
+// The compact index resolves other verified variants to their family keys.
+const SHARED_SHELL_ROOT_KEYS = new Set([
+  '379ded7ba661ce24eaedeb43cf38f117fd89be96', // [D] SideMenu · CorporateAppHeaderNew
+  '2ee267ec2a34601f5a5922b9ece4161aafa63f24', // [D] SideMenu · Corp HubPage
+  '8befa25fd1b73d1ee13384390c1e15f166c8fe0d', // [D] SideMenu · Corp Limited HubPage
+  'd187029a0a1af08dbb499e13b3ef2ac98efaaac2', // [D] Header
+  '8bc7f3ef78fd020085203e9ba738d7e791208f32', // [D] SpotlightBar
+  '92afbeecae84ff7ba5815a20b34cc7c80394f0c5', // [M] AppHeader :: Top
+  'e1a610b5944475fcab566a33ebeae102b21014da', // [M] AppHeader :: Bottom
+  'b7bb4d236678826d34c8fe26b57a731bd7b5e1fe', // [M] TabBar
+  '1b6ce5a6474cc691355f8945a765da3d45d46bd0', // [M] NavigationBar
+  // These published versions are absent from the compact index.
+  '1fc97edb44d3ae3ea303925059535476ff5f4ff5', // ❌ [D] SideMenu
+  '99b0d8803d29d252a4a95be7c568bbceee7e33bd', // ❌ [D] SideMenu · Edit Mode=False
+  '5d455c123ec43834cd278ab4c5186c5a033a811e', // ❌ [D] SideMenu · Edit Mode=True
+  'b55c2ba59e0a39f08968201d5974815adda4d21a', // ❌ [D] Header
+]);
+
+export function isSharedShellRootKey(key: string): boolean {
+  return SHARED_SHELL_ROOT_KEYS.has(key);
+}
+
 const SHELL_COMPONENT_KEYS = [
   // Web _ Corp Components -- CorporateAppHeaderNew [D]
   'd187029a0a1af08dbb499e13b3ef2ac98efaaac2',

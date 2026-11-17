@@ -29,7 +29,7 @@ export class FindingActionRegistry {
       this.runtimeNodes.set(id, runtimeNode);
     }
 
-    return {
+    const summary: FindingActionSummary = {
       id,
       kind: action.kind,
       label,
@@ -37,6 +37,11 @@ export class FindingActionRegistry {
       targetLibrary: action.targetLibrary ?? null,
       scope,
     };
+    if (action.kind === 'bind-variable') {
+      if (action.targetColor) summary.targetColor = action.targetColor;
+      if (action.targetGroup) summary.targetGroup = action.targetGroup;
+    }
+    return summary;
   }
 
   get(id: string): RegisteredFindingAction | null {

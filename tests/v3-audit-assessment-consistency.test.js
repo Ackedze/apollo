@@ -55,7 +55,7 @@ test('rule-data unavailability remains a refusal while the exporter never promot
 
 const hash=text=>crypto.createHash('sha256').update(text).digest('hex');
 function policy(){return {indexEntry:{componentKey:'sample',packageName:'SampleHeading',packagePath:'sample',coverage:'required',figmaKeys:[key],sourceCatalogPath:'components/sample.json',artifacts:{generatedContract:'api.json',rules:'rules.json',composition:'composition.json'}},aliases:['SampleHeading'],loadedArtifacts:{generatedContract:true,rules:true,composition:true,overrides:false,agentContext:false,auditMapping:false},apiEntry:{packageComponentKey:'sample',aliases:['SampleHeading'],figmaKeys:[key],contracts:[{id:'sample-api',name:'SampleHeading',normalizedName:'sampleheading',componentKey:key,status:'current',role:'Main',platform:'Desktop',figma:{variants:{variantKeys:[],properties:{},allowedCombinations:[]}}}]},rulesEntry:registry(),compositionEntry:{contract:{contracts:[]},aliases:['SampleHeading']},agentContext:null,auditMapping:null};}
-function data(api,baselineStyle=style){
+function data(api,baselineStyle=style,configure=()=>{}){
  const base='https://ackedze.github.io/design-system_ab/JSONS/',entryUrl=base+'referenceSourcesMVP.json',policyUrl=base+'apollo/policies.json';
  const documents=[
   [entryUrl,{schemaVersion:2,baseUrl:base,apollo:{patternRulesPath:'apollo/patterns.json'},catalogs:[{fileName:'tokens.json',path:'tokens/tokens.json',source:{kind:'tokens'}},{fileName:'styles.json',path:'styles/styles.json',source:{kind:'styles'}},{fileName:'sample.json',path:'components/sample.json',source:{kind:'components',indexPath:'components/sample.index.json'}}]}],
@@ -67,6 +67,7 @@ function data(api,baselineStyle=style){
   [policyUrl,{schemaVersion:'apollo.v3-audit-policies.v1',coverage:{defaultPolicy:'none'},packages:[policy()]}],
  ];
  for(const category of ['deprecated','scheduled','parts'])documents.push([base+'indexes/lifecycle/'+category+'.index.json',{kind:'component-lifecycle-index',version:1,category,count:0,components:[],warnings:[]}]);
+ configure(documents);
  const assets=new Map(),files=documents.map(([url,value])=>{const text=JSON.stringify(value),id=hash(url);assets.set(id,text);return {id,sha256:hash(text),bytes:Buffer.byteLength(text),urls:[url]};}),body={schemaVersion:protocol.SCHEMA,entryUrl,policyFileId:hash(policyUrl),files},manifest=Object.assign({},body,{dataId:hash(protocol.canonical(body))});
  return api.createAuditDataClient({hashText:hash,loadManifest:async()=>structuredClone(manifest),readAsset:async(dataId,fileId)=>({dataId,fileId,sha256:hash(assets.get(fileId)),text:assets.get(fileId)})});
 }
@@ -86,3 +87,41 @@ test('actual classifier feeds one matching assessment to views, report, bridge a
   assert.equal(result.views.visibleViews.changesWip[0].diffs[0].assessment,undefined);assert.equal(payload.visibleViews.changes[0].diffs[0].assessment,nativeDiff.assessment);
  }}finally{globalThis.fetch=oldFetch;delete globalThis.figma;}assert.equal(networkCalls,0);
 });
+
+for (const scenario of [{mode:'True',badRoot:false},{mode:'False',badRoot:false},{mode:'True',badRoot:true}]) {
+ test(`actual classifier scopes sizing and conditional height: ${scenario.mode}, bad root ${scenario.badRoot}`,async()=>{
+  const oldFetch=globalThis.fetch;let networkCalls=0;globalThis.fetch=()=>{networkCalls++;throw Error('NETWORK_FORBIDDEN');};
+  try {
+   const api=load(),instance=native(changedStyle);
+   Object.assign(instance,{variantProperties:{CustomExtent:scenario.mode},layoutSizingHorizontal:scenario.badRoot?'FIXED':'FILL',layoutSizingVertical:'HUG',width:680,height:500});
+   const body={id:'body',name:'Body',type:'FRAME',visible:true,parent:instance,children:[],width:300,height:440,layoutSizingHorizontal:'FIXED',layoutSizingVertical:'FIXED'};
+   const surface={id:'surface',name:'Surface',type:'FRAME',visible:true,parent:body,children:[],width:300,height:440,layoutSizingHorizontal:'FIXED',layoutSizingVertical:'FIXED'};
+   body.children=[surface];instance.children.push(body);instance.overrides.push({id:'surface',overriddenFields:['height']});
+   const lookup=globalThis.figma.getNodeByIdAsync;globalThis.figma.getNodeByIdAsync=async id=>({body,surface})[id]||lookup(id);
+   const sizing=rule({ruleId:'synthetic.root-sizing',target:{layer:'root'},appliesTo:'layout.sizing.*|variant.CustomExtent',requiredValues:{'layout.sizing.horizontal':'FILL','layout.sizing.vertical':'HUG'}});
+   const allowance=rule({ruleId:'synthetic.surface-height-allowed',severity:'info',target:{layer:'Body / Surface'},appliesTo:'layout.height',conditions:{variant:{CustomExtent:'True'}},classification:{treatAsAllowed:true}});
+   const denied=rule({ruleId:'synthetic.surface-height-forbidden',target:{layer:'Body / Surface'},appliesTo:'layout.height',conditions:{variant:{CustomExtent:'False'}}});
+   const client=data(api,style,documents=>{
+    const catalog=documents.find(([url])=>url.endsWith('/components/sample.json'))[1].components[0];
+    Object.assign(catalog.structure[0],{layout:{sizing:{horizontal:'FILL',vertical:'HUG'}},componentInstance:{componentKey:key,variantProperties:{CustomExtent:scenario.mode}}});
+    catalog.structure.push({id:3,parentId:1,name:'Body',path:'SampleHeading / Body',type:'FRAME',visible:true,layout:{width:300,height:440,sizing:{horizontal:'FIXED',vertical:'FIXED'}}},{id:4,parentId:3,name:'Surface',path:'SampleHeading / Body / Surface',type:'FRAME',visible:true,layout:{width:300,height:200,sizing:{horizontal:'FIXED',vertical:'FIXED'}}});
+    const row=documents.find(([url])=>url.endsWith('/apollo/policies.json'))[1].packages[0];
+    row.rulesEntry=registry([rule(),sizing,allowance,denied]);row.apiEntry.contracts[0].figma.variants.properties={CustomExtent:['True','False']};
+   });
+   const result=await api.runV3Audit({runId:'sizing-integration',channel:'Desktop',pageType:null,shellAuditEnabled:false,pluginVersion:'test',selection:[instance],data:client,assertCurrent(){},onProgress(){}});
+   const diffs=result.views.visibleViews.changes.flatMap(item=>item.diffs),changes=result.report.categories.customizations.items.flatMap(item=>item.changes);
+   const height=diffs.find(d=>d.nodeId==='surface'&&d.details?.property==='layout.height');
+   assert.ok(height,'the real comparator/classifier must retain the custom surface height');
+   assert.equal(height.assessment.verdict,scenario.mode==='True'?'allowed':'violation');
+   assert.equal(height.assessment.ruleId,scenario.mode==='True'?allowance.ruleId:denied.ruleId);
+   assert(diffs.some(d=>d.details?.property==='styles.text'&&d.assessment.verdict==='violation'),'independent typography violation must remain');
+   const rootDiffs=diffs.filter(d=>d.assessment?.ruleId===sizing.ruleId);
+   assert.equal(rootDiffs.length,scenario.badRoot?1:0);assert(rootDiffs.every(d=>d.nodeId==='owner'));
+   if(scenario.mode==='False')assert(changes.some(d=>d.property==='layout.height'&&d.assessment.ruleId===denied.ruleId));
+   const groups=buildV3Groups(api.auditResultForUi(result));
+   const custom=groups.groups.find(g=>g.id==='components').categories.find(c=>c.id==='changes');
+   assert(!custom.entries.flatMap(e=>e.diffs||[]).some(d=>d.assessment?.ruleId===allowance.ruleId),'allowed height must not become a green customization card');
+  } finally {globalThis.fetch=oldFetch;delete globalThis.figma;}
+  assert.equal(networkCalls,0);
+ });
+}

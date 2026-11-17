@@ -20,11 +20,22 @@ import {
 import { FindingActionRegistry } from './findingActionRegistry';
 import {
   findColorTokenValueCandidates,
+  readActualColorPreview,
+  readColorTokenPreview,
   type ColorTokenValueCandidate,
 } from '../services/colorTokenValueIndex';
 import { createCooperativeYield } from '../utils/promisePool';
 
+const blueTintMigration = require('./blue-tint-migration.json') as {
+  styles: Record<string, Array<{ key: string; role?: 'screen' | 'modal' | 'component' }>>;
+  tokens: Record<string, { name: string; library: string }>;
+};
+const surfaceLabels = { screen: 'Фон экрана', modal: 'Модальная поверхность', component: 'Поверхность компонента' };
+
 export interface FindingActionResolverDependencies {
+  channelCounterpart?: typeof getChannelCounterpart;
+  componentRemediation?: typeof getComponentRemediation;
+  styleRemediation?: typeof getStyleRemediation;
   getNodeById(nodeId: string): Promise<BaseNode | null>;
   findExactPaintStyleMatches(
     paints: readonly Paint[] | PluginAPI['mixed'] | undefined,
@@ -33,6 +44,8 @@ export interface FindingActionResolverDependencies {
     node: SceneNode,
     field: 'fill' | 'stroke',
   ): ColorTokenValueCandidate[];
+  isActiveColorToken?: (key: string) => boolean;
+  readColorTokenPreview?: (node: SceneNode, key: string) => string | null;
   findExactTypographyStyleMatches(
     node: TextNode,
   ): TypographyStyleCandidate[];
@@ -50,6 +63,7 @@ const defaultDependencies: FindingActionResolverDependencies = {
   getNodeById: (nodeId) => figma.getNodeByIdAsync(nodeId),
   findExactPaintStyleMatches,
   findColorTokenValueCandidates,
+  readColorTokenPreview,
   findExactTypographyStyleMatches,
   getNodePaintFingerprint,
   getNodeTypographyFingerprint,
@@ -70,7 +84,7 @@ export async function attachFindingActions(
     await checkpoint();
     if (visited.has(item)) continue;
     visited.add(item);
-    attachWrongChannelAction(item, selectedChannel, registry);
+    attachWrongChannelAction(item, selectedChannel, registry, dependencies.channelCounterpart);
   }
 
   for (const item of checkState.relevanceBuckets.deprecated) {
@@ -79,18 +93,25 @@ export async function attachFindingActions(
       item,
       'deprecated-component',
       'Заменить',
-      registry,
+      registry, dependencies.componentRemediation,
     );
   }
 
   for (const item of checkState.relevanceBuckets.update) {
     await checkpoint();
-    attachUpdateActions(item, registry);
+    attachUpdateActions(item, registry, dependencies.componentRemediation);
   }
 
   for (const entry of checkState.deprecatedStyleEntries) {
     await checkpoint();
-    const remediation = getStyleRemediation(entry.styleKey);
+    if(entry.token)continue;
+    const migration = dependencies.isActiveColorToken && blueTintMigration.styles[entry.styleKey];
+    if (migration) {
+      await attachBlueTintMigration(entry, migration, registry, dependencies, guard);
+      guard();
+      continue;
+    }
+    const remediation = (dependencies.styleRemediation??getStyleRemediation)(entry.styleKey);
     if (!remediation) continue;
     const styleField = remediation.styleType ?? entry.reason;
     entry.actions = appendUniqueAction(
@@ -125,6 +146,44 @@ export async function attachFindingActions(
   }
 }
 
+async function attachBlueTintMigration(
+  entry: CheckState['deprecatedStyleEntries'][number],
+  options: (typeof blueTintMigration.styles)[string],
+  registry: FindingActionRegistry,
+  dependencies: FindingActionResolverDependencies,
+  guard: () => void,
+): Promise<void> {
+  const available = options.filter(({ key }) => dependencies.isActiveColorToken?.(key));
+  if (!available.length) return;
+  const node = await dependencies.getNodeById(entry.id);
+  guard();
+  if (!node || node.type === 'DOCUMENT' || node.type === 'PAGE') return;
+  const field = entry.reason;
+  const current = node as SceneNode & Partial<Pick<MinimalFillsMixin & MinimalStrokesMixin, 'fills' | 'strokes' | 'fillStyleId' | 'strokeStyleId'>>;
+  const paints = field === 'fill' ? current.fills : current.strokes;
+  const styleId = field === 'fill' ? current.fillStyleId : current.strokeStyleId;
+  if (styleId !== entry.styleId || !Array.isArray(paints) || paints.length !== 1 || paints[0]?.type !== 'SOLID') return;
+  const expectedFingerprint = dependencies.getNodePaintFingerprint(current, field);
+  if (!expectedFingerprint) return;
+  entry.actualColor = readActualColorPreview(current, field) ?? undefined;
+  for (const { key, role } of available) {
+    const target = blueTintMigration.tokens[key];
+    const action = registry.register({
+      kind: 'bind-variable',
+      nodeId: entry.id,
+      expectedStyleId: entry.styleId,
+      targetVariableKey: key,
+      targetName: target.name,
+      targetLibrary: target.library,
+      targetGroup: role ? surfaceLabels[role] : undefined,
+      targetColor: dependencies.readColorTokenPreview?.(current, key) ?? undefined,
+      styleField: field,
+      expectedFingerprint,
+    }, 'Заменить', 'deprecatedStyles', current);
+    entry.actions = appendUniqueAction(entry.actions, action);
+  }
+}
+
 async function attachExactCustomStyleAction(
   entry: CheckState['customStyleEntries'][number],
   checkState: CheckState,
@@ -146,6 +205,8 @@ async function attachExactCustomStyleAction(
     return;
   }
   const sceneNode = node as SceneNode;
+  const actualColor = readActualColorPreview(sceneNode, entry.reason);
+  if (actualColor) entry.actualColor = actualColor;
   const paints =
     entry.reason === 'fill'
       ? (sceneNode as any).fills
@@ -179,6 +240,7 @@ async function attachExactCustomStyleAction(
     valueCandidates,
   );
   for (const variableCandidate of variableCandidates) {
+    const targetColor = dependencies.readColorTokenPreview?.(sceneNode, variableCandidate.key) ?? undefined;
     entry.actions = appendUniqueAction(
       entry.actions,
       registry.register(
@@ -189,6 +251,7 @@ async function attachExactCustomStyleAction(
           targetVariableKey: variableCandidate.key,
           targetName: variableCandidate.name,
           targetLibrary: variableCandidate.library,
+          targetColor,
           styleField: entry.reason,
           expectedFingerprint,
         },
@@ -332,6 +395,7 @@ function attachWrongChannelAction(
   item: AuditItem,
   selectedChannel: AuditChannel,
   registry: FindingActionRegistry,
+  indexedCounterpart?: typeof getChannelCounterpart,
 ): void {
   if (item.nodeType !== 'INSTANCE' || !item.componentKey) {
     return;
@@ -346,7 +410,7 @@ function attachWrongChannelAction(
     return;
   }
 
-  const counterpart = getChannelCounterpart(
+  const counterpart = (indexedCounterpart??getChannelCounterpart)(
     item.componentKey,
     targetPlatform,
   );
@@ -362,6 +426,7 @@ function attachWrongChannelAction(
         nodeId: item.id,
         expectedComponentKey: item.componentKey,
         targetComponentKey: counterpart.componentKey,
+        exactTarget: Boolean(indexedCounterpart),
         targetName: counterpart.componentName,
         targetLibrary: counterpart.library ?? item.librarySource ?? null,
         reason: 'wrong-channel',
@@ -377,13 +442,13 @@ function attachConfiguredComponentAction(
   reason: 'deprecated-component' | 'catalog-lifecycle',
   label: string,
   registry: FindingActionRegistry,
+  lookup = getComponentRemediation,
 ): void {
   if (item.nodeType !== 'INSTANCE' || !item.componentKey) {
     return;
   }
   const remediation =
-    getComponentRemediation(item.componentKey) ??
-    getComponentRemediation(item.reference?.key);
+    lookup(item.componentKey) ?? lookup(item.reference?.key);
   if (!remediation) {
     return;
   }
@@ -410,6 +475,7 @@ function attachConfiguredComponentAction(
 function attachUpdateActions(
   item: AuditItem,
   registry: FindingActionRegistry,
+  lookup?: typeof getComponentRemediation,
 ): void {
   if (item.nodeType !== 'INSTANCE' || !item.componentKey) {
     return;
@@ -442,7 +508,7 @@ function attachUpdateActions(
       item,
       'catalog-lifecycle',
       'Заменить',
-      registry,
+      registry, lookup,
     );
   }
 }

@@ -57,6 +57,7 @@ export type ComponentContractRule = {
     doNotTreatRequiredTokenizedPaintAsViolation?: boolean;
     treatRawRequiredPaintAsViolation?: boolean;
     treatAsViolation?: boolean;
+    treatAsAllowed?: boolean;
     resetSurface?: 'layer';
   };
   requiredTokenBinding?: {
@@ -212,7 +213,7 @@ export function finalizeComponentRuleAssessment(diff: DiffEntry): DiffEntry {
   if (diff.assessment?.verdict !== 'unknown') return diff;
   const rule = findComponentContractViolationForDiff(diff);
   return rule
-    ? Object.assign({}, diff, { assessment: createRuleViolationAssessment(rule) })
+    ? Object.assign({}, diff, { assessment: createRuleViolationAssessment(rule, diff.details?.property) })
     : diff;
 }
 
@@ -220,6 +221,14 @@ function ruleConfirmsViolation(
   rule: ComponentContractRule,
   diff: DiffEntry,
 ): boolean {
+  if (rule.classification?.treatAsAllowed === true) return false;
+  const sizingAxis = sizingAxisForProperty(diff.details?.property ?? '');
+  if (sizingAxis && hasSizingRequirement(rule)) {
+    const expected = readRequiredSizing(rule.requiredValues ?? {}, sizingAxis);
+    const value = diff.details?.actual.value;
+    const actual = normalizeLayoutSizing(typeof value === 'string' ? value : null);
+    return Boolean(expected && actual && actual !== expected);
+  }
   if (rule.requiredTokenBinding?.byType) {
     return requiredTokenBindingIsViolated(rule, diff);
   }
@@ -444,24 +453,32 @@ export function applyRequiredComponentSizingAssessment(
   diff: DiffEntry,
 ): DiffEntry {
   const property = diff.details?.property ?? '';
-  if (
-    property !== 'layout.sizing.horizontal' &&
-    property !== 'layout.sizing.vertical'
-  ) {
-    return diff;
-  }
+  const axis = sizingAxisForProperty(property);
+  if (!axis || diff.assessment?.verdict === 'violation') return diff;
 
   const rules = findComponentContractRulesForDiff(diff);
   const rule = rules.find(
     (candidate) =>
       isActiveComponentDesignRule(candidate) &&
       candidate.severity === 'error' &&
-      Boolean(candidate.requiredValues),
+      Boolean(readRequiredSizing(candidate.requiredValues ?? {}, axis)),
   );
   if (!rule) return diff;
 
+  const expected = readRequiredSizing(rule.requiredValues ?? {}, axis);
+  const value = diff.details?.actual.value;
+  const actual = normalizeLayoutSizing(typeof value === 'string' ? value : null);
+  if (!actual) return diff;
   return Object.assign({}, diff, {
-    assessment: createRuleViolationAssessment(rule),
+    assessment: actual === expected ? {
+      verdict: 'expected' as const,
+      source: 'component-contract' as const,
+      reasonCode: 'component-rule-required-sizing-match',
+      ruleId: rule.ruleId,
+      message: rule.ruleText,
+      remediation: null,
+      presentation: 'show-expected' as const,
+    } : createRuleViolationAssessment(rule, property),
   });
 }
 
@@ -686,8 +703,48 @@ export function applyContextualComponentRuleAssessment(
     });
   }
 
+  const dimensionRules = rules.filter((rule) =>
+    explicitDimensionRuleMatches(rule, diff, property));
+  const actualRules = dimensionRules.length
+    ? findComponentContractRulesForDiff(Object.assign({}, diff, {
+        context: Object.assign({}, diff.context, {
+          referenceComponentKey: null,
+          nestedOwnerComponentKey: null,
+          nestedOwnerComponentRole: null,
+          nestedOwnerPath: null,
+          nestedOwnerRelativePath: null,
+          referenceVariantProperties: null,
+        }),
+      }))
+    : [];
+  const applicableDimensions = dimensionRules.filter((rule) => actualRules.includes(rule));
+  const dimensionViolation = applicableDimensions.find((rule) =>
+    rule.severity === 'error' && ruleConfirmsViolation(rule, diff));
+  if (dimensionViolation) {
+    return Object.assign({}, diff, {
+      contractEvidenceOnly: false,
+      assessment: createRuleViolationAssessment(dimensionViolation),
+    });
+  }
   if (diff.assessment?.verdict === 'expected') {
     return diff;
+  }
+  const allowance = applicableDimensions.find((rule) =>
+    rule.classification?.treatAsAllowed === true &&
+    rule.classification.treatAsViolation !== true);
+  if (allowance) {
+    return Object.assign({}, diff, {
+      contractEvidenceOnly: false,
+      assessment: {
+        verdict: 'allowed' as const,
+        source: 'component-contract' as const,
+        reasonCode: 'component-rule-explicit-allowance',
+        ruleId: allowance.ruleId,
+        message: allowance.ruleText,
+        remediation: null,
+        presentation: 'show-expected' as const,
+      },
+    });
   }
   const paintRule = findComponentContractRulesForDiff(diff).find(
     (rule) =>
@@ -734,6 +791,20 @@ export function applyContextualComponentRuleAssessment(
     }
   }
   return diff;
+}
+
+function explicitDimensionRuleMatches(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+  property: string,
+): boolean {
+  if (!isActiveComponentDesignRule(rule)) return false;
+  const target = parseRuleTarget(rule);
+  if (!target || !(target.layerSelectors.length || target.slotSelectors.length)) return false;
+  if (!rule.appliesTo.split('|').some((part) => getPropertyAliases(property).includes(part.trim()))) return false;
+  if (rule.conditions?.variant && Object.keys(rule.conditions.variant).length && !diff.context.actualVariantProperties) return false;
+  return readNumericLayoutProperties(property).includes(property) &&
+    readNumericDiffValue(diff.details?.actual.value) !== null;
 }
 
 function normalizeStructuredPaintViolation(
@@ -828,7 +899,7 @@ export function createRequiredComponentSizingDiffs(
               reference: { value: formatLayoutSizing(expected) },
               actual: { value: formatLayoutSizing(actual) },
             },
-            assessment: createRuleViolationAssessment(rule),
+            assessment: createRuleViolationAssessment(rule, property),
           };
 
           const key = makeDiffKey(diff);
@@ -1248,6 +1319,7 @@ function normalizeRuleValue(value: string): string {
 
 function createRuleViolationAssessment(
   rule: ComponentContractRule,
+  property?: string,
 ): NonNullable<DiffEntry['assessment']> {
   const resetSurface = rule.classification?.resetSurface;
   const evidence = Object.assign(
@@ -1260,7 +1332,9 @@ function createRuleViolationAssessment(
   return {
     verdict: 'violation',
     source: 'component-contract',
-    reasonCode: 'component-contract-violation',
+    reasonCode: sizingAxisForProperty(property ?? '') && hasSizingRequirement(rule)
+      ? 'component-contract-required-sizing'
+      : 'component-contract-violation',
     ruleId: rule.ruleId,
     evidence: Object.keys(evidence).length ? evidence : null,
     message: rule.ruleText,
@@ -1320,6 +1394,17 @@ function buildActualDiffContext(
 function getRelativePath(ownerPath: string, nodePath: string): string | null {
   const prefix = `${ownerPath} / `;
   return nodePath.startsWith(prefix) ? nodePath.slice(prefix.length) : null;
+}
+
+function sizingAxisForProperty(property: string): LayoutSizingAxis | null {
+  if (property === 'layout.sizing.horizontal') return 'horizontal';
+  if (property === 'layout.sizing.vertical') return 'vertical';
+  return null;
+}
+
+function hasSizingRequirement(rule: ComponentContractRule): boolean {
+  return Boolean(readRequiredSizing(rule.requiredValues ?? {}, 'horizontal') ||
+    readRequiredSizing(rule.requiredValues ?? {}, 'vertical'));
 }
 
 function readRequiredSizing(
@@ -1417,6 +1502,11 @@ function ruleMatchesDiff(
   ) {
     return false;
   }
+  if (hasSizingRequirement(rule) && !sizingAxisForProperty(property) &&
+      Object.keys(rule.requiredValues ?? {}).every((name) =>
+        ['layout.sizing.horizontal', 'layout.sizing.vertical', 'layoutSizingHorizontal', 'layoutSizingVertical'].includes(name))) {
+    return false;
+  }
   if (!numericConstraintMatchesDiff(rule.numericConstraint, diff)) {
     return false;
   }
@@ -1466,6 +1556,12 @@ function ruleMatchesDiff(
   });
 
   if (!matchingIdentities.length) {
+    return false;
+  }
+  // An unqualified sizing requirement belongs to the component root, not its subtree.
+  if (sizingAxisForProperty(property) && hasSizingRequirement(rule) &&
+      !target.layerSelectors.length && !target.slotSelectors.length &&
+      !matchingIdentities.some(identityIsRoot)) {
     return false;
   }
 
@@ -2097,7 +2193,7 @@ function variantConditionsMatchDiff(
     const expectedValues = Array.isArray(expected) ? expected : [expected];
     if (
       !expectedValues.some(
-        (value) => normalizeVariantValue(value) === normalizeVariantValue(actual),
+        (value) => typeof value === 'string' && normalizeVariantValue(value) === normalizeVariantValue(actual),
       )
     ) {
       return false;
@@ -2114,7 +2210,7 @@ function readCaseInsensitiveValue(
   const normalizedTarget = target.trim().toLowerCase();
   for (const [name, value] of Object.entries(properties)) {
     if (name.trim().toLowerCase() === normalizedTarget) {
-      return value;
+      return typeof value === 'string' ? value : null;
     }
   }
   return null;

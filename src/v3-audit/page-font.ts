@@ -4,7 +4,7 @@ export type PageBaseCheck={id:'font'|'theme';status:'complete'|'incomplete'|'not
 const normalize=(value:unknown)=>String(value).trim().toLowerCase().replace(/\s+/g,' ');
 
 /** Existing page Theme/Font readers from document-audit/engine; no second audit. */
-export async function checkPageBase(api:PluginAPI,channel:string,roots:readonly SceneNode[],guard:()=>void,capturedNodes?:readonly SceneNode[]):Promise<PageBaseCheck[]>{
+export async function checkPageBase(api:PluginAPI,channel:string,roots:readonly SceneNode[],guard:()=>void,capturedNodes?:readonly SceneNode[],shouldSkipShared?:(node:SceneNode)=>Promise<boolean>):Promise<PageBaseCheck[]>{
  const checkpoint=createCooperativeYield(guard),page=api.currentPage,gaps:string[]=[],collections=new Map<string,VariableCollection|null>(),groups=new Map<string,{aliases:Set<string>;collections:VariableCollection[]}>();
  const focusNodeId=roots[0]?.id??null;
  if(['iOS','Android'].includes(channel))return(['font','theme'] as const).map(id=>({id,status:'not-applicable',classification:'not-applicable',message:'Проверка не применяется на этой платформе.',focusNodeId,gaps:[],evidence:{pageId:page.id}}));
@@ -21,6 +21,7 @@ export async function checkPageBase(api:PluginAPI,channel:string,roots:readonly 
  async function visit(nodes:readonly SceneNode[]){
   const stack=Array.from(nodes).reverse(),seen=new Set<string>();
   while(stack.length){await checkpoint();const node=stack.pop()!;if(seen.has(node.id))continue;seen.add(node.id);
+   if(shouldSkipShared&&await shouldSkipShared(node))continue;
    for(const id of Object.keys(node.resolvedVariableModes||{}))await collection(id);
    if('children'in node)for(let i=node.children.length-1;i>=0;i--)stack.push(node.children[i]);
   }

@@ -93,14 +93,14 @@ test('simultaneous start clicks do not dispatch two operations after the preflig
   const first = controller.startAudit(); assert.equal(await controller.startAudit(), false);
   release(); await first; assert.equal(calls, 1);
 });
-test('tool preflight failures do not dispatch native scans or discard existing state', async () => {
+test('Proxy-dependent tools retain preflight while standalone icons can scan offline', async () => {
   const sent = [], denied = async () => { throw Error('Обновите знания'); };
   const names = require('../src/skills/layer-names/client').createLayerNamesClient({ send: m => sent.push(m), beforeOperation: denied });
   await names.start(); assert.equal(sent.length, 0); assert.equal(names.getState().error, 'Обновите знания');
   const glyph = require('../src/skills/reglyph/client').createReglyphClient({ send: m => sent.push(m), beforeOperation: denied });
   glyph.setContext({ channelId: 'b2b', pickerLabel: 'Android' });
-  await glyph.start(); assert.equal(sent.filter(m => m.operation === 'scan').length, 0);
-  assert.equal(glyph.getState().error, 'Обновите знания');
+  await glyph.start(); assert.equal(sent.filter(m => m.operation === 'scan').length, 1);
+  assert.equal(glyph.getState().error, '');
 });
 for (const method of ['startAudit', 'startDocumentAudit']) test(method + ' rechecks availability after the asynchronous handshake', async () => {
   let release, calls = 0;

@@ -189,19 +189,15 @@ async function iconContext(node, mainOf, containers, iconViewSets) {
 
 function createReglyphEngine({api, catalogs, detection, post, assertActive = () => {}, onMutation = () => {}}) {
   const figma = api;
-  const BUNDLED_CATALOG = catalogs.default;
-  const BUNDLED_SCENARIOS = catalogs;
-  const BUNDLED_ICON_DETECTION = detection;
-  const bundled = typeof BUNDLED_CATALOG !== 'undefined' ? validateCatalog(BUNDLED_CATALOG) : null;
-  const scenarios = typeof BUNDLED_SCENARIOS !== 'undefined' ? BUNDLED_SCENARIOS : bundled ? { default: bundled } : {};
-  const iconContainers = new Map((typeof BUNDLED_ICON_DETECTION !== 'undefined' ? BUNDLED_ICON_DETECTION.containers : []).map(c => [c.key, c]));
-  const iconViewSets = new Map((typeof BUNDLED_ICON_DETECTION !== 'undefined' ? BUNDLED_ICON_DETECTION.iconViewSets || [] : []).map(c => [c.key, c]));
-  const protectedSets = new Set((typeof BUNDLED_ICON_DETECTION !== 'undefined' ? BUNDLED_ICON_DETECTION.protectedComponentSets || [] : []).map(c => c.key));
-  const protectedComponents = new Set((typeof BUNDLED_ICON_DETECTION !== 'undefined' ? BUNDLED_ICON_DETECTION.protectedComponents || [] : []).map(c => c.key));
-  const hiddenProtectedSets = new Set((typeof BUNDLED_ICON_DETECTION !== 'undefined' ? BUNDLED_ICON_DETECTION.protectedComponentSets || [] : []).filter(c => !c.showInNativeSection).map(c => c.key));
-  const hiddenProtectedComponents = new Set((typeof BUNDLED_ICON_DETECTION !== 'undefined' ? BUNDLED_ICON_DETECTION.protectedComponents || [] : []).filter(c => !c.showInNativeSection).map(c => c.key));
-  const fixedIconRules = typeof BUNDLED_ICON_DETECTION !== 'undefined' ? BUNDLED_ICON_DETECTION.protectedFixedIconRules || [] : [];
-  const sourceIconSlots = typeof BUNDLED_ICON_DETECTION !== 'undefined' ? BUNDLED_ICON_DETECTION.protectedSourceIconSlots || [] : [];
+  const bundled = validateCatalog(catalogs.default), scenarios = catalogs;
+  const rules = name => detection[name] || [];
+  const iconContainers = new Map(rules('containers').map(c => [c.key,c]));
+  const iconViewSets = new Map(rules('iconViewSets').map(c => [c.key,c]));
+  const protectedSets = new Set(rules('protectedComponentSets').map(c => c.key));
+  const protectedComponents = new Set(rules('protectedComponents').map(c => c.key));
+  const hiddenProtectedSets = new Set(rules('protectedComponentSets').filter(c => !c.showInNativeSection).map(c => c.key));
+  const hiddenProtectedComponents = new Set(rules('protectedComponents').filter(c => !c.showInNativeSection).map(c => c.key));
+  const fixedIconRules = rules('protectedFixedIconRules'), sourceIconSlots = rules('protectedSourceIconSlots');
   const sourceId = part => part?.id?.split(';').pop();
   async function insideProtectedIconSlot(node, mainOf) {
     // Bound resources belong to designer-configurable slots, not variant-fixed artwork.
@@ -256,7 +252,8 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
   let scenario = 'default';
   let catalog = bundled || { version: 1, oldIcons: [], newIcons: [], mappings: [] };
   let snapshot = null;
-  let pendingScan = null, scanPromptSerial = 0;
+  let scanningScope = null;
+  let inspectionSelection = null, pendingSelection = null, selectionPromptSerial = 0, restoringSelection = null;
   let busy = false;
   let revision = 0;
   const components = new Map();
@@ -270,8 +267,11 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
   const previewCacheKey = () => 'apollo-reglyph-abm-v1-preview' + (scenario === 'default' ? '' : '-' + scenario);
   const send = (type, payload = {}) => post(Object.assign({type}, payload));
   const pageOf = node => { for (let part = node; part; part = part.parent) if (part.type === 'PAGE') return part; return null; };
+  const pageSelectionKey = page => page.selection.map(node => node.id).sort().join('|');
+  const selectionKey = () => pageSelectionKey(figma.currentPage);
+  const rootsAvailable = plan => !!plan && !plan.page.removed && plan.roots.length > 0 && plan.roots.every(root => !root.removed && pageOf(root)?.id === plan.page.id);
   const scopeMatches = plan => {
-    try { return !!plan && !plan.page.removed && plan.roots.length > 0 && plan.roots.every(root => !root.removed && pageOf(root)?.id === plan.page.id); }
+    try { return rootsAvailable(plan) && plan.page.id === figma.currentPage.id && (!selectionKey() || plan.scope === selectionKey() || inspectionSelection === selectionKey()); }
     catch (_) { return false; }
   };
   const containsNode = (plan, node) => {
@@ -282,29 +282,10 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
   function captureScope() {
     const page = figma.currentPage, selectedIds = new Set(page.selection.map(node => node.id));
     const roots = page.selection.filter(node => { for (let parent = node.parent; parent; parent = parent.parent) if (selectedIds.has(parent.id)) return false; return true; });
-    return { page, roots };
+    return { page, roots, scope:selectionKey() };
   }
   const scopeLabel = plan => plan.roots.length === 1 ? plan.roots[0].name : `Областей: ${plan.roots.length}`;
   const visibleInLayout = node => { for (let part = node; part; part = part.parent) if (part.removed || ('visible' in part && part.visible === false) || ('opacity' in part && part.opacity === 0)) return false; return true; };
-  const knownIconKeys = () => new Set([catalog, ...Object.values(scenarios)].flatMap(c => [...c.oldIcons, ...c.newIcons, ...(c.observedIcons || [])]).map(icon => icon.key));
-  async function serviceCardRoles(root, knownKeys, mainOf) {
-    const roles = [];
-    async function visit(part) {
-      if (!visibleInLayout(part)) return;
-      if (part.type === 'TEXT') {
-        const text = String(part.characters || '').normalize('NFC').replace(/\s+/gu, ' ').trim();
-        if (text) roles.push({ kind: 'text', text, id: part.id });
-        return;
-      }
-      if (part.type === 'INSTANCE') {
-        const main = await mainOf(part);
-        if (main && knownKeys.has(main.key)) { roles.push({ kind: 'icon' }); return; }
-      }
-      if (part.children) for (const child of part.children) await visit(child);
-    }
-    await visit(root);
-    return roles;
-  }
   const message = error => error instanceof Error ? error.message : String(error);
   async function bounded(operation, milliseconds, label) {
     if (typeof setTimeout !== 'function') return operation;
@@ -387,6 +368,18 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     return 'data:image/png;base64,' + figma.base64Encode(bytes);
   }
 
+  async function targetPreview(key, refresh = false) {
+    if (!indexCatalog().targets.has(key)) throw new Error('Неизвестная новая иконка.');
+    if (refresh) { previews.delete(key); delete previewCache[key]; }
+    if (!previews.has(key)) {
+      const target = await component(key), image = await preview(target);
+      previews.set(key, image);
+      previewCache[key] = {image, monochrome:scenario !== 'services' && isMonochrome(target), time:Date.now()};
+      previewCacheDirty += 1;
+    }
+    return {key, image:previews.get(key), monochrome:previewCache[key]?.monochrome === true};
+  }
+
   async function savePreviewCache(force = false) {
     if (!previewCacheDirty || (!force && previewCacheDirty < 30)) return;
     // Leave room in clientStorage for the catalogue and other plugin settings.
@@ -404,7 +397,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
   async function restorePreviewCache() {
     try {
       const stored = scenarioPreviewCache.get(scenario) || await figma.clientStorage.getAsync(previewCacheKey());
-      const allowed = new Set(catalog.newIcons.map(i => i.key));
+      const allowed = indexCatalog().targets;
       previewCache = {};
       for (const [key, value] of Object.entries(stored || {})) {
         if (allowed.has(key) && value && typeof value.image === 'string' && value.image.startsWith('data:image/png;base64,') && Date.now() - value.time < 86400000) {
@@ -467,39 +460,82 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     }
   }
 
-  function invalidate() {
+  let indexedCatalog = null, catalogIndex;
+  function indexCatalog() {
+    if (indexedCatalog !== catalog) {
+      const sources = [catalog, ...Object.values(scenarios)], knownInfo = new Map(), excludedUnknownKeys = new Set();
+      for (const source of sources) {
+        for (const icon of [...source.oldIcons, ...source.newIcons, ...(source.observedIcons || [])]) knownInfo.set(icon.key, icon);
+        for (const icon of [...source.newIcons, ...(source.observedIcons || []).filter(i => ['native', 'logo'].includes(i.category))]) excludedUnknownKeys.add(icon.key);
+      }
+      catalogIndex = {knownInfo, excludedUnknownKeys, old:new Map(catalog.oldIcons.map(i => [i.key,i])),
+        observed:new Map((catalog.observedIcons || []).map(i => [i.key,i])), targets:new Set(catalog.newIcons.map(i => i.key)),
+        mappings:new Map(catalog.mappings.map(i => [i.oldKey,i.newKey])), candidates:new Map((catalog.mappingCandidates || []).map(i => [i.oldKey,i.options]))};
+      indexedCatalog = catalog;
+    }
+    return catalogIndex;
+  }
+
+  function invalidate(notify = true) {
     revision += 1;
     snapshot = null;
-    pendingScan = null;
-    send('stale');
+    inspectionSelection = null;
+    pendingSelection = null;
+    if (notify) send('stale');
+  }
+  function promptSelection(reason) {
+    const pageId = figma.currentPage.id, scope = selectionKey();
+    if (reason || !pendingSelection || pendingSelection.plan !== snapshot || pendingSelection.pageId !== pageId || pendingSelection.scope !== scope) {
+      pendingSelection = {token:String(++selectionPromptSerial),plan:snapshot,pageId,scope};
+      if (reason) pendingSelection.reason = reason;
+    }
+    const payload = {token:pendingSelection.token};
+    if (pendingSelection.reason) payload.reason = pendingSelection.reason;
+    send('selection-confirmation', payload);
   }
   function selectionChanged() {
-    if ((snapshot && !scopeMatches(snapshot)) || (pendingScan && !scopeMatches(pendingScan))) invalidate();
+    if (restoringSelection) {
+      const restore = restoringSelection, pageId = figma.currentPage.id, scope = selectionKey();
+      if (pageId === restore.targetPageId) {
+        restore.arrived = true;
+        if (scope !== restore.targetScope) restore.changed = true;
+      } else if (restore.arrived || pageId !== restore.sourcePageId || scope !== restore.sourceScope) restore.changed = true;
+    } else {
+      if (scanningScope && rootsAvailable(scanningScope) && scanningScope.page.id === figma.currentPage.id && scanningScope.scope === selectionKey()) {
+        // Apollo may repeat the same selection notification during an async read.
+      } else if (snapshot && scopeMatches(snapshot)) {
+        if (pendingSelection) { pendingSelection = null; send('selection-confirmation-dismissed'); }
+      } else if (snapshot && rootsAvailable(snapshot) && (selectionKey() || snapshot.page.id !== figma.currentPage.id) && (snapshot.rows.length || snapshot.observedRows.length)) {
+        promptSelection();
+      } else invalidate();
+    }
     send('selection', { count: figma.currentPage.selection.length });
   }
 
-  async function scan(confirmed = false, scope = captureScope()) {
-    pendingScan = null;
+  async function scan(scope = captureScope()) {
+    scanningScope = scope;
+    try { await scanScope(scope); }
+    finally { scanningScope = null; }
+  }
+
+  async function scanScope(scope) {
     snapshot = null;
+    pendingSelection = null;
+    inspectionSelection = null;
     const scanRevision = revision;
+    const assertScan = () => {
+      assertActive();
+      if (scanRevision !== revision || scope.scope !== selectionKey() || !scopeMatches(scope)) throw new Error('Выделение изменилось. Повторите проверку.');
+    };
     if (!scope.roots.length) throw Object.assign(new Error('Выдели макеты в Figma'), { code: 'NO_SELECTION' });
     if (!catalog.oldIcons.length && !(catalog.observedIcons || []).length) throw new Error('Каталог иконок недоступен.');
-    const old = new Map(catalog.oldIcons.map(i => [i.key, i]));
-    const observed = new Map((catalog.observedIcons || []).map(i => [i.key, i]));
-    const knownKeys = knownIconKeys();
-    // Only already-target icons and observed-only assets are excluded across scenarios.
-    // An inactive scenario's source may still need manual migration in a verified icon slot.
-    const excludedUnknownKeys = new Set([catalog, ...Object.values(scenarios)].flatMap(c => [
-      ...c.newIcons, ...(c.observedIcons || []).filter(i => ['native', 'logo'].includes(i.category))
-    ]).map(i => i.key));
+    // Keep inactive catalogs in identity/exclusion checks; service replacement stays disabled.
+    const {old, observed, knownInfo, excludedUnknownKeys, mappings, candidates, targets} = indexCatalog();
     const mains = new Map(), protectedParents = new Map(), hiddenProtectedParents = new Map();
-    const knownInfo = new Map([catalog, ...Object.values(scenarios)].flatMap(c => [...c.oldIcons, ...c.newIcons, ...(c.observedIcons || [])]).map(i => [i.key, i]));
     const mainOf = node => {
       if (!mains.has(node.id)) mains.set(node.id, bounded(node.getMainComponentAsync(), 5000, 'Не удалось прочитать компонент.'));
       return mains.get(node.id);
     };
-    const mappings = new Map(catalog.mappings.map(i => [i.oldKey, i.newKey]));
-    const candidates = new Map((catalog.mappingCandidates || []).map(i => [i.oldKey, i.options]));
     const found = new Map();
     const monitored = new Map();
     const sourcePreviews = [];
@@ -511,63 +547,25 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
         for (const node of root.findAllWithCriteria({ types: ['INSTANCE'] })) nodes.set(node.id, node);
       }
     }
-    // Screen boundaries come from verified navigation headers, never platform
-    // names. This also works when a selection contains a section of screens.
-    const screenAncestors = new Set(), occurrenceCounts = new Map(), cardContexts = new Map();
-    const headerSets = new Set((typeof BUNDLED_ICON_DETECTION !== 'undefined' ? BUNDLED_ICON_DETECTION.serviceHeaderSets || [] : []).map(header => header.key));
-    if (scenario === 'services' && candidates.size) {
-      let inspected = 0;
+    const headerSets = new Set(rules('serviceHeaderSets').map(header => header.key));
+    {
+      let hasServiceTitle = false, inspected = 0;
       for (const node of nodes.values()) {
-        if (!visibleInLayout(node)) continue;
-        try {
-          const main = await mainOf(node);
-          if (main?.parent?.type === 'COMPONENT_SET' && headerSets.has(main.parent.key)) {
-            for (let parent = node.parent; parent && parent.type !== 'PAGE' && parent.type !== 'DOCUMENT'; parent = parent.parent) screenAncestors.add(parent);
-          }
-        } catch (_) { /* Unreadable nodes are reported by the scan below. */ }
         if (++inspected % 25 === 0 && typeof setTimeout === 'function') await new Promise(resolve => setTimeout(resolve, 0));
-      }
-    }
-    function screenOf(node) {
-      let selectedRoot = null;
-      for (let part = node; part && part.type !== 'PAGE' && part.type !== 'DOCUMENT'; part = part.parent) {
-        if (screenAncestors.has(part)) return part;
-        if (selectedIds.has(part.id)) selectedRoot = part;
-      }
-      return selectedRoot;
-    }
-    async function cardContext(node, screen) {
-      if (!screen) return null;
-      for (let parent = node.parent; parent && parent !== screen && parent.type !== 'PAGE' && parent.type !== 'DOCUMENT'; parent = parent.parent) {
-        if (!cardContexts.has(parent)) {
-          cardContexts.set(parent, await serviceCardRoles(parent, knownKeys, mainOf));
-        }
-        const roles = cardContexts.get(parent), texts = roles.filter(role => role.kind === 'text');
-        if (!texts.length) continue;
-        // Do not use a whole list, toolbar or another multi-icon container as
-        // evidence that two ambiguous occurrences represent the same service.
-        if (roles.filter(role => role.kind === 'icon').length !== 1) return null;
-        return { title: texts[0].text.toLocaleLowerCase('ru'), structure: roles.map(role => role.kind).join(','), titleId: texts[0].id, cardId: parent.id };
-      }
-      return null;
-    }
-    if (!confirmed) {
-      let hasServiceTitle = false;
-      for (const node of nodes.values()) {
+        assertScan();
         if (!visibleInLayout(node)) continue;
         let main;
-        try { main = await mainOf(node); } catch (_) { continue; }
+        try { main = await mainOf(node); } catch (_) { assertScan(); continue; }
+        assertScan();
         if (main?.parent?.type !== 'COMPONENT_SET' || !headerSets.has(main.parent.key) || !node.findAllWithCriteria) continue;
         for (const text of node.findAllWithCriteria({ types: ['TEXT'] })) {
           if (text.name !== '_title' || !visibleInLayout(text) || !text.characters.trim()) continue;
           if (/(^|[^\p{L}\p{N}_])сервисы(?=$|[^\p{L}\p{N}_])/iu.test(text.characters)) hasServiceTitle = true;
         }
       }
-      const suggestedScenario = scenario === 'default' && hasServiceTitle ? 'services' : scenario === 'services' && !hasServiceTitle ? 'default' : null;
-      if (suggestedScenario) {
-        if (revision !== scanRevision || !scopeMatches(scope)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
-        pendingScan = Object.assign({}, scope, { token: String(++scanPromptSerial), revision });
-        send('scan-confirmation', { token: pendingScan.token, suggestedScenario });
+      if (hasServiceTitle) {
+        assertScan();
+        send('services-pattern-required');
         return;
       }
     }
@@ -575,7 +573,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     const progress = () => send('scan-progress', { processed, total: nodes.size });
     progress();
     for (const node of nodes.values()) {
-      if(scanRevision !== revision) throw new Error('Проверяемая область изменилась. Повторите проверку.');
+      assertScan();
       try {
       if (!visibleInLayout(node)) continue;
       try { if (await insideProtectedComponent(node, mainOf, hiddenProtectedParents, false, false)) continue; }
@@ -595,7 +593,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
       if (!protectedSlot && legacy?.sourceKeys.includes(main.key)) {
         artwork = currencyArtwork(node);
         const matches = artwork && legacy.rows.filter(rule => rule.artwork === artwork);
-        if (matches?.length === 1 && catalog.newIcons.some(icon => icon.key === matches[0].targetKey)) currency = matches[0];
+        if (matches?.length === 1 && targets.has(matches[0].targetKey)) currency = matches[0];
       }
       if (currency) info = { name: currency.currency, library: 'Glyph' };
       if (!info) {
@@ -606,33 +604,18 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
         info = { name: set ? set.name : main.name || node.name, variant: set ? main.name : '' };
       }
       const collection = ['native', 'logo', 'protected'].includes(info.category) ? monitored : found;
-      let rowId = scenario === 'services' && collection === found ? info.serviceGroup || main.key : main.key;
+      let rowId = main.key;
       // Unknown overrides with the same main key can contain different artwork.
       if (context || currency) rowId = JSON.stringify(['icon-occurrence', main.key, node.id]);
       if (info.category === 'protected') rowId = 'protected:' + main.key;
-      let serviceOccurrence = null;
-      if (scenario === 'services' && collection === found && (candidates.get(main.key)?.length || 0) > 1) {
-        const screen = screenOf(node);
-        let card = null;
-        try { card = await cardContext(node, screen); } catch (_) { /* Uncertain occurrences stay independent. */ }
-        if (card) {
-          const identity = JSON.stringify([rowId, card.title, card.structure]);
-          const countKey = JSON.stringify([screen.id, identity]);
-          const ordinal = occurrenceCounts.get(countKey) || 0;
-          occurrenceCounts.set(countKey, ordinal + 1);
-          rowId = JSON.stringify(['service-occurrence', identity, ordinal]);
-          serviceOccurrence = Object.assign({}, card, {screenId: screen.id, ordinal});
-        } else rowId = JSON.stringify(['service-occurrence', rowId, node.id]);
-      }
       let row = collection.get(rowId);
       if (!row) {
-        row = Object.assign({}, {rowId, oldKey: main.key, name: info.baseName || info.name, variant: info.variant || '', newKey: collection === found ? currency?.targetKey || mappings.get(main.key) || '' : '', image: null, monochrome: info.category !== 'logo' && !info.preserveColor && isMonochrome(iconPreviewNode(node)), ids: [], sourceKeys: {}}, (artwork !== undefined ? { sourceArtwork: artwork } : {}), (currency ? { verifiedCurrency: true } : {}), (info.library ? { library: info.library } : {}), (serviceOccurrence ? { serviceOccurrences: {} } : {}), (candidates.has(main.key) && collection === found ? { candidates: candidates.get(main.key), needsServiceChoice: true } : {}), (info.category ? { category: info.category } : {}), (info.preserveColor ? { preserveColor: true } : {}), (context ? Object.assign({}, {outsideCatalog: true}, (currency ? { verifiedCurrency: true } : { category: 'unknown' }), {detection: context}) : {}));
+        row = Object.assign({}, {rowId, oldKey: main.key, name: info.baseName || info.name, variant: info.variant || '', newKey: collection === found ? currency?.targetKey || mappings.get(main.key) || '' : '', image: null, monochrome: info.category !== 'logo' && !info.preserveColor && isMonochrome(iconPreviewNode(node)), ids: [], sourceKeys: {}}, (artwork !== undefined ? { sourceArtwork: artwork } : {}), (currency ? { verifiedCurrency: true } : {}), (info.library ? { library: info.library } : {}), (candidates.has(main.key) && collection === found ? { candidates: candidates.get(main.key), needsServiceChoice: true } : {}), (info.category ? { category: info.category } : {}), (info.preserveColor ? { preserveColor: true } : {}), (context ? Object.assign({}, {outsideCatalog: true}, (currency ? { verifiedCurrency: true } : { category: 'unknown' }), {detection: context}) : {}));
         collection.set(rowId, row);
         sourcePreviews.push({ row, node, main });
       }
       row.ids.push(node.id);
       row.sourceKeys[node.id] = main.key;
-      if (serviceOccurrence) row.serviceOccurrences[node.id] = serviceOccurrence;
       } finally {
         processed++;
         if(processed % 25 === 0 || processed === nodes.size){
@@ -641,30 +624,44 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
         }
       }
     }
-    // Source PNGs must not stall discovery of the remaining instances. Export
-    // in a small pool, with bounded waits for unresponsive Figma render jobs.
-    let previewIndex = 0;
-    await Promise.all(Array.from({ length: Math.min(4, sourcePreviews.length) }, async () => {
-      while (previewIndex < sourcePreviews.length && scanRevision === revision) {
-        const { row, node, main } = sourcePreviews[previewIndex++];
-        try { row.image = await preview(iconPreviewNode(node), main); }
-        catch (_) { /* An unavailable image never removes an icon from results. */ }
+    // Prepare only this result's sources and distinct suggested targets. A shared
+    // four-job pool bounds exports/imports; an unavailable PNG never removes a row.
+    const targetPreviews = [], previewErrors = [];
+    const targetKeys = Array.from(new Set(Array.from(found.values(), row => row.newKey).filter(Boolean)));
+    const previewJobs = sourcePreviews.concat(targetKeys.map(key => ({key})));
+    let previewIndex = 0, previewFailure = null;
+    await Promise.all(Array.from({ length: Math.min(4, previewJobs.length) }, async () => {
+      while (previewIndex < previewJobs.length && scanRevision === revision && !previewFailure) {
+        try { assertScan(); } catch (error) { previewFailure = error; break; }
+        const job = previewJobs[previewIndex++];
+        try {
+          if (job.key) targetPreviews.push(await targetPreview(job.key));
+          else job.row.image = await preview(iconPreviewNode(job.node), job.main);
+        } catch (error) {
+          if (job.key) { components.delete(job.key); previewErrors.push({key:job.key,text:message(error)}); }
+        }
       }
     }));
-    if (scanRevision !== revision || !scopeMatches(scope)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
+    if (previewFailure) throw previewFailure;
+    assertScan();
     snapshot = Object.assign({}, scope, { rows: Array.from(found.values()), observedRows: Array.from(monitored.values()), revision });
-    send('scan', { rows: snapshot.rows, observedRows: snapshot.observedRows, unreadable, scopeName: scopeLabel(snapshot) });
+    send('scan', { rows: snapshot.rows, observedRows: snapshot.observedRows, unreadable, scopeName: scopeLabel(snapshot), targetPreviews, previewErrors });
   }
 
   async function replace(choices) {
     assertActive();
+    if (scenario !== 'default') throw new Error('Для сервисов используй эталонный экран из паттерна «Уважаемые экраны».');
     const plan = snapshot;
     if (!plan || !scopeMatches(plan) || plan.revision !== revision) throw new Error('Проверяемая область изменилась. Повторите проверку.');
     if (!Array.isArray(choices)) throw new Error('Некорректный список замен.');
-    const allowed = new Set(catalog.newIcons.map(i => i.key));
-    const selected = new Map();
+    const allowed = indexCatalog().targets;
+    const selected = new Map(), rowsByKey = new Map();
+    for (const row of plan.rows) {
+      if (!rowsByKey.has(row.oldKey)) rowsByKey.set(row.oldKey, []);
+      rowsByKey.get(row.oldKey).push(row);
+    }
     for (const choice of choices) {
-      const matches = choice ? plan.rows.filter(r => r.oldKey === choice.oldKey && (!choice.rowId || (r.rowId || r.oldKey) === choice.rowId)) : [];
+      const matches = choice ? (rowsByKey.get(choice.oldKey) || []).filter(r => !choice.rowId || (r.rowId || r.oldKey) === choice.rowId) : [];
       const row = matches.length === 1 ? matches[0] : null;
       if (!row || (choice.newKey && (!allowed.has(choice.newKey) || choice.newKey === row.oldKey || Object.values(row.sourceKeys || {}).includes(choice.newKey))) || selected.has(row.rowId || row.oldKey)) {
         throw new Error('Некорректная замена. Повторите проверку.');
@@ -676,23 +673,11 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     for (const key of new Set(selected.values())) if (key) targets.set(key, await component(key));
     if (snapshot !== plan || !scopeMatches(plan)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
     const jobs = [];
-    const currentKnownKeys = knownIconKeys(), checkedCards = new Map();
-    async function validateOccurrence(row, node, checkedCards) {
+    async function validateOccurrence(row, node) {
       if (snapshot !== plan || plan.revision !== revision || !containsNode(plan, node)) throw new Error('Иконка больше не находится в проверенной области. Повторите проверку.');
       const id = node.id;
       if (node && !visibleInLayout(node)) throw new Error('Иконка находится в скрытом слое. Повторите проверку.');
       if (await insideProtectedComponent(node, n => n.getMainComponentAsync())) throw new Error('Иконка находится в исключённом компоненте. Повторите проверку.');
-      const occurrence = row.serviceOccurrences?.[id];
-      if (occurrence) {
-        const title = await figma.getNodeByIdAsync(occurrence.titleId);
-        const text = title?.type === 'TEXT' ? String(title.characters || '').normalize('NFC').replace(/\s+/gu, ' ').trim().toLocaleLowerCase('ru') : '';
-        const ancestors = new Map();
-        for (let parent = node.parent; parent; parent = parent.parent) ancestors.set(parent.id, parent);
-        if (!title || !visibleInLayout(title) || text !== occurrence.title || !ancestors.has(occurrence.cardId) || !ancestors.has(occurrence.screenId)) throw new Error('Контекст сервиса изменился. Повторите проверку.');
-        if (!checkedCards.has(occurrence.cardId)) checkedCards.set(occurrence.cardId, await serviceCardRoles(ancestors.get(occurrence.cardId), currentKnownKeys, n => n.getMainComponentAsync()));
-        const roles = checkedCards.get(occurrence.cardId);
-        if (roles.map(role => role.kind).join(',') !== occurrence.structure || roles.find(role => role.kind === 'text')?.id !== occurrence.titleId) throw new Error('Структура карточки сервиса изменилась. Повторите проверку.');
-      }
       if (row.outsideCatalog && !(await iconContext(node, n => n.getMainComponentAsync(), iconContainers, iconViewSets))) {
         throw new Error('Контекст иконки изменился. Повторите проверку.');
       }
@@ -710,7 +695,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
       if (!target) continue;
       for (const id of row.ids) {
         const node = await figma.getNodeByIdAsync(id);
-        const original = await validateOccurrence(row, node, checkedCards);
+        const original = await validateOccurrence(row, node);
         let depth = 0;
         for (let parent = node.parent; parent; parent = parent.parent) depth += 1;
         jobs.push({ node, row, target, original, depth });
@@ -721,6 +706,9 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     const errors = [];
     let replaced = 0;
     const completed = new Set();
+    // Keep this batch separate from imports, previews and earlier document edits.
+    figma.commitUndo();
+    try {
     // Descendants first, so swapping a parent cannot invalidate a pending child.
     for (const { node, row, target, original } of jobs.sort((a, b) => b.depth - a.depth)) {
       const name = node.name;
@@ -737,7 +725,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
       try {
         assertActive();
         const captured = await captureColors(node);
-        await validateOccurrence(row, node, new Map());
+        await validateOccurrence(row, node);
         const savedColor = record => ({ paints: record.paints, styleId: record.styleId, alpha: record.alpha });
         originalPaints = captured.map(savedColor);
         const colors = colorTransferPlan(node, target, captured).map(pair => savedColor(pair.source));
@@ -760,13 +748,17 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
         errors.push(name + ': замена не выполнена — ' + message(error));
       }
     }
-    figma.commitUndo();
+    } finally {
+      // Close even a partially completed batch when an unexpected error escapes.
+      figma.commitUndo();
+    }
     plan.rows = plan.rows.map(row => (Object.assign({}, row, {ids: row.ids.filter(id => !completed.has(id)), newKey: selected.get(row.rowId || row.oldKey) || ''}))).filter(row => row.ids.length);
     const skipped = plan.rows.filter(row => !selected.get(row.rowId || row.oldKey)).reduce((n, row) => n + row.ids.length, 0);
     send('done', { replaced, skipped, failed: jobs.length - replaced, errors, remainingRows: plan.rows });
   }
 
   async function activateScenario(id) {
+    if (id === 'services') throw new Error('Для сервисов используй эталонный экран из паттерна «Уважаемые экраны».');
     await savePreviewCache(true);
     scenarioPreviewCache.set(scenario, previewCache);
     scenario = id;
@@ -785,7 +777,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     try {
       if (msg.type === 'ready') {
         try {
-          const saved = await figma.clientStorage.getAsync(bundled ? 'apollo-reglyph-abm-v1-catalog' : 'apollo-reglyph-abm-v1-catalog');
+          const saved = await figma.clientStorage.getAsync('apollo-reglyph-abm-v1-catalog');
           if (saved) {
             // Library classification comes from the maintained bundle, never an old saved catalogue.
             catalog = validateSupportedCatalog(Object.assign({}, saved, {observedIcons: bundled ? bundled.observedIcons || [] : saved.observedIcons || []}));
@@ -797,28 +789,54 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
       } else if (msg.type === 'catalog') {
         const next = validateSupportedCatalog(msg.catalog);
         scenarioPreviewCache.delete(scenario);
-        await figma.clientStorage.setAsync(bundled ? 'apollo-reglyph-abm-v1-catalog' : 'apollo-reglyph-abm-v1-catalog', next);
+        await figma.clientStorage.setAsync('apollo-reglyph-abm-v1-catalog', next);
         catalog = next;
         components.clear(); previews.clear(); localComponentPage = null; colorVariables.clear(); invalidate();
         send('catalog', { catalog });
         await restorePreviewCache();
       } else if (msg.type === 'reset') {
-        revision += 1; snapshot = null; pendingScan = null;
+        invalidate(false);
         send('reset');
+      } else if (msg.type === 'selection-decision') {
+        const pending = pendingSelection;
+        if (!pending || msg.token !== pending.token || pending.plan !== snapshot || pending.pageId !== figma.currentPage.id || pending.scope !== selectionKey() || !['stay','switch'].includes(msg.decision)) throw new Error('Выделение изменилось. Повторите выбор.');
+        if (msg.decision === 'switch') {
+          invalidate(false);
+          send('selection-switch-started');
+          await scan();
+        } else {
+          const nodes = await Promise.all(pending.plan.scope.split('|').map(id => figma.getNodeByIdAsync(id)));
+          assertActive();
+          if (pendingSelection !== pending || snapshot !== pending.plan || pending.scope !== selectionKey() || pending.pageId !== figma.currentPage.id) return;
+          if (nodes.some(node => !node || node.removed) || !rootsAvailable(pending.plan)) {
+            invalidate();
+            throw new Error('Исходный макет недоступен. Запустите новую проверку.');
+          }
+          const restore = {sourcePageId:pending.pageId,sourceScope:pending.scope,targetPageId:pending.plan.page.id,targetScope:pageSelectionKey(pending.plan.page),arrived:figma.currentPage.id === pending.plan.page.id,changed:false};
+          restoringSelection = restore;
+          let reprompt = false;
+          try {
+            if (pending.plan.page.id !== figma.currentPage.id) await figma.setCurrentPageAsync(pending.plan.page);
+            assertActive();
+            if (pendingSelection !== pending || snapshot !== pending.plan) return;
+            if (restore.changed || figma.currentPage.id !== restore.targetPageId || selectionKey() !== restore.targetScope) reprompt = true;
+            else {
+              if (nodes.some(node => !node || node.removed) || !rootsAvailable(pending.plan)) throw new Error('Исходный макет недоступен. Запустите новую проверку.');
+              inspectionSelection = null;
+              restore.targetScope = pending.plan.scope;
+              figma.currentPage.selection = nodes;
+              pendingSelection = null;
+            }
+          } catch (error) { invalidate(); throw error; }
+          finally { restoringSelection = null; }
+          if (reprompt) { promptSelection('changed-during-restore'); return; }
+          send('selection-confirmation-dismissed');
+          send('selection', {count:figma.currentPage.selection.length});
+        }
       } else if (msg.type === 'scan') {
-        const confirmed = msg.confirmationToken !== undefined;
-        let scope;
-        if (confirmed) {
-          const plan = pendingScan;
-          if (!plan || msg.confirmationToken !== plan.token || plan.revision !== revision || !scopeMatches(plan)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
-          pendingScan = null;
-          scope = plan;
-          if (!['default', 'services'].includes(msg.scenarioId) || !scenarios[msg.scenarioId]) throw new Error('Неизвестный сценарий.');
-          const switched = msg.scenarioId !== scenario;
-          if (switched) await activateScenario(msg.scenarioId);
-          if (revision !== plan.revision + Number(switched) || !scopeMatches(plan)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
-        } else if (msg.scenarioId && msg.scenarioId !== scenario) throw new Error('Сценарий изменился. Повторите проверку.');
-        await scan(confirmed, scope);
+        if (msg.scenarioId && msg.scenarioId !== 'default') throw new Error('Для сервисов используй эталонный экран из паттерна «Уважаемые экраны».');
+        if (msg.confirmationToken !== undefined) throw new Error('Проверяемая область изменилась. Повторите проверку.');
+        await scan();
       } else if (msg.type === 'scenario') {
         if (!Object.prototype.hasOwnProperty.call(scenarios, msg.id)) throw new Error('Неизвестный сценарий.');
         await activateScenario(msg.id);
@@ -826,8 +844,8 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
         if (!snapshot || snapshot.revision !== revision || !scopeMatches(snapshot) || ![...snapshot.rows, ...snapshot.observedRows].some(r => r.ids.includes(msg.id))) throw new Error('Проверяемая область изменилась. Повторите проверку.');
         const plan = snapshot, node = await figma.getNodeByIdAsync(msg.id);
         if (!containsNode(plan, node)) throw new Error('Иконка больше не находится в проверенной области.');
-        if (figma.currentPage.id !== plan.page.id) await figma.setCurrentPageAsync(plan.page);
         if (snapshot !== plan || !containsNode(plan, node)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
+        inspectionSelection = node.id;
         plan.page.selection = [node];
         figma.viewport.scrollAndZoomIntoView([node]);
       } else if (msg.type === 'icon-preview') {
@@ -850,13 +868,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
         if(msg.key){previews.set(msg.key,image);previewCache[msg.key]={image,monochrome,time:Date.now()};previewCacheDirty++;}
         send('icon-preview', { token: msg.token, image, monochrome });
       } else if (msg.type === 'preview') {
-        if (!catalog.newIcons.some(i => i.key === msg.key)) throw new Error('Неизвестная новая иконка.');
-        if(msg.refresh){previews.delete(msg.key);delete previewCache[msg.key];}
-        if (!previews.has(msg.key)) {
-          const target = await component(msg.key), image = await preview(target);
-          previews.set(msg.key, image); previewCache[msg.key] = { image, monochrome: scenario !== 'services' && isMonochrome(target), time: Date.now() }; previewCacheDirty += 1;
-        }
-        send('preview', { key: msg.key, image: previews.get(msg.key), monochrome: previewCache[msg.key]?.monochrome === true });
+        send('preview', await targetPreview(msg.key, msg.refresh));
         await savePreviewCache(msg.flush === true);
       } else if (msg.type === 'flush-previews') {
         await savePreviewCache(true);
@@ -864,6 +876,13 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
         scenarioPreviewCache.delete(scenario);previews.clear(); previewCache = {}; previewCacheDirty = 1;
         await savePreviewCache(true);
         send('preview-cache-reset');
+      } else if (msg.type === 'undo') {
+        assertActive();
+        figma.triggerUndo();
+        components.clear(); colorVariables.clear(); localComponentPage = null;
+        invalidate();
+        onMutation();
+        send('undo-complete');
       } else if (msg.type === 'replace') {
         await replace(msg.choices);
       }

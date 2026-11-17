@@ -83,7 +83,7 @@ designCheck.subscribe(() => {
   lastCompact = compact; void uiClient.resize(compact).catch(error => status(error.message, true));
 });
 layerNamesClient=createLayerNamesClient({send,beforeOperation:compatibility.ensure,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
-reglyphClient=createReglyphClient({send,beforeOperation:compatibility.ensure,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable(true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
+reglyphClient=createReglyphClient({send,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable(true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
 reglyphClient.setContext({channelId:designCheck.getState().settings.channelId,pickerLabel:designCheck.getState().settings.pickerLabel});
 figmaAuditClient=createFigmaAuditClient({send,beforeOperation:compatibility.ensure,readPlatform:()=>designCheck.getState().settings.pickerLabel,isBusy:()=>legacyOperationUnavailable(false,true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
 function dependencyReason(reason) {

@@ -8,6 +8,18 @@ const patternCaption = (text: string) => /^Паттерн: «([^»\n]+)», (v\.[
 const isUsageFooter = (block: AnswerBlock) => block.kind === 'text' && !block.questionHeading
   && /^\*Токены: (?:всего [\d\s\u00a0\u202f]+ · вход [\d\s\u00a0\u202f]+(?: \(из них кеш: [\d\s\u00a0\u202f]+\))? · выход [\d\s\u00a0\u202f]+\.|агент не передал полный расход\.)\*$/u.test(block.text);
 
+// Presentation only: keep the original question and dialogue unchanged for RAG.
+function displayQuestion(value: string) {
+  return value.trim().replace(/^([^\p{L}]*)(\p{L})/u, (_match, prefix: string, letter: string) => prefix + letter.toLocaleUpperCase('ru-RU')).replace(/[?!.…]+$/u, '') + '?';
+}
+function displayQuestionHeading(value: string) {
+  return '**' + displayQuestion(value.replace(/^\*\*([\s\S]*)\*\*$/u, '$1')) + '**';
+}
+function displayMissingQuestions(value: string) {
+  if (!value.startsWith('**Не нашёл ответа в паттернах АБМ.')) return value;
+  return value.replace(/^- (.+)$/gmu, (_match, question: string) => '- ' + displayQuestion(question));
+}
+
 function RuleText({ text }: { text: string }) {
   const paragraphs = text.split(/\n\s*\n/), last = paragraphs.at(-1) || '';
   const example = /^(?:🍏|🤖) \[Пример\]\(/u.test(last);
@@ -54,20 +66,16 @@ export function AssistantAnswer({ text, blocks, provenance }: { text: string; bl
   const content = usage ? blocks!.slice(0, -1) : blocks;
   const guides = (content || []).filter((block): block is Extract<AnswerBlock, { kind: 'guide' }> => block.kind === 'guide');
   const families = Array.from(new Set(guides.map(block => labels[block.family])));
-  const patterns = (content || []).filter(block => block.kind === 'text' && !block.questionHeading && patternCaption(block.text));
-  const title = patterns.length === 1 && !content?.some(block => block.kind === 'text' && block.questionHeading) ? patternCaption(patterns[0].text)?.[1] : null;
   return <div className="apollo-answer-blocks">
-    {patterns.length > 0 && <div className="apollo-answer-kicker">Паттерны АБМ</div>}
-    {title && <h2 className="apollo-answer-title">{title}</h2>}
     {!content ? <MarkdownMessage text={text} /> : content.map((block, index) => {
       if (block.kind !== 'text') return null;
       if (block.questionHeading) {
         const nextHeading = content.findIndex((item, next) => next > index && item.kind === 'text' && item.questionHeading);
         const scope = content.slice(index + 1, nextHeading < 0 ? undefined : nextHeading);
         if (!scope.some(item => item.kind === 'text' && !item.questionHeading)) return null;
-        return <div className="apollo-answer-question" key={index}><MarkdownMessage text={block.text} /></div>;
+        return <div className="apollo-answer-question" key={index}><MarkdownMessage text={displayQuestionHeading(block.text)} /></div>;
       }
-      return <PatternText text={block.text} key={index} />;
+      return <PatternText text={displayMissingQuestions(block.text)} key={index} />;
     })}
     {guides.length > 0 && <details className="apollo-guide-recommendations">
       <summary className="apollo-guide-recommendations__summary">
@@ -79,7 +87,7 @@ export function AssistantAnswer({ text, blocks, provenance }: { text: string; bl
         <span className="apollo-guide-recommendations__chevron" aria-hidden="true" />
       </summary>
       <div className="apollo-guide-recommendations__content">{guides.map((block, index) => <div className="apollo-guide-recommendations__item" key={index}>
-        {block.question && block.question !== guides[index - 1]?.question && <p className="apollo-guide-recommendations__question"><strong>{block.question}</strong></p>}
+        {block.question && block.question !== guides[index - 1]?.question && <p className="apollo-guide-recommendations__question"><strong>{displayQuestion(block.question)}</strong></p>}
         <h4 className="apollo-guide-recommendations__family">{labels[block.family]}</h4>
         <GuideText text={block.text} />
       </div>)}</div>

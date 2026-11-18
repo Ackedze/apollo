@@ -51,7 +51,7 @@ test('pattern captions, examples, lists and real usage survive the presentation 
  const footer='*Токены: всего 1 200 · вход 1 000 (из них кеш: 800) · выход 200.*';
  const blocks=[{kind:'text',text:rule},{kind:'text',text:footer}];
  const close=dom.window.GuideCardTest.mount(d.querySelector('#root'),{text:blocks.map(b=>b.text).join('\n\n'),blocks,provenance:'Агент: Codex · база: fixture'});
- assert.equal(d.querySelector('h2').textContent,'Хаптик');
+ assert.equal(d.querySelectorAll('h2,.apollo-answer-kicker').length,0);
  assert.equal(d.querySelectorAll('.apollo-answer-rule').length,1);
  assert.deepEqual([...d.querySelectorAll('.apollo-answer-rule li')].map(li=>li.textContent.replace('–','').trim()),['Сохраняй 48 dp.','Не теряй исключение.']);
  assert.equal(d.querySelector('.apollo-answer-rule a').href,'https://example.test/ios');
@@ -84,5 +84,22 @@ test('several documents from the same family retain a source link immediately af
  assert.equal(documents[0].querySelector('a').href,'https://example.test/first');assert(documents[0].textContent.startsWith('Первая рекомендация.'));
  assert.equal(documents[1].querySelector('a').href,'https://example.test/second');assert(documents[1].textContent.startsWith('Вторая рекомендация.'));
  assert(!d.querySelector('.apollo-guide-recommendations__content').textContent.includes('Гайд:'));
+ close();dom.window.close();
+});
+
+
+test('displayed questions use sentence case and one question mark without changing answer wording or input blocks',()=>{
+ const dom=new JSDOM('<div id="root"></div>',{runScripts:'dangerously'});dom.window.eval(bundle);const d=dom.window.document;
+ const missing='**Не нашёл ответа в паттернах АБМ. Напиши в чат [помощь](https://example.test/help).**\n\n- насколько увеличивать высоту???';
+ const blocks=[{kind:'text',text:'**как показывать поле ввода.**',questionHeading:true},{kind:'text',text:'**Для iOS используй TextArea.**\n\nПаттерн: «Поля ввода», v.2.3'},{kind:'text',text:missing},{kind:'guide',family:'hig',question:'как показывать поле ввода.',text:'Мобильная рекомендация.'}];
+ const before=JSON.stringify(blocks);
+ const close=dom.window.GuideCardTest.mount(d.querySelector('#root'),{text:blocks.map(b=>b.text).join('\n\n'),blocks});
+ assert.equal(d.querySelector('.apollo-answer-question').textContent,'Как показывать поле ввода?');
+ assert.equal(d.querySelector('.apollo-guide-recommendations__question').textContent,'Как показывать поле ввода?');
+ assert(d.querySelector('.apollo-answer-rule').textContent.includes('Для iOS используй TextArea.'));
+ assert(d.querySelector('.apollo-answer-blocks').textContent.includes('Насколько увеличивать высоту?'));
+ assert.equal(d.querySelector('a').href,'https://example.test/help');
+ assert.equal(JSON.stringify(blocks),before);
+ assert.equal(d.querySelectorAll('h2,.apollo-answer-kicker').length,0);
  close();dom.window.close();
 });

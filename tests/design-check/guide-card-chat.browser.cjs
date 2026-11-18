@@ -3,7 +3,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {pathToFileURL}=require('node:url');
 const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
-const blocks=[{kind:'text',text:'**Правило АБМ для выбранного сценария.**\n\n- Сохрани условие.\n- Сохрани исключение.\n\n🍏 [Пример](https://example.test/ios) · 🤖 [Пример](https://example.test/android)\n\n**Второе правило АБМ.**\n\n🍏 [Пример](https://example.test/second)\n\nПаттерн: «Хаптик», v.1.4'},
+const blocks=[{kind:'text',text:'**как использовать хаптик.**',questionHeading:true},{kind:'text',text:'**Правило АБМ для выбранного сценария.**\n\n- Сохрани условие.\n- Сохрани исключение.\n\n🍏 [Пример](https://example.test/ios) · 🤖 [Пример](https://example.test/android)\n\n**Второе правило АБМ.**\n\n🍏 [Пример](https://example.test/second)\n\nПаттерн: «Хаптик», v.1.4'},
  {kind:'guide',family:'hig',text:'Дополнительная рекомендация HIG.\n\nГайд: HIG — [Playing haptics](https://developer.apple.com/design/human-interface-guidelines/playing-haptics)'},
  {kind:'guide',family:'material2',text:'Дополнительная рекомендация Material 2.\n\nГайд: Material 2 — [Android haptics](https://m2.material.io/design/platform-guidance/android-haptics.html)'},
  {kind:'text',text:'*Токены: всего 1 200 · вход 1 000 (из них кеш: 800) · выход 200.*'}];
@@ -40,7 +40,11 @@ const blocks=[{kind:'text',text:'**Правило АБМ для выбранно
   assert.equal(await page.locator('.user-msg .apollo-guide-recommendations').count(),0);
   assert.equal(await card.evaluate(node=>node.open),false);
   assert((await answer.innerText()).includes('Правило АБМ'));
-  assert.equal(await answer.getByRole('heading',{name:'Хаптик',exact:true}).count(),1);
+  assert.equal(await answer.locator('h2,.apollo-answer-kicker').count(),0);
+  assert.equal(await answer.locator('.apollo-answer-question').textContent(),'Как использовать хаптик?');
+  assert.equal(await answer.locator('.apollo-answer-question .md-p').evaluate(node=>getComputedStyle(node).fontSize),'16px');
+  assert.equal(await answer.locator('.apollo-answer-rule .md-p').first().evaluate(node=>getComputedStyle(node).fontSize),'14px');
+  assert.equal(await answer.locator('.apollo-answer-rule strong').first().evaluate(node=>getComputedStyle(node).fontSize),'14px');
   assert.equal(await answer.locator('.apollo-answer-rule').count(),2);
   assert.equal(await answer.locator('.apollo-answer-rule li').count(),2);
   assert.equal(await answer.getByRole('link',{name:'Пример',exact:true}).count(),3);

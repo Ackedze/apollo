@@ -15,9 +15,9 @@ function createDesignCheckController(options = {}) {
     documentPageAvailable: false, documentActions:null,documentAction:{busy:false,status:'idle',message:''},
     documentAudit: { status: 'idle', requestId: null, result: null, error: '' },
     tabs: Object.fromEntries(definitions.map(tab => [tab.id, { status: 'not-connected', count: null, items: [] }])),
-    chat: { open: false, source: 'codex', busy: false, messages: [], error: '', unreadCount: 0,
+    chat: { open: false, source: 'codex', busy: false, messages: [], error: '', notice: '', unreadCount: 0,
       transport: options.dialogue ? 'configured' : 'not-connected', cancelScope: options.dialogue?.cancelScope || null,
-      proxy: { available: null, version: null } } };
+      proxy: { available: null, version: null, busy: null } } };
 
   function emit(update) {
     if (destroyed) return;
@@ -167,7 +167,9 @@ function createDesignCheckController(options = {}) {
   function setProxyStatus(proxy) {
     if (destroyed || !proxy || ![true, false, null].includes(proxy.available)) return;
     ++proxySequence;
-    setChat({ proxy: { available: proxy.available, version: typeof proxy.version === 'string' ? proxy.version : null } });
+    const busy = typeof proxy.busy === 'boolean' ? proxy.busy : null;
+    setChat({ proxy: { available: proxy.available, version: typeof proxy.version === 'string' ? proxy.version : null, busy },
+      notice: busy === false ? '' : state.chat.notice });
   }
   async function refreshProxyStatus() {
     if (!options.dialogue?.status) return;
@@ -190,14 +192,25 @@ function createDesignCheckController(options = {}) {
     const text = typeof question === 'string' ? question.trim() : '';
     if (!text || state.chat.busy || !options.dialogue || destroyed) return false;
     if (text.length > 8000) { setChat({ error: 'Вопрос слишком длинный: максимум 8000 символов.' }); return false; }
+    if (state.chat.proxy.busy === true) { setChat({ error: '', notice: 'Apollo ещё обрабатывает предыдущий запрос. Вопрос сохранён — отправь его, когда агент освободится.' }); return false; }
     // Sending consumes the chosen source even if its reply finishes before preference loading.
     revisions.agentSource = (revisions.agentSource || 0) + 1;
     const requestId = `design-check-chat-${++sequence}`, source = state.chat.source;
     const abort = new AbortController(); activeChat = { requestId, abort, contextKey: state.contextKey };
     const history = state.chat.messages.filter(entry => ['user', 'assistant'].includes(entry.role)).slice(-12)
       .map(entry => ({ role: entry.role, text: entry.text.trim().slice(0, 8000) }));
-    setChat({ busy: true, error: '', messages: state.chat.messages.concat({ role: 'user', text, requestId, source }) });
+    let dispatched = false;
+    setChat({ busy: true, error: '', notice: '' });
     try {
+      if (options.dialogue.status) {
+        const proxy = await options.dialogue.status({ signal: abort.signal });
+        if (destroyed || activeChat?.requestId !== requestId || activeChat.contextKey !== state.contextKey) return true;
+        setProxyStatus(proxy);
+        if (proxy.busy === true) throw Object.assign(new Error('Apollo ещё обрабатывает предыдущий запрос. Вопрос сохранён — отправь его, когда агент освободится.'), { code: 'APOLLO_AGENT_BUSY' });
+        if (proxy.available === false) throw new Error('Нет связи с Apollo Proxy. Проверь подключение и повтори отправку.');
+      }
+      dispatched = true;
+      setChat({ messages: state.chat.messages.concat({ role: 'user', text, requestId, source }) });
       const response = await options.dialogue.send({ requestId, source, question: text, dialogue: history,
         dialoguePlatform: state.settings.pickerLabel,
         context: null, signal: abort.signal });
@@ -207,20 +220,30 @@ function createDesignCheckController(options = {}) {
       activeChat = null;
       setChat({ busy: false, unreadCount: state.chat.open ? 0 : state.chat.unreadCount + 1, messages: state.chat.messages.concat({ role: 'assistant', text: response.text, requestId, source: response.source || source, returnedSource: response.returnedSource === undefined ? response.source ?? null : response.returnedSource, provider: response.provider ?? null, knowledgeRelease: response.knowledgeRelease ?? null, answerBlocks: response.answerBlocks }) });
     } catch (error) {
-      if (!destroyed && activeChat?.requestId === requestId) { activeChat = null; setChat({ busy: false, error: error.message || 'Агент недоступен.' }); }
+      if (!destroyed && activeChat?.requestId === requestId) {
+        activeChat = null;
+        if (error.code === 'APOLLO_AGENT_BUSY') {
+          setProxyStatus(Object.assign({}, state.chat.proxy, { busy: true }));
+          setChat({ busy: false, error: '', notice: error.message,
+            messages: state.chat.messages.filter(entry => entry.requestId !== requestId) });
+          return false;
+        }
+        setChat({ busy: false, error: error.message || 'Агент недоступен.' });
+        if (!dispatched) return false;
+      }
     }
     return true;
   }
   function cancelChat() {
     if (!activeChat) return false;
     const pending = activeChat; activeChat = null; pending.abort.abort();
-    setChat({ busy: false, error: 'Ожидание ответа остановлено. Запрос на сервере может продолжаться.' }); return true;
+    setChat({ busy: false, error: 'Ожидание ответа остановлено. Запрос на сервере может продолжаться.' }); void refreshProxyStatus(); return true;
   }
   function setContext(key) {
     if (key === state.contextKey) return;
     if (activeChat) { activeChat.abort.abort(); activeChat = null; }
     options.dialogue?.resetSession?.();
-    emit({ contextKey: key, chat: Object.assign({}, state.chat, { busy: false, messages: [], error: '', unreadCount: 0 }) });
+    emit({ contextKey: key, chat: Object.assign({}, state.chat, { busy: false, messages: [], error: '', notice: '', unreadCount: 0 }) });
   }
   return { getState: () => state, subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); },
     getVisibleTabs, getTabItems, restorePreferences, updateSetting, selectTab, setView, setMode, setAudit, setTabData, setDocumentAudit, setDocumentPageAvailable, beginContractAudit, startDocumentAudit, setDocumentActions:value=>emit({documentActions:value}),setDocumentAction:value=>emit({documentAction:value}),actOnDocumentFinding:(findingId,targetId,actionId)=>options.onDocumentAction?.(findingId,targetId,actionId),hasDocumentAuditPort: () => Boolean(options.onDocumentAudit), focusDocumentFinding: (findingId, targetId) => options.onDocumentFocus?.(findingId, targetId), acceptAuditResult, acceptAuditError,

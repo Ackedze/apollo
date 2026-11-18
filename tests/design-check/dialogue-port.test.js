@@ -40,6 +40,19 @@ test('rejects transport errors, empty bodies and mismatched source identity', as
 });
 test('health means endpoint availability, separate from rule coverage', async () => {
   const { port, calls } = setup({ ok: true, proxy: { version: 'synthetic' }, codex: { configured: false } });
-  assert.deepEqual(await port.status(), { available: true, version: 'synthetic' });
+  assert.deepEqual(await port.status(), { available: true, version: 'synthetic', busy: null });
   assert.equal(calls[0].url, 'http://localhost:3001/health'); assert.equal(calls[0].request.method, 'GET');
+});
+
+
+test('busy health prevents dispatch and preserves cancellation; a racing busy response has a typed friendly error',async()=>{
+ for(const stage of ['health','post']){
+  let posts=0;
+  const port=createExistingDialoguePort({endpoint:'http://localhost:3001/analyze',createSessionId:()=> 'busy-fixture',request:async(url,options)=>{
+   if(url.endsWith('/health'))return {ok:true,json:async()=>({ok:true,capabilities:{dialoguePlatformRouting:true},agent:{busy:stage==='health'}})};
+   posts++;return {ok:false,status:429,json:async()=>({success:false,code:'APOLLO_AGENT_BUSY',error:'AI-агент уже обрабатывает другой запрос Apollo. Токены: всего 0.'})};
+  }});
+  await assert.rejects(port.send({...input(),dialoguePlatform:'iOS'}),error=>error.code==='APOLLO_AGENT_BUSY'&&!error.message.includes('Токены'));
+  assert.equal(posts,stage==='health'?0:1);
+ }
 });

@@ -338,3 +338,33 @@ test('dispose prevents delayed results from publishing into an unmounted UI', as
   controller.subscribe(() => notifications++); const pending = controller.sendChat('test'); controller.destroy();
   const observed = notifications; reply.resolve({ text: 'late result' }); await pending; assert.equal(notifications, observed);
 });
+
+
+test('server busy preflight keeps the question out of history and never sends automatically when free', async()=>{
+ let busy=true,sends=0;const controller=createDesignCheckController({dialogue:{status:async()=>({available:true,version:'test',busy}),send:async()=>{sends++;return {text:'Reply'};}}});
+ assert.equal(await controller.sendChat('Keep this draft'),false);
+ assert.equal(sends,0);assert.equal(controller.getState().chat.messages.length,0);
+ assert.equal(controller.getState().chat.error,'');assert(controller.getState().chat.notice.includes('Вопрос сохранён'));
+ busy=false;await controller.refreshProxyStatus();
+ assert.equal(sends,0);assert.equal(controller.getState().chat.notice,'');
+ assert.equal(await controller.sendChat('Keep this draft'),true);assert.equal(sends,1);
+ assert.deepEqual(controller.getState().chat.messages.map(m=>m.role),['user','assistant']);controller.destroy();
+});
+test('a server busy race removes only the rejected attempt and retains previous conversation',async()=>{
+ const inputs=[];let calls=0;
+ const controller=createDesignCheckController({dialogue:{status:async()=>({available:true,version:'test',busy:false}),send:async input=>{inputs.push(input);if(++calls===2)throw Object.assign(new Error('Вопрос сохранён'),{code:'APOLLO_AGENT_BUSY'});return {text:'Accepted reply'};}}});
+ await controller.sendChat('Accepted question');
+ assert.equal(await controller.sendChat('Rejected question'),false);
+ assert.deepEqual(controller.getState().chat.messages.map(m=>m.text),['Accepted question','Accepted reply']);
+ assert.equal(controller.getState().chat.proxy.busy,true);assert.equal(controller.getState().chat.error,'');
+ await controller.refreshProxyStatus();await controller.sendChat('Retry question');
+ assert(!inputs[2].dialogue.some(m=>m.text==='Rejected question'));assert.equal(calls,3);controller.destroy();
+});
+test('a pending health check locks sending and stale results cannot add a question after a context change',async()=>{
+ const check=deferred();let sends=0;
+ const controller=createDesignCheckController({dialogue:{status:()=>check.promise,send:async()=>{sends++;return {text:'Reply'};}}});
+ const first=controller.sendChat('Old draft');assert.equal(await controller.sendChat('Duplicate draft'),false);
+ assert.equal(controller.getState().chat.messages.length,0);
+ controller.setContext('new');check.resolve({available:true,version:'test',busy:false});await first;
+ assert.equal(sends,0);assert.equal(controller.getState().chat.messages.length,0);controller.destroy();
+});

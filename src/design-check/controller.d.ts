@@ -15,7 +15,7 @@ export type Preferences = { schemaVersion: 'apollo.design-check-ui-preferences.v
 export type DialoguePort = { cancelScope: 'client-only';
   send(input: { requestId: string; source: string; question: string; dialogue: { role: string; text: string }[];
     dialoguePlatform: 'Desktop' | 'MobileWeb' | 'iOS' | 'Android'; context: null; signal: AbortSignal }): Promise<{ text: string; source?: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown; answerBlocks?: AnswerBlock[] }>;
-  status?(): Promise<{ available: boolean; version: string | null }>;
+  status?(input?: { signal?: AbortSignal }): Promise<{ available: boolean; version: string | null; busy?: boolean | null }>;
   resetSession?(): void;
 };
 export type ControllerOptions = { tabs?: Tab[]; preferenceScope?: 'agent-source' | 'all-ui'; settingCapabilities?: Partial<Record<keyof UISettings, boolean>>;
@@ -33,10 +33,10 @@ export type ControllerState = {
   settings: UISettings; selectedTab: string | null; view: string; mode: 'check' | 'generation' | 'skills'; settingsNotice: string;
   preferenceStatus: string; preferenceError: string; auditReady: boolean; auditBusy: boolean; auditProgress: string; auditStale: boolean;
   documentPageAvailable: boolean;documentActions:any;documentAction:{busy:boolean;status:string;message:string;[key:string]:unknown}; documentAudit: DocumentAuditState; auditError: string; audit: Audit | null; contextKey: string | null; tabs: Record<string, TabData>;
-  chat: { open: boolean; source: 'langflow' | 'codex'; busy: boolean; error: string; unreadCount: number;
+  chat: { open: boolean; source: 'langflow' | 'codex'; busy: boolean; error: string; notice: string; unreadCount: number;
     messages: { role: 'user' | 'assistant'; text: string; requestId: string; source: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown; answerBlocks?: AnswerBlock[] }[];
     transport: 'configured' | 'not-connected'; cancelScope: string | null;
-    proxy: { available: boolean | null; version: string | null } };
+    proxy: { available: boolean | null; version: string | null; busy: boolean | null } };
 };
 export type DesignCheckController = {
   getState(): ControllerState; subscribe(listener: () => void): () => void;
@@ -51,7 +51,7 @@ export type DesignCheckController = {
   setTabData(id: string, value: TabData): void; setAuditReady(ready: boolean): void; startAudit(): Promise<boolean>;
   invalidateAudit(): void; openChat(): void; closeChat(): void; setAgentSource(source: string): boolean;
   sendChat(question: string): Promise<boolean>; cancelChat(): boolean; setContext(key: string | null): void;
-  refreshProxyStatus(): Promise<void>; setProxyStatus(value: { available: boolean | null; version: string | null }): void;
+  refreshProxyStatus(): Promise<void>; setProxyStatus(value: { available: boolean | null; version: string | null; busy?: boolean | null }): void;
   flushPreferences(): Promise<void>; getSettingCapabilities(): Partial<Record<keyof UISettings, boolean>>;
   hasAuditPort(): boolean; hasCapturePort(): boolean; captureExample(value: unknown): void; destroy(): void;
 };

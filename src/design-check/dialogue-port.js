@@ -1,3 +1,9 @@
+const BUSY_MESSAGE = 'Apollo ещё обрабатывает предыдущий запрос. Вопрос сохранён — отправь его, когда агент освободится.';
+function busyError() { return Object.assign(new Error(BUSY_MESSAGE), { code: 'APOLLO_AGENT_BUSY' }); }
+function proxyBusy(body) {
+  const values = [body.agent?.busy, body.codex?.busy, body.generation?.busy];
+  return values.includes(true) ? true : values.includes(false) ? false : null;
+}
 // Existing /analyze wire contract observed in v3 and Proxy. Opt-in only: no network on mount.
 function createExistingDialoguePort({ request, endpoint, createSessionId }) {
   if (typeof request !== 'function' || typeof createSessionId !== 'function') throw new TypeError('Explicit request and session identity ports are required.');
@@ -12,10 +18,10 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
     return sessionId;
   }
   return { cancelScope: 'client-only', resetSession() { sessionId = null; },
-    async status() {
-      const response = await request(new URL('/health', url).href, { method: 'GET' });
+    async status({ signal } = {}) {
+      const response = await request(new URL('/health', url).href, { method: 'GET', signal });
       const body = await response.json();
-      return { available: response.ok && body.ok === true, version: typeof body.proxy?.version === 'string' ? body.proxy.version : null };
+      return { available: response.ok && body.ok === true, version: typeof body.proxy?.version === 'string' ? body.proxy.version : null, busy: proxyBusy(body) };
     },
     async send({ source, question, dialogue, dialoguePlatform, context, signal }) {
       if (!['langflow', 'codex'].includes(source) || typeof question !== 'string' || !question.trim() || question.length > 8000
@@ -27,6 +33,7 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
         const state = await health.json();
         if (!health.ok || state.ok !== true || state.capabilities?.dialoguePlatformRouting !== true)
           throw new Error('Для выбора библиотеки по платформе обнови Apollo Proxy и повтори запрос.');
+        if (proxyBusy(state) === true) throw busyError();
       }
       const text = JSON.stringify({ schemaVersion: 1, mode: 'design-dialogue', question: question.trim(),
         context: { selection: null, finding: null, auditReport: null, componentContext: null } });
@@ -34,7 +41,10 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
         body: JSON.stringify({ component: 'apollo-agent-report', action: 'user-question', session_id: session(), source,
           dialoguePlatform, dialogue: dialogue.map(entry => ({ role: entry.role, text: entry.text })), text }) });
       const body = await response.json();
-      if (!response.ok || body.success !== true) throw new Error(body.error || `Apollo proxy error ${response.status}`);
+      if (!response.ok || body.success !== true) {
+        if (response.status === 429 && (body.code === 'APOLLO_AGENT_BUSY' || /^AI-агент уже обрабатывает другой запрос Apollo\./u.test(body.error || ''))) throw busyError();
+        throw new Error(body.error || `Apollo proxy error ${response.status}`);
+      }
       if (dialoguePlatform !== undefined && body.dialogueLibrary !== (['iOS', 'Android'].includes(dialoguePlatform) ? 'abm' : 'ab'))
         throw new Error('Apollo Proxy не подтвердил библиотеку выбранной платформы. Обнови Proxy и повтори запрос.');
       if (body.source !== undefined && body.source !== source) throw new Error('Источник ответа агента не совпал с запросом.');

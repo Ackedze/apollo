@@ -61,11 +61,26 @@ function GuideText({ text }: { text: string }) {
   </div>)}{pending.length > 0 && <MarkdownMessage text={pending.join('\n\n')} />}</>;
 }
 
+function patternSeparators(blocks: AnswerBlock[]) {
+  const indexes = new Set<number>();
+  let previous = '', previousIndex = -1, questionIndex = -1;
+  blocks.forEach((block, index) => {
+    if (block.kind !== 'text') return;
+    if (block.questionHeading) { questionIndex = index; return; }
+    const caption = patternCaption(block.text);
+    if (!caption) return;
+    const key = caption[1] + '\n' + caption[2];
+    if (previous && previous !== key) indexes.add(questionIndex > previousIndex ? questionIndex : index);
+    previous = key; previousIndex = index;
+  });
+  return indexes;
+}
+
 export function AssistantAnswer({ text, blocks, provenance }: { text: string; blocks?: AnswerBlock[]; provenance?: React.ReactNode }) {
   const usage = blocks?.length && isUsageFooter(blocks[blocks.length - 1]) ? blocks[blocks.length - 1].text : null;
   const content = usage ? blocks!.slice(0, -1) : blocks;
   const guides = (content || []).filter((block): block is Extract<AnswerBlock, { kind: 'guide' }> => block.kind === 'guide');
-  const families = Array.from(new Set(guides.map(block => labels[block.family])));
+  const separators = patternSeparators(content || []);
   return <div className="apollo-answer-blocks">
     {!content ? <MarkdownMessage text={text} /> : content.map((block, index) => {
       if (block.kind !== 'text') return null;
@@ -73,16 +88,15 @@ export function AssistantAnswer({ text, blocks, provenance }: { text: string; bl
         const nextHeading = content.findIndex((item, next) => next > index && item.kind === 'text' && item.questionHeading);
         const scope = content.slice(index + 1, nextHeading < 0 ? undefined : nextHeading);
         if (!scope.some(item => item.kind === 'text' && !item.questionHeading)) return null;
-        return <div className="apollo-answer-question" key={index}><MarkdownMessage text={displayQuestionHeading(block.text)} /></div>;
+        return <React.Fragment key={index}>{separators.has(index) && <hr className="apollo-answer-separator" />}<div className="apollo-answer-question"><MarkdownMessage text={displayQuestionHeading(block.text)} /></div></React.Fragment>;
       }
-      return <PatternText text={displayMissingQuestions(block.text)} key={index} />;
+      return <React.Fragment key={index}>{separators.has(index) && <hr className="apollo-answer-separator" />}<PatternText text={displayMissingQuestions(block.text)} /></React.Fragment>;
     })}
     {guides.length > 0 && <details className="apollo-guide-recommendations">
       <summary className="apollo-guide-recommendations__summary">
         <svg className="apollo-guide-recommendations__icon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 5.5C7 4 9 4 12 6c3-2 5-2 8-.5V19c-3-1.5-5-1.5-8 .5-3-2-5-2-8-.5z" /><path d="M12 6v13" /></svg>
         <span className="apollo-guide-recommendations__heading">
-          <span className="apollo-guide-recommendations__title">Рекомендации гайдов</span>
-          <span className="apollo-guide-recommendations__families">{families.join(' · ')}</span>
+          <span className="apollo-guide-recommendations__title">Рекомендации из гайдов</span>
         </span>
         <span className="apollo-guide-recommendations__chevron" aria-hidden="true" />
       </summary>

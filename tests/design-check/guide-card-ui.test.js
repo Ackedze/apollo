@@ -9,8 +9,8 @@ test('guide families share one disclosure using the existing Apollo overview sur
  const close=w.GuideCardTest.mount(d.querySelector('#root'),{text:blocks.map(b=>b.text).join('\n\n'),blocks});
  try{
   const cards=[...d.querySelectorAll('.apollo-guide-recommendations')];assert.equal(cards.length,1);
-  assert.equal(cards[0].querySelector('.apollo-guide-recommendations__title').textContent,'Рекомендации гайдов');
-  assert.equal(cards[0].querySelector('.apollo-guide-recommendations__families').textContent,'HIG · Material 2 · Material 3');
+  assert.equal(cards[0].querySelector('.apollo-guide-recommendations__title').textContent,'Рекомендации из гайдов');
+  assert.equal(cards[0].querySelector('.apollo-guide-recommendations__families'),null);
   assert.equal(cards[0].open,false);cards[0].querySelector('summary').click();assert.equal(cards[0].open,true);cards[0].querySelector('summary').click();assert.equal(cards[0].open,false);
   assert.deepEqual([...cards[0].querySelectorAll('h4')].map(h=>h.textContent),['HIG','Material 2','Material 3']);
   assert(!d.querySelector('strong').closest('.apollo-guide-recommendations'));
@@ -101,5 +101,17 @@ test('displayed questions use sentence case and one question mark without changi
  assert.equal(d.querySelector('a').href,'https://example.test/help');
  assert.equal(JSON.stringify(blocks),before);
  assert.equal(d.querySelectorAll('h2,.apollo-answer-kicker').length,0);
+ close();dom.window.close();
+});
+
+
+test('only a change of pattern inserts a divider and it precedes the next question',()=>{
+ const dom=new JSDOM('<div id="root"></div>',{runScripts:'dangerously'});dom.window.eval(bundle);const d=dom.window.document;
+ const blocks=[{kind:'text',text:'Первое правило.\n\nПаттерн: «Кнопки», v.1.7'},{kind:'text',text:'Второе правило.\n\nПаттерн: «Кнопки», v.1.7'},{kind:'text',questionHeading:true,text:'**что с полем**'},{kind:'text',text:'Другое правило.\n\nПаттерн: «Поля ввода», v.2.3'}];
+ const close=dom.window.GuideCardTest.mount(d.querySelector('#root'),{text:blocks.map(b=>b.text).join('\n\n'),blocks});
+ const lines=[...d.querySelectorAll('hr.apollo-answer-separator')];assert.equal(lines.length,1);
+ assert(lines[0].nextElementSibling.classList.contains('apollo-answer-question'));
+ assert.equal(lines[0].nextElementSibling.textContent,'Что с полем?');
+ assert.equal(d.querySelectorAll('.apollo-answer-source').length,3);
  close();dom.window.close();
 });

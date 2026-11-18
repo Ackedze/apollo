@@ -191,7 +191,6 @@
 .apollo-new .apollo-guide-recommendations__summary:focus { outline:none; }
 .apollo-new .apollo-guide-recommendations__heading { flex:1; min-width:0; }
 .apollo-new .apollo-guide-recommendations__title { display:block; font:600 16px/24px "Apollo Alfa",sans-serif; }
-.apollo-new .apollo-guide-recommendations__families { display:block; color:var(--apollo-muted); font:400 14px/20px "Apollo Alfa",sans-serif; margin-top:2px; }
 .apollo-new .apollo-guide-recommendations__chevron { flex:0 0 7px; width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); margin:0 3px 4px; }
 .apollo-new .apollo-guide-recommendations[open] .apollo-guide-recommendations__chevron { transform:rotate(225deg); margin-bottom:-4px; }
 .apollo-new .apollo-guide-recommendations__content { padding-top:16px; }
@@ -214,10 +213,9 @@
 .apollo-new .apollo-guide-recommendations__icon { flex:0 0 18px; align-self:flex-start; margin-top:2px; color:var(--apollo-muted); }
 .apollo-new .apollo-guide-recommendations__summary { gap:12px; }
 .apollo-new .apollo-guide-recommendations__title { font-size:15px; line-height:21px; }
-.apollo-new .apollo-guide-recommendations__families { font-size:12px; line-height:18px; margin-top:3px; }
 .apollo-new .apollo-guide-recommendations__content { padding-top:20px; font-size:14px; line-height:21px; }
 .apollo-new .apollo-guide-recommendations__item + .apollo-guide-recommendations__item { border-top:1px solid rgba(0,0,0,.07); margin-top:18px; padding-top:18px; }
-.apollo-new .apollo-guide-recommendations__family { font-size:12px; line-height:18px; color:var(--apollo-muted); margin:0 0 6px; }
+.apollo-new .apollo-guide-recommendations__family { font:600 16px/24px "Apollo Alfa",sans-serif; color:var(--apollo-text); margin:0 0 8px; }
 .apollo-new .apollo-guide-recommendations__source { font-size:13px; line-height:20px; margin-top:8px; }
 .apollo-new .apollo-guide-recommendations__source { display:flex; align-items:baseline; gap:4px; }
 .apollo-new .apollo-guide-recommendations__source > span { color:var(--apollo-muted); }
@@ -234,3 +232,5 @@
 
 .apollo-new .apollo-guide-recommendations__source > .markdown-root { flex:0 1 auto; width:auto; min-width:0; }
 .apollo-new .apollo-guide-recommendations__document + .apollo-guide-recommendations__document { margin-top:18px; }
+
+.apollo-new .apollo-answer-separator { border:0; border-top:1px solid rgba(0,0,0,.08); margin:24px 0; }

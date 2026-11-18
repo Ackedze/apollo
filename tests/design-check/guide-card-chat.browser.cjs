@@ -4,8 +4,10 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const {pathToFileURL}=require('node:url');
 const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
 const blocks=[{kind:'text',text:'**как использовать хаптик.**',questionHeading:true},{kind:'text',text:'**Правило АБМ для выбранного сценария.**\n\n- Сохрани условие.\n- Сохрани исключение.\n\n🍏 [Пример](https://example.test/ios) · 🤖 [Пример](https://example.test/android)\n\n**Второе правило АБМ.**\n\n🍏 [Пример](https://example.test/second)\n\nПаттерн: «Хаптик», v.1.4'},
- {kind:'guide',family:'hig',text:'Дополнительная рекомендация HIG.\n\nГайд: HIG — [Playing haptics](https://developer.apple.com/design/human-interface-guidelines/playing-haptics)'},
- {kind:'guide',family:'material2',text:'Дополнительная рекомендация Material 2.\n\nГайд: Material 2 — [Android haptics](https://m2.material.io/design/platform-guidance/android-haptics.html)'},
+ {kind:'text',text:'**другой вопрос про поля**',questionHeading:true},
+ {kind:'text',text:'Правило другого паттерна.\n\nПаттерн: «Поля ввода», v.2.3'},
+ {kind:'guide',family:'hig',question:'отдельный вопрос без ответа паттерна',text:'Дополнительная рекомендация HIG.\n\nГайд: HIG — [Playing haptics](https://developer.apple.com/design/human-interface-guidelines/playing-haptics)'},
+ {kind:'guide',family:'material2',question:'отдельный вопрос без ответа паттерна',text:'Дополнительная рекомендация Material 2.\n\nГайд: Material 2 — [Android haptics](https://m2.material.io/design/platform-guidance/android-haptics.html)'},
  {kind:'text',text:'*Токены: всего 1 200 · вход 1 000 (из них кеш: 800) · выход 200.*'}];
 (async()=>{
  const output=process.env.DESIGN_CHECK_QA_ROOT;if(!output)throw Error('Set DESIGN_CHECK_QA_ROOT to a private QA directory.');fs.mkdirSync(output,{recursive:true});
@@ -41,11 +43,14 @@ const blocks=[{kind:'text',text:'**как использовать хаптик.
   assert.equal(await card.evaluate(node=>node.open),false);
   assert((await answer.innerText()).includes('Правило АБМ'));
   assert.equal(await answer.locator('h2,.apollo-answer-kicker').count(),0);
-  assert.equal(await answer.locator('.apollo-answer-question').textContent(),'Как использовать хаптик?');
-  assert.equal(await answer.locator('.apollo-answer-question .md-p').evaluate(node=>getComputedStyle(node).fontSize),'16px');
+  assert.equal(await answer.locator('.apollo-answer-question').first().textContent(),'Как использовать хаптик?');
+  assert.equal(await answer.locator('.apollo-answer-separator').count(),1);
+  assert.equal(await card.locator('summary').innerText(),'Рекомендации из гайдов');
+  assert.equal(await card.locator('.apollo-guide-recommendations__families').count(),0);
+  assert.equal(await answer.locator('.apollo-answer-question .md-p').first().evaluate(node=>getComputedStyle(node).fontSize),'16px');
   assert.equal(await answer.locator('.apollo-answer-rule .md-p').first().evaluate(node=>getComputedStyle(node).fontSize),'14px');
   assert.equal(await answer.locator('.apollo-answer-rule strong').first().evaluate(node=>getComputedStyle(node).fontSize),'14px');
-  assert.equal(await answer.locator('.apollo-answer-rule').count(),2);
+  assert.equal(await answer.locator('.apollo-answer-rule').count(),3);
   assert.equal(await answer.locator('.apollo-answer-rule li').count(),2);
   assert.equal(await answer.getByRole('link',{name:'Пример',exact:true}).count(),3);
   const metadata=answer.locator('.apollo-answer-details');
@@ -57,6 +62,7 @@ const blocks=[{kind:'text',text:'**как использовать хаптик.
   await page.screenshot({path:path.join(output,'chat-guide-collapsed.png')});
   await card.locator('summary').focus();await page.keyboard.press('Enter');
   assert.equal(await card.evaluate(node=>node.open),true);
+  assert.equal(await card.locator('h4').first().evaluate(node=>getComputedStyle(node).fontSize),'16px');
   assert.equal(await card.getByRole('link',{name:'Playing haptics',exact:true}).getAttribute('href'),'https://developer.apple.com/design/human-interface-guidelines/playing-haptics');
   await card.scrollIntoViewIfNeeded();await page.waitForTimeout(250);
   await page.screenshot({path:path.join(output,'chat-guide-expanded.png')});

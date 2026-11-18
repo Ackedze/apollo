@@ -40,6 +40,49 @@ test('one disclosure retains the question of each recommendation without empty o
  const close=dom.window.GuideCardTest.mount(d.querySelector('#root'),{text:blocks.map(b=>b.text).join('\n\n'),blocks});
  assert.equal(d.querySelectorAll('details').length,1);
  assert.deepEqual([...d.querySelectorAll('.apollo-guide-recommendations__question')].map(p=>p.textContent),['Первый вопрос?','Второй вопрос?']);
- assert.equal(d.querySelector('#root > .apollo-answer-blocks > .markdown-root').textContent,'Второй вопрос?');
+ assert.equal(d.querySelector('.apollo-answer-question').textContent,'Второй вопрос?');
+ close();dom.window.close();
+});
+
+
+test('pattern captions, examples, lists and real usage survive the presentation without invented titles',()=>{
+ const dom=new JSDOM('<div id="root"></div>',{runScripts:'dangerously'});dom.window.eval(bundle);const d=dom.window.document;
+ const rule='**Условие.**\n\n- Сохраняй 48 dp.\n- Не теряй исключение.\n\n🍏 [Пример](https://example.test/ios)\n\nПаттерн: «Хаптик», v.1.4';
+ const footer='*Токены: всего 1 200 · вход 1 000 (из них кеш: 800) · выход 200.*';
+ const blocks=[{kind:'text',text:rule},{kind:'text',text:footer}];
+ const close=dom.window.GuideCardTest.mount(d.querySelector('#root'),{text:blocks.map(b=>b.text).join('\n\n'),blocks,provenance:'Агент: Codex · база: fixture'});
+ assert.equal(d.querySelector('h2').textContent,'Хаптик');
+ assert.equal(d.querySelectorAll('.apollo-answer-rule').length,1);
+ assert.deepEqual([...d.querySelectorAll('.apollo-answer-rule li')].map(li=>li.textContent.replace('–','').trim()),['Сохраняй 48 dp.','Не теряй исключение.']);
+ assert.equal(d.querySelector('.apollo-answer-rule a').href,'https://example.test/ios');
+ assert.equal(d.querySelector('.apollo-answer-source').textContent,'Паттерн: «Хаптик», v.1.4');
+ const details=d.querySelector('.apollo-answer-details');assert.equal(details.open,false);
+ assert(details.textContent.includes('всего 1 200'));assert(details.textContent.includes('Агент: Codex'));
+ assert.equal(d.querySelectorAll('.apollo-answer-rule .md-em').length,0);
+ details.querySelector('summary').click();assert.equal(details.open,true);
+ close();dom.window.close();
+});
+
+test('guide document titles retain exact safe destinations; ordinary token prose stays in the answer',()=>{
+ const dom=new JSDOM('<div id="root"></div>',{runScripts:'dangerously'});dom.window.eval(bundle);const d=dom.window.document;
+ const blocks=[{kind:'text',text:'Токены: это тема вопроса, а не технический счётчик.'},{kind:'guide',family:'hig',text:'Рекомендация.\n\nГайд: HIG — [Playing haptics](https://developer.apple.com/design/human-interface-guidelines/playing-haptics)'}];
+ const close=dom.window.GuideCardTest.mount(d.querySelector('#root'),{text:blocks.map(b=>b.text).join('\n\n'),blocks});
+ assert.equal(d.querySelectorAll('.apollo-answer-title').length,0);
+ assert.equal(d.querySelectorAll('.apollo-answer-details').length,0);
+ assert(d.querySelector('.apollo-answer-blocks > .markdown-root').textContent.includes('Токены: это тема'));
+ const link=d.querySelector('.apollo-guide-recommendations__source a');
+ assert.equal(link.textContent,'Playing haptics');assert.equal(link.href,'https://developer.apple.com/design/human-interface-guidelines/playing-haptics');
+ close();dom.window.close();
+});
+
+
+test('several documents from the same family retain a source link immediately after each recommendation',()=>{
+ const dom=new JSDOM('<div id="root"></div>',{runScripts:'dangerously'});dom.window.eval(bundle);const d=dom.window.document;
+ const text='Первая рекомендация.\n\nГайд: HIG — [First](https://example.test/first)\n\nВторая рекомендация.\n\nГайд: HIG — [Second](https://example.test/second)';
+ const close=dom.window.GuideCardTest.mount(d.querySelector('#root'),{text,blocks:[{kind:'guide',family:'hig',text}]});
+ const documents=[...d.querySelectorAll('.apollo-guide-recommendations__document')];assert.equal(documents.length,2);
+ assert.equal(documents[0].querySelector('a').href,'https://example.test/first');assert(documents[0].textContent.startsWith('Первая рекомендация.'));
+ assert.equal(documents[1].querySelector('a').href,'https://example.test/second');assert(documents[1].textContent.startsWith('Вторая рекомендация.'));
+ assert(!d.querySelector('.apollo-guide-recommendations__content').textContent.includes('Гайд:'));
  close();dom.window.close();
 });

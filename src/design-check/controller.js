@@ -84,7 +84,7 @@ function createDesignCheckController(options = {}) {
   function updateSetting(key, value) {
     if (!validSetting(key, value) || state.documentAction.busy || state.auditBusy || ['loading','cancelling'].includes(state.documentAudit.status) || destroyed) return false;
     if (['shellAuditEnabled', 'experimentalContractV2Enabled', 'showExpectedCustomizations'].includes(key) && settingCapabilities[key] !== true) return false;
-    if (key === 'pickerLabel' && value !== state.settings.pickerLabel && activeChat) cancelChat();
+    if (key === 'pickerLabel' && value !== state.settings.pickerLabel && (state.chat.busy || state.chat.proxy.busy === true)) return false;
     revisions[key] = (revisions[key] || 0) + 1;
     const settings = Object.assign({}, state.settings); settings[key] = value;
     emit({ settings, selectedTab: selectVisibleTab(settings), settingsNotice: CONTEXT_FIELDS.has(key)
@@ -237,6 +237,7 @@ function createDesignCheckController(options = {}) {
   function cancelChat() {
     if (!activeChat) return false;
     const pending = activeChat; activeChat = null; pending.abort.abort();
+    if (options.dialogue?.status) setProxyStatus(Object.assign({}, state.chat.proxy, { busy: true }));
     setChat({ busy: false, error: 'Ожидание ответа остановлено. Запрос на сервере может продолжаться.' }); void refreshProxyStatus(); return true;
   }
   function setContext(key) {

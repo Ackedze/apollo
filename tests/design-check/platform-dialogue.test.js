@@ -42,16 +42,30 @@ test('invalid platforms never cause a network request',async()=>{
  await assert.rejects(port.send(input('Tablet')),/Unsupported/);
  assert.equal(calls,0);
 });
-test('changing the picker while waiting discards a response from the previous platform',async()=>{
+test('changing the picker during a Web request is refused without aborting the request or discarding its answer',async()=>{
  let resolve;
  const pending=new Promise(done=>{resolve=done;}),requests=[];
- const controller=createDesignCheckController({dialogue:{cancelScope:'client-only',send:async value=>{requests.push(value);return pending;}}});
+ const controller=createDesignCheckController({dialogue:{cancelScope:'client-only',send:async value=>{requests.push(value);return requests.length===1?pending:{text:'ABM answer',source:'codex'};}}});
  const sent=controller.sendChat('First question');
  assert.equal(requests[0].dialoguePlatform,'Desktop');
- controller.updateSetting('pickerLabel','iOS');
- assert(requests[0].signal.aborted);
- resolve({text:'Old desktop answer',source:'codex'});await sent;
+ assert.equal(controller.updateSetting('pickerLabel','iOS'),false);
+ assert.equal(controller.getState().settings.pickerLabel,'Desktop');
+ assert.equal(requests[0].signal.aborted,false);
+ resolve({text:'Desktop answer',source:'codex'});await sent;
  assert(!controller.getState().chat.busy);
- assert(!controller.getState().chat.messages.some(entry=>entry.role==='assistant'));
- controller.destroy();
+ assert(controller.getState().chat.messages.some(entry=>entry.text==='Desktop answer'));
+ assert.equal(controller.updateSetting('pickerLabel','iOS'),true);
+ await controller.sendChat('Second question');assert.equal(requests[1].dialoguePlatform,'iOS');
+ assert.equal(controller.getState().chat.error,'');controller.destroy();
+});
+test('a busy server also locks the picker after client Stop until health confirms it is free',async()=>{
+ let resolve,serverBusy=false;
+ const pending=new Promise(done=>{resolve=done;});
+ const controller=createDesignCheckController({dialogue:{cancelScope:'client-only',status:async()=>({available:true,version:'test',busy:serverBusy}),send:async()=>{serverBusy=true;return pending;}}});
+ const sent=controller.sendChat('Pending Web question');
+ await new Promise(done=>setImmediate(done));controller.cancelChat();
+ assert.equal(controller.updateSetting('pickerLabel','iOS'),false);
+ await controller.refreshProxyStatus();assert.equal(controller.updateSetting('pickerLabel','iOS'),false);
+ serverBusy=false;resolve({text:'Old answer'});await sent;await controller.refreshProxyStatus();
+ assert.equal(controller.updateSetting('pickerLabel','iOS'),true);controller.destroy();
 });

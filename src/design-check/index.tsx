@@ -68,10 +68,10 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
   }, [chat.open, controller, restoreFocus]);
   useEffect(() => { if (conversation.current) conversation.current.scrollTop = conversation.current.scrollHeight; }, [chat.messages, chat.busy, chat.error]);
   useEffect(() => {
-    if (!chat.open || chat.busy) return;
+    if ((!chat.open && chat.proxy.busy !== true) || chat.busy) return;
     const timer = window.setInterval(() => { void controller.refreshProxyStatus(); }, 3000);
     return () => window.clearInterval(timer);
-  }, [chat.open, chat.busy, controller]);
+  }, [chat.open, chat.busy, chat.proxy.busy, controller]);
   const connected = chat.transport === 'configured';
   function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -279,7 +279,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
             actionLoading={activeScreen === 'check' && actionBusy} actionType={activeScreen === 'check' && actionBusy ? 'secondary' : 'primary'} compact={false}
             shellAuditEnabled={settings.shellAuditEnabled} showExpectedCustomizations={settings.showExpectedCustomizations}
             hideCustomizations={settings.hideCustomizations} experimentalContractV2Enabled={settings.experimentalContractV2Enabled}
-            controlAvailability={{ pageTypeId: true, channelId: true, pickerLabel: true, compact: false,
+            controlAvailability={{ pageTypeId: true, channelId: true, pickerLabel: !state.chat.busy && state.chat.proxy.busy !== true, compact: false,
               showExpectedCustomizations: capabilities.showExpectedCustomizations === true, hideCustomizations: true, shellAuditEnabled: capabilities.shellAuditEnabled === true,
               experimentalContractV2Enabled: capabilities.experimentalContractV2Enabled === true, captureExample: controller.hasCapturePort() }}
             onActionPress={() => { if (activeScreen !== 'check') return; setCheckedScope(''); pendingScope.current = { name: selectedScopeName(), audit: state.audit, native: state.documentAudit.result }; void (documentAction ? controller.startDocumentAudit() : controller.startAudit()); }} onToggleCompact={() => apply('compact', !settings.compact)}

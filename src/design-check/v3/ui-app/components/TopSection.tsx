@@ -51,7 +51,7 @@ type TopSectionProps = {
   onActionPress: () => void;
   onToggleCompact: () => void;
   onChannelChange?: (channelId: string) => void;
-  onPickerChange?: (pickerLabel: string) => void;
+  onPickerChange?: (pickerLabel: string) => boolean | void;
   onPageTypeChange?: (pageTypeId: PageTypeId) => void;
   onShellAuditToggle?: () => void;
   onShowExpectedToggle?: () => void;
@@ -213,6 +213,7 @@ export function TopSection({
   const [exampleModalOpen, setExampleModalOpen] = useState(false);
   const [dataOpen, setDataOpen] = useState(false);
   const [selectedPickerLabel, setSelectedPickerLabel] = useState(pickerLabel);
+  useEffect(() => { if (!controlAvailability.pickerLabel) setPickerOpen(false); }, [controlAvailability.pickerLabel]);
   const [selectedWorkshopId, setSelectedWorkshopId] = useState(
     channelId || WORKSHOP_OPTIONS[0].id,
   );
@@ -322,6 +323,7 @@ export function TopSection({
         iconSize={20}
         leadingIcon={selectedOption.icon}
         disabled={actionLoading || !controlAvailability.pickerLabel}
+        title={!controlAvailability.pickerLabel ? 'Платформу можно сменить после завершения текущего запроса Apollo.' : undefined}
         onPress={() => {
           setSettingsOpen(false);
           setPageTypeOpen(false);
@@ -335,8 +337,8 @@ export function TopSection({
             {PICKER_OPTIONS[index - 1]?.section !== option.section && <OptionListHeader label={option.section} />}
             <OptionListCell label={option.label} selected={selectedOption.id === option.id} leadingIconSize={20} leadingIcon={option.icon}
               onPress={() => {
+                if (actionLoading || !controlAvailability.pickerLabel || onPickerChange?.(option.label) === false) return;
                 setSelectedPickerLabel(option.label);
-                onPickerChange?.(option.label);
                 setPickerOpen(false);
               }} />
           </React.Fragment>)}

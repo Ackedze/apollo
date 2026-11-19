@@ -64,8 +64,10 @@ test('toast uses a cross, black secondary text in enabled/disabled states and di
   view.render({disabled:true});await wait();assert.equal(w.getComputedStyle(toast.querySelector('[aria-label="Остановить"]')).color,'rgb(24, 24, 27)');close.click();await wait();assert.equal(w.document.querySelector('.apollo-audit-toast'),null);
  }finally{view.close();w.close();}
 });
-test('switching from a Design category to Texts leaves one status and one working Stop',async()=>{
+test('opening Text Audit from Tools leaves one status and one working Stop',async()=>{
  const dom=fixture(),w=dom.window,d=w.document;
+ w.HTMLDialogElement.prototype.showModal=function(){this.open=true;this.querySelector('button')?.focus();};
+ w.HTMLDialogElement.prototype.close=function(){this.open=false;};
  w.eval(js+'\nwindow.QA=QA;');
  const stops=[];
  const controller=w.QA.createDesignCheckController({auditEngine:'v3',onStopAudit:()=>stops.push('texts')});
@@ -89,10 +91,12 @@ test('switching from a Design category to Texts leaves one status and one workin
   assert.ok(designToast.querySelector('[aria-label="Остановить"]'));
 
   controller.setV3AuditState(ready);
-  d.querySelector('button[aria-label="Тексты"]').click();
+  d.querySelector('button[aria-label="Тулзы"]').click();
+  await wait();
+  d.querySelector('button[aria-labelledby="apollo-text-tool-card-title"]').click();
   controller.setV3AuditState({...ready,busy:true,kind:'texts',progress:'Запускаем агента'});
   await wait();
-  assert.equal(Boolean(d.querySelector('.apollo-audit-toast')),false,'Texts uses the main progress indicator');
+  assert.equal(Boolean(d.querySelector('.apollo-audit-toast')),false,'Text Audit uses the main progress indicator');
   assert.equal([...d.querySelectorAll('[role="status"]')].filter(node=>
    !node.closest('[hidden]')&&node.textContent==='Запускаем агента').length,1);
   const visibleStops=[...d.querySelectorAll('[aria-label="Остановить"]')].filter(node=>!node.closest('[hidden]'));
@@ -103,7 +107,7 @@ test('switching from a Design category to Texts leaves one status and one workin
 
   controller.setV3AuditState({...ready,error:'Агент недоступен.'});
   await wait();
-  assert.equal(d.querySelector('.apollo-audit-toast [role="alert"]').textContent,'Агент недоступен.');
+  assert.equal(d.querySelector('dialog[open] .apollo-text-stage-message[role="alert"]').textContent,'Агент недоступен.');
  }finally{view.unmount();controller.destroy();w.close();}
 });
 test('house menu groups libraries and caps inner scrolling at five option rows while keeping outer shadow and keyboard actions',async()=>{
@@ -147,9 +151,9 @@ test('deprecated style shows its swatch by the name and previews replacements by
   assert.deepEqual(calls,['modal']);
  }finally{view.close();w.close();}
 });
-test('overview keeps the existing mascot circle with a closer scoped caption',()=>{
+test('overview keeps the original mascot circle and follows reference title spacing',()=>{
  const d=fixture(),w=d.window;w.document.querySelector('#root').innerHTML='<div class="apollo-overview-total"><div class="apollo-mascot"><div class="apollo-mascot-body"></div></div><p class="apollo-overview-caption">Проверяем</p></div>';
- try{assert.equal(w.getComputedStyle(w.document.querySelector('.apollo-mascot')).height,'160px');assert.equal(w.getComputedStyle(w.document.querySelector('.apollo-mascot-body')).height,'144px');assert.equal(w.getComputedStyle(w.document.querySelector('.apollo-overview-caption')).marginTop,'8px');}finally{w.close();}
+ try{assert.equal(w.getComputedStyle(w.document.querySelector('.apollo-mascot')).height,'166px');assert.equal(w.getComputedStyle(w.document.querySelector('.apollo-mascot-body')).height,'144px');assert.equal(w.getComputedStyle(w.document.querySelector('.apollo-overview-caption')).marginTop,'24px');}finally{w.close();}
 });
 
 test('finding and binding menu show confirmed colors, with text-only ambiguous options and keyboard selection',async()=>{

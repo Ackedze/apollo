@@ -115,7 +115,7 @@ function createDesignCheckController(options = {}) {
     emit({ mode, chat: Object.assign({}, state.chat, { open: false }) }); return true;
   }
   function setView(view) {
-    if (!['audit', 'report', 'texts'].includes(view)) return false;
+    if (!['audit', 'report'].includes(view)) return false;
     emit({ view }); options.onViewChange?.(view); return true;
   }
   function setAudit(audit,extra={}) {

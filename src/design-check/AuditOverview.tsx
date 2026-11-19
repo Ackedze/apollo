@@ -4,16 +4,25 @@ import { auditQuality } from "./result-groups";
 type Category = { id: string; title: string; count: number | null; connected: boolean; entries: any[]; issues: any[]; incomplete: boolean };
 export type ResultGroup = { id: string; title: string; description: string; count: number | null; connected: boolean; categories: Category[] };
 export type ResultGroups = { groups: ResultGroup[]; theme: Category | null; total: number | null; stale: boolean; incomplete: boolean; coverageDetails?: {id:string;title:string;reason:string}[] };
-export function AuditOverview({ progress, summary, busy, checkedScope, onOpen, onBase }: {
-  progress: string; summary: ResultGroups; busy: boolean; checkedScope: string; onOpen: (group: ResultGroup) => void; onBase: () => void;
+export function AuditOverview({ progress, summary, busy, selectedScope, checkedScope, onOpen, onBase }: {
+  progress: string; summary: ResultGroups; busy: boolean; selectedScope?: string; checkedScope: string; onOpen: (group: ResultGroup) => void; onBase: () => void;
 }) {
   const theme = summary.theme, quality = auditQuality(summary, busy);
   const qualityLabel = busy ? 'Проверка выполняется' : summary.stale ? 'Предыдущий результат требует повторной проверки' : quality === 'unchecked' ? 'Проверка ещё не запускалась'
     : quality === 'clean' ? 'В проверенных данных нарушений нет' : quality === 'violation' ? 'Найдены нарушения' : summary.incomplete ? 'Проверка неполная' : 'Есть замечания, требующие проверки';
+  const hasResult = summary.total !== null;
+  const title = busy ? progress || 'Проверяем область…'
+    : hasResult && summary.stale ? 'Нужно повторить проверку'
+    : !hasResult ? 'Давай проверим твой макет'
+    : quality === 'clean' ? 'Всё в порядке'
+    : summary.incomplete && summary.total === 0 ? 'Проверка неполная'
+    : 'Нужно кое-что поправить';
+  const scopeName = hasResult && !busy ? checkedScope || 'Проверенная область' : selectedScope;
   return <section className="apollo-overview" aria-label="Обзор проверки">
     <div className="apollo-overview-total">
       <AuditMascot checking={busy} quality={quality} label={qualityLabel + (summary.total === null || busy ? '' : ` · замечаний: ${summary.total}`)} />
-      <p className="apollo-overview-caption" role={busy ? 'status' : undefined}>{busy ? progress || 'Проверяем область…' : summary.total === null ? 'Выбери область и нажми Проверить' : checkedScope || 'Проверенная область'}</p>
+      <h2 className="apollo-overview-caption" role={busy ? 'status' : undefined}>{title}</h2>
+      {(scopeName || !busy) && <p className="apollo-overview-scope">{scopeName || 'Выбери область и запусти проверку'}</p>}
       {summary.incomplete && !busy && <details className="apollo-overview-coverage">
         <summary>{summary.coverageDetails?.length ? `Не полностью проверены: ${summary.coverageDetails.map(item=>item.title).join(', ')}` : 'Есть непроверенные данные'}</summary>
         <ul>{summary.coverageDetails?.length ? summary.coverageDetails.map(item=><li key={item.id}><strong>{item.title}:</strong> {item.reason}</li>) : <li>Подробности доступны в соответствующих разделах результатов.</li>}</ul>

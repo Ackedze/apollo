@@ -38,7 +38,7 @@ function createComponentTimings(now = () => typeof performance !== 'undefined' &
     };
   }
   return {
-    start() { startedAt = now(); },
+    start() { startedAt ??= now(); },
     finish() { finishedAt = now(); },
     /** @template T @param {string} operation @param {() => Promise<T>} call */
     async measure(operation, call) {

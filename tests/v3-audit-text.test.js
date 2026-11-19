@@ -170,7 +170,7 @@ test('structured comparisons use original V3 display names and never stringify o
  assert.deepEqual(comparisons({details:{property:'variant.SingleIcon',reference:{value:false},actual:{value:true}}}),[{property:'SingleIcon',before:'False',after:'True'}]);
  assert.deepEqual(comparisons({details:{property:'text.style',reference:{displayName:'Action/16–20'},actual:{binding:{name:'Action/11–16'}}}}),[{property:'Типографика',before:'Action/16–20',after:'Action/11–16'}]);
 });
-test('accepted text stays visible during new capture with progress, historical label and disabled focus',async t=>{
+test('new text capture shows the loading state and preserves the accepted result for a failed retry',async t=>{
  const path=require('node:path'),esbuild=require('esbuild'),React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
  const built=esbuild.buildSync({entryPoints:[path.join(__dirname,'../src/v3-audit/TextAudit.tsx')],bundle:true,write:false,platform:'node',format:'cjs',loader:{'.css':'empty','.module.css':'empty'},external:['react','react-dom','react-dom/*']});const module={exports:{}};new Function('require','module','exports',built.outputFiles[0].text)(require,module,module.exports);
  globalThis.document={visibilityState:'visible'};t.after(()=>delete globalThis.document);
@@ -178,10 +178,10 @@ test('accepted text stays visible during new capture with progress, historical l
  const f=setup({request:async()=>ok({success:true,run:{id:'remote',status:'completed',validation}})});
  try{
   f.start('accepted');f.reply('accepted',captured('accepted'));await tick();const verify=f.sent.find(m=>m.type==='v3-audit-verify');f.client.accept({type:'v3-audit-operation-result',schemaVersion:p.BRIDGE,requestId:verify.requestId,runId:'accepted'});await tick();
-  f.start('next');let markup=renderToStaticMarkup(React.createElement(module.exports.TextAudit,{state:f.client.getState(),client:f.client}));
-  assert.match(markup,/Сохранённое замечание/);assert.match(markup,/Подключаем данные проверки/);assert.match(markup,/Показан предыдущий принятый результат/);assert.match(markup.match(/<button[^>]*data-finding-focus[^>]*>/)?.[0]||'',/disabled=""/);
+  f.start('next');let markup=renderToStaticMarkup(React.createElement(module.exports.TextAudit,{state:f.client.getState(),client:f.client,onStart:()=>{},onStop:()=>{},onClose:()=>{},startDisabled:false}));
+  assert.doesNotMatch(markup,/Сохранённое замечание/);assert.match(markup,/Подключаем данные проверки/);assert.equal(f.client.getState().texts.result,validation);
   f.client.accept({type:'v3-audit-error',schemaVersion:p.BRIDGE,requestId:'next',code:'AUDIT_DATA_PACKAGE_MISSING'});
-  markup=renderToStaticMarkup(React.createElement(module.exports.TextAudit,{state:f.client.getState(),client:f.client}));assert.match(markup,/Сохранённое замечание/);assert.match(markup,/предыдущий принятый результат/);assert.equal(f.client.getState().texts.result,validation);
+  markup=renderToStaticMarkup(React.createElement(module.exports.TextAudit,{state:f.client.getState(),client:f.client,onStart:()=>{},onStop:()=>{},onClose:()=>{},startDisabled:false}));assert.match(markup,/Сохранённое замечание/);assert.match(markup,/Повтори проверку текстов перед применением/);assert.equal(f.client.getState().texts.result,validation);
  }finally{f.client.close();}
 });
 test('JSON snapshot separates accepted payload and pending/failed diagnostics without legacy audit fallback',async()=>{
@@ -246,4 +246,133 @@ test('native text collector uses a component-set name and key rather than the re
   assert.deepEqual(scopes,[{nodeId:'card',name:'Card',width:320,overlay:false}]);
   assert.deepEqual(facts.map(f=>[f.node.id,f.scopeNodeId,f.effectiveOpacity]),[['1:1','card',0.5],['1:2','card',0.5]]);
   assert.deepEqual(facts[0].owner,{nodeId:'button',name:'Button I renamed',componentName:'[D] Button',componentKey:'component-key',variantProperties:{}});
+});
+async function acceptedEditableText(extra={},setupCapture=()=>{}){
+ const validation={skillId:'ux-writer-v2',coverageGaps:[],findings:[{nodeId:'text',priority:'warning',category:'Типографика',message:'Пробел',replacement:'Для\u00a0кого',sources:[]}]};
+ Object.assign(validation,extra);
+ let modelCalls=0;const f=setup({request:async()=>{modelCalls++;return ok({success:true,run:{id:'remote',status:'completed',validation}});}});
+ const capture=captured('editable');capture.mutationAvailable=true;capture.textReport.facts.scopes=[];capture.textReport.facts.texts[0].text='Для кого';
+ setupCapture(capture);f.start('editable');f.reply('editable',capture);await tick();
+ const verify=f.sent.find(m=>m.type==='v3-audit-verify');if(verify)f.client.accept({type:'v3-audit-operation-result',schemaVersion:p.BRIDGE,requestId:verify.requestId,runId:'editable'});await tick();
+ return Object.assign(f,{capture,validation,modelCalls:()=>modelCalls});
+}
+test('one common run gates edits until completion and verification, then a model failure offers retry without old cards',async t=>{
+ const path=require('node:path'),esbuild=require('esbuild'),React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
+ const built=esbuild.buildSync({entryPoints:[path.join(__dirname,'../src/v3-audit/TextAudit.tsx')],bundle:true,write:false,platform:'node',format:'cjs',loader:{'.css':'empty','.module.css':'empty'},external:['react','react-dom','react-dom/*']});
+ const mod={exports:{}};new Function('require','module','exports',built.outputFiles[0].text)(require,mod,mod.exports);
+ globalThis.document={visibilityState:'visible'};t.after(()=>delete globalThis.document);
+ const validation={skillId:'ux-writer-v2',coverageGaps:[],findings:[{nodeId:'text',priority:'warning',category:'Типографика',message:'Готовая механическая правка',replacement:'Для\u00a0кого',sources:[]}]};
+ let resolvePoll,posts=0,mode='pending';
+ const f=setup({request:async(url,options)=>{
+  if(options?.method==='POST'){
+   posts++;
+   return ok({success:true,run:{id:'remote-'+posts,status:mode==='failure'?'failed':mode==='pending'?'running':'completed',
+    error:mode==='failure'?{code:'OPENROUTER_UNAVAILABLE'}:null,validation}});
+  }
+  return new Promise(resolve=>{resolvePoll=resolve;});
+ }});
+ const render=()=>renderToStaticMarkup(React.createElement(mod.exports.TextAudit,{state:f.client.getState(),client:f.client,onStart:()=>{},onStop:()=>{},onClose:()=>{},startDisabled:false}));
+ const start=id=>{const capture=captured(id);capture.mutationAvailable=true;capture.textReport.facts.scopes=[];capture.textReport.facts.texts[0].text='Для кого';f.start(id);f.reply(id,capture);};
+ const verify=async id=>{const request=f.sent.find(m=>m.type==='v3-audit-verify'&&m.runId===id);assert(request);f.client.accept({type:'v3-audit-operation-result',schemaVersion:p.BRIDGE,requestId:request.requestId,runId:id});await tick();};
+ try{
+  start('first');await tick();await new Promise(resolve=>setTimeout(resolve,5));
+  assert.equal(f.client.getState().texts.result,null);assert.doesNotMatch(render(),/Готовая механическая правка|Применить всё/);
+  assert.equal(await f.client.replaceTexts(),false);assert.equal(f.client.editText('text','Преждевременно'),false);
+  resolvePoll(ok({success:true,run:{id:'remote-1',status:'completed',validation}}));await tick();
+  assert.equal(f.client.getState().busy,true);assert.equal(await f.client.replaceTexts(),false);
+  await verify('first');assert.match(render(),/Готовая механическая правка/);assert(f.client.editText('text','Для\u00a0кого'));
+  assert.equal(posts,1);assert(!f.sent.some(m=>m.type==='v3-audit-text-replace'),'proposals must not mutate Figma automatically');
+  mode='failure';start('failure');await tick();
+  assert.match(f.client.getState().error,/Модель не справилась/);assert.match(render(),/Повторить анализ/);
+  assert.doesNotMatch(render(),/Готовая механическая правка|Применить всё|Новая проверка/);
+  assert.equal(await f.client.replaceTexts(),false);assert.equal(f.client.editText('text','После сбоя'),false);
+  assert.equal(f.client.snapshot('texts').lastAttempt.error,'OPENROUTER_UNAVAILABLE');assert.equal(f.client.snapshot('texts').lastAttempt.modelFailed,true);
+  mode='success';start('retry');await tick();assert.equal(await f.client.replaceTexts(),false);await verify('retry');
+  assert.equal(posts,3);assert.equal(f.client.getState().texts.stale,false);assert.match(render(),/Готовая механическая правка/);assert.doesNotMatch(render(),/Повторить анализ|Модель не справилась/);
+ }finally{f.client.close();}
+});
+test('text edits are retained as drafts and apply through the original native target without a paid recheck',async()=>{
+ const f=await acceptedEditableText();try{
+  assert(f.client.editText('text','Для\u202fкого – 👩🏽‍💻'));
+  const applying=f.client.replaceTexts(['text']),request=f.sent.find(m=>m.type==='v3-audit-text-replace');assert(request);assert(p.command(request));
+  assert.equal(request.runId,'editable');assert.deepEqual(request.replacements,[{focusActionId:'v3-focus-0',before:'Для кого',after:'Для\u202fкого – 👩🏽‍💻'}]);
+  assert.equal(f.client.editText('text','late edit'),false);assert.equal(await f.client.replaceTexts(),false);
+  f.client.accept({type:'v3-audit-operation-result',schemaVersion:p.BRIDGE,requestId:request.requestId,runId:'editable',stale:true,mutationStarted:true,textReplacements:[{nodeId:'text',text:request.replacements[0].after}],message:'Заменён текст'});
+  assert.equal(await applying,true);assert.deepEqual(f.client.getState().texts.applied,{text:request.replacements[0].after});assert.equal(f.client.getState().texts.stale,true);assert.equal(f.client.getState().texts.result,f.validation);assert.equal(f.capture.textReport.facts.texts[0].text,'Для кого');assert.equal(f.modelCalls(),1);assert.equal(f.sent.filter(m=>m.type==='v3-audit-run').length,1);
+  assert.equal(await f.client.replaceTexts(),false);
+ }finally{f.client.close();}
+});
+test('unsafe edited values and unretained layers never reach the native replacement bridge',async()=>{
+ const f=await acceptedEditableText();try{
+  assert.equal(f.client.editText('invented','text'),false);f.client.editText('text','bad\u0000');assert.equal(await f.client.replaceTexts(),false);
+  f.client.editText('text','Для кого');assert.equal(await f.client.replaceTexts(),false);
+  assert.equal(await f.client.replaceTexts(['invented']),false);assert(!f.sent.some(m=>m.type==='v3-audit-text-replace'));
+ }finally{f.client.close();}
+});
+test('native partial text failure makes only the text result stale and keeps the completed count',async()=>{
+ const f=await acceptedEditableText();try{
+  const applying=f.client.replaceTexts(),request=f.sent.find(m=>m.type==='v3-audit-text-replace');
+  f.client.accept({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:request.requestId,runId:'editable',code:'AUDIT_ACTION_FAILED',stale:true,mutationStarted:true,textReplacements:[{nodeId:'text',text:'Для\u00a0кого'}]});
+  assert.equal(await applying,false);assert.deepEqual(f.client.getState().texts.applied,{text:'Для\u00a0кого'});assert.equal(f.client.getState().texts.stale,true);assert.equal(f.client.getState().stale,false);assert.match(f.client.getState().operation.message,/Заменено текстовых слоёв: 1/);assert.equal(f.modelCalls(),1);
+ }finally{f.client.close();}
+});
+
+test('source refusal before a text write disables the accepted result until a new review',async()=>{
+ const f=await acceptedEditableText();try{
+  const applying=f.client.replaceTexts(),request=f.sent.find(m=>m.type==='v3-audit-text-replace');
+  f.client.accept({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:request.requestId,runId:'editable',code:'AUDIT_ACTION_SOURCE_CHANGED',mutationStarted:false});
+  assert.equal(await applying,false);assert.equal(f.client.getState().texts.stale,true);assert.equal(await f.client.replaceTexts(),false);assert.equal(f.modelCalls(),1);
+ }finally{f.client.close();}
+});
+
+test('unverified layer metadata is optional, bound to captured targets and normalized',async()=>{
+ const f=await acceptedEditableText({unverifiedTexts:[{nodeId:'text',reason:' Заглушка '},{nodeId:'text',reason:'Заглушка'},{nodeId:'text',reason:'Перекрытие'}]});
+ try{assert.deepEqual(f.client.getState().texts.result.unverifiedTexts,[{nodeId:'text',reason:'Заглушка\nПерекрытие'}]);}finally{f.client.close();}
+});
+test('unverified layer metadata rejects foreign IDs and malformed or empty reasons',async()=>{
+ for(const unverifiedTexts of [null,{},[{nodeId:'foreign',reason:'Пропуск'}],[{nodeId:'text',reason:' '}],[{nodeId:'text',reason:2}]]){
+  const f=await acceptedEditableText({unverifiedTexts});try{assert.equal(f.client.getState().texts.result,null);assert.match(f.client.getState().error,/привязать/);}finally{f.client.close();}
+ }
+});
+test('applied confirmation ignores native rows without an exact requested target and text',async()=>{
+ const f=await acceptedEditableText();try{
+  const applying=f.client.replaceTexts(),request=f.sent.find(m=>m.type==='v3-audit-text-replace');
+  f.client.accept({type:'v3-audit-operation-result',schemaVersion:p.BRIDGE,requestId:request.requestId,runId:'editable',stale:true,textReplacements:[{nodeId:'foreign',text:'Для\u00a0кого'},{nodeId:'text',text:'different'}]});
+  assert.equal(await applying,true);assert.deepEqual(f.client.getState().texts.applied,{});
+ }finally{f.client.close();}
+});
+
+test('partial batch confirms completed layers only and leaves the second card unapplied',async()=>{
+ const f=await acceptedEditableText({findings:['text','second'].map(nodeId=>({nodeId,priority:'warning',replacement:'Для\u00a0кого',sources:[]}))},capture=>{
+  capture.textTargets.push({nodeId:'second',focusActionId:'v3-focus-1'});
+  capture.textReport.facts.texts.push({node:{id:'second'},text:'Для кого'});
+ });try{
+  const applying=f.client.replaceTexts(),request=f.sent.find(m=>m.type==='v3-audit-text-replace');assert.equal(request.replacements.length,2);
+  f.client.accept({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:request.requestId,runId:'editable',code:'AUDIT_ACTION_FAILED',stale:true,mutationStarted:true,failedTextNodeId:'second',textReplacements:[{nodeId:'text',text:'Для\u00a0кого'}]});
+  assert.equal(await applying,false);assert.deepEqual(f.client.getState().texts.applied,{text:'Для\u00a0кого'});
+  assert.equal(f.client.getState().texts.stale,true);assert.equal(f.modelCalls(),1);
+  const groups=require('../src/v3-audit/text-review-model').textReviewGroups(f.client.getState().texts.result,f.client.getState().texts.applied);assert.deepEqual(groups.errors.map(row=>row.nodeId),['second']);
+ }finally{f.client.close();}
+});
+
+test('failed focus keeps the existing stale refusal for the text run',async()=>{
+ const f=await acceptedEditableText();try{
+  const focusing=f.client.focus('editable','v3-focus-0'),request=f.sent.find(m=>m.type==='v3-audit-focus');
+  f.client.accept({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:request.requestId,runId:'editable',code:'AUDIT_ACTION_FAILED',stale:true});
+  assert.equal(await focusing,false);assert.equal(f.client.getState().texts.stale,true);
+ }finally{f.client.close();}
+});
+
+test('confirmed sequential replacements remove only completed rows and keep remaining drafts and targets',async()=>{
+ const f=await acceptedEditableText({findings:['text','second'].map(nodeId=>({nodeId,priority:'warning',replacement:'Для\u00a0кого',sources:[]}))},capture=>{
+  capture.textTargets.push({nodeId:'second',focusActionId:'v3-focus-1'});capture.textReport.facts.texts.push({node:{id:'second'},text:'Для кого'});
+ });try{
+  const {textReviewGroups,textReplacements}=require('../src/v3-audit/text-review-model');f.client.editText('second','Для\u202fкого');
+  for(const [index,nodeId]of ['text','second'].entries()){
+   const applying=f.client.replaceTexts([nodeId]),request=f.sent.filter(m=>m.type==='v3-audit-text-replace').at(-1);assert.equal(request.replacements.length,1);
+   f.client.accept({type:'v3-audit-operation-result',schemaVersion:p.BRIDGE,requestId:request.requestId,runId:'editable',stale:false,textReplacements:[{nodeId,text:request.replacements[0].after}]});assert(await applying);
+   const state=f.client.getState().texts;assert.equal(state.stale,false);assert.equal(textReviewGroups(state.result,state.applied).errors.length,1-index);assert.equal(textReplacements(state).length,1-index);
+  }
+  assert.equal(f.client.getState().texts.result,f.validation);assert.equal(f.capture.textReport.facts.texts[0].text,'Для кого');assert.equal(f.modelCalls(),1);
+ }finally{f.client.close();}
 });

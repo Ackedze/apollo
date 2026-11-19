@@ -6,7 +6,7 @@ const {buildV3Groups}=require('../v3-audit/ui-model');
 import { DocumentAuditCards, documentCheckForTab } from "./DocumentAudit";
 import React, { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
-import { flushSync } from 'react-dom';
+import { createPortal, flushSync } from 'react-dom';
 import { TopSection } from "./v3/ui-app/components/TopSection";
 import { tabDefinitions } from "./v3/config/tabs";
 import { createDesignCheckController } from "./controller";
@@ -26,6 +26,7 @@ const { createProgressBarClient } = require('./progressbar-client');
 declare const __APOLLO_PROGRESSBAR_PILOT__: boolean;
 declare const __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: string;
 const skillIcons = require("../skills/layer-names/assets");
+const textToolTitle = 'Проверка текстов';
 
 type Controller = ReturnType<typeof createDesignCheckController>;
 type DataOptions = { v3Client?:any; figmaAuditClient?: any; skillsClient?: any; reglyphClient?: any; statisticsClient?: any; auditStatisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
@@ -139,7 +140,21 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   }, [progressBarClient, controller]);
   const state = useSyncExternalStore(controller.subscribe, controller.getState), settings = state.settings;
   const launcher = useRef<HTMLButtonElement>(null);
-  const activeScreen = state.chat.open ? 'chat' : state.mode === 'skills' ? 'skills' : state.mode === 'generation' ? 'generation' : state.view === 'texts' ? 'texts' : 'check';
+  const [textToolOpen, setTextToolOpen] = useState(false);
+  const textToolCard = useRef<HTMLButtonElement>(null);
+  const textToolDialog = useRef<HTMLDialogElement>(null);
+  const activeScreen = state.chat.open ? 'chat' : state.mode;
+  const showTextTool = activeScreen === 'skills' && textToolOpen;
+  useLayoutEffect(() => {
+    if (!showTextTool) return;
+    const dialog = textToolDialog.current, opener = textToolCard.current;
+    dialog?.showModal();
+    return () => {
+      dialog?.close();
+      opener?.focus({preventScroll:true});
+    };
+  }, [showTextTool]);
+  const showAudit = activeScreen === 'check' || showTextTool;
   const documentAction = state.documentPageAvailable && controller.hasDocumentAuditPort();
   const actionBusy = state.documentAction.busy || state.auditBusy || ['loading','cancelling'].includes(state.documentAudit.status);
   const [settingsHost, setSettingsHost] = useState<HTMLDivElement | null>(null);
@@ -149,7 +164,10 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   const pendingScope = useRef<{ name: string; audit: unknown; native: unknown; v3?:string|null } | null>(null);
   const [categoryId, setCategoryId] = useState<string | null>(null);
   function selectedScopeName() {
-    const name = document.getElementById('selection')?.textContent?.trim() || '';
+    const selection = document.getElementById('selection');
+    if (selection?.dataset.validSelection === 'false') return '';
+    const name = selection?.textContent?.trim() || '';
+    if (selection?.dataset.validSelection === 'true') return name || 'Выбранная область';
     return name === 'Выделите область или слои с компонентами' ? '' : name;
   }
   useEffect(() => {
@@ -160,7 +178,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
     };
     updateScope();
     const observer = new MutationObserver(updateScope);
-    observer.observe(selection, { childList: true, characterData: true, subtree: true });
+    observer.observe(selection, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['data-valid-selection'] });
     return () => observer.disconnect();
   }, [controller]);
   useEffect(() => { void controller.refreshProxyStatus(); }, [controller]);
@@ -210,51 +228,75 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   const toastMessage=toastError||state.documentAction.message||state.auditNotice||(designGroupOpen&&actionBusy?progress:designGroupOpen&&summary.stale?`Показаны результаты проверки ${acceptedScope}`:'');
   const toastKey=(v3?.runId||'')+':'+(v3?.attempts?.components?.requestId||'')+':'+toastMessage;
   const failureHistory=<>{failures.length>0&&<details className="design-check-note"><summary>Диагностика проверки · {failures.length}</summary><p>История сбоев чтения и перепроверки, включая предыдущие попытки. Итоговое покрытие указано в результатах.</p><ul>{failures.map(f=><li key={f.errorId}>{f.code} · {f.stage} · {f.requestId}{f.read&&<> · {f.read.operation} · {readReasonLabels[f.read.sourceReason]||'причина не определена'}{f.read.sourceCode&&<> ({f.read.sourceCode})</>}{(f.resourceId||f.nodeId)&&<> · <span title={f.resourceId||f.nodeId}>{(f.resourceId||f.nodeId).slice(0,40)}{(f.resourceId||f.nodeId).length>40?'…':''}</span></>}</>}</li>)}</ul></details>}</>;
-  return <div className="shell design-check-shell apollo-new" style={v3&&['check','texts'].includes(activeScreen)?{width:'min(800px, 100vw)'}:undefined}>
+  const toast = toastMessage && <AuditToast inline={showTextTool} key={toastKey} message={toastMessage} error={!!toastError} persistent={toastStop&&!toastError}>
+    {toastStop && <Button label="Остановить" type="secondary" size="compact" disabled={v3.stopping} onPress={()=>dataOptions.v3Client.stop()}/>}
+  </AuditToast>;
+  const compatibility = state.chat.proxy.compatibility;
+  const compatibilityNotice = activeScreen !== 'check' && compatibility && compatibility.state !== 'compatible' &&
+    <section className="apollo-compatibility design-check-note" role="status" aria-label="Совместимость Apollo">
+      <p>{compatibility.message}</p>
+      <button type="button" onClick={() => { void controller.refreshProxyStatus(); }}>Проверить снова</button>
+    </section>;
+  const auditFooter = <footer className="apollo-audit-footer" aria-label="Запуск проверки" hidden={showTextTool || !showAudit || activeScreen==='check'&&['styles','components','base'].includes(groupId||'')}>
+      <TopSection title="Apollo" settingsHost={settingsHost} readContractData={dataOptions.readContractData} proxy={state.chat.proxy} proxyError={proxyError} settingsMessage={state.preferenceError || state.settingsNotice} onProxyRefresh={controller.refreshProxyStatus} auditControlsVisible={showAudit} overlayScope={`${state.mode}:${state.chat.open}:${showTextTool}:${actionBusy}`} pageTypeId={settings.pageTypeId} channelId={settings.channelId} pickerLabel={settings.pickerLabel}
+      actionLabel={ state.documentAction.status==='refreshing' ? 'Перепроверяем' : state.documentAction.busy ? 'Выполняем' : state.auditStopping ? 'Останавливаем' : actionBusy ? 'Остановить' : 'Проверить'} actionDisabled={showTextTool&&(!v3||!scope) || state.documentAction.busy || state.auditStopping || !actionBusy&&(!state.auditReady || activeScreen==='check'&&!scope)}
+      actionLoading={activeScreen === 'check' && state.documentAction.busy} actionType={activeScreen === 'check' && state.documentAction.busy ? 'secondary' : 'primary'} compact={false}
+      shellAuditEnabled={settings.shellAuditEnabled} connectCatalogs={v3?true:settings.connectCatalogs} showExpectedCustomizations={settings.showExpectedCustomizations}
+      hideCustomizations={settings.hideCustomizations} experimentalContractV2Enabled={settings.experimentalContractV2Enabled}
+      controlAvailability={{ pageTypeId: !actionBusy, channelId: !actionBusy, pickerLabel: !actionBusy, compact: false,
+        showExpectedCustomizations: capabilities.showExpectedCustomizations === true, hideCustomizations: true, shellAuditEnabled: capabilities.shellAuditEnabled === true, connectCatalogs: !v3&&!actionBusy,
+        experimentalContractV2Enabled: capabilities.experimentalContractV2Enabled === true, captureExample: controller.hasCapturePort() }}
+      onActionPress={() => {
+        if (!showAudit) return;
+        if (actionBusy) { controller.stopAudit(); return; }
+        if (showTextTool) { if (scope) void controller.startAudit('texts'); return; }
+        pendingScope.current = { name: selectedScopeName(), audit: state.audit, native: state.documentAudit.result, v3:state.v3Audit?.runId };
+        void (v3 ? controller.startAudit('components') : documentAction ? controller.startDocumentAudit() : controller.startAudit());
+      }} onToggleCompact={() => apply('compact', !settings.compact)}
+      onPageTypeChange={value => apply('pageTypeId', value)} onChannelChange={value => apply('channelId', value)}
+      onPickerChange={value => apply('pickerLabel', value)} onShellAuditToggle={() => apply('shellAuditEnabled', !settings.shellAuditEnabled)}
+      onConnectCatalogsToggle={() => apply('connectCatalogs', !settings.connectCatalogs)}
+      onShowExpectedToggle={() => apply('showExpectedCustomizations', !settings.showExpectedCustomizations)}
+      onHideCustomizationsToggle={() => apply('hideCustomizations', !settings.hideCustomizations)}
+      onExperimentalContractV2Toggle={() => apply('experimentalContractV2Enabled', !settings.experimentalContractV2Enabled)}
+      onExampleCapture={controller.captureExample} />
+  </footer>;
+  return <div className="shell design-check-shell apollo-new" style={v3 && showAudit ? {width:'min(800px, 100vw)'} : undefined}>
     <header className="apollo-topbar">
       <img className="apollo-logo" src={assets.logo} alt="Apollo" />
       <nav className="apollo-navigation" aria-label="Разделы Apollo">
         <button type="button" aria-label="Проверка" title="Дизайн" aria-pressed={activeScreen === 'check'} onClick={showDesign}>
           <span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.design})`, WebkitMaskImage: `url(${assets.design})`}} /><span className="apollo-nav-label" aria-hidden="true">Дизайн</span>
         </button>
-        <button type="button" aria-label="Тексты" title="Тексты" aria-pressed={activeScreen === 'texts'}
-          onClick={() => { controller.setMode('check'); controller.setView('texts'); }}><span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.texts})`, WebkitMaskImage: `url(${assets.texts})`}} /><span className="apollo-nav-label" aria-hidden="true">Тексты</span></button>
         <button type="button" aria-label="Генерация" title="Генерация" aria-pressed={activeScreen === 'generation'}
           onClick={() => controller.setMode('generation')}><span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.generation})`, WebkitMaskImage: `url(${assets.generation})`}} /><span className="apollo-nav-label" aria-hidden="true">Генерация</span></button>
         <button ref={launcher} type="button" className="apollo-chat-launcher" aria-label="Открыть чат с Apollo" title="Спросить Apollo" aria-pressed={state.chat.open} aria-controls="apollo-chat-screen"
           onClick={() => controller.openChat()}><span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.chat})`, WebkitMaskImage: `url(${assets.chat})`}} /><span className="apollo-nav-label" aria-hidden="true">Спросить</span>
           {state.chat.unreadCount > 0 && <span className="design-check-chat-unread" role="status" aria-label={`Непрочитанных ответов: ${state.chat.unreadCount}`}>{state.chat.unreadCount > 9 ? '9+' : state.chat.unreadCount}</span>}
         </button>
-        <button type="button" aria-label="Тулзы" title="Тулзы" aria-pressed={activeScreen === 'skills'} onClick={() => controller.setMode('skills')}><span className="apollo-skill-nav-icon" aria-hidden="true"><span className="apollo-nav-icon" style={{maskImage:`url(${skillIcons['magic-wand']})`,WebkitMaskImage:`url(${skillIcons['magic-wand']})`}} /></span><span className="apollo-nav-label" aria-hidden="true">Тулзы</span></button>
+        <button type="button" aria-label="Тулзы" title="Тулзы" aria-pressed={activeScreen === 'skills'} onClick={() => { setTextToolOpen(false); controller.setMode('skills'); }}><span className="apollo-skill-nav-icon" aria-hidden="true"><span className="apollo-nav-icon" style={{maskImage:`url(${skillIcons['magic-wand']})`,WebkitMaskImage:`url(${skillIcons['magic-wand']})`}} /></span><span className="apollo-nav-label" aria-hidden="true">Тулзы</span></button>
       </nav>
       <div ref={setSettingsHost} className="apollo-settings-host" />
     </header>
-    <div className={`design-check-background${activeScreen !== 'check' && state.chat.proxy.compatibility && state.chat.proxy.compatibility.state !== 'compatible' ? ' has-compatibility-notice' : ''}`}>
-        {activeScreen !== 'check' && state.chat.proxy.compatibility && state.chat.proxy.compatibility.state !== 'compatible' &&
-          <section className="apollo-compatibility design-check-note" role="status" aria-label="Совместимость Apollo">
-            <p>{state.chat.proxy.compatibility.message}</p>
-            <button type="button" onClick={() => { void controller.refreshProxyStatus(); }}>Проверить снова</button>
-          </section>}
+    <div className={`design-check-background${!showTextTool && compatibilityNotice ? ' has-compatibility-notice' : ''}`}>
+      {!showTextTool && compatibilityNotice}
       <div className="design-check-content">
         <h1 className="design-check-sr-only">Apollo</h1>
-        {['check','texts'].includes(activeScreen)&&toastMessage&&<AuditToast key={toastKey} message={toastMessage} error={!!toastError} persistent={toastStop&&!toastError}>
-          {toastStop&&<Button label="Остановить" type="secondary" size="compact" disabled={v3.stopping} onPress={()=>dataOptions.v3Client.stop()}/>}
-        </AuditToast>}
+        {activeScreen === 'check' && toast}
         <section className="design-check-check-screen" hidden={activeScreen !== 'check'} aria-label="Проверка макета">
-          <div className={`apollo-contextbar${!groupId ? ' is-overview' : ''}`} hidden={!groupId && !scope}>
-            {!groupId ? <span className="apollo-scope" title={scope}>{scope}</span> : <>
-              <button className="apollo-back" type="button" onClick={() => { setGroupId(null); setCategoryId(null); controller.setView('audit'); }} aria-label="Вернуться к обзору проверки">
-                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="m10 5-7 7 7 7M3 12h18" /></svg>
-                {groupId === 'base' ? 'База' : selectedGroup?.title}
-              </button>
-              <nav className="apollo-categories" aria-label="Категории проверки">{categoryButtons(primaryCategories)}</nav>
-            </>}
-          </div>
-          {!groupId ? <>
-            <AuditOverview progress={progress} summary={summary} busy={actionBusy} checkedScope={v3?acceptedScope:checkedScope} onOpen={openGroup}
-              onBase={() => { setGroupId('base'); setCategoryId(null); controller.setView('audit'); controller.selectTab('themization'); }} />
-          </> : <main className="apollo-results" aria-label="Результаты проверки">
-            {state.view === 'audit' && v3 && <V3Findings category={categories.find((category:any)=>category.id===activeCategoryId)} client={dataOptions.v3Client} runId={v3.runId} stale={v3.stale} busy={actionBusy} mutationAvailable={v3.result?.mutationAvailable===true}/>}
+          {groupId && <div className="apollo-contextbar">
+            <button className="apollo-back" type="button" onClick={() => { setGroupId(null); setCategoryId(null); controller.setView('audit'); }} aria-label="Вернуться к обзору проверки">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="m10 5-7 7 7 7M3 12h18" /></svg>
+              {groupId === 'base' ? 'База' : selectedGroup?.title}
+            </button>
+            <nav className="apollo-categories" aria-label="Категории проверки">{categoryButtons(primaryCategories)}</nav>
+          </div>}
+          {!groupId ? <AuditOverview progress={progress} summary={summary} busy={actionBusy}
+            selectedScope={actionBusy ? pendingScope.current?.name ?? scope : scope}
+            checkedScope={v3 ? acceptedScope : checkedScope} onOpen={openGroup}
+            onBase={() => { setGroupId('base'); setCategoryId(null); controller.setView('audit'); controller.selectTab('themization'); }} />
+          : <main className="apollo-results" aria-label="Результаты проверки">
+            {state.view === 'audit' && v3 && <V3Findings category={categories.find((category:any)=>category.id===activeCategoryId)} client={dataOptions.v3Client} runId={v3.runId} stale={v3.stale} staleActionIds={v3.staleActionIds} busy={actionBusy} mutationAvailable={v3.result?.mutationAvailable===true}/>}
             {state.view === 'audit' && !v3 && <>
               <h2 className="design-check-sr-only">{groupId === 'base' ? 'База' : activeTab?.title || 'Результаты'}</h2>
               {!nativeCheck && (!data || data.status === 'not-connected') && <p className="placeholder">Проверка этой категории ещё не подключена.</p>}
@@ -274,43 +316,60 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           <details className="apollo-sources" hidden={!groupId || activeScreen !== 'check' || !!v3}><summary>Источники проверки</summary><ExistingSlot node={slots.auditDiagnostics} /><ExistingSlot node={slots.setup} /></details>
 
         </section>
-        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Тулзы">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient}>{dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient}/>} {dataOptions.figmaAuditClient && <FigmaAuditSkill client={dataOptions.figmaAuditClient}/>}</SkillsPanel>}</section>
-        <section className="design-check-view-pane" hidden={activeScreen !== 'texts'} aria-label="Тексты">
-          {v3 ? <><TextAudit state={v3} client={dataOptions.v3Client}/></> : <><ExistingSlot node={slots.texts} />{!slots.texts && <p className="placeholder">Проверка текстов ещё не подключена.</p>}</>}
+        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Тулзы">
+          <SkillsPanel client={dataOptions.skillsClient} scopeName={scope}>
+            {dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient} />}
+            {dataOptions.figmaAuditClient && <FigmaAuditSkill client={dataOptions.figmaAuditClient} />}
+            <button ref={textToolCard} className="apollo-skill-card" type="button" aria-labelledby="apollo-text-tool-card-title"
+              aria-describedby="apollo-text-tool-agent apollo-text-tool-description" aria-haspopup="dialog"
+              onClick={() => setTextToolOpen(true)}>
+              <span className="apollo-skill-copy">
+                <span className="apollo-skill-title">
+                  <strong id="apollo-text-tool-card-title">{textToolTitle}</strong>
+                  <span id="apollo-text-tool-agent" className="apollo-skill-agent-label">Агент</span>
+                </span>
+                <span id="apollo-text-tool-description">Проверит орфографию, типографику и соответствие текстов правилам Альфа-Бизнеса</span>
+              </span>
+              <img className="apollo-skill-chevron" src={skillIcons['chevron-right']} alt="" />
+            </button>
+          </SkillsPanel>
+          {v3 && <details className="apollo-sources apollo-text-diagnostics">
+            <summary>Диагностика проверки текстов</summary>
+            {failureHistory}
+            {v3.texts?.result?.coverageGaps?.length>0&&<ul>{[...new Set<string>(v3.texts.result.coverageGaps)].map(gap=><li key={gap}>{gap}</li>)}</ul>}
+            <div className="apollo-text-tool-downloads">
+              <Button label="Скачать отчёт" type="secondary" size="compact" onPress={()=>dataOptions.v3Client.download('texts')}/>
+              <Button label="Исходный JSON" type="secondary" size="compact" disabled={!v3.agentInput?.available||v3.agentInput?.loading}
+                loading={v3.agentInput?.loading} onPress={()=>void dataOptions.v3Client.downloadAgentInput()}/>
+            </div>
+            {v3.agentInput?.error&&<div role="status">{v3.agentInput.error}</div>}
+          </details>}
         </section>
         <section className="design-check-generation-screen" hidden={activeScreen !== 'generation'} aria-label="Генерация интерфейса">
           <div className="design-check-generation"><ExistingSlot node={slots.generation} expand />
             {!slots.generation && <p className="placeholder">Генерация недоступна в этом режиме просмотра.</p>}
           </div>
         </section>
-          {v3&&['check','texts'].includes(activeScreen)&&<details className="apollo-sources">
-            <summary>Диагностика проверки</summary>
-            {failureHistory}
-            {activeScreen==='texts'?<>
-              <div style={{display:'flex',gap:8}}>
-                <Button label="Скачать отчёт" type="secondary" size="compact" onPress={()=>dataOptions.v3Client.download('texts')}/>
-                <Button label="Исходный JSON" type="secondary" size="compact" disabled={!v3.agentInput?.available||v3.agentInput?.loading}
-                  loading={v3.agentInput?.loading} onPress={()=>void dataOptions.v3Client.downloadAgentInput()}/>
-              </div>
-              {v3.agentInput?.error&&<div role="status">{v3.agentInput.error}</div>}
-            </>:<Button label="Скачать JSON" type="secondary" size="compact" onPress={()=>dataOptions.v3Client.download('components')}/>}
-          </details>}
-          <footer className={`apollo-audit-footer${activeScreen === 'texts' ? ' apollo-texts-footer' : ''}`} aria-label="Запуск проверки" hidden={activeScreen !== 'check' && activeScreen !== 'texts' || activeScreen==='check'&&['styles','components','base'].includes(groupId||'')}>          <TopSection title="Apollo" settingsHost={settingsHost} readContractData={dataOptions.readContractData} proxy={state.chat.proxy} proxyError={proxyError} settingsMessage={state.preferenceError || state.settingsNotice} onProxyRefresh={controller.refreshProxyStatus} auditControlsVisible={activeScreen === 'check' || activeScreen === 'texts'} overlayScope={`${state.mode}:${state.chat.open}:${actionBusy}`} pageTypeId={settings.pageTypeId} channelId={settings.channelId} pickerLabel={settings.pickerLabel}
-            actionLabel={ state.documentAction.status==='refreshing' ? 'Перепроверяем' : state.documentAction.busy ? 'Выполняем' : state.auditStopping ? 'Останавливаем' : actionBusy ? 'Остановить' : 'Проверить'} actionDisabled={activeScreen === 'texts'&&!v3 || state.documentAction.busy || state.auditStopping || !actionBusy&&!state.auditReady}
-            actionLoading={activeScreen === 'check' && state.documentAction.busy} actionType={activeScreen === 'check' && state.documentAction.busy ? 'secondary' : 'primary'} compact={false}
-            shellAuditEnabled={settings.shellAuditEnabled} connectCatalogs={v3?true:settings.connectCatalogs} showExpectedCustomizations={settings.showExpectedCustomizations}
-            hideCustomizations={settings.hideCustomizations} experimentalContractV2Enabled={settings.experimentalContractV2Enabled}
-            controlAvailability={{ pageTypeId: !actionBusy, channelId: !actionBusy, pickerLabel: !actionBusy, compact: false,
-              showExpectedCustomizations: capabilities.showExpectedCustomizations === true, hideCustomizations: true, shellAuditEnabled: capabilities.shellAuditEnabled === true, connectCatalogs: !v3&&!actionBusy,
-              experimentalContractV2Enabled: capabilities.experimentalContractV2Enabled === true, captureExample: controller.hasCapturePort() }}
-            onActionPress={() => { if (activeScreen !== 'check'&&activeScreen!=='texts') return;if(actionBusy){controller.stopAudit();return;} pendingScope.current = { name: selectedScopeName(), audit: state.audit, native: state.documentAudit.result, v3:state.v3Audit?.runId }; void (v3 ? controller.startAudit(activeScreen==='texts'?'texts':'components') : documentAction ? controller.startDocumentAudit() : controller.startAudit()); }} onToggleCompact={() => apply('compact', !settings.compact)}
-            onPageTypeChange={value => apply('pageTypeId', value)} onChannelChange={value => apply('channelId', value)}
-            onPickerChange={value => apply('pickerLabel', value)} onShellAuditToggle={() => apply('shellAuditEnabled', !settings.shellAuditEnabled)}
-            onConnectCatalogsToggle={() => apply('connectCatalogs', !settings.connectCatalogs)}
-            onShowExpectedToggle={() => apply('showExpectedCustomizations', !settings.showExpectedCustomizations)}
-            onHideCustomizationsToggle={() => apply('hideCustomizations', !settings.hideCustomizations)}
-            onExperimentalContractV2Toggle={() => apply('experimentalContractV2Enabled', !settings.experimentalContractV2Enabled)}
-            onExampleCapture={controller.captureExample} /></footer>
+        {v3 && activeScreen === 'check' && <details className="apollo-sources">
+          <summary>Диагностика проверки</summary>
+          {failureHistory}
+          <Button label="Скачать JSON" type="secondary" size="compact" onPress={()=>dataOptions.v3Client.download('components')}/>
+        </details>}
+        {auditFooter}
+        {showTextTool && createPortal(<dialog ref={textToolDialog} className="apollo-skill-dialog apollo-text-tool apollo-new"
+          aria-labelledby="apollo-text-tool-title"
+          onCancel={event => {
+            if (event.target !== event.currentTarget) return;
+            event.preventDefault();
+            setTextToolOpen(false);
+          }}>
+          {v3 ? <TextAudit state={v3} client={dataOptions.v3Client}
+            scopeName={scope} onClose={()=>setTextToolOpen(false)} onStart={()=>{if(scope)void controller.startAudit('texts');}} onStop={()=>controller.stopAudit()}
+            startDisabled={!state.auditReady||actionBusy||!scope} notice={compatibilityNotice}/>
+            : <><header className="apollo-skill-header"><h2 id="apollo-text-tool-title">{textToolTitle}</h2>
+              <button className="apollo-skill-close" type="button" aria-label="Закрыть проверку текстов" onClick={()=>setTextToolOpen(false)}><img src={skillIcons.close} alt="" /></button></header>
+              <div className="apollo-results"><ExistingSlot node={slots.texts} />{!slots.texts && <p className="placeholder">Проверка текстов ещё не подключена.</p>}</div></>}
+        </dialog>, document.body)}
         <Chat controller={controller} restoreFocus={launcher} />
       </div>
     </div>

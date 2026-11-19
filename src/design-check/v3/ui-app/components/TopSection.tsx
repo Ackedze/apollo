@@ -168,7 +168,7 @@ function SettingsPickerMenu({anchor, menuRef, label, onClose, children}: {
     const current = buttons.indexOf(document.activeElement as HTMLButtonElement);
     const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (current + (event.key === 'ArrowUp' ? -1 : 1) + buttons.length) % buttons.length;
     buttons[next].focus({preventScroll:true});
-  }}><OptionList className={styles.pickerMenu}>{children}</OptionList></div>, document.body);
+  }}><OptionList className={styles.pickerMenu}>{children}</OptionList></div>, anchor.current?.closest('dialog') ?? document.body);
 }
 
 export function TopSection({
@@ -269,10 +269,16 @@ export function TopSection({
 
     function handleKeyDown(event: KeyboardEvent): void {
       if (event.key === 'Escape') {
+        const dialog = pageTypeRootRef.current?.closest('dialog');
+        if (dialog && !dialog.contains(event.target as Node)) return;
         if (pickerOpen || workshopOpen) {
           event.preventDefault();
           closeSettingsPicker();
           return;
+        }
+        if (dialog) {
+          event.preventDefault();
+          if (pageTypeOpen) pageTypeRootRef.current?.querySelector('button')?.focus({preventScroll:true});
         }
         if (settingsOpen && settingsRootRef.current?.contains(document.activeElement)) settingsButtonRef.current?.focus();
         setSettingsOpen(false);

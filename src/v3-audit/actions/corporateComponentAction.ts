@@ -297,6 +297,7 @@ export async function swapCorporateTarget(
 ): Promise<boolean> {
   mutation?.assertCurrent();
   if(mutation){
+    if(mutation.verifyBeforeWrite)await mutation.verifyBeforeWrite();
     const actual=await instance.getMainComponentAsync();mutation.assertCurrent();
     if(instance.removed||actual?.key!==expectedSourceKey||JSON.stringify(snapshotInstanceComponentProperties(instance))!==JSON.stringify(sourceProperties))throw Error('AUDIT_ACTION_SOURCE_CHANGED');
   }

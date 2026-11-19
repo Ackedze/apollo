@@ -99,7 +99,8 @@ function fixture(post){
  await page.goto(pathToFileURL(path.resolve(__dirname,'../dist/ui.html')).href);await page.evaluate(()=>document.fonts.ready);
  await page.getByRole('button',{name:'Тулзы',exact:true}).click();
  const card=page.getByRole('button',{name:'Перевести на Glyph-26',exact:true});await card.waitFor();
- assert.equal(await page.locator('.apollo-skills-catalog>.apollo-skill-card').count(),3,'ReGlyph shares the existing catalogue with layer names and Figma audit');
+ assert.equal(await page.locator('.apollo-skills-catalog>.apollo-skill-card').count(),4,'ReGlyph shares the catalogue with layer names, Figma audit and text review');
+ assert.equal(await page.getByRole('button',{name:'Проверка текстов',exact:true}).isVisible(),true);
  await page.screenshot({animations:'disabled',path:path.join(output,'skills-catalog.png')});
  await card.click();await page.getByRole('heading',{name:'Выбери iOS или Android',exact:true}).waitFor();const unavailable=page.getByRole('region',{name:'Помощник'});assert.equal(await unavailable.getAttribute('data-mood'),'error');assert.equal(await unavailable.locator('.apollo-mascot-body').evaluate(element=>getComputedStyle(element).backgroundColor),'rgb(255, 174, 166)');assert.equal(await unavailable.locator('.apollo-reglyph-bubble').getByText('Навык работает с правилами АБМ. Для Desktop и MobileWeb правила пока не подключены.',{exact:true}).count(),1);assert.equal(await page.getByRole('button',{name:'Закрыть',exact:true}).count(),0);assert.equal(await page.locator('.apollo-reglyph-workspace .apollo-skill-footer').count(),0);await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-platform-required-800.png')});assert.equal(sent.filter(m=>m.type==='reglyph-request').length,0);
  await page.getByRole('button',{name:'Закрыть: Перевести на Glyph-26',exact:true}).click();await waitDialogs();

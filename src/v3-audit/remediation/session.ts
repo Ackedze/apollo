@@ -1,6 +1,6 @@
 import { FindingActionRegistry } from './findingActionRegistry';
 import { executeFindingAction,type MutationControl } from '../actions/findingAction';
-import { applyVariableBindingAction } from '../actions/variableBindingAction';
+import { applyVariableBindingAction, type StartTokenImportTiming } from '../actions/variableBindingAction';
 import { applyComponentFindingReplacement } from '../actions/corporateComponentAction';
 import { createCustomizationResetAction,type CustomizationResetPayload } from '../actions/customizationResetAction';
 import { createCustomizationResetMutations } from '../actions/customizationResetMutations';
@@ -8,12 +8,13 @@ import { resolveCustomizationReference,resolveNumericVariableToken,resolveVariab
 import { ensureReferenceCatalogsLoaded } from '../reference/library';
 import { resolveSceneNodeById } from '../actions/sceneNodeResolver';
 import { createCooperativeYield } from '../utils/promisePool';
+import {replaceCapturedTexts,type CapturedTextTarget,type TextReplacement} from '../actions/textReplacement';
 
 type Descriptor={kind:'registry';id:string}|{kind:'reset';payload:CustomizationResetPayload}|{kind:'theme';evidence:any}|{kind:'font';evidence:any}|{kind:'component';nodeId:string;expectedComponentKey:string;targetComponentKey:string;exactTarget?:boolean};
 function pageOf(node:BaseNode):PageNode|null{let n:BaseNode|null=node;const seen=new Set<string>();while(n&&!seen.has(n.id)){if(n.type==='PAGE')return n;seen.add(n.id);n=n.parent;}return null;}
 
 /** Only IDs/descriptors produced by the accepted native run cross this boundary. */
-export async function createAuditSession(result:any,registry:FindingActionRegistry,pageId:string,guard:()=>void){
+export async function createAuditSession(result:any,registry:FindingActionRegistry,pageId:string,guard:()=>void,observedNode?:(id:string)=>BaseNode|undefined){
  const checkpoint=createCooperativeYield(guard),focus=new Map<string,string>(),focusByNode=new Map<string,string>(),actions=new Map<string,Descriptor>(),seen=new Set<any>();
  const explicitModes=JSON.stringify(figma.currentPage.explicitVariableModes||{});
  function target(id:unknown){
@@ -54,8 +55,8 @@ export async function createAuditSession(result:any,registry:FindingActionRegist
   const ids=[descriptor.payload.nodeId,...(descriptor.payload.remediations||[]).map(item=>item.nodeId)].filter((id):id is string=>!!id);
   for(const id of ids){await checkpoint();if(resetStates.has(id))continue;const node=await resolveSceneNodeById(id);guard();if(node&&!node.removed&&pageOf(node)?.id===pageId)resetStates.set(id,{node,state:resetState(node)});}
  }
- const textTargets=[];
- for(const fact of result.textReport?.facts?.texts||[]){await checkpoint();const id=target(fact.node?.id);if(id)textTargets.push({nodeId:fact.node.id,focusActionId:id});}
+ const textTargets=[],textStates=new Map<string,CapturedTextTarget>();
+ for(const fact of result.textReport?.facts?.texts||[]){await checkpoint();const id=target(fact.node?.id);if(id){textTargets.push({nodeId:fact.node.id,focusActionId:id});if(typeof fact.text==='string')textStates.set(id,{nodeId:fact.node.id,text:fact.text});}}
  result.textTargets=textTargets;guard();
  async function scene(id:string,operationGuard:()=>void){operationGuard();const node=await resolveSceneNodeById(id);operationGuard();if(!node||node.removed||pageOf(node)?.id!==pageId)throw Error('AUDIT_SCOPE_UNAVAILABLE');return node;}
  function paintAction(id:string){
@@ -65,11 +66,21 @@ export async function createAuditSession(result:any,registry:FindingActionRegist
  }
  return{
   hasFocus:(id:string)=>focus.has(id),hasAction:(id:string)=>actions.has(id),
+  actionScopes(){
+   return Array.from(actions,([id,descriptor])=>{
+    if(descriptor.kind==='theme'||descriptor.kind==='font')return {id,targets:[],page:true};
+    if(descriptor.kind==='reset')return {id,targets:[descriptor.payload.rootId,descriptor.payload.nodeId,...(descriptor.payload.remediations||[]).map(item=>item.nodeId)].filter((target):target is string=>Boolean(target))};
+    if(descriptor.kind==='component')return {id,targets:[descriptor.nodeId]};
+    const action=descriptor.kind==='registry'?registry.get(descriptor.id):null;
+    return {id,targets:action?[action.nodeId]:[],paint:action?.kind==='bind-variable'?action.styleField:undefined};
+   });
+  },
   paintAction,
-  async applyPaint(id:string,mutation:MutationControl){
+  async replaceTexts(changes:TextReplacement[],mutation:MutationControl){return replaceCapturedTexts(changes,textStates,id=>scene(id,mutation.assertCurrent),mutation);},
+  async applyPaint(id:string,mutation:MutationControl,startTokenImportTiming:StartTokenImportTiming){
    const action=paintAction(id);
    if(!action)throw Error('AUDIT_ACTION_UNAVAILABLE');
-   const applied=await applyVariableBindingAction(action,registry.getRuntimeNode(id),mutation,true);
+   const applied=await applyVariableBindingAction(action,registry.getRuntimeNode(id),mutation,true,startTokenImportTiming);
    mutation.assertCurrent();
    if(!applied.ok)throw Error('AUDIT_ACTION_FAILED');
    for(const [actionId,descriptor] of actions){
@@ -78,7 +89,26 @@ export async function createAuditSession(result:any,registry:FindingActionRegist
    }
    return {message:'Библиотечный токен привязан.',paintFix:{nodeId:action.nodeId,field:action.styleField}};
   },
-  async focus(id:string,operationGuard:()=>void){const nodeId=focus.get(id);if(!nodeId)throw Error('AUDIT_FOCUS_UNAVAILABLE');const node=await scene(nodeId,operationGuard);operationGuard();figma.currentPage.selection=[node];figma.viewport.scrollAndZoomIntoView([node]);},
+  async focus(id:string,operationGuard:()=>void,trace?:{startPhase(stage:string):(outcome:string)=>void}){
+   const nodeId=focus.get(id);
+   if(!nodeId)throw Error('AUDIT_FOCUS_UNAVAILABLE');
+   operationGuard();
+   const finishLookup=trace?.startPhase('focus-lookup');
+   let node:SceneNode;
+   try{
+    const captured=observedNode?.(nodeId);
+    node=captured&&!captured.removed&&captured.type!=='PAGE'&&captured.type!=='DOCUMENT'&&pageOf(captured)?.id===pageId
+     ?captured:await scene(nodeId,operationGuard);
+    operationGuard();
+   }catch(error){finishLookup?.('error');throw error;}
+   finishLookup?.('success');
+   const finishViewport=trace?.startPhase('focus-viewport');
+   try{
+    figma.currentPage.selection=[node];
+    figma.viewport.scrollAndZoomIntoView([node]);
+   }catch(error){finishViewport?.('error');throw error;}
+   finishViewport?.('success');
+  },
   async execute(id:string,mutation:MutationControl){
    mutation.assertCurrent();const descriptor=actions.get(id);if(!descriptor)throw Error('AUDIT_ACTION_UNAVAILABLE');let message='';
    const notify=(text:string)=>{message=text;};

@@ -20,7 +20,7 @@ export async function checkPageBase(api:PluginAPI,channel:string,roots:readonly 
  for(const id of Object.keys(explicit)){await checkpoint();await collection(id);}
  async function visit(nodes:readonly SceneNode[]){
   const stack=Array.from(nodes).reverse(),seen=new Set<string>();
-  while(stack.length){await checkpoint();const node=stack.pop()!;if(seen.has(node.id))continue;seen.add(node.id);
+  while(stack.length){await checkpoint();const node=stack.pop()!;if(seen.has(node.id)||node.visible===false)continue;seen.add(node.id);
    if(shouldSkipShared&&await shouldSkipShared(node))continue;
    for(const id of Object.keys(node.resolvedVariableModes||{}))await collection(id);
    if('children'in node)for(let i=node.children.length-1;i>=0;i--)stack.push(node.children[i]);

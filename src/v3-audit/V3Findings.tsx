@@ -23,15 +23,20 @@ function FindingActions({actions=[],disabled,onAction}:{actions?:any[];disabled:
  return <SmallButton label={actions[0].label} disabled={disabled} singleIcon={false} onPress={()=>onAction(actions[0].id)}/>;
 }
 function FocusIcon(){return <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-export function V3Findings({category,client,runId,stale,busy,mutationAvailable}:{category:any;client:any;runId:string|null;stale:boolean;busy:boolean;mutationAvailable:boolean}){
+export function V3Findings({category,client,runId,stale,busy,mutationAvailable,staleActionIds=[]}:{category:any;client:any;runId:string|null;stale:boolean;busy:boolean;mutationAvailable:boolean;staleActionIds?:string[]}){
  if(!category?.connected)return <p className="placeholder">Запусти проверку выбранной области.</p>;
  if(!category.entries.length)return <p className="placeholder">В этой категории замечаний нет.</p>;
  const disabled=stale||busy||!mutationAvailable||!runId;
+ const staleActions=new Set(staleActionIds);
  const deprecatedStyles=category.id==='deprecatedStyles';
  return <div className="apollo-findings apollo-v3-findings">
   {category.entries.map((row:any)=>{
    const tone=row.classification==='violation'?'violation':['compliant','allowed','not-applicable'].includes(row.classification)?'current':'warning';
-   const actions=(items:any[])=><FindingActions actions={items} disabled={disabled} onAction={id=>void client.action(id)}/>;
+   const actions=(items:any[]=[])=>{
+    const available=items.filter(item=>!staleActions.has(item.id));
+    const stale=items.length>0&&available.length===0;
+    return <FindingActions actions={stale?items:available} disabled={disabled||stale} onAction={id=>void client.action(id)}/>;
+   };
    const swatch=<FindingColorSwatch color={row.item.actualColor} describe/>;
    return <ResultCard key={row.id} title={row.displayName||row.item.name||row.title} caption={row.library||undefined} onFocus={row.focusActionId&&!busy&&runId?()=>void client.focus(runId,row.focusActionId):undefined}
     indicator={<span className={`apollo-finding-status ${tone}`} role="img" aria-label={tone==='violation'?'Нарушение':tone==='warning'?'Замечание':'Соответствует'}>{tone==='current'?<span/>:<img src={tone==='warning'?assets.imgStatusWarning:assets.imgStatusCircle} width={36} height={36} alt=""/>}</span>}

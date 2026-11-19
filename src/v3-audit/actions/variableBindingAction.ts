@@ -5,12 +5,14 @@ import type { MutationControl } from './findingAction';
 export type VariableBindingActionResult =
   | { ok: true; node: SceneNode }
   | { ok: false; message: string };
+export type StartTokenImportTiming = () => (outcome: 'success' | 'error') => void;
 
 export async function applyVariableBindingAction(
   action: VariableFindingAction,
   runtimeNode: SceneNode | null = null,
   mutation?:MutationControl,
   confirmBinding = false,
+  startTokenImportTiming?: StartTokenImportTiming,
 ): Promise<VariableBindingActionResult> {
   mutation?.assertCurrent();
   const node = isUsableRuntimeNode(runtimeNode, action.nodeId)
@@ -49,11 +51,13 @@ export async function applyVariableBindingAction(
   }
 
   let variable: Variable;
+  const finishImport = startTokenImportTiming?.();
   try {
     variable = await figma.variables.importVariableByKeyAsync(
       action.targetVariableKey,
     );
   } catch (error) {
+    finishImport?.('error');
     mutation?.assertCurrent();
     console.error('[Apollo] failed to import library variable', {
       targetVariableKey: action.targetVariableKey,
@@ -64,6 +68,8 @@ export async function applyVariableBindingAction(
       message: 'Не удалось загрузить библиотечный токен. Проверьте доступ к библиотеке.',
     };
   }
+  finishImport?.('success');
+  if(mutation?.verifyBeforeWrite)await mutation.verifyBeforeWrite();
   mutation?.assertCurrent();
   const current=(sceneNode as any)[styleProperty];
   if(!isUsableRuntimeNode(sceneNode,action.nodeId)||(typeof current==='string'&&current?current:null)!==action.expectedStyleId||getNodePaintFingerprint(sceneNode,action.styleField)!==action.expectedFingerprint){

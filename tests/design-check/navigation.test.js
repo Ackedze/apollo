@@ -7,14 +7,14 @@ const audit = { auditId: 'synthetic-navigation-audit', result: { engine: { evalu
 test('workspace navigation preserves audit, selected category, subview and preferences', async () => {
   const saved = [];
   const controller = createDesignCheckController({ tabs, preferences: { save: async value => saved.push(value) } });
-  controller.setAudit(audit); controller.selectTab('changes'); controller.setView('texts');
+  controller.setAudit(audit); controller.selectTab('changes'); controller.setView('report');
   controller.updateSetting('pageTypeId', 'form'); await controller.flushPreferences();
   const previous = controller.getState();
   assert.equal(previous.mode, 'check');
   assert.equal(controller.setMode('generation'), true);
   assert.equal(controller.getState().audit, previous.audit);
   assert.equal(controller.getState().settings, previous.settings);
-  assert.equal(controller.getState().view, 'texts');
+  assert.equal(controller.getState().view, 'report');
   assert.equal(controller.getState().selectedTab, 'changes');
   assert.equal(controller.setMode('check'), true);
   assert.equal(controller.getState().audit, previous.audit);

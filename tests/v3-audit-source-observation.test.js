@@ -163,3 +163,37 @@ test('final identity overlap rechecks only the observation: unchanged passes, ma
   }finally{armed=false;clearTimeout(timer);port.close();delete globalThis.figma;delete globalThis.__finalIdentityRun;}
  }
 });
+
+function boundTextScene(){
+ const f=scene(),main={id:'main',type:'COMPONENT',name:'Card',key:'k',remote:true,parent:f.page};
+ Object.assign(f.root,{type:'INSTANCE',componentProperties:{'Title#1':{type:'TEXT',value:'Before'},Other:{type:'TEXT',value:'Keep'}},getMainComponentAsync:async()=>main});
+ Object.assign(f.child,{type:'TEXT',name:'Before',characters:'Before',autoRename:true,componentPropertyReferences:{characters:'Title#1'}});
+ return f;
+}
+test('own text commit advances exact characters, derived name and actual referenced TEXT property only',async()=>{
+ const {createV3SourceObservation}=load('source-observation.ts'),f=boundTextScene(),proof=createV3SourceObservation('texts');await proof.prepare([f.root],()=>{},false);proof.snapshot.getChildNames(f.root);
+ f.child.characters='After';f.child.name='After';f.root.componentProperties['Title#1'].value='After';
+ proof.recordTextChanges([{nodeId:f.child.id,text:'After'}]);await proof.verify(()=>{});assert.equal(proof.snapshot.getText(f.child),'After');
+});
+for(const change of ['unbound-property','other-property','opacity','sibling-name'])test('own text commit never adopts '+change,async()=>{
+ const {createV3SourceObservation}=load('source-observation.ts'),f=boundTextScene();
+ if(change==='unbound-property')f.child.componentPropertyReferences=null;
+ const sibling={id:'sibling',type:'TEXT',name:'Other',characters:'Keep',parent:f.root};f.root.children.push(sibling);
+ const proof=createV3SourceObservation('texts');await proof.prepare([f.root],()=>{},false);proof.snapshot.getChildNames(f.root);
+ f.child.characters='After';f.child.name='After';f.root.componentProperties['Title#1'].value='After';
+ if(change==='other-property')f.root.componentProperties.Other.value='External';if(change==='opacity')f.child.opacity=.5;if(change==='sibling-name')sibling.name='External';
+ await assert.rejects(async()=>{proof.recordTextChanges([{nodeId:f.child.id,text:'After'}]);await proof.verify(()=>{});},/SOURCE_CHANGED/);
+});
+
+test('own text commit does not adopt an unexplained selected text width change',async()=>{
+ const {createV3SourceObservation}=load('source-observation.ts'),f=boundTextScene(),proof=createV3SourceObservation('texts');
+ await proof.prepare([f.child],()=>{},false);f.child.characters='After';f.child.name='After';f.child.width+=10;
+ await assert.rejects(async()=>{proof.recordTextChanges([{nodeId:f.child.id,text:'After'}]);await proof.verify(()=>{});},/SOURCE_CHANGED/);
+});
+
+test('synchronous retained text check reads facts without invoking native main-component lookups',async()=>{
+ const {createV3SourceObservation}=load('source-observation.ts'),f=boundTextScene(),proof=createV3SourceObservation('texts');await proof.prepare([f.root],()=>{},false);
+ let lookups=0;f.root.getMainComponentAsync=async()=>{lookups++;throw Error('Unexpected lookup');};
+ assert.equal(proof.assertTextCurrent(()=>{}),undefined);assert.equal(lookups,0);
+ f.child.characters='Changed';assert.throws(()=>proof.assertTextCurrent(()=>{}),/SOURCE_CHANGED/);
+});

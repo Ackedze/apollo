@@ -31,9 +31,9 @@
 .apollo-new .design-check-content { height:100%; background:white; border-radius:36px; position:relative; overflow:hidden; }
 .apollo-new .design-check-check-screen { flex:1; min-height:0; }
 .apollo-contextbar { box-sizing:border-box; flex:0 0 56px; min-height:56px; margin:8px; padding:0 20px; border:1px solid #edeef0; border-radius:99px; display:flex; align-items:center; justify-content:space-between; gap:8px; background:rgba(255,255,255,.88); backdrop-filter:blur(2px); box-shadow:0 4px 24px rgba(0,0,0,.05); z-index:20; }
-.apollo-contextbar.is-overview { position:absolute; top:0; left:0; right:0; height:56px; }
 .apollo-contextbar h2 { margin:0; font-size:16px; font-weight:500; line-height:24px; white-space:nowrap; }
-.apollo-scope { min-width:0; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; line-height:20px; color:var(--apollo-text); text-align:center; }
+.apollo-text-tool > .apollo-compatibility { margin:0 20px 8px; }
+.apollo-text-tool-downloads { display:flex; gap:8px; }
 .apollo-back { border:0; background:transparent; color:inherit; display:inline-flex; align-items:center; gap:8px; padding:8px 0; cursor:pointer; font-size:14px; font-weight:500; white-space:nowrap; }
 .apollo-back svg { width:20px; height:20px; }
 .apollo-categories { box-sizing:border-box; display:flex; align-items:flex-start; min-width:0; flex:0 1 auto; height:56px; overflow-x:auto; gap:16px; padding-top:18px; margin-left:auto; scrollbar-width:thin; }
@@ -42,12 +42,11 @@
 .apollo-categories button:disabled { opacity:.5; cursor:default; }
 .apollo-results { flex:1; min-height:0; overflow:auto; padding:12px 20px; }
 .apollo-status-messages:empty { display:none; }
-.apollo-contextbar.is-overview:not([hidden]) + .apollo-status-messages:not(:empty) { margin-top:72px; }
 .apollo-status-messages p { font-size:13px; line-height:20px; margin:0 0 8px; padding:12px; }
-.apollo-overview { display:flex; flex:1; min-height:0; flex-direction:column; gap:8px; padding:8px; }
-.apollo-overview-total { flex:1; min-height:196px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:16px 24px; }
+.apollo-overview { display:flex; flex:1; min-height:0; flex-direction:column; gap:8px; padding:16px 8px 8px; overflow-y:auto; }
+.apollo-overview-total { flex:1 0 auto; display:flex; flex-direction:column; align-items:center; text-align:center; padding:64px 20px 20px; }
 .apollo-mascot { width:196px; height:196px; flex:0 0 196px; display:grid; place-items:center; }
-.apollo-overview-total .apollo-mascot { height:160px; flex-basis:160px; }
+.apollo-overview-total .apollo-mascot { width:162px; height:166px; flex-basis:166px; }
 .apollo-mascot-body { display:grid; place-items:center; width:144px; height:144px; border-radius:50%; background:#f2f3f5; color:#18181b; box-shadow:none; transition:background-color .2s ease-out; }
 .apollo-mascot.quality-clean .apollo-mascot-body { background:#bce8cb; }
 .apollo-mascot.quality-warning .apollo-mascot-body { background:#ffe09a; }
@@ -70,10 +69,8 @@
 @keyframes apollo-mascot-check-blink { 0%,88%,92%,100% { transform:scaleY(1); } 90% { transform:scaleY(.12); } }
 @keyframes apollo-mascot-blink { 0%,42%,46%,100% { transform:scaleY(1); } 44% { transform:scaleY(.12); } }
 @media (prefers-reduced-motion:reduce) { .apollo-mascot * { animation:none !important; } .apollo-mascot-gaze { transform:none; transition:none; } }
-.apollo-overview-total h2 { font-size:16px; line-height:24px; font-weight:500; margin:12px 0 0; }
-.apollo-overview-total p { font-size:14px; line-height:20px; margin:8px 0 0; color:var(--apollo-muted); max-width:55ch; }
-.apollo-overview-total .apollo-overview-caption { margin:8px 0 0; font-size:16px; line-height:24px; color:var(--apollo-text); }
-.apollo-overview-total:has(.apollo-mascot.quality-unchecked:not(.is-checking)) .apollo-overview-caption { color:var(--apollo-muted); }
+.apollo-overview-caption { margin:24px 0 0; font-size:18px; line-height:24px; font-weight:400; letter-spacing:-.36px; overflow-wrap:anywhere; }
+.apollo-overview-scope { margin:10px 0 0; font-size:14px; line-height:20px; color:var(--apollo-muted); max-width:100%; overflow-wrap:anywhere; }
 .apollo-overview-total .apollo-overview-coverage { color:var(--apollo-muted); font-size:13px; line-height:20px; text-align:left; max-width:100%; margin-top:12px; }
 .apollo-overview-coverage summary { cursor:pointer; }
 .apollo-overview-coverage ul { margin:8px 0 0; padding-left:20px; }
@@ -214,3 +211,6 @@
 .apollo-audit-toast>span { min-width:0; overflow-wrap:anywhere; }
 .apollo-audit-toast>button,.apollo-audit-toast>button:disabled { flex:none; color:#18181b; }
 .apollo-audit-toast.is-error>span { color:#c13325; }
+.apollo-text-tool > .apollo-audit-toast { position:static; transform:none; flex:none; align-self:center; max-width:calc(100% - 40px); margin:0 20px 8px; }
+
+.apollo-text-diagnostics { flex:none; max-height:220px; overflow:auto; }

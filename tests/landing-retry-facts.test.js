@@ -4,7 +4,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const {createDirectLandingService,FLOW,readTool}=require(path.resolve(__dirname,'../../../services/apollo-proxy/src/landing/direct-service'));
 function fixture(t,attack){
  const root=fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(),'direct-target-recovery-')));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));const session=crypto.randomUUID();let calls=0;
- const source={id:'fixture',resumePin:'pin',knowledgeVersion:'fixture',skill:{id:'ab-generate-custom-landing',name:'Fixture',version:'0.6.0',sha256:'a'.repeat(64),generation:{workflow:FLOW}},initial:{instructions:{},selectedSkill:{}},assertCurrent(){}};
+ const source={id:'fixture',resumePin:'pin',knowledgeVersion:'fixture',skill:{id:'ab-generate-custom-landing',name:'Fixture',version:'0.6.0',sha256:'a'.repeat(64),generation:{workflow:FLOW},bodies:{'references/rules/page-layout.md':'Layout recipe.','references/rules/component-selection.md':'Selection recipe.'}},initial:{instructions:{},selectedSkill:{}},assertCurrent(){}};
  const service=createDirectLandingService({root,knowledge:()=>source,isProcessAlive:()=>false,createCli:()=>({async run(input){
   calls++;const data=JSON.parse(input.prompt.split('\n').at(-1));input.onEvent({type:'thread.started',thread_id:session});
   const target={rootNodeId:'40:10',pageId:'1:2',parentNodeId:'1:2',ownerNonce:data.target.ownerNonce};const result={content:[{type:'text',text:JSON.stringify({target,descendantIds:[calls===1?'40:20':'I40:10;40:30']})}]};

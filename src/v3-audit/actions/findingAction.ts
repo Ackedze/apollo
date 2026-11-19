@@ -4,7 +4,7 @@ import { applyVariableBindingAction } from './variableBindingAction';
 import { FindingActionRegistry } from '../remediation/findingActionRegistry';
 import { isComponentFindingAction } from '../remediation/types';
 
-export type MutationControl={assertCurrent():void;beforeWrite():void};
+export type MutationControl={assertCurrent():void;beforeWrite():void;verifyBeforeWrite?():Promise<void>};
 
 export interface FindingActionDependencies {
   registry: FindingActionRegistry;

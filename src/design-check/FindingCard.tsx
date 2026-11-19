@@ -45,7 +45,7 @@ export function FindingComparison({ property, before, after, beforeLabel, afterL
   </div>;
 }
 
-export function FindingInformation({children, label}:{children:React.ReactNode; label?:string}) {
+export function FindingInformation({children, label, icon}:{children:React.ReactNode; label?:string; icon?:React.ReactNode}) {
   const [expanded, setExpanded] = useState(false), informationId = useId();
   const dialog = useRef<HTMLDialogElement>(null), trigger = useRef<HTMLButtonElement>(null);
   const title = label ?? 'Сведения проверки';
@@ -56,10 +56,10 @@ export function FindingInformation({children, label}:{children:React.ReactNode; 
     return () => { modal.close(); if (opener?.isConnected) opener.focus(); };
   }, [expanded]);
   return <>
-        <button ref={trigger} className={label ? 'apollo-finding-info-text' : 'apollo-finding-info-toggle'}
+        <button ref={trigger} className={label&&!icon ? 'apollo-finding-info-text' : 'apollo-finding-info-toggle'}
           type="button" aria-label={title} title={title}
           aria-haspopup="dialog" aria-controls={expanded ? informationId : undefined} onClick={() => setExpanded(true)}>
-          {label ?? <img src={assets.imgFixer} width={16} height={16} alt="" />}
+          {icon ?? label ?? <img src={assets.imgFixer} width={16} height={16} alt="" />}
         </button>
     {expanded && createPortal(<dialog ref={dialog} className="apollo-finding-dialog" id={informationId} role="dialog" aria-modal="true" aria-labelledby={`${informationId}-title`}
       onCancel={event => { event.preventDefault(); setExpanded(false); }} onClick={event => { event.stopPropagation(); if (event.target === event.currentTarget) setExpanded(false); }}>

@@ -1,7 +1,7 @@
 import React, {useEffect, useId, useRef, useState, useSyncExternalStore} from 'react';
 import {createPortal} from 'react-dom';
 import {Button} from '../../design-check/v3/ui-app/components/Button';
-import {AuditMascot} from '../../design-check/AuditMascot';
+import {SkillStage} from '../shared/SkillStage';
 import './ui.css';
 const icons = require('./assets');
 const diagnosticPhases:Record<string,string>={preparing:'Подготавливаем запрос…','waiting-agent':'Ожидаем события от агента…',connecting:'Ожидаем ответа сервиса…',retrying:'Агент повторяет подключение…',receiving:'Получаем ответ агента…','reading-context':'Уточняем содержимое слоёв…',validating:'Проверяем предложения…',completed:'Анализ завершён',failed:'Анализ завершился с ошибкой',cancelled:'Анализ остановлен'};
@@ -30,13 +30,14 @@ function SkillDiagnostics({state,waiting}: {state:any;waiting:boolean}){
     </details>
   </section>;
 }
-function AnalysisProgress({progress}: {progress:string}) {
-  return <div className="apollo-skill-progress">
-    <AuditMascot checking label={progress}/>
-    <h3>{progress}</h3>
-  </div>;
+export function SkillsPanel({client,children,scopeName=''}: {client?:any;children?:React.ReactNode;scopeName?:string}) {
+  return <div className="apollo-skills"><div className="apollo-skills-catalog">
+    {client && <LayerNamesSkill client={client} scopeName={scopeName} />}
+    {children}
+  </div></div>;
 }
-export function SkillsPanel({client,children}: {client:any;children?:React.ReactNode}) {
+
+function LayerNamesSkill({client,scopeName}: {client:any;scopeName:string}) {
   const state:any = useSyncExternalStore(client.subscribe,client.getState);
   const [detailOpen,setDetailOpen] = useState(false);
   const cardRef = useRef<HTMLButtonElement>(null), dialogRef = useRef<HTMLDialogElement>(null), titleId = useId();
@@ -72,8 +73,7 @@ export function SkillsPanel({client,children}: {client:any;children?:React.React
     : !state.result.complete ? 'Переименование завершено частично. Открыть результат.'
     : state.status==='undone' ? 'Прежние названия возвращены. Открыть результат.'
     : `Переименовано слоёв: ${changes.length}. Открыть результат.`;
-  return <div className="apollo-skills">
-    <div className="apollo-skills-catalog">
+  return <>
       <button ref={cardRef} className="apollo-skill-card" type="button" aria-label="Переназвать слои" aria-describedby={`${titleId}-agent ${titleId}-description`} aria-haspopup="dialog" onClick={()=>setDetailOpen(true)}>
         <span className="apollo-skill-copy">
           <span className="apollo-skill-title"><strong>Переназвать слои</strong><span id={`${titleId}-agent`} className="apollo-skill-agent-label">Агент</span></span>
@@ -81,8 +81,6 @@ export function SkillsPanel({client,children}: {client:any;children?:React.React
         </span>
         <img className="apollo-skill-chevron" src={icons['chevron-right']} alt="" aria-hidden="true" />
       </button>
-      {children}
-    </div>
     {detailOpen && createPortal(<dialog ref={dialogRef} className="apollo-skill-dialog" aria-labelledby={titleId} aria-modal="true"
       onCancel={event=>{event.preventDefault();setDetailOpen(false);}}>
       <header className="apollo-skill-header"><h2 id={titleId}>Переназвать слои</h2>
@@ -90,12 +88,11 @@ export function SkillsPanel({client,children}: {client:any;children?:React.React
       </header>
       {running && <p className="design-check-sr-only" role="status">{progress}{state.run && ` Изучено подробно слоёв: ${state.run.readCount}.`}{state.run?.step>0 && ` Проход анализа: ${state.run.step}.`}</p>}
       <main className={preview || finished || partial ? 'apollo-skill-content' : running ? 'apollo-skill-stage is-running' : 'apollo-skill-stage'} tabIndex={preview || finished || partial ? 0 : undefined} aria-label="Результат навыка «Переназвать слои»" aria-busy={running}>
-        {state.status==='idle' && <div className="apollo-skill-invitation">
-          <p className="apollo-skill-prompt">Выбери область и запусти проверку</p>
-          <p>Предложим понятные названия по содержимому слоёв,<br className="apollo-skill-wide-break" /> а ты выберешь, какие применить</p>
-          {!state.available && !running && <p role="status">Дождись завершения другой операции Apollo.</p>}
-        </div>}
-        {running && <div className="apollo-skill-running"><AnalysisProgress progress={progress} />
+        {state.status==='idle' && <SkillStage idle message={<>Предложу понятные названия по содержимому слоёв,<br/> а ты выберешь, какие применить</>} description={<>
+          <p className="apollo-skill-scope-name" title={state.validSelection&&scopeName||undefined} role="status">{state.validSelection&&scopeName?scopeName:'Выбери область и запусти проверку'}</p>
+          {!state.available && <p role="status">Дождись завершения другой операции Apollo.</p>}
+        </>}/>}
+        {running && <div className="apollo-skill-running"><SkillStage message={progress} announce={false} />
           {state.batch && <p className="apollo-skills-hint apollo-skill-batch-progress" role="status">{state.batch.status==='capturing'?`Прочитано слоёв: ${state.batch.observedCount}.`:state.batch.batchCount?`Пачка ${Math.min(state.batchIndex || 1,state.batch.batchCount)} из ${state.batch.batchCount}. Готово пачек: ${state.batch.completedCount}.`:'Проверяем актуальность области…'}{state.batchChecked>0 && ` Проверено актуальных слоёв: ${state.batchChecked}.`}</p>}
           {waiting && <SkillDiagnostics state={state} waiting={waiting}/>}</div>}
         {state.status==='error' && <div className="apollo-skills-message"><h3>Не удалось проверить названия</h3><p role="alert">{state.error}</p>
@@ -144,5 +141,5 @@ export function SkillsPanel({client,children}: {client:any;children?:React.React
         </>}
       </div></footer>
     </dialog>,document.body)}
-  </div>;
+  </>;
 }

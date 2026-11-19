@@ -35,7 +35,7 @@ const healthy = () => ({ ok: true, proxy: { version: '1.4.12' }, compatibility: 
     const check = () => page.getByRole('button', { name: 'Проверить', exact: true });
     await check().click(); await until(() => f.messages.some(m => m.type === 'audit-result')); await check().waitFor();
     const starts = () => host.filter(m => ['audit', 'document-audit-request'].includes(m.type)).length;
-    const count = starts(), previousScope = await page.locator('.apollo-scope').innerText();
+    const count = starts(), previousScope = await page.locator('.apollo-overview-scope').innerText();
     current = healthy(); current.proxy.version = '1.4.10';
     await page.getByRole('button', { name: 'Открыть настройки Apollo', exact: true }).click();
     const banner = page.getByRole('status', { name: 'Совместимость Apollo' });
@@ -43,7 +43,7 @@ const healthy = () => ({ ok: true, proxy: { version: '1.4.12' }, compatibility: 
     assert.equal(await page.locator('[data-state="connected"]').count(), 0);
     assert.equal(await page.locator('[data-state="update-required"]').count(), 1);
     await page.getByRole('button', { name: 'Открыть настройки Apollo', exact: true }).click();
-    await check().click(); assert.equal(starts(), count); assert.equal(await page.locator('.apollo-scope').innerText(), previousScope);
+    await check().click(); assert.equal(starts(), count); assert.equal(await page.locator('.apollo-overview-scope').innerText(), previousScope);
     for (const width of [800, 540, 360]) {
       await page.setViewportSize({ width, height: 900 });
       const box = await banner.boundingBox(); assert.ok(box && box.x >= 0 && box.x + box.width <= width + 1);

@@ -63,6 +63,7 @@ export async function applyStyleBindingAction(
       message: 'Не удалось загрузить библиотечный стиль. Проверьте доступ к библиотеке.',
     };
   }
+  if(mutation?.verifyBeforeWrite)await mutation.verifyBeforeWrite();
   mutation?.assertCurrent();
   const assertBeforeWrite=()=>{
     mutation?.assertCurrent();

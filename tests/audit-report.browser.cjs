@@ -37,9 +37,10 @@ try{const page=await browser.newPage({acceptDownloads:true}),errors=[];page.on('
   await page.evaluate(({data,request})=>window.emit(Object.assign({type:'audit-result',requestId:request.requestId},data)),{data,request});
   assert.equal(await page.locator('.apollo-finding-card:visible').count(),0);
   await page.getByRole('button',{name:'Проверка',exact:true}).click();
-  assert.notEqual(await page.locator('.apollo-overview-caption').innerText(),'Synthetic');
-  const alert=await page.getByRole('alert').filter({hasText:'AUDIT_CAPTURE_CHANGED'}).boundingBox(),context=await page.locator('.apollo-contextbar.is-overview').boundingBox();
-  assert.ok(alert.y>=context.y+context.height,'Audit error is visible below the scope bar');
+  assert.equal(await page.locator('.apollo-overview-scope').innerText(),'CorporateContent');
+  assert.equal(await page.locator('.apollo-contextbar.is-overview').count(),0);
+  const alert=await page.getByRole('alert').filter({hasText:'AUDIT_CAPTURE_CHANGED'}).boundingBox(),title=await page.locator('.apollo-overview-caption').boundingBox();
+  assert.ok(alert && title && alert.y>=title.y+title.height,'Audit error is visible below the overview title');
   if(process.env.DESIGN_CHECK_QA_ROOT)await page.screenshot({path:path.join(process.env.DESIGN_CHECK_QA_ROOT,`failed-area-${width}.png`),fullPage:true});
  }
  assert.deepEqual(errors,[]);console.log('Compact report browser QA PASS: 800/1024, exports, selected explain, stale replies, keyboard and layout.');

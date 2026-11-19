@@ -7,6 +7,7 @@ const count=v=>Number.isSafeInteger(v)&&v>=0;
 function event(value){
  if(!value||!word(value.event)||!count(value.sequence)||!Number.isFinite(value.elapsedMs)||value.elapsedMs<0)return null;
  const out={sequence:value.sequence,elapsedMs:value.elapsedMs,event:value.event};
+ if(value.event==='operation-phase-end'&&Number.isFinite(value.durationMs)&&value.durationMs>=0)out.durationMs=value.durationMs;
  for(const key of ['stage','reason','outcome','resource','callsite'])if(word(value[key]))out[key]=value[key];
  if(typeof value.code==='string'&&/^AUDIT_[A-Z_]{1,80}$/.test(value.code))out.code=value.code;
  for(const key of ['nodeId','dataRequestId'])if(typeof value[key]==='string')out[key]=value[key].slice(0,200);
@@ -37,12 +38,19 @@ function readTrace(value){
 }
 function createRunTrace(context,now=()=>typeof performance!=='undefined'&&typeof performance.now==='function'?performance.now():Date.now()){
  const started=now(),events=[];let sequence=0,dropped=0,elapsedMs=0,firstFailure=null;
+ const ms=value=>Math.round(Math.max(0,value)*1000)/1000;
+ function add(name,details={},failed=false){
+  elapsedMs=Math.max(elapsedMs,ms(now()-started));
+  const item=event(Object.assign({},details,{event:name,sequence:++sequence,elapsedMs}));if(!item)return;
+  if(failed&&!firstFailure)firstFailure=item;
+  if(events.length===MAX_EVENTS){events.shift();dropped++;}events.push(item);
+ }
  return{
-  add(name,details={},failed=false){
-   elapsedMs=Math.max(elapsedMs,Math.round(Math.max(0,now()-started)*1000)/1000);
-   const item=event(Object.assign({},details,{event:name,sequence:++sequence,elapsedMs}));if(!item)return;
-   if(failed&&!firstFailure)firstFailure=item;
-   if(events.length===MAX_EVENTS){events.shift();dropped++;}events.push(item);
+  add,
+  startPhase(stage){
+   add('operation-phase-start',{stage});
+   const phaseStarted=now();
+   return outcome=>add('operation-phase-end',{stage,outcome,durationMs:ms(now()-phaseStarted)});
   },
   snapshot(){return readTrace(Object.assign({},context,{schemaVersion:VERSION,dropped,firstFailure,events}));},
  };

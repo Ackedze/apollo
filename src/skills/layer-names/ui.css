@@ -1,4 +1,4 @@
-.apollo-skills-screen { display:flex; min-height:0; max-width:calc(100vw - 16px); overflow:hidden; }
+.apollo-skills-screen { display:flex; flex-direction:column; min-height:0; max-width:calc(100vw - 16px); overflow:hidden; }
 .apollo-skills { --apollo-text:rgba(3,3,6,.88); --apollo-muted:rgba(4,4,19,.55); display:flex; flex:1; min-width:0; min-height:0; flex-direction:column; overflow:hidden; font-size:14px; line-height:20px; }
 .apollo-skills-catalog { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding:20px; overflow:auto; }
 .apollo-navigation button[aria-label="Тулзы"][aria-pressed="true"] { padding-inline:12px; gap:4px; }
@@ -30,11 +30,7 @@
 .apollo-skill-content,.apollo-skill-stage { box-sizing:border-box; flex:1; min-width:0; min-height:0; overflow:auto; scrollbar-width:thin; scrollbar-color:#c6c8ce #fff; }
 .apollo-skill-content { padding:0 28px 108px; }
 .apollo-skill-stage { display:grid; place-items:center; padding:0 28px 20px; }
-/* Balance the 82px header and 108px footer clearance around the dialog center. */
-.apollo-skill-stage.is-running { padding-top:26px; padding-bottom:108px; }
-.apollo-skill-progress { display:flex; flex-direction:column; align-items:center; gap:10px; width:100%; text-align:center; }
-.apollo-skill-progress .apollo-mascot { width:166px; height:166px; flex:0 0 166px; }
-.apollo-skill-progress h3 { margin:0; font-size:18px; line-height:24px; letter-spacing:-.36px; font-weight:400; }
+.apollo-skill-stage.is-running { display:block; padding-top:0; padding-bottom:108px; }
 .apollo-skill-running { width:100%; min-width:0; }
 .apollo-skill-stage:has(.apollo-skill-diagnostics) { align-items:safe center; padding-bottom:108px; }
 .apollo-skill-diagnostics { width:min(100%,640px); margin:16px auto 0; font-size:14px; line-height:20px; text-align:left; overflow-wrap:anywhere; }
@@ -48,9 +44,6 @@
 .apollo-skill-diagnostics ol { padding:0; margin:16px 0; list-style:none; }
 .apollo-skill-diagnostics li { margin:8px 0; }
 .apollo-skill-diagnostics time { font-variant-numeric:tabular-nums; color:var(--apollo-muted); }
-.apollo-skill-invitation { width:100%; text-align:center; }
-.apollo-skill-invitation p { max-width:400px; margin:10px auto 0; color:var(--apollo-muted); }
-.apollo-skill-invitation .apollo-skill-prompt { max-width:none; margin:0; color:var(--apollo-text); font-size:18px; line-height:24px; letter-spacing:-.36px; }
 .apollo-skills-message { margin:20px 0; max-width:60ch; }
 .apollo-skill-stage .apollo-skills-message { text-align:center; }
 .apollo-skills-message h3 { margin:0 0 8px; font-size:18px; line-height:24px; font-weight:400; }
@@ -90,3 +83,6 @@
 @media (max-width:799px) { .apollo-skill-content { padding-bottom:160px; } }
 @media (max-width:500px) { .apollo-skills-catalog { grid-template-columns:minmax(0,1fr); } .apollo-skill-content { padding-inline:20px; padding-bottom:160px; } .apollo-skill-header { padding-left:20px; } .apollo-skill-stage { padding-inline:20px; } .apollo-skill-wide-break { display:none; } .apollo-skills-actions button { padding-inline:16px; } .apollo-skills-actions { border-radius:28px; } .apollo-rename-table th,.apollo-rename-table td { padding-right:12px; } .apollo-rename-table th:last-child,.apollo-rename-table td:last-child { padding-right:0; } }
 @media (prefers-reduced-motion:reduce) { .apollo-skill-dialog [class*="loader"] { animation:none; } }
+
+/* Keep the common loading illustration anchored while diagnostics grow below it. */
+.apollo-skill-stage.is-running .apollo-skill-running { align-self:start; margin-top:calc(50dvh + 39px); }

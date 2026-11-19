@@ -11,7 +11,7 @@ const { createCompatibilityClient } = require('../src/compatibility');
 const { createV3UiClient } = require('../src/v3-audit/ui-client');
 const { buildV3Groups } = require('../src/v3-audit/ui-model');
 const { createComponentTimings } = require('../src/v3-audit/component-timings');
-const { readTrace } = require('../src/v3-audit/run-trace');
+const { createRunTrace, readTrace } = require('../src/v3-audit/run-trace');
 
 const source = require('esbuild').buildSync({ stdin: { contents: 'module.exports = Object.assign({},require("./src/v3-audit/native-port.ts"),require("./src/v3-audit/embedded-data.ts"),require("./src/v3-audit/services/auditTreeTraversal.ts"))', resolveDir: path.join(__dirname,'..') },
   bundle: true, write: false, platform: 'node', format: 'cjs', supported: { 'object-rest-spread': false } }).outputFiles[0].text;
@@ -105,11 +105,39 @@ test('normal button reaches the real native report with Proxy unavailable and re
   const finding=result.originalPayload.visibleViews.themization[0];
   assert.equal(finding.recommendation,'[D] Button');
   assert.equal(finding.replacementComponentKey,targetKey);
-  assert(await h.ui.focus(result.runId,finding.focusActionId));
+  let focusReads=0;
+  const lookup=h.figma.getNodeByIdAsync;
+  h.figma.getNodeByIdAsync=async id=>{focusReads++;return lookup(id);};
+  const focusPromise=h.ui.focus(result.runId,finding.focusActionId);
+  assert.equal(h.ui.busy(),false);
+  assert(await focusPromise);
+  assert.equal(focusReads,0);
   assert.deepEqual(h.focused(),[h.instance]);
   assert.deepEqual(h.calls,[]);
   assert.equal(await h.controller.startAudit('texts'),false);
   assert.deepEqual(h.calls,['/health']);
+});
+
+test('capture skips hidden descendants and overlaps distinct visible instance reads',async t=>{
+  const h=fixture(t);
+  const root={id:'1:3',type:'FRAME',name:'Root',visible:true,parent:h.page,children:[]};
+  let calls=0,inFlight=0,peak=0;
+  const instances=Array.from({length:12},(_,index)=>Object.assign({},h.instance,{
+   id:'visible:'+index,parent:root,async getMainComponentAsync(){
+    calls++;peak=Math.max(peak,++inFlight);
+    await new Promise(resolve=>setTimeout(resolve,2));
+    inFlight--;return h.instance.getMainComponentAsync();
+   },
+  }));
+  const hidden={id:'hidden',type:'FRAME',visible:false,parent:root,
+   get children(){assert.fail('hidden branch was read');}};
+  root.children=[hidden,...instances];h.page.children=[root];h.page.selection=[root];
+  const result=await h.run();
+  assert(result.hasAcceptedResult,result.lastAttempt?.error);
+  assert.equal(calls,12);
+  assert.equal(h.imports.length,1);
+  assert(peak>1&&peak<=8);
+  assert.equal(result.trace.sessions[0].native.componentTimings.calls.figmaGetMainComponentAsync.count,12);
 });
 
 test('Design skips confirmed shared variants and detaches before reading children, including the page fallback',async t=>{
@@ -209,7 +237,7 @@ test('offline Design shows findings from one capture and still checks live ident
   assert.equal(timings.calls.customStyles.count,3);
   assert.equal(timings.calls.deprecatedStyles.count,3);
   assert.equal(timings.calls.figmaImportComponentByKeyAsync.completed,1);
-  assert.equal(timings.calls.figmaGetMainComponentAsync,undefined);
+  assert.equal(timings.calls.figmaGetMainComponentAsync.count,1);
   assert.deepEqual(result.originalPayload.textReport.facts.texts.map(fact=>[fact.text,fact.owner.componentKey]),[
     ['First',legacyKey],['Second',legacyKey],
   ]);
@@ -222,7 +250,8 @@ test('offline Design shows findings from one capture and still checks live ident
   assert.equal(h.posts.find(message=>message.type==='v3-audit-operation-error').sourceChange.reason,'main-component-changed');
   h.instance.opacity=0.9;
   h.observeChange({nodeChanges:[{type:'PROPERTY_CHANGE',id:h.instance.id,properties:['opacity']}]});
-  await until(()=>h.ui.getState().stale);
+  await until(()=>h.ui.getState().staleActionIds.includes(finding.actions[0].id));
+  assert.equal(h.ui.getState().stale,false);
   assert.deepEqual(h.ui.snapshot().originalPayload,result.originalPayload);
 });
 
@@ -369,13 +398,13 @@ test('a missing compact-index route or file uses the repository',async t=>{
     assert.equal(result.originalPayload.athenaIndex.source,'repository');
     assert.equal(result.dataId,embedded.dataId);
     assert.deepEqual(h.calls,[compactPath,repositoryPath]);
-    assert.deepEqual(h.progress.filter(message=>message.includes('Athena')),[
-      'Качаем индексы Athena с GitHub Pages…','Подготавливаем индексы Athena с GitHub Pages…',
+    assert.deepEqual(h.progress.filter(message=>/^(Качаем|Подготавливаем) индексы/.test(message)),[
+      'Качаем индексы','Подготавливаем индексы',
     ]);
     h.progress.length=0;
     assert.equal((await h.run()).originalPayload.athenaIndex.source,'repository');
     assert.deepEqual(h.calls,[compactPath,repositoryPath]);
-    assert.deepEqual(h.progress.filter(message=>message.includes('Athena')),['Подготавливаем индексы Athena с GitHub Pages…']);
+    assert.deepEqual(h.progress.filter(message=>/^(Качаем|Подготавливаем) индексы/.test(message)),['Подготавливаем индексы']);
   }
 });
 
@@ -390,7 +419,7 @@ test('a corrupt index is refused from either source',async t=>{
     const h=fixture(t,{delivery:pathname=>pathname===compactPath?proxy:repository});
     assert.equal((await h.run()).lastAttempt.error,'AUDIT_ATHENA_INDEX_INVALID');
     assert.deepEqual(h.calls,repository?[compactPath,repositoryPath]:[compactPath]);
-    assert(!h.progress.some(message=>message.startsWith('Подготавливаем индексы Athena')));
+    assert(!h.progress.some(message=>message.startsWith('Подготавливаем индексы')));
   }
 });
 
@@ -453,6 +482,26 @@ test('component timing export counts overlap, failures and unfinished calls with
     )})});
   assert.deepEqual(partial,{elapsedMs:10,finished:false,calls:{figmaGetStyleByIdAsync:{count:2,completed:1,failed:1,totalMs:5,maxMs:5}}});
   assert.deepEqual(trace.componentTimings,{elapsedMs:14,finished:true,calls:{figmaGetStyleByIdAsync:{count:2,completed:2,failed:1,totalMs:17,maxMs:12}}});
+});
+
+test('paint operation phase durations survive trace sanitization without exposing arguments',()=>{
+  let now=10;
+  const trace=createRunTrace({requestId:'operation',runId:'audit',kind:'components',side:'native'},()=>now);
+  const finishVerification=trace.startPhase('source-verification');
+  now=518;
+  finishVerification('success');
+  now=600;
+  const finishImport=trace.startPhase('token-import');
+  now=724.125;
+  finishImport('error');
+  const snapshot=trace.snapshot();
+  snapshot.events[3].variableKey='private variable key';
+  assert.deepEqual(readTrace(snapshot).events,[
+    {sequence:1,elapsedMs:0,event:'operation-phase-start',stage:'source-verification'},
+    {sequence:2,elapsedMs:508,event:'operation-phase-end',durationMs:508,stage:'source-verification',outcome:'success'},
+    {sequence:3,elapsedMs:590,event:'operation-phase-start',stage:'token-import'},
+    {sequence:4,elapsedMs:714.125,event:'operation-phase-end',durationMs:124.125,stage:'token-import',outcome:'error'},
+  ]);
 });
 
 for(const breakProperties of [false,true])test('exact replacement verifies key and preserved properties: '+(!breakProperties?'success':'refused'),async t=>{
@@ -581,6 +630,8 @@ test('Design fixes one confirmed color field without rerunning or rewriting the 
  fill.fillStyleId='changed';
  assert.equal(await h.ui.action(finding(fill.id).actions[0].id),false);
  assert.deepEqual(imported,[]);
+ const refused=h.ui.snapshot().trace.sessions.at(-1).native.events.filter(event=>event.event==='operation-phase-end');
+ assert.deepEqual(refused.map(({stage,outcome})=>[stage,outcome]),[['source-verification','error']]);
  const refreshed=await h.run();
  const baseline=JSON.stringify(refreshed.originalPayload);
  const countResults=()=>h.posts.filter(m=>m.type==='v3-audit-result').length;
@@ -590,6 +641,10 @@ test('Design fixes one confirmed color field without rerunning or rewriting the 
  const strokeAction=actionsFor('stroke')[0];
  assert.equal(await h.ui.action(strokeAction.id),true);
  assert.deepEqual(imported,[active]);
+ const operation=h.ui.snapshot().trace.sessions.at(-1).native.events;
+ const phases=operation.filter(event=>event.event==='operation-phase-end');
+ assert.deepEqual(phases.map(({stage,outcome})=>[stage,outcome]),[['source-verification','success'],['token-import','success'],['source-verification-before-write','success']]);
+ assert(phases.every(({durationMs,sequence})=>durationMs>=0&&sequence<operation.find(event=>event.event==='mutation-start').sequence));
  assert.equal(stroke.strokes[0].boundVariables.color.id,'VariableID:'+active);
  assert.equal(h.ui.busy(),false);
  assert.equal(peerReads,0);
@@ -619,25 +674,73 @@ for(const external of [false,true])test('Color binding keeps original findings a
  const payload=structuredClone(embedded.payload),token=payload.tokenCatalogs[0].collections[0].variables[0];
  token.actualValuesByMode={mode:[{r:1,g:0,b:0}]};
  const audit=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
- const layer={id:'1:3',type:'RECTANGLE',name:'Цвет',parent:audit.page,visible:true},peer={id:'1:4',type:'RECTANGLE',name:'Соседний слой',parent:audit.page,visible:true};
+ const layer={id:'1:3',type:'RECTANGLE',name:'Цвет',parent:audit.page,visible:true},peer={id:'1:4',type:'RECTANGLE',name:'Соседний слой',parent:audit.page,visible:true,fills:[{type:'SOLID',color:{r:1,g:0,b:0}}]};
  audit.page.children=[layer,peer];audit.page.selection=audit.page.children;
  let current=[{type:'SOLID',color:{r:1,g:0,b:0}}];
  Object.defineProperty(layer,'fills',{get:()=>current,set:value=>{
   if(!external)return;
   current=value;
-  peer.name='Новое имя слоя';
-  audit.observeChange({nodeChanges:[{id:peer.id,type:'PROPERTY_CHANGE',properties:['name']}]});
+  peer.fills=[{type:'SOLID',color:{r:0,g:1,b:0}}];
+  audit.observeChange({nodeChanges:[{id:peer.id,node:peer,type:'PROPERTY_CHANGE',properties:['fills']}]});
  }});
  audit.figma.variables.importVariableByKeyAsync=async key=>({id:'VariableID:'+key,key,resolvedType:'COLOR'});
  audit.figma.variables.setBoundVariableForPaint=(paint,field,variable)=>Object.assign({},paint,{boundVariables:{[field]:{type:'VARIABLE_ALIAS',id:variable.id}}});
  const first=await audit.run();
  const finding=first.originalPayload.visibleViews.customStyles.find(row=>row.reason==='fill');
  assert(finding?.actions?.some(action=>action.kind==='bind-variable'));
- assert.equal(await audit.ui.action(finding.actions.find(action=>action.kind==='bind-variable').id),false);
+ const target=first.originalPayload.visibleViews.customStyles.find(row=>row.id===layer.id).actions.find(action=>action.kind==='bind-variable');
+ const peerAction=first.originalPayload.visibleViews.customStyles.find(row=>row.id===peer.id).actions.find(action=>action.kind==='bind-variable');
+ assert.equal(await audit.ui.action(target.id),external);
  const after=audit.ui.snapshot();
- assert.equal(after.stale,true);
- assert.equal(after.paintFixes,undefined);
+ assert.equal(after.stale,!external);
+ assert.deepEqual(after.paintFixes,external?[{nodeId:layer.id,field:'fill'}]:undefined);
  assert.deepEqual(after.originalPayload,first.originalPayload);
  assert.equal(audit.posts.filter(m=>m.type==='v3-audit-result').length,1);
- assert.equal(audit.posts.find(m=>m.type==='v3-audit-operation-error').code,external?'AUDIT_SOURCE_CHANGED':'AUDIT_ACTION_UNCONFIRMED');
+ if(external){
+  assert.deepEqual(audit.ui.getState().staleActionIds,[peerAction.id]);
+  assert.equal(await audit.ui.action(peerAction.id),false);
+ }else assert.equal(audit.posts.find(m=>m.type==='v3-audit-operation-error').code,'AUDIT_ACTION_UNCONFIRMED');
+});
+
+test('Color binding rechecks only its dependencies and refuses a target edit during token import',async t=>{
+ const payload=structuredClone(embedded.payload),token=payload.tokenCatalogs[0].collections[0].variables[0];
+ token.actualValuesByMode={mode:[{r:1,g:0,b:0}]};
+ const h=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
+ const layer={id:'1:3',type:'RECTANGLE',name:'Color',parent:h.instance,visible:true,fills:[{type:'SOLID',color:{r:1,g:0,b:0}}]};
+ const second=Object.assign({},layer,{id:'1:4',name:'Other color'});
+ const outside=Object.assign({},layer,{id:'1:5',parent:h.page,name:'Outside'});
+ h.instance.children=[layer,second];h.page.children.push(outside);
+ const first=await h.run();
+ const actionFor=id=>first.originalPayload.visibleViews.customStyles.find(row=>row.id===id).actions.find(action=>action.kind==='bind-variable');
+ h.observeChange({nodeChanges:[{id:h.instance.id,node:h.instance,type:'PROPERTY_CHANGE',properties:['opacity']}]});
+ outside.name='Outside edit';
+ h.observeChange({nodeChanges:[{id:outside.id,node:outside,type:'PROPERTY_CHANGE',properties:['name']}]});
+ h.figma.variables.setBoundVariableForPaint=(paint,field,variable)=>Object.assign({},paint,{boundVariables:{[field]:{id:variable.id}}});
+ h.figma.variables.importVariableByKeyAsync=async key=>{
+  layer.fills=[{type:'SOLID',color:{r:0,g:1,b:0}}];
+  return {key,id:'VariableID:'+key,resolvedType:'COLOR'};
+ };
+ assert.equal(await h.ui.action(actionFor(layer.id).id),false);
+ assert.deepEqual(layer.fills[0].color,{r:0,g:1,b:0});
+ assert.equal(h.ui.getState().stale,false);
+ assert(h.ui.getState().staleActionIds.includes(actionFor(layer.id).id));
+ h.figma.variables.importVariableByKeyAsync=async key=>({key,id:'VariableID:'+key,resolvedType:'COLOR'});
+ assert.equal(await h.ui.action(actionFor(second.id).id),true);
+ assert.equal(second.fills[0].boundVariables.color.id,'VariableID:'+token.key);
+});
+
+test('an edited root paint does not disable the page Theme action',async t=>{
+ const h=fixture(t);
+ const theme={id:'theme',key:'theme-key',name:'Theme',remote:true,modes:[{modeId:'old',name:'Promo'},{modeId:'corp',name:'Corp'}]};
+ h.page.explicitVariableModes={theme:'old'};
+ h.page.setExplicitVariableModeForCollection=(collection,mode)=>{h.page.explicitVariableModes[collection.id]=mode;};
+ h.figma.variables.getVariableCollectionByIdAsync=async id=>id===theme.id?theme:null;
+ h.instance.fills=[{type:'SOLID',color:{r:1,g:0,b:0}}];
+ const report=await h.run();
+ const action=report.originalPayload.baseChecks.find(check=>check.id==='theme').actions[0];
+ h.instance.fills=[{type:'SOLID',color:{r:0,g:1,b:0}}];
+ h.observeChange({nodeChanges:[{id:h.instance.id,node:h.instance,type:'PROPERTY_CHANGE',properties:['fills']}]});
+ assert(await h.ui.action(action.id));
+ assert.deepEqual(h.page.explicitVariableModes,{theme:'corp'});
+ await until(()=>!h.ui.busy());
 });

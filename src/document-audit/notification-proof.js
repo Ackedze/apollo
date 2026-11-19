@@ -11,11 +11,11 @@ function plain(value,seen=new Set()){
  if(seen.has(value))throw Error('NATIVE_OBSERVATION_UNAVAILABLE');seen.add(value);
  const result=Array.isArray(value)?value.map(v=>plain(v,seen)):Object.fromEntries(Object.keys(value).sort().map(k=>[k,plain(value[k],seen)]));seen.delete(value);return result;
 }
-function nodeEvidence(n){
+function nodeEvidence(n,children){
  const value={id:n.id,type:n.type,name:n.name,removed:!!n.removed,parent:n.parent?.id||null};
  if(n.removed)return value;
  if(n.type==='PAGE'||n.type==='DOCUMENT'){if(n.type==='PAGE')value.explicitVariableModes=plain(n.explicitVariableModes);return value;}
- if('children'in n)value.children=Array.from(n.children).map(c=>c.id);
+ if('children'in n)value.children=Array.from(children??n.children).map(c=>c.id);
  for(const field of sceneFields)if(field in n)value[field]=plain(n[field]);
  if(n.type==='TEXT'&&typeof n.getStyledTextSegments==='function')value.textSegments=plain(n.getStyledTextSegments(['textStyleId','fontName','fontSize','lineHeight','letterSpacing','textDecoration','textCase','fills']));
  return value;

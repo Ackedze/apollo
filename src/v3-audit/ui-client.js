@@ -1,5 +1,6 @@
 'use strict';
 const p=require('./transport'),{nativeMetrics}=require('./ui-model');
+const {textReplacements,normalizeUnverifiedTexts,confirmedTextReplacements}=require('./text-review-model');
 const {createRunTrace,readTrace,MAX_SESSIONS}=require('./run-trace');
 const compactIndexPath='/v1/audit-data/compact-index';
 const compactIndexUrl='https://ackedze.github.io/design-system_ab/JSONS/apollo/indexes/athena-audit.json';
@@ -8,6 +9,10 @@ const messages={UX_WRITER_SKILL_UNAVAILABLE:'Обнови данные Proxy д�
 const uncertain=new Set(['node-unreadable','notification-unavailable','outside-observation','unobserved-property','identity-unconfirmed','identity-unavailable','topology-notification']);
 function sourceChange(value){if(!value||typeof value.reason!=='string'||!/^[-a-z]{1,80}$/.test(value.reason))return null;return{reason:value.reason,stage:['capture','operation','retained'].includes(value.stage)?value.stage:null,nodeId:typeof value.nodeId==='string'?value.nodeId.slice(0,200):null,fields:Array.isArray(value.fields)?value.fields.filter(field=>typeof field==='string').slice(0,32).map(field=>field.slice(0,80)):[]};}
 const indexMessages={
+ AUDIT_TEXT_DIFF_TOO_COMPLEX:'Не удалось безопасно сохранить оформление текста. Внеси эту замену вручную.',
+ AUDIT_TEXT_UNCONFIRMED:'Не удалось подтвердить замену текста. Проверь слой и повтори проверку.',
+ AUDIT_TEXT_VALUE_INVALID:'Предложение содержит недопустимые символы. Исправь текст перед заменой.',
+ AUDIT_TEXT_FONT_UNAVAILABLE:'Не удалось загрузить шрифты слоя. Проверь доступ к шрифтам и повтори замену.',
  AUDIT_ACTION_UNCONFIRMED:'Не удалось подтвердить привязку токена. Проверь слой и повтори проверку.',
  AUDIT_ATHENA_INDEX_UNAVAILABLE:'Не удалось загрузить индексы Athena. Проверь подключение и повтори проверку.',
  AUDIT_ATHENA_INDEX_INVALID:'Данные Athena не прошли проверку. Обнови пакет данных Proxy или повтори проверку позже.',
@@ -70,7 +75,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
    }
    if(source==='repository'){
     if(signal.aborted)throw Error('AUDIT_CANCELLED');
-    onProgress('Качаем индексы Athena с GitHub Pages…');
+    onProgress('Качаем индексы');
     try{response=await request(compactIndexUrl,{signal,credentials:'omit',cache:'no-cache',redirect:'error'});}
     catch{throw Error('AUDIT_ATHENA_INDEX_UNAVAILABLE');}
    }
@@ -99,8 +104,10 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
   if(active!==work)return;
   work.trace.add('run-terminal',{stage:work.phase,code:error?.message,outcome:cancelled?'cancelled':error?'error':'success'},!!error||cancelled);
   if(work.kind==='components'&&(error||cancelled))statistics?.finish(work.requestId,'native-document',null,cancelled?'cancelled':'failed');
-  const attempt={requestId:work.requestId,kind:work.kind,settings:work.settings,phase:work.phase,cancelled,error:error?.message||null,capture:work.capture||null};
-  active=null;emit({attempts:Object.assign({},state.attempts,{[work.kind]:attempt}),busy:false,stopping:false,progress:'',error:cancelled?'':error?readable(error.message,state.sourceChange):'',notice:cancelled?(work.phase==='model'?'Ожидание остановлено. Проверка текстов на сервере может продолжаться.':'Проверка остановлена. Предыдущий результат сохранён.'):'',operation:{busy:false,status:cancelled?'cancelled':error?'error':'success',message:''}});
+  const modelFailed=!!error&&!cancelled&&work.modelFailed===true;
+  const attempt={requestId:work.requestId,kind:work.kind,settings:work.settings,phase:work.phase,cancelled,error:error?.message||null,modelFailed,capture:work.capture||null};
+  const errorMessage=modelFailed?'Модель не справилась с анализом. '+(messages[error.message]?readable(error.message,state.sourceChange):'Повтори анализ.'):error?readable(error.message,state.sourceChange):'';
+  active=null;emit({attempts:Object.assign({},state.attempts,{[work.kind]:attempt}),busy:false,stopping:false,progress:'',error:cancelled?'':errorMessage,notice:cancelled?(work.phase==='model'?'Ожидание остановлено. Проверка текстов на сервере может продолжаться.':'Проверка остановлена. Предыдущий результат сохранён.'):'',operation:{busy:false,status:cancelled?'cancelled':error?'error':'success',message:''}});
  }
  async function serve(message){
   if(!p.dataRequest(message)||reads.has(message.requestId))return;
@@ -122,10 +129,11 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
   const requestId=id('v3-operation'),kind=kindForRun(runId),trace=uiTrace(requestId,runId,kind);trace.add('operation-start',{stage:type.replace('v3-audit-','')});return new Promise((resolve,reject)=>{operations.set(requestId,{resolve,reject,runId,kind,trace});try{send(Object.assign({type,schemaVersion:p.BRIDGE,requestId,runId},payload));}catch(error){trace.add('operation-error',{code:error.message},true);operations.delete(requestId);reject(error);}});
  }
  async function analyze(work,capture){
+  const uxWriter=Array.isArray(capture.textReport.facts.scopes);
+  let modelPending=true;
   try{
    current(work);work.phase='model';work.capture=capture;work.trace.add('stage',{stage:work.phase});
    emit({progress:'Проверяем тексты по редакционным правилам…'});
-   const uxWriter=Array.isArray(capture.textReport.facts.scopes);
    const report=uxWriter?Object.assign({},capture.textReport,{reportKind:'apollo-ux-writer-report'}):capture.textReport;
    const inputKey=uxWriter?createInputKey():null;
    const headers={'Content-Type':'application/json'};
@@ -139,24 +147,30 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
      agentInputAccess={runId:remoteId,key:inputKey};
      emit({agentInput:{available:true,loading:false,error:''}});
     }
-    if(run.status==='failed')throw Error(uxWriter&&messages[run.error?.code]?run.error.code:'AUDIT_FAILED');
+    if(run.status==='failed')throw Error(uxWriter&&typeof run.error?.code==='string'?run.error.code:'AUDIT_FAILED');
     if(run.status==='completed'){
-     const validation=run.validation;
+     let validation=run.validation;
      if(!validation||!Array.isArray(validation.findings))throw Error('AUDIT_FAILED');
      const nodes=new Set(capture.textReport.facts.texts.map(fact=>fact.node.id));
      if(uxWriter){
        const targets=new Set((capture.textTargets||[]).map(target=>target.nodeId));
        if(validation.skillId!=='ux-writer-v2'||!Array.isArray(validation.coverageGaps)||!validation.coverageGaps.every(value=>typeof value==='string')
          ||validation.findings.some(finding=>!nodes.has(finding?.nodeId)||!targets.has(finding.nodeId)||!Array.isArray(finding.sources)))throw Error('UX_WRITER_RESPONSE_INVALID');
+      if(Object.prototype.hasOwnProperty.call(validation,'unverifiedTexts'))validation=Object.assign({},validation,{unverifiedTexts:normalizeUnverifiedTexts(validation.unverifiedTexts,nodes,targets)});
      }else if(typeof validation.responseMarkdown!=='string'||validation.findings.some(finding=>finding.nodeId&&!nodes.has(finding.nodeId)))throw Error('AUDIT_FAILED');
+     modelPending=false;
      await rpc('v3-audit-verify',work.requestId);current(work);
-     emit({texts:{result:validation,capture,runId:work.requestId,settings:work.settings,stale:false}});finish(work);return;
+     emit({texts:{result:validation,capture,runId:work.requestId,settings:work.settings,stale:false,drafts:{},applied:{}}});finish(work);return;
     }
     emit({progress:typeof run.message==='string'&&run.message.trim()?run.message:'Проверяем тексты по редакционным правилам…'});
     await new Promise(resolve=>{const timer=setTimeout(done,pollDelay);function done(){clearTimeout(timer);work.abort.signal.removeEventListener('abort',done);resolve();}work.abort.signal.addEventListener('abort',done,{once:true});});current(work);
     value=await json('/v1/analyze/codex/runs/'+encodeURIComponent(remoteId),{signal:work.abort.signal,cache:'no-store'});current(work);run=value.run;if(!run)throw Error('AUDIT_FAILED');
    }
-  }catch(error){finish(work,error,work.cancelled);}
+  }catch(error){
+   work.modelFailed=uxWriter&&modelPending&&(['AUDIT_FAILED','UX_WRITER_RESPONSE_INVALID'].includes(error.message)||
+    !messages[error.message]&&!/^UX_WRITER_|^AUDIT_|^CODEX_INPUT_BUDGET_/.test(error.message));
+   finish(work,error,work.cancelled);
+  }
  }
  const api={
   getState:()=>state,subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);},busy:()=>Boolean(active||operation),
@@ -171,8 +185,9 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     hasAcceptedResult:!!saved,status:!saved?'diagnostic':work?'checking-with-saved-result':stale?'stale':'accepted',stale:!!stale,
     pending:work?{requestId:work.requestId,phase:work.phase,settings:work.settings,stopping:!!work.cancelled}:null,
     error:state.kind===kind?state.error:'',notice:state.kind===kind?state.notice:'',operation:Object.assign({},state.operation,{runId:operation?.runId||null}),
-    lastAttempt:attempt?{requestId:attempt.requestId,phase:attempt.phase,cancelled:attempt.cancelled,error:attempt.error}:null,
-    originalPayload,paintFixes:kind==='components'&&state.paintFixes.length?state.paintFixes:undefined,sourceChange:state.sourceChange,trace:{droppedSessions:droppedTraces[kind],sessions:traces[kind].map(entry=>({requestId:entry.requestId,runId:entry.runId,ui:entry.ui?.snapshot()||null,native:entry.native}))},diagnosticCapture:saved?null:work?.capture||attempt?.capture||null}));
+    lastAttempt:attempt?{requestId:attempt.requestId,phase:attempt.phase,cancelled:attempt.cancelled,error:attempt.error,modelFailed:attempt.modelFailed}:null,
+    originalPayload,staleActionIds:kind==='components'&&state.staleActionIds?.length?state.staleActionIds:undefined,
+    paintFixes:kind==='components'&&state.paintFixes.length?state.paintFixes:undefined,sourceChange:state.sourceChange,trace:{droppedSessions:droppedTraces[kind],sessions:traces[kind].map(entry=>({requestId:entry.requestId,runId:entry.runId,ui:entry.ui?.snapshot()||null,native:entry.native}))},diagnosticCapture:saved?null:work?.capture||attempt?.capture||null}));
   },
   download(kind='components'){
    const snapshot=api.snapshot(kind),name='apollo-v3-'+kind+'-'+(snapshot.runId||'diagnostic').replace(/[^a-zA-Z0-9_-]/g,'-')+'.json';
@@ -215,12 +230,31 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
    if(state.runId||state.texts.runId)emit({stale:!!state.runId,texts:Object.assign({},state.texts,{stale:!!state.texts.runId})});
    if(active){active.stale=true;active.abort.abort();send({type:'v3-audit-cancel',schemaVersion:p.BRIDGE,requestId:active.requestId});if(active.phase==='model'){cancelOperations(active.requestId,'AUDIT_SOURCE_CHANGED');finish(active,Error('AUDIT_SOURCE_CHANGED'));}}
   },
-  async focus(runId,focusActionId){return api.operate('v3-audit-focus',runId,{focusActionId});},
+  async focus(runId,focusActionId){
+  if(closed||api.busy()||!kindForRun(runId)||!p.id(focusActionId))return false;
+  try{await rpc('v3-audit-focus',runId,{focusActionId});return true;}
+  catch(error){
+   if(!closed&&!api.busy()&&kindForRun(runId)&&error.message!=='AUDIT_CANCELLED')
+    emit({texts:runId===state.texts.runId&&error.reply?.stale?Object.assign({},state.texts,{stale:true}):state.texts,
+     stale:state.stale||runId===state.runId&&error.reply?.stale===true,
+     operation:{busy:false,status:'error',message:readable(error.message)}});
+   return false;
+  }
+ },
   async action(actionId){if(!state.result?.mutationAvailable)return false;return api.operate('v3-audit-action',state.runId,{actionId});},
+  editText(nodeId,text){
+   if(api.busy()||state.texts.stale||typeof text!=='string'||!state.texts.result?.findings?.some(f=>f.nodeId===nodeId&&typeof f.replacement==='string'))return false;
+   emit({texts:Object.assign({},state.texts,{drafts:Object.assign({},state.texts.drafts,{[nodeId]:text})})});return true;
+  },
+  async replaceTexts(nodeIds){
+   const replacements=textReplacements(state.texts,nodeIds);
+   if(!replacements.length)return false;
+   return api.operate('v3-audit-text-replace',state.texts.runId,{replacements});
+  },
   async operate(type,runId,payload){
    const saved=runId===state.runId?{stale:state.stale}:runId===state.texts.runId?state.texts:null;
-   if(closed||api.busy()||!saved||saved.stale&&type!=='v3-audit-focus')return false;
-   const task={runId};operation=task;emit({operation:{busy:true,status:'applying',message:type==='v3-audit-focus'?'Переходим к слою…':'Применяем исправление…'}});
+   if(closed||api.busy()||!saved||saved.stale||type==='v3-audit-action'&&state.staleActionIds?.includes(payload.actionId))return false;
+   const task={runId};operation=task;emit({operation:{busy:true,status:'applying',message:'Применяем исправление…'}});
    try{const reply=await rpc(type,runId,payload);if(operation!==task)return false;
     if(reply.recheckRequestId){operation=null;begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}
     else{
@@ -228,9 +262,21 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
      const paintFix=reply.paintFix;
      const paintFixes=type==='v3-audit-action'&&runId===state.runId&&typeof paintFix?.nodeId==='string'&&['fill','stroke'].includes(paintFix.field)
       ?state.paintFixes.concat({nodeId:paintFix.nodeId,field:paintFix.field}):state.paintFixes;
-     emit({paintFixes,operation:{busy:false,status:'success',message:reply.message||''}});
+     emit({paintFixes,texts:type==='v3-audit-text-replace'&&runId===state.texts.runId?Object.assign({},state.texts,{stale:state.texts.stale||!!reply.stale,applied:confirmedTextReplacements(state.texts,runId,payload.replacements,reply.textReplacements)}):state.texts,operation:{busy:false,status:'success',message:reply.message||''}});
     }return true;
-   }catch(error){if(operation===task){operation=null;const reply=error.reply;if(reply?.recheckRequestId){begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}else emit({stale:state.stale||reply?.stale===true,operation:{busy:false,status:'error',message:readable(error.message)}});}return false;}
+   }catch(error){
+    if(operation!==task)return false;
+    operation=null;const reply=error.reply;
+    if(reply?.recheckRequestId){begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}
+    else{
+     const textAction=type==='v3-audit-text-replace';
+     const textStale=textAction&&['AUDIT_SOURCE_CHANGED','AUDIT_ACTION_SOURCE_CHANGED','AUDIT_SCOPE_UNAVAILABLE','AUDIT_SESSION_UNAVAILABLE'].includes(error.message);
+     const message=textAction&&error.message==='AUDIT_ACTION_FAILED'?'Не удалось завершить замену текста. Повтори проверку текстов.':readable(error.message);
+     emit({stale:state.stale||runId===state.runId&&reply?.stale===true,
+      texts:runId===state.texts.runId?Object.assign({},state.texts,{stale:state.texts.stale||!!reply?.stale||textStale,applied:textAction?confirmedTextReplacements(state.texts,runId,payload.replacements,reply?.textReplacements):state.texts.applied}):state.texts,
+      operation:{busy:false,status:'error',message:message+(textAction&&reply?.mutationStarted?' Заменено текстовых слоёв: '+Object.keys(confirmedTextReplacements(state.texts,runId,payload.replacements,reply.textReplacements)).length+'. Часть текста могла измениться. Повтори проверку текстов.':'')}});
+    }return false;
+   }
   },
   accept(message){
    if(closed)return!!message?.type?.startsWith('v3-audit-');
@@ -246,6 +292,13 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     if(message.runId===state.runId)emit({stale:true});if(message.runId===state.texts.runId)emit({texts:Object.assign({},state.texts,{stale:true})});
     if(message.runId===active?.requestId){active.stale=true;active.abort.abort();if(active.phase==='model'){cancelOperations(active.requestId,'AUDIT_SOURCE_CHANGED');finish(active,Error('AUDIT_SOURCE_CHANGED'));}}return true;
    }
+    if(message.type==='v3-audit-actions-invalidated'){
+     if(message.runId===state.runId&&Array.isArray(message.actionIds)&&message.actionIds.every(p.id)){
+      nativeTrace(message,'components',message.runId,message.runId);
+      emit({staleActionIds:Array.from(new Set((state.staleActionIds||[]).concat(message.actionIds)))});
+     }
+     return true;
+    }
    if(message.type.startsWith('v3-audit-operation-')){
     const task=operations.get(message.requestId);if(!task||task.runId!==message.runId)return true;
     nativeTrace(message,task.kind,message.requestId,task.runId);task.trace.add('operation-terminal',Object.assign({},sourceChange(message.sourceChange)||{},{code:message.code,outcome:message.type==='v3-audit-operation-result'?'success':'error',mutationStarted:message.mutationStarted}),message.type!=='v3-audit-operation-result');
@@ -263,7 +316,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     nativeTrace(message,work.kind,work.requestId,work.requestId);work.trace.add('native-result',{stage:'capture',dataId:result.dataId});
     work.capture=result;
     if(work.kind==='texts')void analyze(work,result);
-    else{statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));emit({result,runId:work.requestId,resultSettings:work.settings,stale:false,paintFixes:[]});finish(work);}return true;
+    else{statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));emit({result,runId:work.requestId,resultSettings:work.settings,stale:false,staleActionIds:[],paintFixes:[]});finish(work);}return true;
    }
    return true;
   },

@@ -139,6 +139,7 @@ export async function collectAuditTargets(
   await measure('renderedTree',()=>traverseAuditTree(selection, {
     throwIfCancelled,
     timings: indexed?.timings,
+    prepareNodes:snapshot?.prepareNodes,
     isVisible: isNodeVisibleSafe,
     getChildren,
     visit: async (node) => {

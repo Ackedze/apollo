@@ -84,7 +84,28 @@ test('busy loops use only transform with matching endpoints, scoped layer promot
 test('overview retains mascot and actual total in its accessible description after completion',async()=>{
  const summary={groups:[],theme:null,total:0,stale:false,incomplete:false};
  await harness('overview',{progress:'',summary,busy:false,checkedScope:'Область А',themeCanApply:false,onOpen:()=>{},onTheme:()=>{}},async w=>{
-  assert.ok(w.document.querySelector('.apollo-mascot.quality-clean'));assert.match(w.document.querySelector('.apollo-mascot').getAttribute('aria-label'),/замечаний: 0/);assert.equal(w.document.querySelector('.apollo-overview-number'),null);assert.equal(w.document.querySelector('.apollo-overview-caption').textContent,'Область А');
+  assert.ok(w.document.querySelector('.apollo-mascot.quality-clean'));assert.match(w.document.querySelector('.apollo-mascot').getAttribute('aria-label'),/замечаний: 0/);assert.equal(w.document.querySelector('.apollo-overview-number'),null);assert.equal(w.document.querySelector('.apollo-overview-caption').textContent,'Всё в порядке');assert.equal(w.document.querySelector('.apollo-overview-scope').textContent,'Область А');
+ });
+});
+
+test('overview keeps the checked area in the same place when the live selection changes',async()=>{
+ const initial={groups:[],theme:null,total:null,stale:false,incomplete:false};
+ const props={progress:'',summary:initial,busy:false,checkedScope:'',onOpen(){},onBase(){}};
+ await harness('overview',props,async(w,mounted)=>{
+  const text=selector=>w.document.querySelector(selector).textContent;
+  assert.equal(text('.apollo-overview-caption'),'Давай проверим твой макет');
+  assert.equal(text('.apollo-overview-scope'),'Выбери область и запусти проверку');
+  mounted.render({...props,selectedScope:'Выбранный экран'});await delay();
+  assert.equal(text('.apollo-overview-caption'),'Давай проверим твой макет');
+  assert.equal(text('.apollo-overview-scope'),'Выбранный экран');
+  mounted.render({...props,busy:true,progress:'Проверяем область…',selectedScope:'Выбранный экран'});await delay();
+  assert.equal(text('.apollo-overview-caption[role=status]'),'Проверяем область…');
+  assert.equal(text('.apollo-overview-scope'),'Выбранный экран');
+  const result={...initial,total:1,theme:{count:1,issues:[{classification:'violation'}]}};
+  mounted.render({...props,summary:result,selectedScope:'Другой экран',checkedScope:'Выбранный экран'});await delay();
+  assert.equal(text('.apollo-overview-caption'),'Нужно кое-что поправить');
+  assert.equal(text('.apollo-overview-scope'),'Выбранный экран');
+  assert.ok(w.document.querySelector('.apollo-mascot.quality-violation'));
  });
 });
 

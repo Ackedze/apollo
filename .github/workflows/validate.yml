@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           repository: Ackedze/apollo-proxy
-          ref: e63a6a141134cd6059e1e3c148615bf62843947a
+          ref: b6b60842d8b985a595e2185d14ccb41458c6c79b
           path: services/apollo-proxy
       - uses: actions/setup-node@v7
         with:

@@ -10,6 +10,7 @@ export interface AuditTreeTraversalOptions<TNode> {
   getChildren: (node: TNode) => readonly TNode[];
   visit: (node: TNode) => Promise<AuditTreeVisitResult | void>;
   throwIfCancelled: () => void;
+  prepareNodes?: (nodes:readonly TNode[])=>Promise<void>;
   timings?: ReturnType<typeof createComponentTimings>;
 }
 
@@ -36,12 +37,14 @@ export async function traverseAuditTree<TNode>(
     }
 
     const children = measureSync('treeChildren', () => options.getChildren(node));
+    await options.prepareNodes?.(children);
     for (const child of children) {
       guardEdge();
       await traverseNode(child);
     }
   };
 
+  await options.prepareNodes?.(roots);
   for (const root of roots) {
     guardEdge();
     await traverseNode(root);

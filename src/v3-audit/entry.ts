@@ -240,7 +240,19 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
     return key;
   };
   const getKey:typeof getComponentKeyCached=(node,cache,settings)=>resolveCachedComponentKey(node.id,cache,()=>safeKey(node),settings);
-  const getNodeById=async(id:string)=>{guard();const node=traversal.sceneNodeById.get(id)??await measure('figmaGetNodeByIdAsync',()=>figma.getNodeByIdAsync(id));guard();return node;};
+  const nodeLookups=new Map<string,Promise<BaseNode|null>>();
+  const getNodeById=async(id:string)=>{
+    guard();
+    const captured=traversal.sceneNodeById.get(id);
+    if(captured)return captured;
+    let pending=nodeLookups.get(id);
+    if(!pending){
+      pending=measure('figmaGetNodeByIdAsync',()=>figma.getNodeByIdAsync(id));
+      nodeLookups.set(id,pending);
+      void pending.catch(()=>nodeLookups.delete(id));
+    }
+    const node=await pending;guard();return node;
+  };
   timings?.start();
   await collectAuditTargets(options.selection,state,options.channel,traversal,{shellAuditEnabled:options.shellAuditEnabled,dependencyConcurrency:4},{
     getComponentKeyCached:getKey,buildNodeSegments,getNodeById,throwIfCancelled:guard,indexed:{

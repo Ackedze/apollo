@@ -205,7 +205,7 @@ function createDesignCheckController(options = {}) {
     try {
       if (options.dialogue.status) {
         const proxy = await options.dialogue.status({ signal: abort.signal });
-        if (destroyed || activeChat?.requestId !== requestId || activeChat.contextKey !== state.contextKey) return true;
+        if (destroyed || activeChat?.requestId !== requestId || activeChat.contextKey !== state.contextKey) return false;
         setProxyStatus(proxy);
         if (proxy.busy === true) throw Object.assign(new Error('Apollo ещё обрабатывает предыдущий запрос. Вопрос сохранён — отправь его, когда агент освободится.'), { code: 'APOLLO_AGENT_BUSY' });
         if (proxy.available === false) throw new Error('Нет связи с Apollo Proxy. Проверь подключение и повтори отправку.');
@@ -233,7 +233,7 @@ function createDesignCheckController(options = {}) {
         if (!dispatched) return false;
       }
     }
-    return true;
+    return dispatched;
   }
   function cancelChat() {
     if (!activeChat) return false;

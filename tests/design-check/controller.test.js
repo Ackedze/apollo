@@ -368,3 +368,21 @@ test('a pending health check locks sending and stale results cannot add a questi
  controller.setContext('new');check.resolve({available:true,version:'test',busy:false});await first;
  assert.equal(sends,0);assert.equal(controller.getState().chat.messages.length,0);controller.destroy();
 });
+
+
+test('Stop during preflight restores an unsent draft whether health resolves or aborts',async()=>{
+ for(const reject of [false,true]) {
+  const check=deferred();let calls=0,sends=0;
+  const controller=createDesignCheckController({dialogue:{
+   status:()=>++calls===1?check.promise:Promise.resolve({available:true,busy:false}),
+   send:async()=>{sends++;return {text:'Reply'};},
+  }});
+  const sent=controller.sendChat('Unsent draft');
+  assert.equal(controller.cancelChat(),true);
+  if(reject)check.reject(Object.assign(new Error('Aborted'),{name:'AbortError'}));
+  else check.resolve({available:true,busy:false});
+  assert.equal(await sent,false,'The UI must restore a draft that never reached send');
+  assert.equal(sends,0);assert.equal(controller.getState().chat.messages.length,0);
+  assert.equal(controller.getState().chat.busy,false);controller.destroy();
+ }
+});

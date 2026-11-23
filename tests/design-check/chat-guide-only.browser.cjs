@@ -17,8 +17,10 @@ const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
    if(url.pathname==='/analyze'){
     const payload=JSON.parse(route.request().postData());payloads.push(payload);
     const text='**Подпись кнопки описывает действие.**\n\nГайд: HIG — [Buttons](https://developer.apple.com/design/human-interface-guidelines/buttons)';
-    const blocks=payloads.length===1?[{kind:'text',text}]:[{kind:'guide',family:'hig',text}];
-    body={success:true,source:'codex',provider:'codex',dialogueLibrary:'abm',result:text,answerBlocks:blocks};
+    const library=['iOS','Android'].includes(payload.dialoguePlatform)?'abm':'ab';
+    const blocks=library==='ab'?[{kind:'text',text:'Ответ АБ.'}]:payloads.length===1?[{kind:'text',text}]:[{kind:'guide',family:'hig',text}];
+    blocks.push({kind:'text',text:'*Токены: всего 120 · вход 100 (из них кеш: 0) · выход 20.*'});
+    body={success:true,source:'codex',provider:'codex',dialogueLibrary:library,knowledgeRelease:{contentVersion:'fixture',source:library==='abm'?'ds-ai-hub-abm':'ds-ai-hub'},result:blocks.map(b=>b.text).join('\n\n'),answerBlocks:blocks};
    }
    await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(body)});
   });
@@ -32,10 +34,23 @@ const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
   assert((await first.locator('.apollo-guide-recommendations__source').innerText()).startsWith('Гайд: HIG'));
   assert.equal(await first.getByRole('link',{name:'Buttons',exact:true}).getAttribute('href'),'https://developer.apple.com/design/human-interface-guidelines/buttons');
   assert.equal(await first.locator('.apollo-guide-recommendations__source .md-p').evaluate(node=>getComputedStyle(node).fontSize),'13px');
+  assert.equal(await first.locator('.design-check-provenance').count(),0);
+  await first.locator('.apollo-answer-details > summary').click();
+  assert((await first.locator('.apollo-answer-details').innerText()).includes('всего 120'));
   await page.waitForTimeout(250);await page.screenshot({path:path.join(output,'guide-only-inline.png')});
   await input.fill('Как назвать кнопку?');await send.click();await page.waitForFunction(()=>document.querySelectorAll('.assistant-copy').length===2);
   const card=page.locator('.assistant-copy').last().locator('.apollo-guide-recommendations');assert.equal(await card.count(),1);assert.equal(await card.evaluate(node=>node.open),false);
   assert.equal(payloads.length,2);assert(payloads.every(p=>p.dialoguePlatform==='iOS'));assert.deepEqual(errors,[]);
+  await page.locator('[title="Платформа"] > button').click();
+  await page.getByRole('group',{name:'Платформа',exact:true}).getByRole('button',{name:'Desktop',exact:true}).click();
+  await input.fill('Вопрос по АБ');await send.click();
+  await page.waitForFunction(()=>document.querySelectorAll('.assistant-copy').length===3);
+  const ab=page.locator('.assistant-copy').last();
+  assert.equal(await ab.locator('.design-check-provenance').count(),1);
+  assert.equal(await first.locator('.design-check-provenance').count(),0);
+  await ab.locator('.apollo-answer-details > summary').click();
+  assert((await ab.locator('.design-check-provenance').innerText()).includes('Агент: Codex'));
+  await page.screenshot({path:path.join(output,'abm-hidden-ab-preserved.png')});
   console.log('PASS: explicit guide replies stay inline with verified links; ordinary fallback replies retain the collapsed guide card.');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1});

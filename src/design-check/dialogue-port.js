@@ -61,7 +61,7 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
         answerBlocks = body.answerBlocks.map(block => block.kind === 'guide'
           ? {kind:'guide',family:block.family,text:block.text, ...(block.question !== undefined ? {question:block.question} : {})} : {kind:'text',text:block.text, ...(block.questionHeading ? {questionHeading:true} : {})});
       }
-      return { answerBlocks, text: body.result, source: body.source || source, returnedSource: body.source ?? null, provider: body.provider ?? null, knowledgeRelease: body.knowledgeRelease ?? null };
+      return { dialogueLibrary: ['ab','abm'].includes(body.dialogueLibrary) ? body.dialogueLibrary : undefined, answerBlocks, text: body.result, source: body.source || source, returnedSource: body.source ?? null, provider: body.provider ?? null, knowledgeRelease: body.knowledgeRelease ?? null };
     } };
 }
 module.exports = { createExistingDialoguePort };

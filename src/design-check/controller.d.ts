@@ -14,7 +14,7 @@ export type Preferences = { schemaVersion: 'apollo.design-check-ui-preferences.v
   settings: Partial<UISettings>; agentSource: 'langflow' | 'codex' };
 export type DialoguePort = { cancelScope: 'client-only';
   send(input: { requestId: string; source: string; question: string; dialogue: { role: string; text: string }[];
-    dialoguePlatform: 'Desktop' | 'MobileWeb' | 'iOS' | 'Android'; context: null; signal: AbortSignal }): Promise<{ text: string; source?: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown; answerBlocks?: AnswerBlock[] }>;
+    dialoguePlatform: 'Desktop' | 'MobileWeb' | 'iOS' | 'Android'; context: null; signal: AbortSignal }): Promise<{ text: string; source?: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; dialogueLibrary?: 'ab' | 'abm'; knowledgeRelease?: unknown; answerBlocks?: AnswerBlock[] }>;
   status?(input?: { signal?: AbortSignal }): Promise<{ available: boolean; version: string | null; busy?: boolean | null }>;
   resetSession?(): void;
 };
@@ -34,7 +34,7 @@ export type ControllerState = {
   preferenceStatus: string; preferenceError: string; auditReady: boolean; auditBusy: boolean; auditProgress: string; auditStale: boolean;
   documentPageAvailable: boolean;documentActions:any;documentAction:{busy:boolean;status:string;message:string;[key:string]:unknown}; documentAudit: DocumentAuditState; auditError: string; audit: Audit | null; contextKey: string | null; tabs: Record<string, TabData>;
   chat: { open: boolean; source: 'langflow' | 'codex'; busy: boolean; error: string; notice: string; unreadCount: number;
-    messages: { role: 'user' | 'assistant'; text: string; requestId: string; source: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown; answerBlocks?: AnswerBlock[] }[];
+    messages: { role: 'user' | 'assistant'; text: string; requestId: string; source: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; dialogueLibrary?: 'ab' | 'abm'; knowledgeRelease?: unknown; answerBlocks?: AnswerBlock[] }[];
     transport: 'configured' | 'not-connected'; cancelScope: string | null;
     proxy: { available: boolean | null; version: string | null; busy: boolean | null } };
 };

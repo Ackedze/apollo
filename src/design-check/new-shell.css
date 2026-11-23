@@ -236,3 +236,7 @@
 .apollo-new .apollo-answer-separator { border:0; border-top:1px solid rgba(0,0,0,.08); margin:24px 0; }
 
 .apollo-new .apollo-chat-waiting { margin:16px 0; color:var(--apollo-muted); font:400 14px/20px "Apollo Alfa",sans-serif; }
+
+.apollo-new .apollo-answer-inline-guide { margin:0 0 24px; font-size:14px; line-height:20px; }
+
+.apollo-new .apollo-guide-recommendations__source .md-p { font-size:13px; line-height:20px; }

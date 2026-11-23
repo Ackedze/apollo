@@ -16,7 +16,7 @@ function displayQuestionHeading(value: string) {
   return '**' + displayQuestion(value.replace(/^\*\*([\s\S]*)\*\*$/u, '$1')) + '**';
 }
 function displayMissingQuestions(value: string) {
-  if (!value.startsWith('**Не нашёл ответа в паттернах АБМ.')) return value;
+  if (!/^\*\*Не нашёл ответа в (?:паттернах АБМ|выбранных гайдах)\./u.test(value)) return value;
   return value.replace(/^- (.+)$/gmu, (_match, question: string) => '- ' + displayQuestion(question));
 }
 
@@ -31,7 +31,9 @@ function RuleText({ text }: { text: string }) {
 
 function PatternText({ text }: { text: string }) {
   const caption = patternCaption(text);
-  if (!caption) return <MarkdownMessage text={text} />;
+  if (!caption) return /^Гайд: (?:HIG|Material 2|Material 3) — /mu.test(text)
+    ? <div className="apollo-answer-inline-guide"><GuideText text={text} inline /></div>
+    : <MarkdownMessage text={text} />;
   const paragraphs = text.split(/\n\s*\n/).slice(0, -1), rules: string[] = [];
   let pending: string[] = [];
   for (const paragraph of paragraphs) {
@@ -45,12 +47,12 @@ function PatternText({ text }: { text: string }) {
   </div>;
 }
 
-function GuideText({ text }: { text: string }) {
+function GuideText({ text, inline = false }: { text: string; inline?: boolean }) {
   const groups: { text: string; caption: string }[] = [];
   let pending: string[] = [];
   for (const paragraph of text.split(/\n\s*\n/)) {
     if (/^Гайд: (?:HIG|Material 2|Material 3) — /u.test(paragraph)) {
-      groups.push({ text: pending.join('\n\n'), caption: paragraph.replace(/^Гайд: (?:HIG|Material 2|Material 3) — /u, '') });
+      groups.push({ text: pending.join('\n\n'), caption: inline ? paragraph : paragraph.replace(/^Гайд: (?:HIG|Material 2|Material 3) — /u, '') });
       pending = [];
     } else pending.push(paragraph);
   }

@@ -115,3 +115,15 @@ test('only a change of pattern inserts a divider and it precedes the next questi
  assert.equal(d.querySelectorAll('.apollo-answer-source').length,3);
  close();dom.window.close();
 });
+
+
+test('explicit guide text blocks render inline with their full source caption while fallback guides keep the card',()=>{
+ const dom=new JSDOM('<div id="root"></div>',{runScripts:'dangerously'});dom.window.eval(bundle);const d=dom.window.document;
+ const text='**Используй понятную подпись.**\n\nГайд: HIG — [Buttons](https://developer.apple.com/design/human-interface-guidelines/buttons)';
+ const close=dom.window.GuideCardTest.mount(d.querySelector('#root'),{text,blocks:[{kind:'text',text}]});
+ assert.equal(d.querySelectorAll('.apollo-guide-recommendations').length,0);
+ assert.equal(d.querySelectorAll('.apollo-answer-inline-guide').length,1);
+ assert(d.querySelector('.apollo-guide-recommendations__source').textContent.startsWith('Гайд: HIG — Buttons'));
+ assert.equal(d.querySelector('a').href,'https://developer.apple.com/design/human-interface-guidelines/buttons');
+ assert.equal(d.querySelectorAll('.apollo-answer-source').length,0);close();dom.window.close();
+});

@@ -1,15 +1,20 @@
+const {yieldToHost}=require('../../document-audit/reads');
+
+export const designTraversalBudget={maxTimeMs:32,maxVisits:256,hostYield:yieldToHost as ()=>Promise<void>|null};
+
 /** Let native UI messages run even when every awaited read is already cached. */
 export function createCooperativeYield(
   guard: () => void = () => {},
   measureWait?: (wait: () => Promise<void>) => Promise<void>,
+  budget?: typeof designTraversalBudget,
 ) {
   let resumedAt = Date.now();
   let visited = 0;
-  const wait = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+  const wait = () => budget?.hostYield() ?? new Promise<void>((resolve) => setTimeout(resolve, 0));
   return async (): Promise<void> => {
     guard();
     visited += 1;
-    if (visited < 256 && Date.now() - resumedAt < 8) return;
+    if (visited < (budget?.maxVisits ?? 256) && Date.now() - resumedAt < (budget?.maxTimeMs ?? 8)) return;
     await (measureWait ? measureWait(wait) : wait());
     guard();
     resumedAt = Date.now();

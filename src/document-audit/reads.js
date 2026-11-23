@@ -63,4 +63,4 @@ function readError(error,context){
  failure.nativeRead=error?.nativeRead||context;
  return failure;
 }
-module.exports={boundedRead,cooperativeRead,parallel,retryableRead,readError,readScheduling,setHostYieldTransport,completeHostYield};
+module.exports={boundedRead,cooperativeRead,parallel,retryableRead,readError,readScheduling,setHostYieldTransport,completeHostYield,yieldToHost};

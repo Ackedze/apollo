@@ -3,7 +3,7 @@ import { createAuditDataClient } from './data-client';
 import { createV3AuditBridge } from './bridge';
 import { FindingActionRegistry } from './remediation/findingActionRegistry';
 import { createAuditSession } from './remediation/session';
-import { createCooperativeYield } from './utils/promisePool';
+import { createCooperativeYield, designTraversalBudget } from './utils/promisePool';
 import { sha256Hex } from './utils/sha256';
 import { readOfflineAuditIndex, type OfflineAuditIndex } from './embedded-data';
 import {createComponentTimings} from './component-timings';
@@ -55,7 +55,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
     scope.staleActions.add(id);affected.push(id);
    }
   }
-  if(affected.length)post({type:'v3-audit-actions-invalidated',schemaVersion:p.BRIDGE,runId:scope.message.requestId,actionIds:affected,trace:scope.traceSnapshot()});
+  if(affected.length&&accepted.has(scope.message.requestId))post({type:'v3-audit-actions-invalidated',schemaVersion:p.BRIDGE,runId:scope.message.requestId,actionIds:affected,trace:scope.traceSnapshot()});
  }
  function captureRun(message:any,internal=false,rootIds?:string[]){
   if(closed||capture||operation&&!internal||!internal&&options.isUnavailable()){post({type:'v3-audit-error',schemaVersion:p.BRIDGE,requestId:message.requestId,code:'AUDIT_BUSY'});return;}
@@ -86,7 +86,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
   scope.registry=new FindingActionRegistry();scope.registry.reset();
   scope.bridge=createV3AuditBridge({data:scope.data,offlineIndex:scope.offlineIndex,snapshot:scope.offlineIndex||textOnly?scope.observation.snapshot:undefined,pluginVersion:options.pluginVersion,findingActions:scope.registry,componentTimings,
    isUnavailable:()=>false,readRevision:options.readRevision,
-   onGuard:guard=>{scope.guard=traceGuard(scope,guard);scope.checkpoint=createCooperativeYield(scope.guard);},onBusy:()=>notifyBusy(),
+   onGuard:guard=>{scope.guard=traceGuard(scope,guard);scope.checkpoint=createCooperativeYield(scope.guard,undefined,scope.offlineIndex?designTraversalBudget:undefined);},onBusy:()=>notifyBusy(),
    prepareRoots:async(roots,guard,isSharedKey)=>{
     if(scope.offlineIndex){
      componentTimings!.start();
@@ -100,15 +100,24 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
    assertPublishReady:()=>assertReady(scope),
    finish:async(guard,publish)=>{
     scope.stage='publish';let round=0;
+    if(scope.offlineIndex){
+     scope.trace.add('publish-barrier',Object.assign(context(scope),{round:1}));
+     await scope.checkpoint();
+     let impact:Map<string,ReadonlySet<string>|null>|null=null;
+     try{impact=scope.observation.finishCapture(guard);}
+     catch{guard();scope.trace.add('capture-notification-unreadable',context(scope),true);}
+     scope.captureUnverified=impact===null;
+     scope.capturePartial=impact===null||impact.size>0;
+     if(impact?.size)invalidateActions(scope,impact);
+     if(scope.capturePartial)scope.trace.add('capture-coverage',Object.assign(context(scope),sourceChange(scope,'capture'),{outcome:'partial'}));
+     guard();scope.trace.add('publish-ready',context(scope));publish();return;
+    }
     while(true){
      scope.trace.add('publish-barrier',Object.assign(context(scope),{round:++round}));
      await scope.checkpoint();await settleNotifications(scope,guard);
      const serial=scope.notificationSerial;
-     // Offline findings describe the captured snapshot. Writes verify the live scene in act().
-     if(!scope.offlineIndex){
-      await scope.observation.verify(guard);
-      guard();
-     }
+     await scope.observation.verify(guard);
+     guard();
      if(scope.notifications.size||scope.notificationSerial!==serial){scope.trace.add('publish-retry',Object.assign(context(scope),{previousSerial:serial}));continue;}
      scope.trace.add('publish-ready',context(scope));
      publish();return;
@@ -117,15 +126,23 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
    prepareResult:async(result,context)=>{
     scope.stage='actions';scope.trace.add('session-start',{stage:scope.stage});
     await settleNotifications(scope,context.guard);
-    if(scope.offlineIndex)await scope.observation.finishCapture(context.guard);
     scope.pageId=context.pageId;scope.revision=context.revision;
-    scope.session=await createAuditSession(result,scope.registry,context.pageId,context.guard,scope.offlineIndex?scope.observation.observedNode:undefined);
     scope.staleActions=new Set();
-    scope.actionDependencies=new Map((scope.offlineIndex?scope.session.actionScopes():[]).map((action:any)=>[
-     action.id,scope.observation.dependencies(action.targets,action.paint,action.page?figma.currentPage:undefined),
-    ]));
+    scope.actionDependencies=new Map();
+    try{
+     scope.session=await createAuditSession(result,scope.registry,context.pageId,context.guard,scope.offlineIndex?scope.observation.observedNode:undefined);
+     if(scope.offlineIndex)for(const action of scope.session.actionScopes()){
+      scope.actionDependencies.set(action.id,scope.observation.dependencies(action.targets,action.paint,action.page?figma.currentPage:undefined));
+     }
+    }catch(error){
+     if(!scope.offlineIndex)throw error;
+     context.guard();
+     scope.session=null;
+     scope.trace.add('session-unavailable',{stage:scope.stage,outcome:'partial',code:'AUDIT_SESSION_UNAVAILABLE'},true);
+    }
     await settleNotifications(scope,context.guard);
-    result.mutationAvailable=options.canMutate();scope.trace.add('session-ready',{stage:scope.stage});
+    result.mutationAvailable=scope.session!==null&&options.canMutate();
+    if(scope.session)scope.trace.add('session-ready',{stage:scope.stage});
    },
    post:message=>{
     if(capture!==scope)return;
@@ -145,6 +162,17 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
     }
     if(terminal)reply.trace=scope.traceSnapshot();
     if(message.type==='v3-audit-result'&&scope.compactSummary)reply.result.athenaIndex=scope.compactSummary;
+    if(message.type==='v3-audit-result'&&scope.offlineIndex){
+     const gaps=(reply.result.offlineCoverage?.gaps??[]).slice();
+     if(!scope.session)gaps.push('capture-session-unavailable');
+     if(scope.capturePartial){
+      gaps.push('capture-source-changed');
+      if(scope.captureUnverified)reply.result.mutationAvailable=false;
+      reply.staleActionIds=Array.from(scope.staleActions);
+      reply.sourceChange=sourceChange(scope,'capture');
+     }
+     reply.result.offlineCoverage={gaps};
+    }
     post(reply);notifyBusy();
    }});
   capture=scope;notifyBusy();scope.bridge.accept(Object.assign({},message,{rootIds:ids}));
@@ -152,7 +180,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
  function actionReply(task:any,type:string,extra:any){task.trace.add('operation-terminal',Object.assign(context(task.scope),['AUDIT_SOURCE_CHANGED','AUDIT_ACTION_SOURCE_CHANGED'].includes(extra.code)?sourceChange(task.scope,'operation'):{},{stage:task.stage,code:extra.code,outcome:type==='v3-audit-operation-result'?'success':type==='v3-audit-operation-cancelled'?'cancelled':'error',mutationStarted:task.started}),type!=='v3-audit-operation-result');post(Object.assign({type,schemaVersion:p.BRIDGE,requestId:task.requestId,runId:task.scope.message.requestId,trace:task.trace.snapshot()},extra));}
  async function focus(message:any){
   const scope=accepted.get(message.runId);
-  if(!scope)return post({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:message.requestId,runId:message.runId,code:'AUDIT_SESSION_UNAVAILABLE'});
+  if(!scope?.session)return post({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:message.requestId,runId:message.runId,code:'AUDIT_SESSION_UNAVAILABLE'});
   focusing?.cancel();
   const task={scope,requestId:message.requestId,stage:'focus',started:false,trace:createRunTrace({
    requestId:message.requestId,runId:message.runId,kind:scope.message.kind,side:'native',pluginVersion:options.pluginVersion,
@@ -184,7 +212,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
  async function act(message:any){
   if(busy()||options.isUnavailable()){post({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:message.requestId,runId:message.runId,code:'AUDIT_BUSY'});return;}
   const scope=accepted.get(message.runId);
-  if(!scope){post({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:message.requestId,runId:message.runId,code:'AUDIT_SESSION_UNAVAILABLE'});return;}
+  if(!scope?.session){post({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:message.requestId,runId:message.runId,code:'AUDIT_SESSION_UNAVAILABLE'});return;}
   focusing?.cancel();
   let reject!:(error:Error)=>void;const cancelled=new Promise<never>((_,fail)=>{reject=fail;});
   const task:any={scope,requestId:message.requestId,cancelled:false,started:false,reject,stage:message.type.replace('v3-audit-',''),trace:createRunTrace({requestId:message.requestId,runId:scope.message.requestId,kind:scope.message.kind,side:'native',pluginVersion:options.pluginVersion})};operation=task;scope.ownerRequestId=task.requestId;
@@ -208,6 +236,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
   let outcome:any=null,error:any=null;
   const work=async()=>{
    if(textReplacement)task.finishTextPreparation=textPhase('text-preparation');
+   if(scope.captureUnverified)throw Error('AUDIT_ACTION_SOURCE_CHANGED');
    guard();await settleNotifications(scope,guard);
    const finishVerification=paint?task.trace.startPhase('source-verification'):undefined;
    let verified=false;
@@ -328,6 +357,11 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
     }
     scope.notificationSerial++;
     const serial=scope.notificationSerial,trace=traceFor(scope);trace.add('notification',Object.assign(context(scope),{changes:event?.nodeChanges,totalChanges:Array.isArray(event?.nodeChanges)?event.nodeChanges.length:0}));
+    if(scope.offlineIndex&&capture===scope){
+     scope.observation.queueCaptureChange(event);
+     trace.add('notification-result',Object.assign(context(scope),{previousSerial:serial,outcome:'queued'}));
+     continue;
+    }
     // First-write safety retains the prior conservative event barrier.
     if(scope.offlineIndex&&accepted.get(scope.message.requestId)===scope){
      const check=scope.observation.impacts(event).then((impact:Map<string,ReadonlySet<string>|null>|null)=>{

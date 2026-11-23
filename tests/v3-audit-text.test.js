@@ -5,11 +5,11 @@ const settings={pickerLabel:'Desktop',pageTypeId:null,shellAuditEnabled:false};
 const tick=()=>new Promise(setImmediate),ok=value=>({ok:true,json:async()=>value});
 function captured(id){return{runId:id,dataId:'a'.repeat(64),textTargets:[{nodeId:'text',focusActionId:'v3-focus-0'}],textReport:{reportId:id+':texts',reportKind:'apollo-text-audit-report',summary:{scannedTextNodes:1},facts:{texts:[{node:{id:'text',visible:true},text:'Тест',ancestors:[]}]}}};}
 function setup(options={}){const sent=[],client=createV3UiClient(Object.assign({send:message=>sent.push(message),pollDelay:0},options));return{client,sent,start:(id,kind='texts')=>client.start({requestId:id,kind,uiPreferences:settings}),reply:(id,result,kind='texts')=>client.accept({type:'v3-audit-result',schemaVersion:p.BRIDGE,requestId:id,kind,result})};}
-test('native text capture skips component policy assets and keeps verification and navigation',async t=>{
+for(const scopeName of ['', ' \t '])test('native text capture allows unnamed scope '+JSON.stringify(scopeName)+' and keeps verification and navigation',async t=>{
  const path=require('node:path'),crypto=require('node:crypto'),esbuild=require('esbuild');
  const built=esbuild.buildSync({entryPoints:[path.join(__dirname,'../src/v3-audit/native-port.ts')],bundle:true,write:false,platform:'node',format:'cjs',supported:{'object-rest-spread':false}});
  const mod={exports:{}};new Function('require','module','exports',built.outputFiles[0].text)(require,mod,mod.exports);
- const page={id:'page',type:'PAGE',name:'Example'},root={id:'card',type:'FRAME',name:'Card',width:320,visible:true,parent:page};
+ const page={id:'page',type:'PAGE',name:'Example'},root={id:'card',type:'FRAME',name:scopeName,width:320,visible:true,parent:page};
  const text={id:'text',type:'TEXT',name:'Title',visible:true,opacity:1,characters:'Check this',parent:root};
  root.children=[text];page.children=[root];page.selection=[root];
  let focused;
@@ -38,6 +38,8 @@ test('native text capture skips component policy assets and keeps verification a
  assert.equal(captured.type,'v3-audit-result',captured.code);
  assert.equal(captured.result.dataId,manifest.dataId);
  assert.equal(captured.result.textReport.facts.scopes[0].width,320);
+ assert.equal(captured.result.textReport.facts.scopes[0].name,scopeName);
+ assert.equal(captured.result.textReport.facts.scopes[0].nodeId,root.id);
  assert.equal(captured.result.textReport.facts.texts[0].node.id,text.id);
  assert(!messages.some(message=>message.type==='v3-audit-data-request'&&message.operation==='asset'));
  send('v3-audit-verify','verify',{runId:'capture'});

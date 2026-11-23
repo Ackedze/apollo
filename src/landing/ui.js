@@ -1,6 +1,7 @@
 'use strict';
 const {createOpaqueId}=require('../design-check/opaque-id');
 const assets=require('../design-check/assets');
+const historyIcons=require('./assets/history-icons.json');
 const {mountGenerationSelect,styleGenerationSettings}=require('../GenerationSelect');
 require('./ui.css');
 const FLOW='direct-cli-mcp-v1';
@@ -14,22 +15,51 @@ Object.assign(errors,{LANDING_DIRECT_SKILL_REQUIRED:'Для прямой ген�
 function mountLanding({root,send,isUnavailable=()=>false,isVisible=()=>true,readPlatform=()=> 'Desktop',onBusy=()=>{},request=fetch,beforeOperation}){
  root.classList.add('landing-workspace');root.innerHTML=`
   <h2 class="design-check-sr-only">Генерация</h2>
-  <div class="landing-history-label"><label class="design-check-sr-only" for="landing-history">История генерации</label><select id="landing-history" data-history aria-label="История генерации"><option value="">История чатов</option></select><div data-history-picker></div></div>
-  <section id="landing-delete-confirm" class="landing-delete-confirm" data-delete-confirm hidden role="group" aria-labelledby="landing-delete-title"><p id="landing-delete-title">Удалить этот чат из истории?</p><p>Макет в Figma и диагностическая копия чата сохранятся.</p><div><button type="button" data-delete-cancel>Отмена</button><button type="button" data-delete-confirm-button>Удалить из истории</button></div></section>
-  <div class="landing-conversation" data-conversation><div class="landing-empty" data-start><h3>Что создадим?</h3><p>Опиши задачу — уточним детали и соберём макет в этом файле Figma.</p></div><div data-messages role="log" aria-label="Диалог о макете" aria-live="polite" aria-relevant="additions"></div><section data-structure hidden aria-label="Подтверждение структуры"><a data-structure-link target="_blank" rel="noopener noreferrer">Показать каркас в Figma</a><div class="landing-structure-actions"><button type="button" data-structure-approve>Структура подходит</button><button type="button" data-structure-revise>Изменить структуру</button></div></section><section data-result hidden aria-label="Результат генерации"></section></div>
+  <button type="button" class="landing-history-icon landing-history-launch" data-history-toggle aria-label="История чатов" aria-haspopup="dialog" aria-expanded="false" aria-controls="landing-history"><img alt="" data-history-icon></button>
+  <div class="landing-content" data-content>
+  <div class="landing-empty" data-start><h3>Что создадим?</h3><p>Опиши задачу — уточним детали<br>и соберём макет в этом файле Figma</p></div>
+  <div class="landing-conversation" data-conversation><div data-messages role="log" aria-label="Диалог о макете" aria-live="polite" aria-relevant="additions"></div><section data-structure hidden aria-label="Подтверждение структуры"><a data-structure-link target="_blank" rel="noopener noreferrer">Показать каркас в Figma</a><div class="landing-structure-actions"><button type="button" data-structure-approve>Структура подходит</button><button type="button" data-structure-revise>Изменить структуру</button></div></section><section data-result hidden aria-label="Результат генерации"></section></div>
   <p class="landing-notice" data-status role="status" aria-live="polite"></p>
-  <details class="landing-details"><summary>Подробности</summary><pre data-details></pre><button type="button" data-export>Скачать историю и результат</button><details><summary>История прежней генерации</summary><div data-legacy></div><button type="button" data-load-legacy>Загрузить историю</button></details></details>
+  <details class="landing-details" data-diagnostics hidden><summary>Подробности</summary><pre data-details></pre><button type="button" data-export>Скачать историю и результат</button></details>
   <form class="landing-composer generation-prompt-form" data-form>
    <div class="apollo-message-field"><label class="design-check-sr-only" for="generation-prompt">Бриф или уточнение</label><textarea id="generation-prompt" data-input rows="1" maxlength="32000" placeholder="Опиши задачу"></textarea><button type="submit" class="generation-send" data-submit aria-label="Отправить сообщение" title="Отправить сообщение"><img data-send-icon width="24" height="24" alt=""></button><button type="button" class="generation-send is-stop" data-stop hidden aria-label="Остановить" title="Остановить"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" /></svg></button></div>
    <div class="apollo-generation-options"><button type="button" class="apollo-new-chat" data-new><span class="apollo-option-icon"><span class="apollo-option-plus" data-plus></span></span><span>Новый чат</span></button><div class="apollo-generation-options-right"><select data-kind aria-label="Что генерируем"><option value="ab-generate-custom-landing">Лендинг</option></select><div data-kind-picker></div><div class="landing-settings"><button type="button" data-settings-toggle aria-expanded="false" aria-controls="landing-screen-settings"><span>Настройки экрана</span><span class="apollo-option-icon"><span class="apollo-option-chevron" data-chevron></span></span></button><div id="landing-screen-settings" data-screen-settings hidden><label>Где собрать лендинг?<select data-placement aria-label="Место лендинга"><option value="new">Создать новую секцию</option></select></label><p data-platform>Desktop · текущий файл Figma</p></div></div></div></div>
-  </form>`;
- const $=name=>root.querySelector('[data-'+name+']'),tickets=new Map();let chat=null,available=false,busy=false,inFlight=false,closed=false,initialized=false,version=0,timer=null,nativeContext=null,linkedContext=null,lastMessages='',lastRelease='',activeNewId=null,lastError=null,placementChosen=false,skillRegistry=false,retryDelay=500,canDelete=false,deleting=false,deleteTarget=null;
+  </form>
+  </div>
+  <div class="landing-history-layer" data-history-layer hidden>
+   <div class="landing-history-backdrop" data-history-backdrop aria-hidden="true"></div>
+   <section id="landing-history" class="landing-history-panel" role="dialog" aria-labelledby="landing-history-title">
+    <header class="landing-history-header"><h3 id="landing-history-title">История чатов</h3><button type="button" class="landing-history-icon" data-history-close aria-label="Закрыть историю"><img alt="" data-history-close-icon></button></header>
+    <div class="landing-history-actions"><button type="button" class="landing-history-new" data-history-new>Новый чат<img alt="" data-history-plus></button></div>
+    <div class="landing-history-scroll">
+     <ul class="landing-history-list" data-history-list aria-label="Сохранённые чаты"></ul>
+     <p class="landing-history-note" data-history-empty hidden>Сохранённых чатов пока нет.</p>
+     <details class="landing-details landing-history-legacy"><summary>История прежней генерации</summary><div data-legacy></div><button type="button" data-load-legacy>Загрузить историю</button></details>
+    </div>
+    <p class="landing-history-note landing-history-status" data-history-note role="status"></p>
+   </section>
+  </div>`;
+ const $=name=>root.querySelector('[data-'+name+']'),tickets=new Map();let chat=null,available=false,busy=false,inFlight=false,closed=false,initialized=false,version=0,timer=null,nativeContext=null,linkedContext=null,lastMessages='',lastRelease='',activeNewId=null,lastError=null,placementChosen=false,skillRegistry=false,retryDelay=500,canDelete=false,deleting=false;
+ const deleteRevisions=new Map();
  $('send-icon').src=assets.sendCircle;$('plus').style.maskImage='url("'+assets.newChat+'")';$('chevron').style.maskImage='url("'+assets.chevron+'")';
+ $('history-icon').src=historyIcons.history;$('history-close-icon').src=historyIcons.close;$('history-plus').src=historyIcons.plus;
  styleGenerationSettings($('screen-settings'),$('settings-toggle'));
- const kindPicker=mountGenerationSelect({host:$('kind-picker'),select:$('kind'),onOpen:()=>{settings(false);historyPicker.close(false);}});
- const historyPicker=mountGenerationSelect({host:$('history-picker'),select:$('history'),label:'История чатов',onOpen:()=>{settings(false);kindPicker.close(false);deletion(false);},onRemove:requestDeletion});
+ const kindPicker=mountGenerationSelect({host:$('kind-picker'),select:$('kind'),onOpen:()=>settings(false)});
+ const historyDate=new Intl.DateTimeFormat('ru-RU',{dateStyle:'short',timeStyle:'short'});
+ let historyRevision=0;
+ function historyOpen(open,restoreFocus=true){
+  const layer=$('history-layer'),trigger=$('history-toggle');
+  const isOpen=!layer.hidden;if(open===isOpen)return;
+  if(open){settings(false);kindPicker.close(false);$('history-note').textContent='';}
+  layer.hidden=!open;$('content').inert=open;trigger.tabIndex=open?-1:0;
+  trigger.setAttribute('aria-expanded',String(open));
+  if(open){controls();$('history-close').focus();void history().catch(()=>{if(!closed&&!layer.hidden)$('history-note').textContent='Не удалось обновить историю. Открой её снова.';});}
+  else if(restoreFocus)trigger.focus();
+ }
+ $('history-toggle').onclick=()=>historyOpen(true);
+ $('history-close').onclick=()=>historyOpen(false);
+ $('history-backdrop').onclick=()=>historyOpen(false);
  function settings(open){$('screen-settings').hidden=!open;$('settings-toggle').setAttribute('aria-expanded',String(open));}
- function deletion(open){$('delete-confirm').hidden=!open;if(!open&&!deleting)deleteTarget=null;if(open)$('delete-cancel').focus();}
  function updateContext(value){if(linkedContext&&linkedContext.pageId!==value.pageId)linkedContext=null;nativeContext=value;const select=$('placement'),previous=select.value;select.replaceChildren(new Option('Создать новую секцию','new'));for(const section of value.sections||[])select.append(new Option('В секции: '+section.name,'section:'+section.id));select.value=placementChosen&&Array.from(select.options).some(o=>o.value===previous)?previous:value.selectedSectionId?'section:'+value.selectedSectionId:'new';}
  function updateSkills(info){
   const select=$('kind'),previous=chat?.skillId||select.value;
@@ -45,8 +75,12 @@ function mountLanding({root,send,isUnavailable=()=>false,isVisible=()=>true,read
  }
  function placement(){const value=$('placement').value;return value.startsWith('section:')?{mode:'section',sectionId:value.slice(8)}:{mode:'new-section',sectionId:null};}
  const outside=event=>{if(!$('settings-toggle').parentNode.contains(event.target))settings(false);};
- const escape=event=>{if(event.key==='Escape'&&!$('delete-confirm').hidden&&!deleting){event.preventDefault();deletion(false);historyPicker.focus();return;}if(event.key==='Escape'&&!$('screen-settings').hidden){event.preventDefault();settings(false);$('settings-toggle').focus();}};
- document.addEventListener('pointerdown',outside);root.addEventListener('keydown',escape);$('settings-toggle').onclick=async()=>{kindPicker.close(false);historyPicker.close(false);const open=$('screen-settings').hidden,token=version;if(open&&!chat){try{const value=await context();if(token!==version)return;updateContext(value);}catch{notice('Не удалось прочитать текущую страницу Figma.');return;}}settings(open);};
+ const escape=event=>{
+  if(event.key!=='Escape'||event.defaultPrevented)return;
+  if(!$('history-layer').hidden){event.preventDefault();historyOpen(false);return;}
+  if(!$('screen-settings').hidden){event.preventDefault();settings(false);$('settings-toggle').focus();}
+ };
+ document.addEventListener('pointerdown',outside);root.addEventListener('keydown',escape);$('settings-toggle').onclick=async()=>{kindPicker.close(false);const open=$('screen-settings').hidden,token=version;if(open&&!chat){try{const value=await context();if(token!==version)return;updateContext(value);}catch{notice('Не удалось прочитать текущую страницу Figma.');return;}}settings(open);};
  const legacy=require('../generation/session/client').createSessionClient(send);
  function readCanvasContext(){return new Promise((resolve,reject)=>{const requestId='landing:'+createOpaqueId(),operation='context',t=setTimeout(()=>{tickets.delete(requestId);reject(Object.assign(Error('LANDING_CONTEXT_TIMEOUT'),{code:'LANDING_CONTEXT_TIMEOUT'}));},30000);tickets.set(requestId,{operation,resolve,reject,t});try{send({type:'landing-canvas',requestId,operation,payload:{}});}catch(e){clearTimeout(t);tickets.delete(requestId);reject(e);}});}
  async function api(route,body){const abort=new AbortController(),t=setTimeout(()=>abort.abort(),15000);let serverError=false;try{const response=await request('http://localhost:3001/landing/'+route,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body),signal:abort.signal});const value=await response.json();if(!response.ok||value.success!==true){serverError=true;const code=value.code||'LANDING_PROXY_UNAVAILABLE';throw Object.assign(Error(code),{code,retryable:['LANDING_PROXY_UNAVAILABLE','LANDING_UNAVAILABLE'].includes(code)});}return value;}catch(e){if(!e.code)e.code='LANDING_PROXY_UNAVAILABLE';if(!serverError)e.retryable=true;throw e;}finally{clearTimeout(t);}}
@@ -56,14 +90,17 @@ function mountLanding({root,send,isUnavailable=()=>false,isVisible=()=>true,read
   const keys=new Set();for(const match of text.matchAll(/https:\/\/[^\s<>"']+/g)){try{const url=new URL(match[0]),key=/^\/(?:design|file)\/([A-Za-z0-9_-]{6,128})(?:\/|$)/.exec(url.pathname);if(['figma.com','www.figma.com'].includes(url.hostname)&&!url.username&&!url.password&&!url.port&&key)keys.add(key[1]);}catch{}}
   return keys.size===1?Array.from(keys)[0]:null;
  }
- function notice(text){$('status').textContent=text;}
+ function notice(text){const target=$('history-layer').hidden?'status':'history-note';$(target).textContent=text;}
  function controls(){
   const working=Boolean(chat&&WORKING.has(chat.status)),locked=inFlight||working;
   if(busy!==locked){busy=locked;onBusy(busy);}
   const unsupported=!['Desktop','desktop'].includes(readPlatform());
-  const currentOption=Array.from($('history').options).find(option=>option.value===chat?.id);if(currentOption&&currentOption.dataset.removeDisabled!==String(working))currentOption.dataset.removeDisabled=String(working);
-  $('start').hidden=Boolean(chat?.messages.length);$('history').disabled=locked;$('new').disabled=locked;$('kind').disabled=locked||Boolean(chat);$('placement').disabled=locked||Boolean(chat);$('settings-toggle').disabled=locked;
-  $('delete-confirm-button').disabled=locked||!deleteTarget||!canDelete||isUnavailable();$('delete-cancel').disabled=deleting;$('delete-confirm').setAttribute('aria-busy',String(deleting));$('delete-confirm-button').textContent=deleting?'Удаляем…':'Удалить из истории';if(working||!canDelete)deletion(false);
+  $('start').hidden=Boolean(chat?.messages.length);$('diagnostics').hidden=!chat;$('history-toggle').disabled=locked;$('history-new').disabled=locked;$('new').disabled=locked;$('kind').disabled=locked||Boolean(chat);$('placement').disabled=locked||Boolean(chat);$('settings-toggle').disabled=locked;
+  for(const button of $('history-list').querySelectorAll('[data-open-chat]')){
+   button.disabled=locked;
+   if(button.dataset.openChat===chat?.id)button.setAttribute('aria-current','true');else button.removeAttribute('aria-current');
+  }
+  for(const button of $('history-list').querySelectorAll('[data-delete-chat]'))button.disabled=locked||button.dataset.working==='true'||isUnavailable();
   $('input').disabled=locked||!available||isUnavailable()||unsupported||Boolean(chat?.historical);
   $('submit').disabled=locked||!available||isUnavailable()||unsupported||Boolean(chat?.historical)||!$('input').value.trim();
   $('submit').hidden=working;$('submit').setAttribute('aria-label','Отправить сообщение');
@@ -79,7 +116,8 @@ function mountLanding({root,send,isUnavailable=()=>false,isVisible=()=>true,read
    const error=chat.historical?null:chat.error||lastError;notice(error?error.retryable?'Нет связи с Proxy. Повторяем подключение; макет сохранён.':errors[error.code]||'Сборка прервана. История и макет сохранены; подробности доступны ниже.':chat.messages.at(-1)?.role==='assistant'&&chat.messages.at(-1)?.text===chat.message?'':chat.message||'');$('details').textContent=JSON.stringify({status:chat.status,revision:chat.revision,source:chat.source,execution:chat.execution,historical:chat.historical||false,planning:chat.planning,verification:chat.result?.verification||null,sources:chat.sources,checks:chat.result?.checks||[],issues:chat.result?.issues||[],limits:chat.result?.limits||[],usage:chat.usage,error,failures:chat.failures||[]},null,2);
   }controls();
  }
- function acceptChat(next){if(!next||next.schemaVersion!=='apollo.landing-chat.v1'||chat&&next.id!==chat.id||!Array.isArray(next.messages)||!Number.isSafeInteger(next.sequence)||chat&&next.sequence<chat.sequence)throw Object.assign(Error('LANDING_RESPONSE_INVALID'),{code:'LANDING_RESPONSE_INVALID'});chat=next;
+ function acceptChat(next,replacing=false){if(!next||next.schemaVersion!=='apollo.landing-chat.v1'||!Array.isArray(next.messages)||!Number.isSafeInteger(next.sequence)||!replacing&&chat&&(next.id!==chat.id||next.sequence<chat.sequence))throw Object.assign(Error('LANDING_RESPONSE_INVALID'),{code:'LANDING_RESPONSE_INVALID'});chat=next;
+  if(replacing){lastError=null;historyOpen(false,false);}
   retryDelay=500;if(lastError?.retryable)lastError=null;selectChatSkill();render();}
  async function releaseIfTerminal(){if(chat&&!WORKING.has(chat.status)&&lastRelease!==chat.id+':'+chat.revision){lastRelease=chat.id+':'+chat.revision;await history();}}
  function schedule(){clearTimeout(timer);if(!closed&&chat&&WORKING.has(chat.status))timer=setTimeout(()=>void poll(),retryDelay);}
@@ -90,24 +128,104 @@ function mountLanding({root,send,isUnavailable=()=>false,isVisible=()=>true,read
   }catch(e){if(token===version){lastError={code:e.code||e.message,retryable:true};retryDelay=Math.min(5000,retryDelay*2);notice('Нет связи с Proxy. Повторяем подключение; макет сохранён.');}}
   finally{if(token===version)schedule();}
  }
- async function history(){const value=await api('chats'),select=$('history'),current=chat?.id||'';select.replaceChildren(new Option('История чатов',''));for(const item of value.chats){const label=new Date(item.updatedAt).toLocaleDateString('ru-RU')+' · '+item.title;const option=new Option(label,item.id);option.dataset.removable=String(canDelete);option.dataset.removeDisabled=String(WORKING.has(item.status));select.append(option);}select.value=current;}
- function reset(){settings(false);historyPicker.close(false);deletion(false);placementChosen=false;version++;clearTimeout(timer);chat=null;for(const option of Array.from($('kind').options))if(option.dataset.historical)option.remove();if(!$('kind').value&&$('kind').options.length)$('kind').selectedIndex=0;kindPicker.refresh();activeNewId=null;lastMessages='';retryDelay=500;lastError=null;$('messages').replaceChildren();$('result').replaceChildren();$('result').hidden=true;$('history').value='';$('input').value='';notice(available?'':'Для генерации нужны совместимые Proxy и данные.');controls();}
- $('new').onclick=reset;
- $('history').onchange=async()=>{deletion(false);const id=$('history').value;if(!id){reset();return;}const token=++version;inFlight=true;controls();try{const value=await api('chats/'+id);if(token!==version)return;chat=null;acceptChat(value.chat);schedule();}catch(e){notice(errors[e.code]||'Не удалось загрузить чат.');}finally{inFlight=false;controls();if(!closed)historyPicker.focus();}};
- async function requestDeletion(option){
-  if(!canDelete||inFlight||WORKING.has(chat?.status)||option.dataset.removeDisabled==='true'||isUnavailable())return;
-  const id=option.value,token=version;deleting=true;inFlight=true;controls();
-  try{const value=await api('chats/'+id);if(token!==version||closed)return;if(value.chat?.id!==id||!Number.isSafeInteger(value.chat.revision))throw Error('LANDING_RESPONSE_INVALID');if(WORKING.has(value.chat.status)){notice('Сначала останови этот чат.');return;}deleteTarget={id,revision:value.chat.revision};$('delete-confirm').querySelector('p').textContent='Удалить чат «'+option.textContent+'» из истории?';deletion(true);}
-  catch(e){if(!closed&&token===version)notice(errors[e.code]||'Не удалось подготовить удаление чата. Повтори попытку.');}
-  finally{deleting=false;inFlight=false;if(!closed){controls();if(deleteTarget&&!$('delete-confirm').hidden)$('delete-cancel').focus();}}
+ async function history(){
+  const revision=++historyRevision,value=await api('chats');
+  if(closed||revision!==historyRevision)return;
+  if(!Array.isArray(value.chats)||value.chats.some(item=>typeof item?.id!=='string'||!item.id.trim()))throw Error('LANDING_RESPONSE_INVALID');
+  const list=$('history-list'),focused=document.activeElement;
+  const rows=value.chats.map(item=>{
+   const title=item.title||'Новый чат',preview=document.createElement('span'),open=document.createElement('button'),row=document.createElement('li');
+   row.className='landing-history-row';open.type='button';open.className='landing-history-open';open.dataset.openChat=item.id;
+   preview.textContent=(typeof item.lastMessagePreview==='string'&&item.lastMessagePreview.trim())||title;preview.className='landing-history-preview';open.append(preview);
+   const date=new Date(item.updatedAt);
+   if(Number.isFinite(date.valueOf())){const time=document.createElement('time');time.dateTime=date.toISOString();time.textContent=historyDate.format(date);open.append(time);}
+   open.onclick=()=>selectChat(item.id);row.append(open);
+   if(canDelete){
+    const remove=document.createElement('button'),icon=document.createElement('img');
+    remove.type='button';remove.className='generation-history-remove';remove.dataset.deleteChat=item.id;remove.dataset.working=String(WORKING.has(item.status));remove.setAttribute('aria-label','Удалить чат из истории: '+title);
+    icon.src=historyIcons.trash;icon.alt='';remove.append(icon);
+    remove.onclick=()=>deleteChat(remove);row.append(remove);
+   }
+   return row;
+  });
+  list.replaceChildren(...rows);$('history-empty').hidden=rows.length!==0;controls();
+  if(focused?.dataset.openChat||focused?.dataset.deleteChat){
+   const key=focused.dataset.openChat?'openChat':'deleteChat';
+   Array.from(list.querySelectorAll('button')).find(button=>button.dataset[key]===focused.dataset[key])?.focus();
+  }
+  return value.chats;
  }
- $('delete-cancel').onclick=()=>{deletion(false);historyPicker.focus();};
- $('delete-confirm-button').onclick=async()=>{
-  if($('delete-confirm-button').disabled||!deleteTarget)return;const {id,revision}=deleteTarget,token=version;let removed=false;deleting=true;inFlight=true;controls();notice('Удаляем чат из истории…');
-  try{const value=await api('chats/'+id+'/delete',{revision});if(token!==version||closed)return;if(value.deleted!==true||value.id!==id)throw Error('LANDING_RESPONSE_INVALID');if(chat?.id===id)reset();else deletion(false);deleteTarget=null;removed=true;await history();if(closed)return;notice('Чат удалён из истории. Макет в Figma сохранён.');}
-  catch(e){if(!closed&&(token===version||removed))notice(removed?'Чат удалён. Обновить список не удалось — открой историю заново.':e.code==='LANDING_REVISION_STALE'?'Чат изменился. Выбери его заново перед удалением.':errors[e.code]||'Не удалось подтвердить удаление. Повтори попытку.');}
-  finally{deleting=false;inFlight=false;if(!closed){controls();if(removed){if(!$('input').disabled)$('input').focus();else historyPicker.focus();}}}
- };
+ function reset(closeHistory=true){settings(false);if(closeHistory)historyOpen(false,false);placementChosen=false;version++;clearTimeout(timer);chat=null;for(const option of Array.from($('kind').options))if(option.dataset.historical)option.remove();if(!$('kind').value&&$('kind').options.length)$('kind').selectedIndex=0;kindPicker.refresh();activeNewId=null;lastMessages='';retryDelay=500;lastError=null;$('messages').replaceChildren();$('result').replaceChildren();$('result').hidden=true;$('input').value='';$('input').style.height='48px';notice(available?'':'Для генерации нужны совместимые Proxy и данные.');controls();}
+ function newChat(){reset();if(!$('input').disabled)$('input').focus();else $('history-toggle').focus();}
+ $('new').onclick=newChat;$('history-new').onclick=newChat;
+ async function selectChat(id){
+  if(inFlight||WORKING.has(chat?.status))return;
+  const token=++version;inFlight=true;controls();
+  try{
+   const value=await api('chats/'+id);if(token!==version||closed)return;
+   if(value.chat?.id!==id)throw Error('LANDING_RESPONSE_INVALID');
+   acceptChat(value.chat,true);schedule();
+  }catch(e){if(token===version&&!closed)notice(errors[e.code]||'Не удалось загрузить чат.');}
+  finally{inFlight=false;if(!closed){controls();if($('history-layer').hidden)($('history-toggle').disabled?$('stop'):$('history-toggle')).focus();else $('history-close').focus();}}
+ }
+ async function deleteChat(button){
+  if(button.disabled||!canDelete||inFlight||WORKING.has(chat?.status)||isUnavailable())return;
+  const id=button.dataset.deleteChat,token=version,list=$('history-list');
+  const rowIndex=Array.from(list.children).indexOf(button.parentElement);
+  const retry=deleteRevisions.has(id);
+  let removed=false,alreadyAbsent=false;
+  deleting=true;inFlight=true;controls();notice('Удаляем чат из истории…');
+  try{
+   let revision=deleteRevisions.get(id);
+   if(!retry){
+    const {chat:current}=await api('chats/'+id);
+    if(closed||token!==version)return;
+    if(current?.id!==id||!Number.isSafeInteger(current.revision)||current.revision<0)throw Error('LANDING_RESPONSE_INVALID');
+    if(WORKING.has(current.status)){notice('Сначала останови этот чат.');return;}
+    revision=current.revision;
+   }
+   deleteRevisions.set(id,revision);
+   let response;
+   try{
+    response=await api('chats/'+id+'/delete',{revision});
+   }catch(error){
+    if(!retry||error.code!=='LANDING_CHAT_NOT_FOUND')throw error;
+    alreadyAbsent=true;
+   }
+   if(closed||token!==version)return;
+   if(!alreadyAbsent&&(response?.deleted!==true||response.id!==id))throw Object.assign(Error('LANDING_RESPONSE_INVALID'),{retryable:true});
+   if(alreadyAbsent){
+    const chats=await history();
+    if(closed||token!==version)return;
+    if(!chats||chats.some(item=>item.id===id))throw Error('LANDING_RESPONSE_INVALID');
+   }
+   deleteRevisions.delete(id);
+   removed=true;
+   if(chat?.id===id)reset(false);
+   list.querySelector('[data-open-chat="'+CSS.escape(id)+'"]')?.parentElement.remove();
+   $('history-empty').hidden=Boolean(list.childElementCount);
+   if(!alreadyAbsent)await history();
+   if(!closed)notice(alreadyAbsent?'Чата больше нет в истории. Макет в Figma сохранён.':'Чат удалён из истории. Макет в Figma сохранён.');
+  }catch(error){
+   if(!error.retryable&&!alreadyAbsent)deleteRevisions.delete(id);
+   if(!closed&&(token===version||removed)){
+    if(removed)notice('Чат удалён. Обновить список не удалось — открой историю заново.');
+    else if(error.code==='LANDING_REVISION_STALE')notice('Чат изменился. Нажми на корзину ещё раз.');
+    else notice(errors[error.code]||'Не удалось подтвердить удаление. Повтори попытку.');
+   }
+  }finally{
+   deleting=false;inFlight=false;
+   if(!closed){
+    controls();
+    const focused=document.activeElement;
+    if(isVisible()&&(focused===button||focused===document.body)){
+     if($('history-layer').hidden)$('history-toggle').focus();
+     else if(removed)(list.children[Math.min(rowIndex,list.childElementCount-1)]?.querySelector('[data-open-chat]')||$('history-new')).focus();
+     else (list.querySelector('[data-delete-chat="'+CSS.escape(id)+'"]:not(:disabled)')||$('history-close')).focus();
+    }
+   }
+  }
+ }
  $('placement').onchange=()=>{placementChosen=true;};
  $('form').onsubmit=async event=>{
   event.preventDefault();if($('submit').disabled)return;const token=version;
@@ -132,8 +250,8 @@ function mountLanding({root,send,isUnavailable=()=>false,isVisible=()=>true,read
  $('input').onkeydown=event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing&&event.keyCode!==229){event.preventDefault();$('form').requestSubmit();}};
  $('export').onclick=()=>{if(!chat)return;const a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(chat,null,2)],{type:'application/json'}));a.href=url;a.download='apollo-landing-'+chat.id+'-r'+chat.revision+'.json';a.click();URL.revokeObjectURL(url);};
  $('load-legacy').onclick=async()=>{try{const saved=await legacy.load();$('legacy').replaceChildren(...(saved?.conversation.messages||[]).map(m=>message(m.role,m.text)));if(!saved)$('legacy').textContent='Сохранённой истории прежней генерации нет.';}catch{$('legacy').textContent='Не удалось прочитать прежнюю историю. Она не удалена.';}};
- function refresh(){controls();if(!isVisible()&&!available)initialized=false;if(!initialized&&isVisible()){initialized=true;notice('Подключаем генерацию…');void(async()=>{try{updateContext(await context());const info=await api('status');canDelete=info.chatDeletion===true;updateSkills(info);available=info.available===true&&info.flow===FLOW&&['new-section','section'].every(mode=>info.placementModes?.includes(mode));notice(available?'':info.available===true?errors.LANDING_PROXY_UPDATE_REQUIRED:errors[info.code]||'Для генерации обновите Proxy и пакет данных.');await history();}catch(e){notice(e.code==='LANDING_PLUGIN_RELOAD_REQUIRED'?'Переоткройте Apollo: интерфейс и native-код имеют разные версии.':'Нет связи с Proxy. Запустите его и откройте раздел снова.');}finally{controls();}})();}}
+ function refresh(){controls();if(!isVisible()){historyOpen(false,false);if(!available)initialized=false;}if(!initialized&&isVisible()){initialized=true;notice('Подключаем генерацию…');void(async()=>{try{updateContext(await context());const info=await api('status');canDelete=info.chatDeletion===true;updateSkills(info);available=info.available===true&&info.flow===FLOW&&['new-section','section'].every(mode=>info.placementModes?.includes(mode));notice(available?'':info.available===true?errors.LANDING_PROXY_UPDATE_REQUIRED:errors[info.code]||'Для генерации обновите Proxy и пакет данных.');await history();}catch(e){notice(e.code==='LANDING_PLUGIN_RELOAD_REQUIRED'?'Переоткройте Apollo: интерфейс и native-код имеют разные версии.':'Нет связи с Proxy. Запустите его и откройте раздел снова.');}finally{controls();}})();}}
  refresh();
- return {refresh,busy:()=>busy,accept(m){if(legacy.accept(m))return true;if(m?.type!=='landing-canvas-result')return false;const ticket=tickets.get(m.requestId);if(!ticket)return true;tickets.delete(m.requestId);clearTimeout(ticket.t);if(m.operation!==ticket.operation||m.error)ticket.reject(Object.assign(Error(m.error?.code||'LANDING_RESPONSE_INVALID'),{code:m.error?.code||'LANDING_RESPONSE_INVALID',diagnostic:m.error||null}));else ticket.resolve(m.value);return true;},close(){closed=true;kindPicker.destroy();historyPicker.destroy();document.removeEventListener('pointerdown',outside);root.removeEventListener('keydown',escape);clearTimeout(timer);for(const t of tickets.values()){clearTimeout(t.t);t.reject(Error('LANDING_CLOSED'));}tickets.clear();}};
+ return {refresh,busy:()=>busy,accept(m){if(legacy.accept(m))return true;if(m?.type!=='landing-canvas-result')return false;const ticket=tickets.get(m.requestId);if(!ticket)return true;tickets.delete(m.requestId);clearTimeout(ticket.t);if(m.operation!==ticket.operation||m.error)ticket.reject(Object.assign(Error(m.error?.code||'LANDING_RESPONSE_INVALID'),{code:m.error?.code||'LANDING_RESPONSE_INVALID',diagnostic:m.error||null}));else ticket.resolve(m.value);return true;},close(){closed=true;historyOpen(false,false);kindPicker.destroy();document.removeEventListener('pointerdown',outside);root.removeEventListener('keydown',escape);clearTimeout(timer);for(const t of tickets.values()){clearTimeout(t.t);t.reject(Error('LANDING_CLOSED'));}tickets.clear();}};
 }
 module.exports={mountLanding};

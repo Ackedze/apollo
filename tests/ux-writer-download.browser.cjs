@@ -24,7 +24,7 @@ function mockFigma(schema) {
       emit({type:'v3-audit-result',schemaVersion:schema,requestId:id,kind:'texts',result:{
         runId:id,dataId:'a'.repeat(64),mutationAvailable:true,textTargets:grouped?Array.from({length:9},(_,i)=>({nodeId:'text'+i,focusActionId:'v3-focus-'+i})):[{nodeId:'text',focusActionId:'v3-focus-0'},{nodeId:'skipped',focusActionId:'v3-focus-1'}],
         textReport:{reportId:id+':texts',reportKind:'apollo-text-audit-report',scan:{channel:'Desktop'},
-          summary:{scannedTextNodes:1},facts:{scopes:[{nodeId:'root',name:'Карточка',width:320,overlay:false}],
+          summary:{scannedTextNodes:1},facts:{scopes:[{nodeId:'root',name:window.__fixtureScopeName??'Карточка',width:320,overlay:false}],
             texts:grouped?Array.from({length:9},(_,i)=>({node:{id:'text'+i,name:'Label '+i,visible:true},scopeNodeId:'root',text:'Для кого '+i,ancestors:[]})):[{node:{id:'text',name:'Label',visible:true},scopeNodeId:'root',text:'Архив платежей',ancestors:[]},{node:{id:'skipped',name:'Заглушка',visible:true},scopeNodeId:'root',text:'Label',ancestors:[]}]}}
       }});
     }
@@ -73,6 +73,7 @@ async function run() {
       if (pathname === runPath) {
         runRequests++;
         assert.equal(request.postDataJSON().report.reportKind, 'apollo-ux-writer-report');
+        if(runRequests===1)assert.equal(request.postDataJSON().report.facts.scopes[0].name,'');
         inputKey = request.headers()['x-apollo-input-key'];
         assert.match(inputKey, /^[a-f0-9]{64}$/);
         await agentCanComplete;
@@ -128,7 +129,7 @@ async function run() {
     assert.equal(await textTool.locator('.apollo-shared-stage-description').textContent(),'Выбери область и запусти проверку');
     const start=textTool.getByRole('button',{name:'Запустить проверку',exact:true}),scopeHint=textTool.locator('.apollo-skill-scope-name');
     assert.equal(await start.isDisabled(),true);await start.evaluate(button=>button.click());assert.equal(runRequests,0);
-    const choose=async(name,id='root',valid=true)=>page.evaluate(message=>window.postMessage({pluginMessage:message},'*'),{type:'selection',pageId:'page',id,name,valid});
+    const choose=async(name,id='root',valid=true)=>page.evaluate(message=>{window.__fixtureScopeName=message.name;window.postMessage({pluginMessage:message},'*');},{type:'selection',pageId:'page',id,name,valid});
     await choose('Карточка');await scopeHint.getByText('Карточка',{exact:true}).waitFor();assert.equal(await start.isEnabled(),true);
     const longName='ОченьДлинноеИмяОбласти'.repeat(80);await choose(longName);await scopeHint.getByText(longName,{exact:true}).waitFor();
     assert.equal(await scopeHint.getAttribute('title'),longName);assert.equal(await scopeHint.evaluate(node=>getComputedStyle(node).textOverflow),'ellipsis');assert.equal(await scopeHint.evaluate(node=>node.scrollWidth>node.clientWidth),true);assert.equal((await scopeHint.boundingBox()).width,728);
@@ -136,6 +137,7 @@ async function run() {
     await choose('Выбрано областей: 2','root|other');await scopeHint.getByText('Выбрано областей: 2',{exact:true}).waitFor();
     await choose('','',false);await scopeHint.getByText('Выбери область и запусти проверку',{exact:true}).waitFor();assert.equal(await start.isDisabled(),true);assert.equal(runRequests,0);
     await choose('');await scopeHint.getByText('Выбранная область',{exact:true}).waitFor();assert.equal(await start.isEnabled(),true);
+    await choose(' \t ');await scopeHint.getByText('Выбранная область',{exact:true}).waitFor();assert.equal(await start.isEnabled(),true);
     await choose('Выделите область или слои с компонентами');await scopeHint.getByText('Выделите область или слои с компонентами',{exact:true}).waitFor();assert.equal(await start.isEnabled(),true);
     await choose('Карточка');await scopeHint.getByText('Карточка',{exact:true}).waitFor();
     await capture('texts-idle');
@@ -156,18 +158,54 @@ async function run() {
     const input=diagnostics.getByRole('button',{name:'Исходный JSON',exact:true});
     assert.equal(await input.isDisabled(),true);
     await card.click();
+    const downloads=textTool.getByRole('button',{name:'Скачать диагностику',exact:true});
+    assert.equal(await downloads.isDisabled(),true);
+    await choose('');await scopeHint.getByText('Выбранная область',{exact:true}).waitFor();
     await textTool.getByRole('button',{name:'Запустить проверку',exact:true}).click();
     const stop = textTool.getByRole('button',{name:'Остановить',exact:true});
     await stop.waitFor();
+    await scopeHint.getByText('Выбранная область',{exact:true}).waitFor();
+    assert.equal(await scopeHint.evaluate(node=>node.parentElement.previousElementSibling?.tagName==='P'),true);
     assert.equal(await textTool.locator('.apollo-shared-stage.is-idle').count(),0);
     assert.deepEqual(await textTool.locator('.apollo-shared-stage>img').boundingBox(),{x:319,y:329,width:162,height:166});
     await capture('texts-loading');
+    await downloads.click();
+    const pendingDownloads=textTool.getByRole('group',{name:'Файлы проверки текстов',exact:true});
+    assert.equal(await pendingDownloads.getByRole('button',{name:'Исходный JSON',exact:true}).isDisabled(),true);
+    assert.equal(await pendingDownloads.getByRole('button',{name:'Скачать отчёт',exact:true}).isEnabled(),true);
+    await page.keyboard.press('Escape');
+    await choose('Другая выделенная область','other');
+    await scopeHint.getByText('Выбранная область',{exact:true}).waitFor();
     await close.click();
     await card.click();
     await stop.waitFor();
+    await scopeHint.getByText('Выбранная область',{exact:true}).waitFor();
     releaseAgent();
     const findings = textTool.locator('.apollo-text-findings');
     await findings.getByText(findingMessage,{exact:true}).waitFor();
+    await downloads.click();
+    const downloadMenu=textTool.getByRole('group',{name:'Файлы проверки текстов',exact:true});
+    await downloadMenu.waitFor();
+    assert.deepEqual(await downloads.boundingBox(),{x:29,y:783,width:48,height:48});
+    assert.deepEqual(await downloads.locator('img').boundingBox(),{x:41,y:795,width:24,height:24});
+    assert.equal(await downloadMenu.getByRole('button',{name:'Скачать отчёт',exact:true}).evaluate(node=>node===document.activeElement),true);
+    await page.keyboard.press('ArrowDown');
+    assert.equal(await downloadMenu.getByRole('button',{name:'Исходный JSON',exact:true}).evaluate(node=>node===document.activeElement),true);
+    await capture('texts-download-menu');
+    await page.keyboard.press('Escape');await downloadMenu.waitFor({state:'hidden'});
+    assert.equal(await downloads.evaluate(node=>node===document.activeElement),true);
+    assert.equal(await textTool.evaluate(node=>node.open),true);
+    await downloads.click();
+    const [menuReport]=await Promise.all([page.waitForEvent('download'),downloadMenu.getByRole('button',{name:'Скачать отчёт',exact:true}).click()]);
+    const menuJson=JSON.parse(await fs.readFile(await menuReport.path(),'utf8'));
+    assert.equal(menuJson.originalPayload.capture.textReport.facts.scopes[0].name,'');
+    assert.equal(menuJson.originalPayload.validation.skillId,'ux-writer-v2');
+    assert.equal(JSON.stringify(menuJson).includes(inputKey),false);
+    await downloads.click();
+    const [menuInput]=await Promise.all([page.waitForEvent('download'),downloadMenu.getByRole('button',{name:'Исходный JSON',exact:true}).click()]);
+    assert.equal(await fs.readFile(await menuInput.path(),'utf8'),agentInput);
+    assert.equal(menuInput.suggestedFilename(),'apollo-ux-writer-input-synthetic-model.json');
+    await downloads.click();await textTool.getByRole('heading',{name:'Проверка текстов',exact:true}).click();await downloadMenu.waitFor({state:'hidden'});
     assert.equal(await page.evaluate(()=>window.__fixtureTextRun.channel), 'MobileWeb');
     assert.equal(await page.evaluate(()=>window.__fixtureTextRun.pageType), null);
     assert.equal(await findings.getByText('Архив платежей',{exact:true}).count(),1);
@@ -213,7 +251,7 @@ async function run() {
     assert.deepEqual(reportJson.originalPayload.validation.unverifiedTexts,[{nodeId:'skipped',reason:'Заглушка вместо текста — не проверялась'}]);
     await diagnostics.getByText('Недоступно одно правило проверки.',{exact:true}).waitFor();
     assert.equal(JSON.stringify(reportJson).includes(inputKey), false);
-    assert.equal(inputRequests, 0);
+    assert.equal(inputRequests, 1);
 
     const [sourceDownload] = await Promise.all([page.waitForEvent('download'),input.click()]);
     assert.equal(sourceDownload.suggestedFilename(), 'apollo-ux-writer-input-synthetic-model.json');
@@ -222,7 +260,13 @@ async function run() {
     await input.click();
     await diagnostics.getByText('Исходный JSON больше недоступен. Запусти проверку заново.',{exact:true}).waitFor();
     assert.equal(await input.isDisabled(), true);
-    assert.equal(inputRequests, 2);
+    assert.equal(inputRequests, 3);
+    await card.click();
+    await textTool.getByText('Исходный JSON больше недоступен. Запусти проверку заново.',{exact:true}).waitFor();
+    await downloads.click();
+    assert.equal(await downloadMenu.getByRole('button',{name:'Исходный JSON',exact:true}).isDisabled(),true);
+    assert.equal(await downloadMenu.getByRole('button',{name:'Скачать отчёт',exact:true}).isEnabled(),true);
+    await page.keyboard.press('Escape');await close.click();
     await card.click();
     await textTool.getByRole('button',{name:'Новая проверка',exact:true}).click();
     await textTool.getByRole('tab',{name:'Ошибки · 7',exact:true}).waitFor();

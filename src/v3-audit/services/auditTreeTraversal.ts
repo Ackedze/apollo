@@ -1,4 +1,4 @@
-import { createCooperativeYield } from '../utils/promisePool';
+import { createCooperativeYield, designTraversalBudget } from '../utils/promisePool';
 import { untimed, type createComponentTimings } from '../component-timings';
 
 export interface AuditTreeVisitResult {
@@ -23,6 +23,7 @@ export async function traverseAuditTree<TNode>(
   const checkpoint = createCooperativeYield(
     () => measureSync('treeCheckpointGuard', options.throwIfCancelled),
     wait => measure('treeYield', wait),
+    options.prepareNodes ? designTraversalBudget : undefined,
   );
   const guardEdge = () => measureSync('treeEdgeGuard', options.throwIfCancelled);
   const traverseNode = async (node: TNode): Promise<void> => {

@@ -316,7 +316,12 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     nativeTrace(message,work.kind,work.requestId,work.requestId);work.trace.add('native-result',{stage:'capture',dataId:result.dataId});
     work.capture=result;
     if(work.kind==='texts')void analyze(work,result);
-    else{statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));emit({result,runId:work.requestId,resultSettings:work.settings,stale:false,staleActionIds:[],paintFixes:[]});finish(work);}return true;
+    else{
+     const staleActionIds=Array.isArray(message.staleActionIds)?message.staleActionIds.filter(p.id):[];
+     statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));
+     emit({result,runId:work.requestId,resultSettings:work.settings,stale:false,staleActionIds,paintFixes:[],sourceChange:sourceChange(message.sourceChange)});
+     finish(work);
+    }return true;
    }
    return true;
   },

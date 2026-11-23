@@ -13,11 +13,11 @@ const { buildV3Groups } = require('../src/v3-audit/ui-model');
 const { createComponentTimings } = require('../src/v3-audit/component-timings');
 const { createRunTrace, readTrace } = require('../src/v3-audit/run-trace');
 
-const source = require('esbuild').buildSync({ stdin: { contents: 'module.exports = Object.assign({},require("./src/v3-audit/native-port.ts"),require("./src/v3-audit/embedded-data.ts"),require("./src/v3-audit/services/auditTreeTraversal.ts"))', resolveDir: path.join(__dirname,'..') },
+const source = require('esbuild').buildSync({ stdin: { contents: 'module.exports = Object.assign({},require("./src/v3-audit/native-port.ts"),require("./src/v3-audit/embedded-data.ts"),require("./src/v3-audit/services/auditTreeTraversal.ts"),require("./src/document-audit/reads.js"))', resolveDir: path.join(__dirname,'..') },
   bundle: true, write: false, platform: 'node', format: 'cjs', supported: { 'object-rest-spread': false } }).outputFiles[0].text;
 const runtime = { exports: {} };
 new Function('module','exports','require',source)(runtime,runtime.exports,require);
-const { createV3NativePort, createOfflineAuditIndex, traverseAuditTree } = runtime.exports;
+const { createV3NativePort, createOfflineAuditIndex, traverseAuditTree, setHostYieldTransport, completeHostYield } = runtime.exports;
 const {data:embedded,legacyKey,targetKey}=require('./fixtures/v3-audit-compact-index.cjs');
 const externalKey = '1234567890'.repeat(4);
 const getFixtureIndex=()=>createOfflineAuditIndex(embedded.payload,embedded.dataId);
@@ -255,20 +255,130 @@ test('offline Design shows findings from one capture and still checks live ident
   assert.deepEqual(h.ui.snapshot().originalPayload,result.originalPayload);
 });
 
-test('offline Design refuses a notified property edit during an asynchronous library read before publishing',async t=>{
-  const h=fixture(t);
+async function captureWhileReadingLibrary(h,notify){
   let release;
   h.pending.set(legacyKey,new Promise(resolve=>{release=resolve;}));
   const run=h.run();
   await until(()=>h.imports.includes(legacyKey));
-  h.instance.opacity=0.9;
-  h.observeChange({nodeChanges:[{type:'PROPERTY_CHANGE',id:h.instance.id,properties:['opacity']}]});
+  notify();
   release(await h.instance.getMainComponentAsync());
+  return run;
+}
+
+test('offline Design publishes a partial report when queued geometry reveals changed variable modes',async t=>{
+  const h=fixture(t);
+  Object.assign(h.instance,{y:20,relativeTransform:[[1,0,0],[0,1,20]],resolvedVariableModes:{theme:'before'}});
+  const sibling=Object.assign({},h.instance,{id:'1:3',name:'Other',resolvedVariableModes:{theme:'before'}});
+  h.page.children.push(sibling);h.page.selection=[h.instance,sibling];
+  const result=await captureWhileReadingLibrary(h,()=>{
+    h.observeChange({nodeChanges:[{type:'PROPERTY_CHANGE',node:h.instance,id:h.instance.id,properties:['y','relativeTransform']}]});
+    h.instance.resolvedVariableModes={theme:'after'};
+  });
+  assert(result.hasAcceptedResult,result.lastAttempt.error);
+  assert.equal(result.lastAttempt.error,null);
+  assert.deepEqual(result.sourceChange,{reason:'observed-facts-changed',stage:'capture',nodeId:h.instance.id,fields:['resolvedVariableModes']});
+  const findings=result.originalPayload.visibleViews.themization;
+  const changed=findings.find(item=>item.nodeId===h.instance.id),unchanged=findings.find(item=>item.nodeId===sibling.id);
+  assert.deepEqual(result.staleActionIds,[changed.actions[0].id]);
+  assert(!result.staleActionIds.includes(unchanged.actions[0].id));
+  assert(result.originalPayload.mutationAvailable);
+  assert(buildV3Groups(result.originalPayload).coverageDetails.some(item=>item.id==='capture-source'));
+  assert.equal(await h.ui.action(changed.actions[0].id),false);
+  assert.equal(h.swaps(),0);
+  assert.equal(await h.ui.focus(result.runId,changed.focusActionId),true);
+  assert.equal(h.focused()[0],h.instance);
+  const native=result.trace.sessions[0].native;
+  assert(native.events.some(event=>event.event==='notification-result'&&event.outcome==='queued'));
+  assert(native.events.some(event=>event.event==='capture-coverage'&&event.outcome==='partial'));
+  assert.equal(native.firstFailure,null);
+  assert.equal(await h.ui.action(unchanged.actions[0].id),true);
+  assert.equal(h.swaps(),1);
+  await until(()=>!h.ui.busy());
+});
+
+test('offline Design publishes unchanged queued events with full coverage',async t=>{
+  const h=fixture(t);
+  const result=await captureWhileReadingLibrary(h,()=>{
+    h.observeChange({nodeChanges:[{type:'PROPERTY_CHANGE',id:h.instance.id,properties:['opacity']}]});
+  });
+  assert(result.hasAcceptedResult,result.lastAttempt.error);
+  assert.equal(result.sourceChange,null);
+  assert(!result.originalPayload.offlineCoverage.gaps.includes('capture-source-changed'));
+  assert(result.originalPayload.mutationAvailable);
+});
+
+test('offline Design retains findings and refuses native writes when a queued event is ambiguous',async t=>{
+  const h=fixture(t);
+  const result=await captureWhileReadingLibrary(h,()=>{
+    h.observeChange({nodeChanges:[{type:'DELETE',id:'unobserved-removed-node'}]});
+  });
+  assert(result.hasAcceptedResult,result.lastAttempt.error);
+  assert.equal(result.sourceChange.reason,'topology-notification');
+  assert(result.originalPayload.offlineCoverage.gaps.includes('capture-source-changed'));
+  assert.equal(result.originalPayload.mutationAvailable,false);
+  const finding=result.originalPayload.visibleViews.themization[0];
+  assert.equal(await h.ui.operate('v3-audit-action',result.runId,{actionId:finding.actions[0].id}),false);
+  assert.equal(h.posts.find(message=>message.type==='v3-audit-operation-error').code,'AUDIT_ACTION_SOURCE_CHANGED');
+  assert.equal(h.swaps(),0);
+});
+
+test('offline Design retains findings if the live session for applying them is unavailable',async t=>{
+  const h=fixture(t);
+  Object.defineProperty(h.page,'explicitVariableModes',{get(){
+    if(h.posts.some(message=>message.progress?.stage==='texts'))throw Error('native value unavailable');
+    return {};
+  }});
+  const result=await h.run();
+  assert(result.hasAcceptedResult,result.lastAttempt.error);
+  assert(result.originalPayload.visibleViews.themization.length>0);
+  assert(result.originalPayload.offlineCoverage.gaps.includes('capture-session-unavailable'));
+  assert.equal(result.originalPayload.mutationAvailable,false);
+  assert.equal(result.trace.sessions[0].native.firstFailure.code,'AUDIT_SESSION_UNAVAILABLE');
+});
+
+test('offline Design resolves nested source IDs concurrently, retaining first occurrence order and fallback',async t=>{
+  const h=fixture(t),ownerOrder=[];
+  h.instance.children=['I1:2;50:0;50:1','I1:3;50:2','I1:4;50:1;50:3'].map(id=>
+    Object.assign({},h.instance,{id,parent:h.instance,children:[]}));
+  const makeSource=(id,name)=>{
+    const parent={id:name,name,type:'COMPONENT',key:name,remote:false,visible:true,parent:h.page,
+      get children(){ownerOrder.push(name);return[];}};
+    return{id,type:'RECTANGLE',name:id,parent,visible:true};
+  };
+  const first=makeSource('50:1','first'),second=makeSource('50:2','second');
+  const pending=new Map(),lookups=[],getNode=h.figma.getNodeByIdAsync;
+  h.figma.getNodeByIdAsync=id=>{
+    if(!id.startsWith('50:'))return getNode(id);
+    lookups.push(id);
+    if(id==='50:0')return Promise.resolve(null);
+    return new Promise(resolve=>pending.set(id,resolve));
+  };
+  const run=h.run();
+  await until(()=>pending.has('50:1')&&pending.has('50:2'));
+  pending.get('50:2')(second);pending.get('50:1')(first);
   const result=await run;
+  assert(result.hasAcceptedResult,result.lastAttempt.error);
+  assert.deepEqual(lookups.slice().sort(),['50:0','50:1','50:2']);
+  assert.deepEqual(Array.from(new Set(ownerOrder)),['first','second']);
+});
+
+test('Stop abandons a bounded batch of nested source lookups and late replies do not schedule more',async t=>{
+  const h=fixture(t),pending=[];
+  h.instance.children=Array.from({length:7},(_,index)=>Object.assign({},h.instance,{
+    id:'I1:'+index+';60:'+index,parent:h.instance,children:[],
+  }));
+  const getNode=h.figma.getNodeByIdAsync;
+  h.figma.getNodeByIdAsync=id=>id.startsWith('60:')?new Promise(resolve=>pending.push(resolve)):getNode(id);
+  const run=h.run();
+  await until(()=>pending.length===4);
+  assert(h.controller.stopAudit());
+  const result=await run;
+  assert.equal(result.lastAttempt.cancelled,true);
   assert.equal(result.hasAcceptedResult,false);
-  assert.equal(result.lastAttempt.error,'AUDIT_SOURCE_CHANGED');
-  assert.equal(result.sourceChange.reason,'observed-facts-changed');
-  assert(result.sourceChange.fields.includes('opacity'));
+  pending.forEach(resolve=>resolve(null));
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(pending.length,4);
+  assert(!h.posts.some(message=>message.type==='v3-audit-result'));
 });
 
 test('shared component catalogs apply to every channel and keep their lifecycle status',async t=>{
@@ -460,6 +570,34 @@ test('tree timings count actual yields separately and preserve hidden and skippe
   assert.equal(calls.treeEdgeGuard.completed,259);
   assert(calls.treeYield.completed>=1&&calls.treeYield.completed<calls.treeCheckpoint.completed);
   assert.equal(calls.treeCheckpointGuard.completed,calls.treeCheckpoint.completed+calls.treeYield.completed);
+});
+
+test('one offline tree uses fewer host turns and can stop from the existing UI reply',async t=>{
+  let clock=Date.now()+100,turns=0,stopAfterReply=false,stopped=false,visits=0;
+  t.mock.method(Date,'now',()=>clock);
+  const root={children:Array.from({length:1024},()=>({}))};
+  const release=setHostYieldTransport(ticket=>{
+    turns++;
+    queueMicrotask(()=>{if(stopAfterReply)stopped=true;assert(completeHostYield(ticket));});
+  });
+  t.after(release);
+  async function traverse(offline){
+    const timings=createComponentTimings(()=>clock);
+    timings.start();
+    await traverseAuditTree([root],{timings,prepareNodes:offline?async()=>{}:undefined,
+      throwIfCancelled(){if(stopped)throw Error('AUDIT_CANCELLED');},
+      visit:async()=>{visits++;clock+=2;},isVisible:()=>true,getChildren:node=>node.children??[],
+    });
+    return timings.snapshot().calls.treeYield.count;
+  }
+  const previous=await traverse(false);
+  assert.equal(turns,0);
+  const current=await traverse(true);
+  assert.equal(visits,2050);
+  assert.deepEqual([previous,current,turns],[256,64,64]);
+  stopAfterReply=true;visits=0;
+  await assert.rejects(traverse(true),/AUDIT_CANCELLED/);
+  assert(visits>0&&visits<root.children.length);
 });
 
 test('component timing export counts overlap, failures and unfinished calls without recording call arguments',async()=>{

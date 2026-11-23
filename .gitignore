@@ -20,3 +20,6 @@ live-tests/
 
 # Private generation run artifacts
 generation-runs/
+
+# Local audit data is delivered through Proxy; never commit private catalogs.
+/data/design-check/athena-audit.json

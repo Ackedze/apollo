@@ -4,13 +4,29 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 (async()=>{
  const project=process.env.APOLLO_PROJECT_ROOT||path.resolve(__dirname,'..'),proxy=process.env.APOLLO_PROXY_ROOT||path.resolve(project,'../../services/apollo-proxy'),work=fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(),'landing-direct-ui-'))),out=process.env.LANDING_QA_ROOT||work;
  fs.mkdirSync(out,{recursive:true});let browser,ui;const errors=[],operations=[],routes=[],calls=[];
- const {createDirectLandingService,FLOW}=require(path.join(proxy,'src/landing/direct-service')),source={id:'data',resumePin:'a'.repeat(64),knowledgeVersion:'fixture',skill:{id:'ab-generate-custom-landing',name:'Лендинг',version:'0.6.0',sha256:'b'.repeat(64),generation:{workflow:FLOW}},initial:{instructions:{'SKILL.md':'Fixture skill'},selectedSkill:{id:'ab-generate-custom-landing'}},assertCurrent(){}};
+ const {createDirectLandingService,FLOW}=require(path.join(proxy,'src/landing/direct-service'));
+ const source={id:'data',resumePin:'a'.repeat(64),knowledgeVersion:'fixture',
+  skill:{id:'ab-generate-custom-landing',name:'Лендинг',version:'0.6.0',sha256:'b'.repeat(64),generation:{workflow:FLOW},bodies:{
+   'references/rules/page-layout.md':'Fixture layout recipe.',
+   'references/rules/component-selection.md':'Fixture component recipe.',
+   'references/rules/content-and-assets.md':'Fixture asset recipe.',
+  }},
+  initial:{instructions:{'SKILL.md':'Fixture skill'},selectedSkill:{id:'ab-generate-custom-landing'}},assertCurrent(){}};
  const store=path.join(work,'store'),session=crypto.randomUUID();let currentId,createdRoots=0;
  const service=createDirectLandingService({root:store,knowledge:()=>source,isProcessAlive:()=>false,createCli:()=>({async run(input){
   calls.push({profile:input.profile,sessionId:input.sessionId});const data=JSON.parse(input.prompt.split('\n').at(-1));input.onEvent({type:'thread.started',thread_id:session});
   if(calls.length===2){await new Promise(resolve=>input.signal.addEventListener('abort',resolve,{once:true}));throw Object.assign(Error('Stopped'),{code:'AGENT_CANCELLED'});}
   if(!data.target.rootNodeId)createdRoots++;
-  input.onEvent({type:'item.completed',item:{id:'figma:'+calls.length,type:'mcp_tool_call',server:'apollo_figma_mcp',tool:'use_figma',status:'completed',result:{content:[{type:'text',text:JSON.stringify({target:{rootNodeId:'40:10',pageId:'1:2',parentNodeId:'1:2',ownerNonce:data.target.ownerNonce}})}]}}});
+  const target={rootNodeId:'40:10',pageId:'1:2',parentNodeId:'1:2',ownerNonce:data.target.ownerNonce};
+  const instances=[{id:'40:11',setName:'[D] PromoMainBlock'}],illustrationSlotIds=['40:12'];
+  const readback=(phase,value)=>input.onEvent({type:'item.completed',item:{id:'figma:'+calls.length+':'+phase,type:'mcp_tool_call',server:'apollo_figma_mcp',tool:'use_figma',status:'completed',result:{content:[{type:'text',text:JSON.stringify({target,...value})}]}}});
+  readback('inventory',{instances,illustrationSlotIds});
+  if(calls.length===3){
+   assert.equal(data.structureApproved,true);
+   assert.equal(data.target.rootNodeId,target.rootNodeId);
+   readback('write',{mutatedNodeIds:illustrationSlotIds});
+   readback('final',{contentReadback:{imageSlots:[{id:'40:12',variantKey:'c'.repeat(40),familyKey:'d'.repeat(40),gridVisible:false}],groups:[]}});
+  }
   return {result:{status:calls.length===1?'needs-structure-approval':'completed',message:calls.length===1?'Каркас создан. Структура подходит?':'Наполнение завершено.',rootNodeId:'40:10',checkpoint:'Same owned root; next step',checks:[],issues:[]},receipt:{usage:{actualInputTokens:10,actualOutputTokens:5}}};
  }})});
  const oldId=crypto.randomUUID(),old={schemaVersion:'apollo.landing-chat.v1',id:oldId,revision:2,sequence:1,status:'awaiting-native',messages:[{role:'user',text:'Исторический чат'}],context:{pageId:'1:2',fileKey:'FixtureFile'},updatedAt:'2026-11-06T00:00:00Z'};fs.writeFileSync(path.join(store,oldId+'.json'),JSON.stringify(old));
@@ -38,15 +54,18 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
   await ui.evaluate(()=>{window.landing=Landing.mountLanding({root:document.getElementById('root'),send:message=>void window.nativeHost(message),request:async(url,options)=>{const value=await window.proxyHost({url,options});return {ok:value.success,json:async()=>value};}});});
   await ui.locator('[data-input]').waitFor();await ui.waitForFunction(()=>!document.querySelector('[data-input]').disabled);
   await ui.locator('[data-input]').fill('Собери лендинг');await ui.locator('[data-submit]').click();await ui.getByRole('button',{name:'Структура подходит',exact:true}).waitFor();
-  assert.equal(calls.length,1);assert.equal(service.poll(currentId).status,'needs-structure-approval');await ui.waitForFunction(()=>!document.querySelector('[data-history]').disabled);await ui.screenshot({path:path.join(out,'direct-approval-800.png')});
+  assert.equal(calls.length,1);assert.equal(service.poll(currentId).status,'needs-structure-approval');await ui.waitForFunction(()=>!document.querySelector('[data-history-toggle]').disabled);await ui.screenshot({path:path.join(out,'direct-approval-800.png')});
   await ui.getByRole('button',{name:'Структура подходит',exact:true}).click();await ui.locator('[data-stop]').waitFor();await ui.locator('[data-stop]').click();await service.settled(currentId);
   await ui.waitForFunction(()=>!document.querySelector('[data-input]').disabled);await ui.locator('[data-input]').fill('продолжай');await ui.locator('[data-submit]').click();
   await ui.waitForFunction(()=>document.querySelector('[data-messages]').textContent.includes('Наполнение завершено.'));assert.equal(service.poll(currentId).status,'completed');assert.equal(createdRoots,1);assert.equal(calls.length,3);assert.equal(calls[0].sessionId,null);assert(calls.slice(1).every(c=>c.sessionId===session));
-  await ui.waitForFunction(()=>!document.querySelector('[data-history]').disabled);await ui.screenshot({path:path.join(out,'direct-completed-800.png')});
-  const label=await ui.locator('[data-history] option[value="'+oldId+'"]').textContent();await ui.locator('[data-history-picker] button').click();await ui.getByRole('group',{name:'История генерации',exact:true}).getByRole('button',{name:label,exact:true}).click();
+  await ui.waitForFunction(()=>!document.querySelector('[data-history-toggle]').disabled);await ui.screenshot({path:path.join(out,'direct-completed-800.png')});
+  await ui.getByRole('button',{name:'История чатов',exact:true}).click();
+  const panel=ui.getByRole('dialog',{name:'История чатов',exact:true});
+  assert.equal(await panel.locator('[data-open-chat="'+currentId+'"] .landing-history-preview').innerText(),'Наполнение завершено.');
+  await panel.locator('[data-open-chat="'+oldId+'"]').click();
   await ui.waitForFunction(()=>document.querySelector('[data-status]').textContent.includes('прежним механизмом'));assert(await ui.locator('[data-input]').isDisabled());assert.equal(calls.length,3);assert(!(await ui.locator('[data-new]').isDisabled()));
   assert(operations.every(operation=>operation==='context'));assert.deepEqual(errors,[]);assert(await ui.locator('[data-send-icon]').evaluate(n=>n.complete&&n.naturalWidth>0));assert.equal(JSON.parse(fs.readFileSync(path.join(store,oldId+'.json'))).status,'awaiting-native');
   fs.writeFileSync(path.join(out,'RESULT.json'),JSON.stringify({status:'PASS',syntheticOnly:true,liveFigma:false,paidModelCalls:0,fixedWidth:800,flow:'direct CLI → approval → content Stop → same-session resume → completed; historical chat read-only',createdRoots,cliCalls:calls,pluginOperations:operations,legacyCanvasCallbacks:0,routes},null,2)+'\n');console.log('Direct CLI UI PASS: context only, structure approval, Stop/resume same root/session and read-only history.');
- }catch(error){fs.writeFileSync(path.join(out,'FAILURE.json'),JSON.stringify({error:String(error.stack||error),operations,routes,calls,errors},null,2)+'\n');throw error;}
+ }catch(error){const chat=currentId&&service.poll(currentId);fs.writeFileSync(path.join(out,'FAILURE.json'),JSON.stringify({error:String(error.stack||error),chatStatus:chat?.status,chatError:chat?.error?.code,operations,routes,calls,errors},null,2)+'\n');throw error;}
  finally{if(ui)await ui.evaluate(()=>window.landing?.close()).catch(()=>{});if(browser)await browser.close();fs.rmSync(work,{recursive:true,force:true});}
 })().catch(error=>{console.error(error);process.exitCode=1;});

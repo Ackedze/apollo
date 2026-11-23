@@ -1,6 +1,7 @@
-import {createCooperativeYield,forEachWithConcurrency} from './utils/promisePool';
+import {createCooperativeYield,designTraversalBudget,forEachWithConcurrency} from './utils/promisePool';
 import {getDetachedLibraryComponentKey} from './services/detachedComponentSource';
 const {nodeEvidence}=require('../document-audit/notification-proof');
+const MAX_CAPTURE_NOTIFICATION_CHANGES=512;
 type Observation={node:BaseNode;value:string|null;fields:Set<string>;identity:string|null;main:ComponentNode|null;mainCaptured?:boolean;children?:readonly SceneNode[];childNames?:readonly string[];visible?:boolean;text?:string};
 type Impact=Map<string,ReadonlySet<string>|null>;
 const contextFields=['id','type','removed','parent','visible','explicitVariableModes','resolvedVariableModes','componentProperties','variantProperties','key','remote','detachedInfo','mainComponent'];
@@ -22,6 +23,7 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
  const hidden=new Set<string>();
  const rootIds=new Set<string>();
  let traversalCapture=false;
+ let queuedChangeCount=0,captureNotificationsOverflow=false;
  const ownPaintChanges=new Map<string,Set<string>>();
  function refuse(reason:string,nodeId?:string,fields:string[]=[]){if(!diagnostic)diagnostic={reason,nodeId:nodeId?.slice(0,200),fields:fields.slice(0,32).map(field=>String(field).slice(0,80))};return false;}
  function textEvidence(node:BaseNode):Record<string,unknown>{
@@ -185,14 +187,58 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
   }
   return true;
  }
- async function finishCapture(guard:()=>void){
+ function queueCaptureChange(event:NodeChangeEvent){
+  if(captureNotificationsOverflow)return;
+  queuedChangeCount+=Math.max(1,event?.nodeChanges?.length??0);
+  if(queuedChangeCount>MAX_CAPTURE_NOTIFICATION_CHANGES){captureNotificationsOverflow=true;queued.length=0;return;}
+  queued.push(event);
+ }
+ function finishCapture(guard:()=>void):Impact|null{
   ready=true;
-  for(const event of queued){
-   guard();
-   if(!await unchanged(event,true))throw Error('AUDIT_SOURCE_CHANGED');
+  const result:Impact=new Map(),checked=new Set<string>();
+  const events=queued.splice(0);
+  if(captureNotificationsOverflow){refuse('notification-overflow');return null;}
+  for(const event of events){
+   if(!event?.nodeChanges?.length){refuse('notification-unavailable');return null;}
+   for(const change of event.nodeChanges){
+    guard();
+    if(knownOutside(change)||hidden.has(change.id)&&change.type==='PROPERTY_CHANGE'&&change.node&&!change.node.removed&&change.node.visible===false)continue;
+    const record=nodes.get(change.id);
+    if(change.type!=='PROPERTY_CHANGE'){refuse('topology-notification',change.id);return null;}
+    if(!record){refuse('outside-observation',change.id);return null;}
+    if(!change.properties?.length||!change.properties.every(field=>record.fields.has(field))){
+     refuse('unobserved-property',change.id,change.properties??[]);return null;
+    }
+    for(let node:BaseNode|null=record.node;node&&!checked.has(node.id);node=node.parent){
+     guard();checked.add(node.id);
+     const observed=nodes.get(node.id);
+     const fields=observed&&readChangedFields(observed,true);
+     if(!fields){refuse('node-unreadable',node.id);return null;}
+     if(!fields.size)continue;
+     refuse('observed-facts-changed',node.id,Array.from(fields));
+     if(fields.has('parent')||fields.has('removed')||fields.has('children'))return null;
+     result.set(node.id,fields);
+    }
+   }
   }
-  queued.length=0;
-  guard();
+  guard();return result;
+ }
+ function readChangedFields(record:Observation,includeChildNames=false):Set<string>|null{
+  const latest=read(record.node).value;
+  if(!latest||!record.value)return null;
+  const fields=new Set<string>();
+  if(latest!==record.value){
+   const before=JSON.parse(record.value),after=JSON.parse(latest);
+   for(const name of new Set(Object.keys(before).concat(Object.keys(after)))){
+    if(JSON.stringify(before[name])!==JSON.stringify(after[name]))fields.add(name);
+   }
+  }
+  const capturedNames=record.childNames;
+  if(includeChildNames&&capturedNames)try{
+   const names=childNames(record.node);
+   if(names.length!==capturedNames.length||names.some((name,index)=>name!==capturedNames[index]))fields.add('childNames');
+  }catch{return null;}
+  return fields;
  }
  async function impacts(event:NodeChangeEvent):Promise<Impact|null>{
   if(!event?.nodeChanges?.length)return null;
@@ -205,11 +251,8 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
     return null;
    }
    if(change.type!=='PROPERTY_CHANGE'||!record.value){result.set(change.id,null);continue;}
-   const latest=read(record.node).value;
-   if(!latest){result.set(change.id,null);continue;}
-   const before=JSON.parse(record.value),after=JSON.parse(latest);
-   const fields=new Set(Array.from(new Set(Object.keys(before).concat(Object.keys(after))))
-    .filter(name=>JSON.stringify(before[name])!==JSON.stringify(after[name])));
+   const fields=readChangedFields(record);
+   if(!fields){result.set(change.id,null);continue;}
    for(const field of change.properties||[])if(!record.fields.has(field))fields.add(field);
    if(record.node.type==='INSTANCE'&&record.mainCaptured&&record.identity!==(await readInstance(record.node))?.identity)fields.add('mainComponent');
    if(fields.size&&result.get(change.id)!==null){
@@ -314,12 +357,12 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
   async getMainComponent(node,readMain){const record=nodes.get(node.id);if(record?.mainCaptured)return record.main;return record?.main??(readMain?readMain(node):node.getMainComponentAsync());},
  };
  return{
-  unchanged,verify,snapshot,assertTextCurrent,assertNodeCurrent,recordPaintChange,recordTextChanges,finishCapture,impacts,dependencies,diagnostic:()=>diagnostic,
+  unchanged,verify,snapshot,assertTextCurrent,assertNodeCurrent,recordPaintChange,recordTextChanges,queueCaptureChange,finishCapture,impacts,dependencies,diagnostic:()=>diagnostic,
   observedNode(id:string){return nodes.get(id)?.node;},
   paintPreimage(id:string){const node=nodes.get(id)?.node;return node?read(node).value:null;},
   async beginTraversal(roots:SceneNode[],guard:()=>void,isSharedKey?:(key:string)=>boolean,readMain?:(node:InstanceNode)=>Promise<ComponentNode|null>){
    traversalCapture=true;
-   const checkpoint=createCooperativeYield(guard);
+   const checkpoint=createCooperativeYield(guard,undefined,designTraversalBudget);
    const mainReads=new Map<string,ReturnType<typeof readInstance>>();
    function main(node:InstanceNode){
     let pending=mainReads.get(node.id);

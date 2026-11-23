@@ -1,6 +1,8 @@
 
 let layerNamesClient=null;
 let figmaAuditClient=null;
+let patternAuditClient=null;
+const {createPatternAuditClient}=require("./skills/pattern-audit/client");
 let v3Client=null;
 const {createFigmaAuditClient}=require("./figma-audit/client");
 let reglyphClient=null;
@@ -86,6 +88,7 @@ layerNamesClient=createLayerNamesClient({send,beforeOperation:compatibility.ensu
 reglyphClient=createReglyphClient({send,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable(true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
 reglyphClient.setContext({channelId:designCheck.getState().settings.channelId,pickerLabel:designCheck.getState().settings.pickerLabel});
 figmaAuditClient=createFigmaAuditClient({send,beforeOperation:compatibility.ensure,readPlatform:()=>designCheck.getState().settings.pickerLabel,isBusy:()=>legacyOperationUnavailable(false,true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
+patternAuditClient=createPatternAuditClient({send,beforeOperation:compatibility.ensure,readPlatform:()=>designCheck.getState().settings.pickerLabel,isBusy:()=>legacyOperationUnavailable(false,false,true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
 function dependencyReason(reason) {
   if (['dependency-reference-not-captured', 'dependency-reference-capture-failed', 'dependency-main-component-unavailable', 'dependency-instance-unavailable'].includes(reason)) return 'Не удалось получить независимый библиотечный эталон.';
   if (reason === 'dependency-variable-modes-unavailable') return 'Не удалось воспроизвести режимы переменных.';
@@ -95,9 +98,9 @@ function dependencyReason(reason) {
   return 'Недостаточно подтверждённых фактов о структуре, варианте или происхождении компонента.';
 }
 function status(text, error = false) { $('status').textContent = text; $('status').classList.toggle('error', error); }
-function legacyOperationUnavailable(ignoreReglyph=false,ignoreFigmaAudit=false) { return (!ignoreFigmaAudit && Boolean(figmaAuditClient?.busy())) || (!ignoreReglyph && Boolean(reglyphClient?.busy())) || Boolean(layerNamesClient?.busy()) || designCheck.getState().documentAction.busy || Boolean(v3Client?.busy()) || busy || generationBusy; }
+function legacyOperationUnavailable(ignoreReglyph=false,ignoreFigmaAudit=false,ignorePatterns=false) { return (!ignorePatterns && Boolean(patternAuditClient?.busy())) || (!ignoreFigmaAudit && Boolean(figmaAuditClient?.busy())) || (!ignoreReglyph && Boolean(reglyphClient?.busy())) || Boolean(layerNamesClient?.busy()) || designCheck.getState().documentAction.busy || Boolean(v3Client?.busy()) || busy || generationBusy; }
 function controls() {
-  landingUi?.refresh();layerNamesClient?.refresh();reglyphClient?.refresh();figmaAuditClient?.refresh();
+  landingUi?.refresh();layerNamesClient?.refresh();reglyphClient?.refresh();figmaAuditClient?.refresh();patternAuditClient?.refresh();
   const unavailable=legacyOperationUnavailable();
   $('audit').disabled=!validSelection||unavailable;
   $('audit').textContent=busy?'Проверяем…':'Проверить выделение';
@@ -291,12 +294,13 @@ window.onmessage = event => {
   }
   if(v3Client.accept(data)){controls();return;}
   if (auditStatisticsClient.accept(data) || tokenJournalClient.accept(data) || uiClient.accept(data) || contractData.accept(data) || auditReports.accept(data)) return;
+  if (patternAuditClient?.accept(data)) return;
   if (figmaAuditClient?.accept(data)) return;
   if (layerNamesClient?.accept(data)) return;
   if (reglyphClient?.accept(data)) return;
   if (landingUi?.accept(data)) return;
   if(contractFocusClient.accept(data)){controls();return;}
-  if (data.type === 'selection') { statisticsUserName=typeof data.statisticsUserName==='string'?data.statisticsUserName:null; figmaAuditClient?.selection(data); layerNamesClient?.selection(data); reglyphClient?.selection(data); documentAuditClient.selection(data); if(currentPageId&&data.pageId&&currentPageId!==data.pageId){v3Client.invalidate();markContractStale();}currentPageId=data.pageId||currentPageId; validSelection = data.valid===true; $('selection').dataset.validSelection = String(validSelection); $('selection').textContent = validSelection ? data.name || 'Выбранная область' : 'Выделите область или слои с компонентами'; }
+  if (data.type === 'selection') { statisticsUserName=typeof data.statisticsUserName==='string'?data.statisticsUserName:null; patternAuditClient?.selection(data); figmaAuditClient?.selection(data); layerNamesClient?.selection(data); reglyphClient?.selection(data); documentAuditClient.selection(data); if(currentPageId&&data.pageId&&currentPageId!==data.pageId){v3Client.invalidate();markContractStale();}currentPageId=data.pageId||currentPageId; validSelection = data.valid===true; $('selection').dataset.validSelection = String(validSelection); $('selection').textContent = validSelection ? data.name || 'Выбранная область' : 'Выделите область или слои с компонентами'; }
   if (data.type === 'contract-loaded') { $('contract-name').textContent = `${data.name} · r${data.revision} · локальный авторский контракт`; status('Локальный пакет загружен. Можно проверять выделение.'); }
   if (data.type === 'source-mode') { clearResult(); $('contract-name').textContent = 'Прокси подберёт контракты по ключам компонентов'; status('Автоматическая загрузка контрактов включена.'); }
   if(['v3-catalog-request','v3-catalog-cancel'].includes(data.type)){void catalogTransport.accept(data);return;}
@@ -316,7 +320,7 @@ window.onmessage = event => {
 
 controls();
 send({ type: 'ready' });
-landingUi=require('./landing/ui').mountLanding({root:$('generation-panel'),send,beforeOperation:compatibility.ensure,isVisible:()=>designCheck.getState().mode==='generation'&&!designCheck.getState().chat.open,readPlatform:()=>designCheck.getState().settings.pickerLabel,isUnavailable:()=>busy||Boolean(v3Client?.busy())||Boolean(figmaAuditClient?.busy())||contractFocusClient.busy()||Boolean(reglyphClient?.busy())||Boolean(layerNamesClient?.busy())||designCheck.getState().documentAction.busy||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onBusy:value=>{generationBusy=value;controls();}});
+landingUi=require('./landing/ui').mountLanding({root:$('generation-panel'),send,beforeOperation:compatibility.ensure,isVisible:()=>designCheck.getState().mode==='generation'&&!designCheck.getState().chat.open,readPlatform:()=>designCheck.getState().settings.pickerLabel,isUnavailable:()=>busy||Boolean(v3Client?.busy())||Boolean(figmaAuditClient?.busy())||Boolean(patternAuditClient?.busy())||contractFocusClient.busy()||Boolean(reglyphClient?.busy())||Boolean(layerNamesClient?.busy())||designCheck.getState().documentAction.busy||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onBusy:value=>{generationBusy=value;controls();}});
 async function readContractData() {
   const [auditData,generation] = await Promise.allSettled([v3Client.readData(),contractData.read()]);
   const state = v3Client.getState();
@@ -327,7 +331,7 @@ async function readContractData() {
     auditDataError:auditData.status==='rejected'?'Данные проверки текстов в Proxy недоступны.':'',
   });
 }
-mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { v3Client, readContractData, skillsClient: layerNamesClient, reglyphClient, figmaAuditClient, statisticsClient:tokenJournalClient, auditStatisticsClient });
+mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { v3Client, readContractData, skillsClient: layerNamesClient, reglyphClient, figmaAuditClient, patternAuditClient, statisticsClient:tokenJournalClient, auditStatisticsClient });
 void designCheck.restorePreferences();
 designCheck.subscribe(()=>landingUi?.refresh());
 window.addEventListener('pagehide',()=>{v3Client.close();landingUi?.close();});

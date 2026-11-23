@@ -104,7 +104,17 @@ function buildV3Groups(result,settings={},state={}){
  const active=visible.flatMap(group=>group.categories).concat(theme?[theme]:[]),issues=active.flatMap(category=>category.issues),coverage=active.concat(categories.unknown);
  const coverageDetails=coverage.filter(category=>category.incomplete).map(category=>({id:category.id,title:category.id==='unknown'?'Компоненты':category.title,reason:category.id==='unknown'?'Не удалось подтвердить часть компонентов. Причины сохранены в диагностике проверки.':'Есть изменения, для которых пока не удалось подтвердить правило. Подробности — в карточках.'}));
  if(result?.offlineCoverage?.gaps?.includes('component-index-coverage-partial'))coverageDetails.push({id:'athena-index',title:'Индексы Athena',reason:'Часть подключённых источников не покрыта индексом.'});
+ if(result?.offlineCoverage?.gaps?.includes('capture-source-changed'))coverageDetails.push({id:'capture-source',title:'Актуальность макета',reason:'Часть данных могла измениться за время проверки. Найденные замечания доступны.'});
+ if(result?.offlineCoverage?.gaps?.includes('capture-session-unavailable'))coverageDetails.push({id:'capture-session',title:'Исправления',reason:'Найденные замечания доступны. Не удалось подготовить исправления.'});
  return{groups:visible,theme,total:result?new Set(issues.map(row=>row.id)).size:null,stale:!!state.stale,unconfirmed:categories.unknown,incomplete:coverageDetails.length>0,coverageDetails};
 }
-function nativeMetrics(result,settings){const summary=buildV3Groups(result,settings),categories=summary.groups.flatMap(group=>group.categories).concat(summary.theme?[summary.theme]:[],summary.unconfirmed?[summary.unconfirmed]:[]);return{checks:categories.filter(category=>category.id!=='changesWip').map(category=>({id:'v3:'+category.id,status:category.incomplete?'incomplete':'complete',checked:category.entries.length,gaps:Array.from(new Set(category.entries.flatMap(row=>row.item.gaps||[]))),findings:category.entries.map(row=>({status:row.classification,componentKey:row.item.componentKey||null}))}))};}
+function nativeMetrics(result,settings){
+ const summary=buildV3Groups(result,settings),categories=summary.groups.flatMap(group=>group.categories).concat(summary.theme?[summary.theme]:[],summary.unconfirmed?[summary.unconfirmed]:[]);
+ const sourceChanged=result?.offlineCoverage?.gaps?.includes('capture-source-changed');
+ return{checks:categories.filter(category=>category.id!=='changesWip').map(category=>({
+  id:'v3:'+category.id,status:category.incomplete||sourceChanged?'incomplete':'complete',checked:category.entries.length,
+  gaps:Array.from(new Set(category.entries.flatMap(row=>row.item.gaps||[]).concat(sourceChanged?['capture-source-changed']:[]))),
+  findings:category.entries.map(row=>({status:row.classification,componentKey:row.item.componentKey||null})),
+ }))};
+}
 module.exports={buildV3Groups,nativeMetrics,comparisons,titles};

@@ -2,6 +2,7 @@ import {AuditToast} from './AuditToast';
 import {Button} from './v3/ui-app/components/Button';
 import {V3Findings} from '../v3-audit/V3Findings';
 import {TextAudit} from '../v3-audit/TextAudit';
+import {PatternAuditSkill} from '../skills/pattern-audit/PatternAuditSkill';
 const {buildV3Groups}=require('../v3-audit/ui-model');
 import { DocumentAuditCards, documentCheckForTab } from "./DocumentAudit";
 import React, { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
@@ -29,7 +30,7 @@ const skillIcons = require("../skills/layer-names/assets");
 const textToolTitle = 'Проверка текстов';
 
 type Controller = ReturnType<typeof createDesignCheckController>;
-type DataOptions = { v3Client?:any; figmaAuditClient?: any; skillsClient?: any; reglyphClient?: any; statisticsClient?: any; auditStatisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
+type DataOptions = { v3Client?:any; patternAuditClient?: any; figmaAuditClient?: any; skillsClient?: any; reglyphClient?: any; statisticsClient?: any; auditStatisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
 type Slots = { setup?: HTMLElement; audit?: HTMLElement; auditDiagnostics?: HTMLElement; generation?: HTMLElement; patterns?: HTMLElement; texts?: HTMLElement };
 const readReasonLabels:Record<string,string>={'access-denied':'нет доступа','not-found-or-unpublished':'не найден или не опубликован',network:'ошибка соединения',timeout:'таймаут','invalid-response':'некорректный ответ',unavailable:'источник недоступен',cancelled:'чтение отменено',unknown:'причина не определена'};
 
@@ -143,6 +144,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   const [textToolOpen, setTextToolOpen] = useState(false);
   const textToolCard = useRef<HTMLButtonElement>(null);
   const textToolDialog = useRef<HTMLDialogElement>(null);
+  const textRunScope = useRef('');
   const activeScreen = state.chat.open ? 'chat' : state.mode;
   const showTextTool = activeScreen === 'skills' && textToolOpen;
   useLayoutEffect(() => {
@@ -320,6 +322,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           <SkillsPanel client={dataOptions.skillsClient} scopeName={scope}>
             {dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient} />}
             {dataOptions.figmaAuditClient && <FigmaAuditSkill client={dataOptions.figmaAuditClient} />}
+            {dataOptions.patternAuditClient && <PatternAuditSkill client={dataOptions.patternAuditClient} scopeName={scope} />}
             <button ref={textToolCard} className="apollo-skill-card" type="button" aria-labelledby="apollo-text-tool-card-title"
               aria-describedby="apollo-text-tool-agent apollo-text-tool-description" aria-haspopup="dialog"
               onClick={() => setTextToolOpen(true)}>
@@ -364,7 +367,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
             setTextToolOpen(false);
           }}>
           {v3 ? <TextAudit state={v3} client={dataOptions.v3Client}
-            scopeName={scope} onClose={()=>setTextToolOpen(false)} onStart={()=>{if(scope)void controller.startAudit('texts');}} onStop={()=>controller.stopAudit()}
+            scopeName={v3.busy&&v3.kind==='texts'?textRunScope.current||scope:scope} onClose={()=>setTextToolOpen(false)} onStart={()=>{if(scope){textRunScope.current=scope;void controller.startAudit('texts');}}} onStop={()=>controller.stopAudit()}
             startDisabled={!state.auditReady||actionBusy||!scope} notice={compatibilityNotice}/>
             : <><header className="apollo-skill-header"><h2 id="apollo-text-tool-title">{textToolTitle}</h2>
               <button className="apollo-skill-close" type="button" aria-label="Закрыть проверку текстов" onClick={()=>setTextToolOpen(false)}><img src={skillIcons.close} alt="" /></button></header>

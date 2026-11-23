@@ -1,0 +1,7 @@
+.apollo-skill-download-menu { position:absolute; left:21px; bottom:21px; z-index:6; }
+.apollo-skill-dialog .apollo-skill-download-menu>button { width:48px; height:48px; min-width:48px; min-height:48px; padding:12px; border:0; background:#f2f3f5; color:rgba(3,3,6,.88); }
+.apollo-skill-dialog .apollo-skill-download-menu>button:hover:not(:disabled) { background:#e7e8ea; }
+.apollo-skill-download-menu>button img { display:block; flex:none; }
+.apollo-skill-download-menu>button:disabled img { opacity:.4; }
+.apollo-skill-download-popup { position:absolute; left:0; bottom:56px; }
+.apollo-skill-download-menu button:focus-visible { outline:2px solid #2a77ef; outline-offset:2px; }

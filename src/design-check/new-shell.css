@@ -159,16 +159,14 @@
 .apollo-new .agent-input-addon.is-stop svg { background:#212124; color:white; fill:currentColor; border-radius:50%; }
 .apollo-message-field:focus-within { outline:2px solid #1769d2; outline-offset:2px; }
 .apollo-new .agent-composer-input:focus-visible { outline:none; }
-.apollo-new .design-check-generation .generation-workspace { box-sizing:border-box; padding:12px; }
-.apollo-new #generation-panel .generation-prompt-form { box-sizing:border-box; display:flex; flex-direction:column; align-items:stretch; gap:8px; padding:12px; min-height:122px; margin:0; border:1px solid #edeef0; border-radius:32px; background:rgba(255,255,255,.88); backdrop-filter:blur(2px); box-shadow:0 4px 24px rgba(0,0,0,.05); }
-.apollo-new #generation-panel .generation-prompt-form:focus-within { border-color:#edeef0; }
-.apollo-new #generation-panel #generation-prompt { box-sizing:border-box; flex:1; width:0; min-width:0; min-height:48px; padding:14px 20px; border:0; border-radius:24px; color:#18181b; background:transparent; font:400 14px/20px "Apollo Alfa",sans-serif; caret-color:#18181b; }
-.apollo-new #generation-panel #generation-prompt:focus-visible { outline:none; }
-.apollo-new #generation-panel .generation-send { box-sizing:border-box; flex:0 0 36px; width:36px; height:48px; padding:12px 12px 12px 0; border:0; background:transparent; color:#18181b; border-radius:0; }
-.apollo-new #generation-panel .generation-send:hover:not(:disabled) { background:transparent; }
-.apollo-new #generation-panel .generation-send:disabled { background:transparent; opacity:.36; }
-.apollo-new #generation-panel .generation-send img { display:block; }
-.apollo-new #generation-panel .generation-send.is-stop svg { width:24px; height:24px; background:#212124; color:white; border-radius:50%; }
+.apollo-new .design-check-generation #generation-panel { margin:0; border-radius:36px; overflow:hidden; background:transparent; }
+.apollo-new #generation-panel .landing-history-launch { top:12px; }
+/* Let the open history shadow reach the shell padding while the backdrop follows the rounded workspace. */
+.apollo-new .design-check-background:has(#generation-panel > .landing-history-layer:not([hidden])) { overflow:clip; }
+.apollo-new .design-check-content:has(#generation-panel > .landing-history-layer:not([hidden])),
+.apollo-new .design-check-generation:has(#generation-panel > .landing-history-layer:not([hidden])),
+.apollo-new .design-check-generation #generation-panel:has(> .landing-history-layer:not([hidden])) { overflow:visible; }
+.apollo-new #generation-panel :is(.landing-history-layer,.landing-history-backdrop) { border-radius:inherit; }
 .apollo-generation-options { display:flex; justify-content:space-between; align-items:center; gap:8px; height:40px; }
 .apollo-generation-options-right { display:flex; align-items:center; gap:8px; }
 .apollo-new #generation-panel .apollo-generation-options .apollo-new-chat { box-sizing:border-box; position:relative; display:inline-flex; align-items:center; justify-content:center; gap:2px; height:40px; margin:0; padding:4px 16px; border:0; background:transparent; color:#18181b; font:400 14px/20px "Apollo Alfa",sans-serif; cursor:pointer; }

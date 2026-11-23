@@ -33,6 +33,7 @@ import {
 } from '../policies/shellComponentAuditPolicy';
 import { traceAudit } from '../utils/auditInstrumentation';
 import { getDetachedLibraryComponentKey } from './detachedComponentSource';
+import { forEachWithConcurrency } from '../utils/promisePool';
 
 export interface AuditTargetCollectorOptions {
   shellAuditEnabled: boolean;
@@ -110,7 +111,7 @@ export async function collectAuditTargets(
   const sourceComponentDefinitions = new Map<string, ComponentNode>();
   const sourceComponentFocusNodeIds = new Map<string, Set<string>>();
   const resolvedFlattenedSourceIds = new Set<string>();
-  const rejectedFlattenedSourceIds = new Set<string>();
+  const flattenedOwners = new Map<string, Promise<ComponentNode | null>>();
   const snapshot=indexed?.snapshot;
   const measure=indexed?.timings?.measure??untimed;
   const measureSync=indexed?.timings?.measureSync??untimed;
@@ -135,6 +136,31 @@ export async function collectAuditTargets(
   const skipLegacyShell=!indexed&&!shellAuditEnabled;
   const directSharedKey=(node:SceneNode)=>node.type==='COMPONENT'||node.type==='COMPONENT_SET'
     ? node.key : getDetachedLibraryComponentKey(node);
+  type SourceRegistration = {node:SceneNode;owner:ComponentNode|null;flattenedId?:string};
+  const deferredSources:SourceRegistration[]=[];
+  async function readFlattenedSource(source:SourceRegistration){
+    for(const sourceId of extractInstanceSublayerSourceNodeIds(source.node.id)){
+      throwIfCancelled();
+      let pending=flattenedOwners.get(sourceId);
+      if(!pending){
+        pending=getNodeById(sourceId).catch(()=>null).then(node=>node?findLocalComponentAncestor(node):null);
+        flattenedOwners.set(sourceId,pending);
+      }
+      const owner=await pending;throwIfCancelled();
+      if(owner){source.owner=owner;source.flattenedId=sourceId;return;}
+    }
+  }
+  function registerSource({node,owner,flattenedId}:SourceRegistration){
+    if(!owner||flattenedId&&resolvedFlattenedSourceIds.has(flattenedId))return;
+    registerComponentDefinition(sourceComponentDefinitions,sourceComponentFocusNodeIds,owner,node.id);
+    if(flattenedId){
+      resolvedFlattenedSourceIds.add(flattenedId);
+      traceAudit('flattened-local-component-source-resolved',{
+        renderedNodeId:node.id,renderedNodeName:node.name,sourceNodeId:flattenedId,
+        ownerComponentId:owner.id,ownerComponentName:owner.name,
+      });
+    }
+  }
 
   await measure('renderedTree',()=>traverseAuditTree(selection, {
     throwIfCancelled,
@@ -163,12 +189,10 @@ export async function collectAuditTargets(
           isRemoteComponent: (component) => component.remote,
         }));
         if (localDefinition) {
-          measureSync('visitLocalDefinitionRegistration', () => registerComponentDefinition(
-            sourceComponentDefinitions,
-            sourceComponentFocusNodeIds,
-            localDefinition,
-            node.id,
-          ));
+          measureSync('visitLocalDefinitionRegistration', () => {
+            const source={node,owner:localDefinition};
+            if(snapshot)deferredSources.push(source);else registerSource(source);
+          });
         }
 
         const item = await measure('classifyComponent',()=>classify(node,localDefinition));
@@ -182,14 +206,12 @@ export async function collectAuditTargets(
           node.type === 'INSTANCE' &&
           freshnessScope === 'instance-sublayer'
         ) {
-          await measure('resolveFlattenedSource',()=>registerFlattenedLocalComponentDefinition(
-            node,
-            sourceComponentDefinitions,
-            sourceComponentFocusNodeIds,
-            resolvedFlattenedSourceIds,
-            rejectedFlattenedSourceIds,
-            getNodeById,
-          ));
+          const source={node,owner:null};
+          if(snapshot)deferredSources.push(source);
+          else{
+            await measure('resolveFlattenedSource',()=>readFlattenedSource(source));
+            registerSource(source);
+          }
         }
 
         const skipChildren = measureSync('visitComponentGrouping', () => {
@@ -307,6 +329,14 @@ export async function collectAuditTargets(
     },
   }));
 
+  if(snapshot){
+    await forEachWithConcurrency(deferredSources.filter(source=>!source.owner),dependencyConcurrency,
+      source=>measure('resolveFlattenedSource',()=>readFlattenedSource(source)));
+    throwIfCancelled();
+    // Parallel completion must not change which occurrence represents a source.
+    for(const source of deferredSources)registerSource(source);
+  }
+
   const localDependencyResult = await measure('localDependencies',()=>auditLocalComponentDependencies<
     SceneNode,
     ComponentNode
@@ -387,57 +417,6 @@ function findLocalComponentAncestor(node: BaseNode): ComponentNode | null {
     current = current.parent;
   }
   return null;
-}
-
-async function registerFlattenedLocalComponentDefinition(
-  renderedNode: InstanceNode,
-  definitions: Map<string, ComponentNode>,
-  focusNodeIds: Map<string, Set<string>>,
-  resolvedSourceIds: Set<string>,
-  rejectedSourceIds: Set<string>,
-  getNodeById: AuditTargetCollectorDependencies['getNodeById'],
-): Promise<void> {
-  const sourceIds = extractInstanceSublayerSourceNodeIds(renderedNode.id);
-  for (const sourceId of sourceIds) {
-    if (resolvedSourceIds.has(sourceId)) return;
-    if (rejectedSourceIds.has(sourceId)) continue;
-
-    let sourceNode: BaseNode | null = null;
-    try {
-      sourceNode = await getNodeById(sourceId);
-    } catch (_error) {
-      rejectedSourceIds.add(sourceId);
-      continue;
-    }
-
-    if (!sourceNode || !('parent' in sourceNode)) {
-      rejectedSourceIds.add(sourceId);
-      continue;
-    }
-
-    const owner = findLocalComponentAncestor(sourceNode);
-    if (!owner) {
-      rejectedSourceIds.add(sourceId);
-      continue;
-    }
-
-    resolvedSourceIds.add(sourceId);
-    registerComponentDefinition(
-      definitions,
-      focusNodeIds,
-      owner,
-      renderedNode.id,
-    );
-    traceAudit('flattened-local-component-source-resolved', {
-      renderedNodeId: renderedNode.id,
-      renderedNodeName: renderedNode.name,
-      sourceNodeId: sourceId,
-      sourceNodeName: 'name' in sourceNode ? sourceNode.name : null,
-      ownerComponentId: owner.id,
-      ownerComponentName: owner.name,
-    });
-    return;
-  }
 }
 
 function isPresetCandidate(item: AuditItem): boolean {

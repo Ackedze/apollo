@@ -5,7 +5,15 @@ const {createDirectLandingService,FLOW,readTool}=require(path.resolve(__dirname,
 function fixture(t,attack){
  const root=fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(),'direct-target-recovery-')));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));const session=crypto.randomUUID();let calls=0;
  const source={id:'fixture',resumePin:'pin',knowledgeVersion:'fixture',skill:{id:'ab-generate-custom-landing',name:'Fixture',version:'0.6.0',sha256:'a'.repeat(64),generation:{workflow:FLOW},bodies:{'references/rules/page-layout.md':'Layout recipe.','references/rules/component-selection.md':'Selection recipe.'}},initial:{instructions:{},selectedSkill:{}},assertCurrent(){}};
- const service=createDirectLandingService({root,knowledge:()=>source,isProcessAlive:()=>false,createCli:()=>({async run(input){
+ source.fileAccess={hub:path.join(root,'hub'),skill:path.join(root,'skill'),workflow:path.join(root,'workflow.md')};
+ const rootLifecycle={async inspect(input,{create}){
+  assert.equal(input.rootId,create?null:'40:10');
+  const childId=calls>1?'I40:10;40:30':'40:20';
+  return{state:'found',matches:['40:10'],root:{id:'40:10',type:input.type,pageId:input.pageId,parentId:input.parentId,
+   owner:input.ownerNonce,chat:input.chatId,width:100,height:100,childrenComplete:true,
+   children:[{id:childId,x:0,y:0,width:100,height:100}]}};
+ }};
+ const service=createDirectLandingService({root,rootLifecycle,knowledge:()=>source,isProcessAlive:()=>false,createCli:()=>({async run(input){
   calls++;const data=JSON.parse(input.prompt.split('\n').at(-1));input.onEvent({type:'thread.started',thread_id:session});
   const target={rootNodeId:'40:10',pageId:'1:2',parentNodeId:'1:2',ownerNonce:data.target.ownerNonce};const result={content:[{type:'text',text:JSON.stringify({target,descendantIds:[calls===1?'40:20':'I40:10;40:30']})}]};
   if(calls>1&&['rootNodeId','pageId','parentNodeId','ownerNonce'].includes(attack))target[attack]=attack==='ownerNonce'?'foreign-owner':'99:99';
@@ -18,7 +26,7 @@ function fixture(t,attack){
   return {result:{status:calls===1?'needs-structure-approval':'completed',message:'Fixture result',rootNodeId:'40:10',checkpoint:'Same root, refreshed descendants',checks:[],issues:[]},receipt:{usage:{actualInputTokens:1}}};
  }})});
  const c=service.create({id:crypto.randomUUID(),fileKey:'FixtureFile',pageId:'1:2',placement:{mode:'new-section',sectionId:null}});
- return {service,id:c.id,session,async skeleton(){service.submit(c.id,{requestId:crypto.randomUUID(),revision:0,text:'Build'});await service.settled(c.id);return service.poll(c.id);},async content(c){const a=c.execution.structureApproval;service.structureDecision(c.id,{requestId:crypto.randomUUID(),revision:c.revision,approvalId:a.id,structureHash:a.structureHash,decision:'approve',text:''});await service.settled(c.id);return service.poll(c.id);}};
+ return {service,id:c.id,session,async skeleton(){service.submit(c.id,{requestId:crypto.randomUUID(),revision:0,text:'Build'});await service.settled(c.id);const initial=service.poll(c.id);assert.equal(initial.status,'needs-structure-approval',initial.error?.code);return initial;},async content(c){const a=c.execution.structureApproval;service.structureDecision(c.id,{requestId:crypto.randomUUID(),revision:c.revision,approvalId:a.id,structureHash:a.structureHash,decision:'approve',text:''});await service.settled(c.id);return service.poll(c.id);}};
 }
 test('direct recovery accepts refreshed descendant IDs while preserving the actual owned root and CLI session',async t=>{
  const f=fixture(t),skeleton=await f.skeleton(),after=await f.content(skeleton);assert.equal(after.status,'completed');assert.deepEqual(after.target,skeleton.target);assert.equal(after.execution.sessionId,f.session);assert.equal(after.result.ready,false);

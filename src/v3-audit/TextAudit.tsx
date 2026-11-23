@@ -4,6 +4,7 @@ import {FindingCard} from '../design-check/FindingCard';
 import {MarkdownMessage} from '../design-check/MarkdownMessage';
 import {Button} from '../design-check/v3/ui-app/components/Button';
 import {SkillStage} from '../skills/shared/SkillStage';
+import {SkillDownloadMenu} from '../skills/shared/SkillDownloadMenu';
 import {TextReviewTable} from './TextReviewTable';
 import './text-review-table.css';
 const icons=require('../skills/layer-names/assets');
@@ -39,7 +40,7 @@ function TextReviewContent({state,client,active,groups,canFocus,focus,canReplace
  state:any;client:any;active:string;groups:any;canFocus:(id:string)=>boolean;focus:(id:string)=>void;canReplace:(id:string)=>boolean;hasTarget:(id:string)=>boolean;
 }){
  const texts=state.texts,result=texts.result,busy=state.busy||state.operation?.busy;
- const message=state.error||(state.operation?.status==='error'?state.operation.message:'')||state.notice;
+ const message=state.error||(state.operation?.status==='error'?state.operation.message:'')||state.agentInput?.error||state.notice;
  return <section className="apollo-text-results" id="text-review-panel" role="tabpanel" aria-labelledby={'text-tab-'+active} tabIndex={0}>
    {texts.stale&&<p className="design-check-note" role="status">Показан предыдущий результат. Повтори проверку текстов перед применением исправлений.</p>}
    {message&&<p className="design-check-note" role={state.error||state.operation?.status==='error'?'alert':'status'}>{message}</p>}
@@ -67,7 +68,7 @@ export function TextAudit({state,client,onStart,onStop,onClose,startDisabled,sco
  const focus=(id:string)=>void client.focus(texts.runId,targets.get(id));
  const eligible=textReplacements(texts),eligibleTargets=new Set(eligible.map((row:any)=>row.focusActionId));
  const canReplace=(id:string)=>showResults&&!busy&&eligibleTargets.has(targets.get(id));
- const message=state.error||state.operation?.message||state.notice;
+ const message=state.error||state.operation?.message||state.agentInput?.error||state.notice;
  return <>
   <header className={'apollo-skill-header apollo-text-header'+(showResults?' has-tabs':'')}>
    <h2 id="apollo-text-tool-title">Проверка текстов</h2>
@@ -79,11 +80,13 @@ export function TextAudit({state,client,onStart,onStop,onClose,startDisabled,sco
   {showResults?<TextReviewContent state={state} client={client} active={active} groups={groups} canFocus={canFocus} focus={focus}
    canReplace={canReplace} hasTarget={id=>targets.has(id)}/>:<div className="apollo-text-stage" aria-busy={checking}>
    <SkillStage idle={!checking} message={checking?state.progress||'Проверяем тексты…':<>Проверю орфографию, типографику<br/> и соответствие текстов правилам Альфа-Бизнеса</>}
-    description={!checking&&<p className="apollo-skill-scope-name" title={scopeName||undefined} role="status">{scopeName||'Выбери область и запусти проверку'}</p>} announce={!checking} />
+    description={<p className="apollo-skill-scope-name" title={scopeName||undefined} role="status">{scopeName||(checking?'Выбранная область':'Выбери область и запусти проверку')}</p>} announce={!checking} />
    {message&&!checking&&<p className="apollo-text-stage-message" role={state.error?'alert':'status'}>{message}</p>}
   </div>}
   <TextReviewFooter checking={checking} stopping={!!state.stopping} showResults={showResults} modelFailed={modelFailed} startDisabled={startDisabled} busy={busy}
    operationBusy={operationBusy} canApply={eligible.length>0} onStart={onStart} onStop={onStop} onApply={()=>void client.replaceTexts()}/>
+  <SkillDownloadMenu canReport={checking||!!texts.result||!!state.attempts?.texts} canInput={!!state.agentInput?.available}
+   inputLoading={!!state.agentInput?.loading} onReport={()=>client.download('texts')} onInput={()=>void client.downloadAgentInput()}/>
   {showResults&&successToast&&<div className="apollo-text-toast"><AuditToast inline key={texts.runId+':'+appliedCount} message={successToast}/></div>}
  </>;
 }

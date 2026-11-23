@@ -56,3 +56,10 @@ test('busy health prevents dispatch and preserves cancellation; a racing busy re
   assert.equal(posts,stage==='health'?0:1);
  }
 });
+
+test('ABM transport permits thirty messages and still rejects larger histories',async()=>{
+ const history=Array.from({length:30},(_,i)=>({role:i%2?'assistant':'user',text:'Synthetic '+i}));
+ const port=createExistingDialoguePort({endpoint:'http://localhost:3001/analyze',createSessionId:()=> 'memory-fixture',request:async(_url,options)=>({ok:true,json:async()=>options.method==='GET'?{ok:true,capabilities:{dialoguePlatformRouting:true}}:{success:true,source:'codex',dialogueLibrary:'abm',result:'Reply'}})});
+ assert.equal((await port.send({...input(),dialoguePlatform:'iOS',dialogue:history})).text,'Reply');
+ await assert.rejects(port.send({...input(),dialoguePlatform:'iOS',dialogue:[...history,history[0]]}),/Unsupported/);
+});

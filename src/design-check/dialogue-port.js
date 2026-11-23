@@ -26,7 +26,7 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
     async send({ source, question, dialogue, dialoguePlatform, context, signal }) {
       if (!['langflow', 'codex'].includes(source) || typeof question !== 'string' || !question.trim() || question.length > 8000
         || dialoguePlatform !== undefined && !['Desktop', 'MobileWeb', 'iOS', 'Android'].includes(dialoguePlatform)
-        || context !== null || !Array.isArray(dialogue) || dialogue.length > 12
+        || context !== null || !Array.isArray(dialogue) || dialogue.length > (['iOS','Android'].includes(dialoguePlatform)?30:12)
         || dialogue.some(entry => !['user', 'assistant'].includes(entry.role) || typeof entry.text !== 'string' || !entry.text.trim() || entry.text.length > 8000)) throw new TypeError('Unsupported dialogue input; frozen audit context requires a separate v4 protocol.');
       if (dialoguePlatform !== undefined) {
         const health = await request(new URL('/health', url).href, { method: 'GET', signal });

@@ -196,8 +196,9 @@ function createDesignCheckController(options = {}) {
     // Sending consumes the chosen source even if its reply finishes before preference loading.
     revisions.agentSource = (revisions.agentSource || 0) + 1;
     const requestId = `design-check-chat-${++sequence}`, source = state.chat.source;
+    const dialogueLibrary=['iOS','Android'].includes(state.settings.pickerLabel)?'abm':'ab';
     const abort = new AbortController(); activeChat = { requestId, abort, contextKey: state.contextKey };
-    const history = state.chat.messages.filter(entry => ['user', 'assistant'].includes(entry.role)).slice(-12)
+    const history = state.chat.messages.filter(entry => ['user', 'assistant'].includes(entry.role)&& (dialogueLibrary!=='abm'||entry.dialogueLibrary!=='ab')).slice(dialogueLibrary==='abm'?-30:-12)
       .map(entry => ({ role: entry.role, text: entry.text.trim().slice(0, 8000) }));
     let dispatched = false;
     setChat({ busy: true, error: '', notice: '' });
@@ -210,7 +211,7 @@ function createDesignCheckController(options = {}) {
         if (proxy.available === false) throw new Error('Нет связи с Apollo Proxy. Проверь подключение и повтори отправку.');
       }
       dispatched = true;
-      setChat({ messages: state.chat.messages.concat({ role: 'user', text, requestId, source }) });
+      setChat({ messages: state.chat.messages.concat({ role: 'user', text, requestId, source, dialogueLibrary }) });
       const response = await options.dialogue.send({ requestId, source, question: text, dialogue: history,
         dialoguePlatform: state.settings.pickerLabel,
         context: null, signal: abort.signal });
@@ -218,7 +219,7 @@ function createDesignCheckController(options = {}) {
       if (response?.source !== undefined && response.source !== source) throw new Error('Источник ответа агента не совпал с запросом.');
       if (typeof response?.text !== 'string' || !response.text.trim()) throw new TypeError('Агент вернул пустой ответ.');
       activeChat = null;
-      setChat({ busy: false, unreadCount: state.chat.open ? 0 : state.chat.unreadCount + 1, messages: state.chat.messages.concat({ role: 'assistant', text: response.text, requestId, source: response.source || source, returnedSource: response.returnedSource === undefined ? response.source ?? null : response.returnedSource, provider: response.provider ?? null, dialogueLibrary: response.dialogueLibrary, knowledgeRelease: response.knowledgeRelease ?? null, answerBlocks: response.answerBlocks }) });
+      setChat({ busy: false, unreadCount: state.chat.open ? 0 : state.chat.unreadCount + 1, messages: state.chat.messages.concat({ role: 'assistant', text: response.text, requestId, source: response.source || source, returnedSource: response.returnedSource === undefined ? response.source ?? null : response.returnedSource, provider: response.provider ?? null, dialogueLibrary: response.dialogueLibrary || dialogueLibrary, knowledgeRelease: response.knowledgeRelease ?? null, answerBlocks: response.answerBlocks }) });
     } catch (error) {
       if (!destroyed && activeChat?.requestId === requestId) {
         activeChat = null;

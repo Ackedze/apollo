@@ -69,3 +69,19 @@ test('a busy server also locks the picker after client Stop until health confirm
  serverBusy=false;resolve({text:'Old answer'});await sent;await controller.refreshProxyStatus();
  assert.equal(controller.updateSetting('pickerLabel','iOS'),true);controller.destroy();
 });
+
+test('ABM sends fifteen exchanges and excludes AB messages while preserving AB history limits',async()=>{
+ const sent=[];const controller=createDesignCheckController({dialogue:{send:async value=>{
+  sent.push(value);return {text:'Reply '+value.question,source:'codex',dialogueLibrary:['iOS','Android'].includes(value.dialoguePlatform)?'abm':'ab'};
+ }}});
+ await controller.sendChat('AB topic');
+ controller.updateSetting('pickerLabel','iOS');
+ for(let i=0;i<17;i++)await controller.sendChat('ABM topic '+i);
+ assert.equal(sent.at(-1).dialogue.length,30);
+ assert.equal(sent.at(-1).dialogue[0].text,'ABM topic 1');
+ assert(sent.at(-1).dialogue.every(entry=>!entry.text.includes('AB topic')));
+ controller.updateSetting('pickerLabel','Desktop');
+ await controller.sendChat('AB next');
+ assert.equal(sent.at(-1).dialogue.length,12);
+ controller.destroy();
+});

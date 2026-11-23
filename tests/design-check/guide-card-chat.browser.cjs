@@ -9,6 +9,8 @@ const blocks=[{kind:'text',text:'**как использовать хаптик.
  {kind:'guide',family:'hig',question:'отдельный вопрос без ответа паттерна',text:'Дополнительная рекомендация HIG.\n\nГайд: HIG — [Playing haptics](https://developer.apple.com/design/human-interface-guidelines/playing-haptics)'},
  {kind:'guide',family:'material2',question:'отдельный вопрос без ответа паттерна',text:'Дополнительная рекомендация Material 2.\n\nГайд: Material 2 — [Android haptics](https://m2.material.io/design/platform-guidance/android-haptics.html)'},
  {kind:'text',text:'*Токены: всего 1 200 · вход 1 000 (из них кеш: 800) · выход 200.*'}];
+const requirements=require('../../src/compatibility-requirements.json');
+const compatibility={protocolVersion:requirements.protocolVersion,data:{state:'ready',version:'a'.repeat(64),schemaVersion:requirements.dataSchemaVersion,profileVersion:requirements.dataProfiles[0],deliveryProfile:requirements.deliveryProfile,generatedAt:requirements.minDataGeneratedAt}};
 (async()=>{
  const output=process.env.DESIGN_CHECK_QA_ROOT;if(!output)throw Error('Set DESIGN_CHECK_QA_ROOT to a private QA directory.');fs.mkdirSync(output,{recursive:true});
  const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH});
@@ -23,7 +25,7 @@ const blocks=[{kind:'text',text:'**как использовать хаптик.
   await page.route(/^https?:/,async route=>{
    const request=route.request(),url=new URL(request.url());let body;
    if(url.origin!=='http://localhost:3001'){await route.abort();return;}
-   if(url.pathname==='/health')body={ok:true,proxy:{version:'fixture'},capabilities:{dialoguePlatformRouting:true}};
+   if(url.pathname==='/health')body={ok:true,proxy:{version:requirements.minProxyVersion},compatibility,capabilities:{dialoguePlatformRouting:true}};
    else if(url.pathname==='/analyze'){
     const payload=JSON.parse(request.postData());requests.push(payload);assert.equal(payload.dialoguePlatform,'iOS');
     body={success:true,source:'codex',provider:'codex',dialogueLibrary:'abm',knowledgeRelease:'synthetic-guide-fixture',result:blocks.map(b=>b.text).join('\n\n'),answerBlocks:blocks};

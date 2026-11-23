@@ -2,7 +2,11 @@ const {resolveNativeNode}=require("../canvas-target");
 // Native evidence only. No reference loader, contract engine or corrective action.
 const {getDetachedLibraryComponentKey,detachedValue}=require("./detached");
 const {styleValue,variableValue,linkedStyleValue,describeNativeStyles}=require("./styles");
-const {parallel,boundedRead}=require("./reads");
+const {parallel,boundedRead,retryableRead,readError}=require("./reads");
+const {contextPolicy}=require('./catalog-policy');
+const {describeDeprecatedStyles}=require('./deprecated-styles');
+const {readFailureReason}=require('./protocol');
+const {publishedSet,publishedVariant}=require('./published-variant');
 const LIMITS={selection:10000,definitions:1000,source:10000,page:10000,findings:1800,imports:300,collections:300,concurrency:12,readMs:1200};
 const signature=nodes=>nodes.map(n=>n.id).sort().join('|');
 function pageOf(node){let n=node,seen=new Set();while(n&&!seen.has(n.id)){seen.add(n.id);if(n.type==='PAGE')return n;n=n.parent;}return null;}
@@ -10,25 +14,30 @@ function visible(node){let n=node,seen=new Set();while(n&&n.type!=='PAGE'&&!seen
 function nodeValue(n){const scene=n.type!=='PAGE'&&n.type!=='DOCUMENT';return {id:n.id,type:n.type,name:String(n.name||n.type),parent:n.parent?.id||null,pageId:pageOf(n)?.id||null,visible:scene?n.visible!==false:null,removed:!!n.removed,children:scene&&'children' in n?Array.from(n.children).map(x=>x.id):[],resolvedModes:null};}
 function mainValue(n){return n?{id:n.id,key:typeof n.key==='string'?n.key:null,remote:typeof n.remote==='boolean'?n.remote:null,pageId:pageOf(n)?.id||null,name:String(n.name||'Компонент')}:null;}
 function collectionValue(c){return c?{id:c.id,name:String(c.name),key:typeof c.key==='string'?c.key:null,remote:typeof c.remote==='boolean'?c.remote:null,defaultModeId:typeof c.defaultModeId==='string'?c.defaultModeId:null,modes:c.modes.map(m=>({modeId:m.modeId,name:m.name}))}:null;}
-async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedRoots,onProgress=async()=>{},readTimeoutMs,scoped=false}){
- const bound=Object.assign({},LIMITS,limits),facts=new Map(),targets=new Map(),nodes=new Map(),mainCache=new Map(),published=new Map();
+async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedRoots,onProgress=async()=>{},readTimeoutMs,readOperation,onReadFailure=()=>{},scoped=false,deprecatedStyleReader=null,catalogPolicyReader=null,onTrace=null}){
+ const bound=Object.assign({},LIMITS,limits),facts=new Map(),targets=new Map(),nodes=new Map(),mainCache=new Map(),published=new Map(),publishedSets=new Map(),publishedSetKeys=new Map();
  const checks=[{id:'local',scope:'visible-selected-area-and-local-source-definitions',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false},{id:'freshness',scope:'published-version-at-run; independent-instances-and-local-source-dependencies',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false},{id:'theme',scope:'current-page-explicit-theme-mode; Desktop/MobileWeb',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false}];
  checks.push({id:'detached',scope:'visible-selected-area; native-library-detachedInfo-only',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false});
  checks.push({id:'customStyles',scope:'visible-selected-area; native-unbound-paints-effects-typography; no DS-membership or detach-history claim',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false});
  checks.push({id:'font',scope:'current-page-Font-mode; explicit-or-collection-default; Desktop/MobileWeb',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false});
+ const deprecated=deprecatedStyleReader?{id:'deprecatedStyles',scope:'visible-selected-area; applied native style keys listed in packaged deprecation policy; no token lifecycle claim',status:'running',findings:[],gaps:[],checked:0,categoryComplete:false}:null;
+ if(deprecated)checks.push(deprecated);
+ let deprecatedIndexId=null,stylePolicyIndexId=null;
  const finished=new Set(['detached']);
  const [local,fresh,theme,detached,styles,font]=checks;const versions=[],versionSeen=new Set();
  const queueVersion=args=>{const id=args[0].id+':'+(args[1]?.id||'')+':'+args[3];if(!versionSeen.has(id)){versionSeen.add(id);versions.push(args);}};
  const units=new Map(checks.map(c=>[c.id,new Set()])),modeGraph=new Map(),resolvedStyles=new Map();
- const observation=()=>({checks,facts:Array.from(facts.values()),targets,nodes,units,modeGraph,resolvedStyles});
- const read=fn=>boundedRead(fn,readTimeoutMs?readTimeoutMs():bound.readMs,assertCurrent);
+ const observation=()=>({checks,facts:Array.from(facts.values()),targets,nodes,units,modeGraph,resolvedStyles,deprecatedIndexId,stylePolicyIndexId});
+ let readFailure=null;const runGuard=assertCurrent;assertCurrent=()=>{runGuard();if(readFailure)throw readFailure;};
+ const trace=(event,data)=>{try{onTrace?.(event,data);}catch(_){}};
+ const read=async(fn,context)=>{const started=Date.now();if(context)trace('read-start',context);try{return await(readOperation?readOperation(fn):boundedRead(fn,readTimeoutMs?readTimeoutMs():bound.readMs,assertCurrent));}catch(error){const failure=context?readError(error,context):error;if(readOperation){onReadFailure(failure);if(retryableRead(failure))readFailure=failure;}throw failure;}finally{if(context)trace('read-end',Object.assign({durationMs:Date.now()-started},context));}};
  let progressQueue=Promise.resolve();
  const checkpoint=()=>{const o=observation(),snapshot={checks:JSON.parse(JSON.stringify(o.checks)).map(c=>{if(!finished.has(c.id))c.status='running';return c;}),facts:o.facts,targets:new Map(o.targets),nodes:new Map(o.nodes),units:new Map(Array.from(o.units,([id,values])=>[id,new Set(values)])),modeGraph:new Map(o.modeGraph),resolvedStyles:new Map(o.resolvedStyles)};progressQueue=progressQueue.then(async()=>{assertCurrent();await onProgress(snapshot);assertCurrent();});return progressQueue;};
  function gap(c,reason){c.status='incomplete';if(!c.gaps.includes(reason)&&c.gaps.length<1900)c.gaps.push(reason);}
  function remember(n){if(!n||n.removed)return;nodes.set(n.id,n);facts.set('node:'+n.id,{kind:'node',id:n.id,value:nodeValue(n)});}
  async function main(n){
   if(!mainCache.has(n.id))mainCache.set(n.id,(async()=>{
-   let m=null,available=true;try{m=['COMPONENT','COMPONENT_SET'].includes(n.type)?n:await read(()=>n.getMainComponentAsync());}catch(_){available=false;}
+   let m=null,available=true;try{m=['COMPONENT','COMPONENT_SET'].includes(n.type)?n:await read(()=>n.getMainComponentAsync(),{operation:'getMainComponentAsync',nodeId:n.id,resourceId:null});}catch(_){available=false;}
    assertCurrent();if(available)facts.set('main:'+n.id,{kind:'main',id:n.id,value:mainValue(m)});return m;
   })());return mainCache.get(n.id);
  }
@@ -51,10 +60,28 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
   if(!key){gap(fresh,'component-key-missing');finding(fresh,'unknown',n,'Не удалось определить библиотечный ключ компонента.',common);return;}
   if(!published.has(key)){
    if(published.size>=bound.imports){gap(fresh,'published-import-limit');finding(fresh,'unknown',n,'Достигнут лимит чтения опубликованных компонентов.',common);return;}
-   published.set(key,Promise.resolve().then(()=>api.importComponentByKeyAsync(key)));
+   published.set(key,(async()=>{
+    try{return await read(()=>api.importComponentByKeyAsync(key),{operation:'importComponentByKeyAsync',nodeId:n.id,resourceId:key});}
+    catch(error){
+     assertCurrent();const parent=m.parent;
+     if(readFailureReason(error)!=='not-found-or-unpublished'||typeof api.importComponentSetByKeyAsync!=='function'||parent?.type!=='COMPONENT_SET'||parent.remote!==true||typeof parent.key!=='string'||!parent.key)throw error;
+     const setKey=parent.key;
+     facts.set('parentIdentity:'+m.id,{kind:'parentIdentity',id:m.id,value:mainValue(parent)});
+     if(!publishedSets.has(setKey))publishedSets.set(setKey,read(async()=>{
+      const set=await api.importComponentSetByKeyAsync(setKey);assertCurrent();
+      return publishedSet(set,setKey);
+     },{operation:'importComponentSetByKeyAsync',nodeId:n.id,resourceId:setKey}));
+     const set=await publishedSets.get(setKey);assertCurrent();
+     // A matching name/property combination never establishes variant identity.
+     const latest=publishedVariant(set,setKey,key);publishedSetKeys.set(key,setKey);facts.set('identity:'+set.id,{kind:'identity',id:set.id,value:mainValue(set)});
+     if(!facts.has('parentIdentity:'+latest.id))facts.set('parentIdentity:'+latest.id,{kind:'parentIdentity',id:latest.id,value:mainValue(set)});
+     return latest;
+    }
+   })());
   }
-  let latest;try{latest=await read(()=>published.get(key));}catch(_){assertCurrent();gap(fresh,'component-import-failed');finding(fresh,'unknown',n,'Опубликованная версия недоступна. Проверьте доступ к библиотеке и повторите проверку.',common);return;}
+  let latest;try{latest=await published.get(key);}catch(error){assertCurrent();const absent=error.message==='PUBLISHED_VARIANT_UNAVAILABLE';gap(fresh,absent?'published-variant-unavailable':'component-import-failed');if(absent)common.evidence.componentSetKey=error.componentSetKey;finding(fresh,'unknown',n,absent?'Опубликованный набор доступен, но вариант с этим библиотечным ключом не найден.':'Опубликованная версия недоступна. Проверьте доступ к библиотеке и повторите проверку.',common);return;}
   assertCurrent();common.evidence.latestComponentId=latest?.id||null;
+  if(publishedSetKeys.has(key))common.evidence.componentSetKey=publishedSetKeys.get(key);
   if(!latest||latest.key!==key||latest.remote!==true||typeof latest.id!=='string'){gap(fresh,'component-import-identity-mismatch');finding(fresh,'unknown',n,'Опубликованный компонент не совпал с библиотечным ключом.',common);return;}
   facts.set('identity:'+latest.id,{kind:'identity',id:latest.id,value:mainValue(latest)});
   finding(fresh,latest.id===m.id?'current':'update',n,latest.id===m.id?'Экземпляр использует опубликованную версию. Соответствие дизайн-системе проверяется отдельно.':'Доступна новая опубликованная версия компонента.',common);
@@ -81,8 +108,11 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
   if('children' in n)stack.push(...Array.from(n.children).reverse());
   if(seen.size%128===0)await new Promise(resolve=>setTimeout(resolve,0));
  }
+ // Source discovery can expand nodes onto another page; style scope stays selected-only.
+ const areaNodes=Array.from(nodes.values());
+ function captureModeGraph(){
  // Resolved collection identities plus explicit ancestor overrides prove PAGE inheritance.
- for(const n of nodes.values()){
+ for(const n of areaNodes){
   if(n.type==='PAGE'||n.type==='DOCUMENT')continue;
   const chain=[],overridden=new Set();let complete=true,p=n,seenModes=new Set();
   while(p&&p.type!=='PAGE'&&p.type!=='DOCUMENT'&&!seenModes.has(p.id)){
@@ -95,24 +125,58 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
   let resolved=[];try{if(!n.resolvedVariableModes)complete=false;else resolved=Object.keys(n.resolvedVariableModes);}catch(_){complete=false;}
   modeGraph.set(n.id,{complete,resolved,overridden:Array.from(overridden),chain});
  }
- // Theme and provenance finish before any published-version RPC. Running checks
- // carry explicit coverage rather than hiding independently established findings.
+ }
+ // Imported library resources must settle before their bindings become evidence.
  local.status='running';fresh.status='running';theme.status='running';styles.status='running';
- async function checkStyles(){
+ async function checkStyles(beforeStyles=new Map()){
  styles.status=roots.length?'complete':'incomplete';const styleCache=new Map(),variableCache=new Map();
- await parallel(Array.from(nodes.values()).filter(n=>n.type!=='PAGE'&&n.type!=='DOCUMENT'),bound.concurrency,async n=>{
-  if(n.type==='SECTION')return;styles.checked++;units.get(styles.id).add(n.id);let diagnostic;
-  try{const value=styleValue(n);facts.set('styles:'+n.id,{kind:'styles',id:n.id,value});diagnostic=await describeNativeStyles(api,n,{read,styleCache,variableCache});}
-  catch(_){gap(styles,'native-style-read-unavailable');finding(styles,'unknown',n,'Не удалось прочитать связь со стилем. Её состояние не подтверждено.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});return;}
+ let materialized=0;
+ let deprecatedIndex=null,stylePolicyIndex=null;
+ if(catalogPolicyReader){try{stylePolicyIndex=await catalogPolicyReader.read(assertCurrent);stylePolicyIndexId=stylePolicyIndex.indexId;styles.scope='visible-selected-area; native bindings and V3 packaged style/token catalog membership with scoped exceptions';}catch(error){assertCurrent();onReadFailure(readError(error,{operation:'catalogAuditPolicy.index',nodeId:null,resourceId:null}));gap(styles,'v3-catalog-policy-not-connected');}}
+ async function policyFor(n){
+  if(!stylePolicyIndex)return {};
+  const ancestors=[],seen=new Set();let p=n;
+  while(p&&p.type!=='PAGE'&&p.type!=='DOCUMENT'&&!seen.has(p.id)){
+   seen.add(p.id);if(!nodes.has(p.id))remember(p);let key=null;
+   if(['INSTANCE','COMPONENT','COMPONENT_SET'].includes(p.type)){const m=await main(p);if(!m||typeof m.key!=='string')throw Error('CATALOG_POLICY_CONTEXT_UNAVAILABLE');key=m.key;}
+   ancestors.push({key,name:String(p.name||''),self:p===n});p=p.parent;
+  }
+  return contextPolicy(stylePolicyIndex,String(n.name||''),ancestors);
+ }
+ if(deprecated){try{deprecatedIndex=await deprecatedStyleReader.read(assertCurrent);deprecatedIndexId=deprecatedIndex.indexId;deprecated.status=roots.length?'complete':'incomplete';if(!roots.length)gap(deprecated,'empty-selection');}catch(error){assertCurrent();onReadFailure(readError(error,{operation:'deprecatedStyles.index',nodeId:null,resourceId:null}));gap(deprecated,'deprecated-style-index-unavailable');}assertCurrent();if(local.gaps.includes('selection-node-limit'))gap(deprecated,'selection-node-limit');}
+ await parallel(areaNodes.filter(n=>n.type!=='PAGE'&&n.type!=='DOCUMENT'),bound.concurrency,async n=>{
+  if(n.type==='SECTION')return;styles.checked++;units.get(styles.id).add(n.id);let diagnostic,value;
+  try{
+   const policy=await policyFor(n);
+   const before=onTrace?beforeStyles.get(n.id)||styleValue(n):null;
+   await describeNativeStyles(api,n,{read,styleCache,variableCache,policy});
+   if(deprecatedIndex)await describeDeprecatedStyles(api,n,{read,styleCache,index:deprecatedIndex});
+   assertCurrent();value=styleValue(n);
+   if(before&&hash(before)!==hash(value)){materialized++;if(materialized<=8)trace('phase-drift',factFailure({kind:'styles',id:n.id,value:before},value,'value-mismatch',hash,'style-resource-loading').nativeFailure);}
+   facts.set('styles:'+n.id,{kind:'styles',id:n.id,value});diagnostic=await describeNativeStyles(api,n,{read,styleCache,variableCache,policy});
+  }
+  catch(error){assertCurrent();onReadFailure(readError(error,{operation:'readNativeStyles',nodeId:n.id,resourceId:null}));if(deprecatedIndex){gap(deprecated,'deprecated-style-binding-unavailable');finding(deprecated,'unknown',n,'Не удалось прочитать применённые стили.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});}gap(styles,'native-style-read-unavailable');finding(styles,'unknown',n,'Не удалось прочитать связь со стилем. Её состояние не подтверждено.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});return;}
   assertCurrent();
   resolvedStyles.set(n.id,diagnostic.resolved);
   for(const reason of diagnostic.gaps)gap(styles,reason);
   for(const resource of diagnostic.resources)if(resource.value)facts.set(resource.kind+':'+resource.id,resource);
-  for(const entry of diagnostic.findings){const f=finding(styles,entry.status,n,entry.status==='unknown'?'Связанный стиль или токен недоступен. Его состояние не подтверждено.':'Не задана связь со стилем или переменной: '+({fills:'заливка',strokes:'обводка',effects:'эффекты',typography:'типографика'}[entry.property])+'.',{occurrences:[n.id],evidence:entry.evidence});if(f)f.findingId=hash(['customStyles',n.id,entry.property]);}
+  for(const entry of diagnostic.findings){const f=finding(styles,entry.status,n,entry.status==='unknown'?'Связанный стиль или токен недоступен. Его состояние не подтверждено.':(stylePolicyIndex?'Нет подтверждённой связи со стилем или токеном из каталога: ':'Не задана связь со стилем или переменной: ')+({fills:'заливка',strokes:'обводка',effects:'эффекты',typography:'типографика'}[entry.property])+'.',{occurrences:[n.id],evidence:entry.evidence});if(f)f.findingId=hash(['customStyles',n.id,entry.property]);}
+  if(deprecatedIndex){
+   deprecated.checked++;units.get(deprecated.id).add(n.id);
+   try{
+    const result=await describeDeprecatedStyles(api,n,{read,styleCache,index:deprecatedIndex});assertCurrent();
+    for(const reason of result.gaps)gap(deprecated,reason);
+    for(const resource of result.resources)if(resource.value)facts.set(resource.kind+':'+resource.id,resource);
+    for(const entry of result.findings){const f=finding(deprecated,entry.status,n,entry.status==='unknown'?'Не удалось подтвердить статус связанного стиля.':'Устаревший стиль: '+entry.evidence.styleName,{occurrences:[n.id],evidence:entry.evidence});if(f)f.findingId=hash(['deprecatedStyles',n.id,entry.evidence.property,entry.evidence.styleId]);}
+   }catch(_){assertCurrent();gap(deprecated,'deprecated-style-binding-unavailable');finding(deprecated,'unknown',n,'Не удалось прочитать применённые стили.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});}
+  }
+  assertCurrent();let currentValue;try{currentValue=styleValue(n);}catch(error){throw readError(error,{operation:'readNativeStyles',nodeId:n.id,resourceId:null});}
+  if(hash(value)!==hash(currentValue))throw factFailure({kind:'styles',id:n.id,value},currentValue,'value-mismatch',hash,'style-resource-resolution');
  });
  // Native binding state is not a replacement for v3's catalog and policy gates.
  // Exact library/context exceptions require authority that this subset lacks.
- if(styles.findings.length)gap(styles,'v3-catalog-policy-not-connected');
+ if(!stylePolicyIndex&&styles.findings.length)gap(styles,'v3-catalog-policy-not-connected');
+ if(materialized)trace('phase-summary',{stage:'style-resource-loading',count:materialized});
  finished.add('customStyles');await checkpoint();
  }
  async function checkLocal(){
@@ -143,9 +207,19 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  for(const owner of owners.values())finding(local,'local',owner.node,'Определение находится в текущем файле. Наличие ключа или записи в каталоге не меняет его локальность.',{owner:owner.node,occurrences:Array.from(owner.occurrences),componentKey:owner.node.key||null,evidence:{nativeRemote:false}});
  finished.add('local');await checkpoint();
  }
- await Promise.all([checkTheme().then(()=>{finished.add('theme');finished.add('font');return checkpoint();}),checkStyles(),checkLocal()]);
+ captureModeGraph();await Promise.all([checkTheme().then(()=>{finished.add('theme');finished.add('font');return checkpoint();}),checkLocal()]);assertCurrent();
+ const beforeImports=[];
+ if(onTrace&&versions.length)for(const n of areaNodes)if(n.type!=='SECTION')try{beforeImports.push({node:n,value:styleValue(n)});}catch(_){}
+ trace('phase-start',{stage:'published-imports',count:versions.length});
  fresh.status=fresh.gaps.length?'incomplete':'complete';
  await parallel(versions,bound.concurrency,async args=>{await version(...args);});
+ assertCurrent();trace('phase-end',{stage:'published-imports',count:published.size});
+ let materialized=0;const beforeStyles=new Map();
+ for(const entry of beforeImports)try{const actual=styleValue(entry.node);beforeStyles.set(entry.node.id,actual);if(hash(entry.value)!==hash(actual)){
+  materialized++;if(materialized<=8)trace('phase-drift',factFailure({kind:'styles',id:entry.node.id,value:entry.value},actual,'value-mismatch',hash,'published-imports').nativeFailure);
+ }entry.value=actual;}catch(_){}
+ if(materialized)trace('phase-summary',{stage:'published-imports',count:materialized});
+ trace('phase-start',{stage:'styles',count:areaNodes.length});await checkStyles(beforeStyles);
  // Late-discovered occurrences share the source-owner diagnostic, without duplicate entries.
  for(const f of fresh.findings)if(f.owner&&owners.has(f.owner.id)){
   const o=owners.get(f.owner.id);f.occurrences=Array.from(o.occurrences);f.targets=f.occurrences.map(id=>target(nodes.get(id),'occurrence')).filter(Boolean);const own=target(o.node,'owner');if(own)f.targets.push(own);
@@ -162,7 +236,7 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
    if(collectionIds.has(id))return;
    if(collectionIds.size>=bound.collections){gap(theme,'collection-limit');gap(font,'collection-limit');return;}
    collectionIds.add(id);let c=null;
-   try{c=await read(()=>api.variables.getVariableCollectionByIdAsync(id));}catch(_){/* recorded as unavailable below */}
+   try{c=await read(()=>api.variables.getVariableCollectionByIdAsync(id),{operation:'variables.getVariableCollectionByIdAsync',nodeId:page.id,resourceId:id});}catch(_){assertCurrent();gap(theme,'variable-collection-unavailable');gap(font,'variable-collection-unavailable');return;}
    assertCurrent();facts.set('collection:'+id,{kind:'collection',id,value:collectionValue(c)});
    if(!c){gap(theme,'variable-collection-unavailable');gap(font,'variable-collection-unavailable');return;}
    // Different native IDs can represent the same published collection. Only an exact
@@ -174,7 +248,7 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
   // PAGE supports explicit modes, not SceneNode resolved modes. Explicit collections
   // are relevant even when no selected node uses variables or the page is empty.
   for(const id of Object.keys(explicit)){assertCurrent();await collection(id);}
-  for(const n of nodes.values())if(n.type!=='PAGE'&&n.type!=='DOCUMENT'){const modes=Object.assign({},n.resolvedVariableModes||{});if(Object.keys(modes).length)facts.set('sceneModes:'+n.id,{kind:'sceneModes',id:n.id,value:modes});for(const id of Object.keys(modes))await collection(id);}
+  for(const n of areaNodes)if(n.type!=='PAGE'&&n.type!=='DOCUMENT'){const modes=Object.assign({},n.resolvedVariableModes||{});if(Object.keys(modes).length)facts.set('sceneModes:'+n.id,{kind:'sceneModes',id:n.id,value:modes});for(const id of Object.keys(modes))await collection(id);}
   const knownTheme=Array.from(groups.values()).some(g=>g.collections.some(c=>String(c.name).trim().toLowerCase()==='theme'));
   const knownFont=Array.from(groups.values()).some(g=>g.collections.some(c=>String(c.name).trim().toLowerCase()==='font'));
   const tree=knownTheme&&knownFont||scoped?[]:Array.from(page.children).reverse(),pageSeen=new Set();
@@ -243,23 +317,24 @@ function factFailure(f,actual,reason,hash,stage){
  const resource=['style','variable','collection'].includes(f.kind);
  return Object.assign(Error('NATIVE_FACTS_CHANGED'),{nativeFailure:{stage,factKind:f.kind,factId:f.id,nodeId:resource?null:f.id,resourceId:resource?f.id:null,reason,changedFields,expectedHash:hash(f.value===undefined?null:f.value),actualHash:hash(actual===undefined?null:actual)}});
 }
-async function recheck(api,facts,{hash,assertCurrent,timeoutMs=1200,concurrency=16,stage='native-recheck'}){
+async function recheck(api,facts,{hash,assertCurrent,timeoutMs=1200,concurrency=16,stage='native-recheck',readOperation}){
  const nodes=new Map();
- const read=fn=>boundedRead(fn,timeoutMs,assertCurrent);
- const node=id=>{if(!nodes.has(id))nodes.set(id,resolveNativeNode(api,id,{read,guard:assertCurrent}));return nodes.get(id);};
+ const read=async(fn,context)=>{try{return await(readOperation?readOperation(fn):boundedRead(fn,timeoutMs,assertCurrent));}catch(error){throw readError(error,context);}};
+ const node=id=>{if(!nodes.has(id))nodes.set(id,resolveNativeNode(api,id,{read:fn=>read(fn,{operation:'getNodeByIdAsync',nodeId:id,resourceId:null}),guard:assertCurrent}));return nodes.get(id);};
  await parallel(facts,concurrency,async f=>{assertCurrent();let value;
-  if(f.kind==='style'){value=linkedStyleValue(await read(()=>api.getStyleByIdAsync(f.id)));}
-  else if(f.kind==='variable'){value=variableValue(await read(()=>api.variables.getVariableByIdAsync(f.id)));}
-  else if(f.kind==='collection'){try{value=collectionValue(await read(()=>api.variables.getVariableCollectionByIdAsync(f.id)));}catch(_){value=null;}}
+  if(f.kind==='style'){value=linkedStyleValue(await read(()=>api.getStyleByIdAsync(f.id),{operation:'getStyleByIdAsync',nodeId:null,resourceId:f.id}));}
+  else if(f.kind==='variable'){value=variableValue(await read(()=>api.variables.getVariableByIdAsync(f.id),{operation:'variables.getVariableByIdAsync',nodeId:null,resourceId:f.id}));}
+  else if(f.kind==='collection'){value=collectionValue(await read(()=>api.variables.getVariableCollectionByIdAsync(f.id),{operation:'variables.getVariableCollectionByIdAsync',nodeId:null,resourceId:f.id}));}
   else{const n=await node(f.id);if(!n||n.removed)throw factFailure(f,null,'node-unavailable',hash,stage);
    if(f.kind==='node')value=nodeValue(n);
    else if(f.kind==='identity')value=mainValue(n);
+   else if(f.kind==='parentIdentity')value=mainValue(n.parent);
    else if(f.kind==='pageModes')value=Object.assign({},n.explicitVariableModes||{});
    else if(f.kind==='explicitModes')value=Object.assign({},n.explicitVariableModes||{});
    else if(f.kind==='sceneModes')value=Object.assign({},n.resolvedVariableModes||{});
    else if(f.kind==='detached')value=detachedValue(n);
-   else if(f.kind==='styles')value=styleValue(n);
-   else{let m=null;try{m=['COMPONENT','COMPONENT_SET'].includes(n.type)?n:await read(()=>n.getMainComponentAsync());}catch(e){if(e.message==='NATIVE_READ_TIMEOUT')throw e;}value=mainValue(m);}
+   else if(f.kind==='styles'){try{value=styleValue(n);}catch(error){throw readError(error,{operation:'readNativeStyles',nodeId:f.id,resourceId:null});}}
+   else{const m=['COMPONENT','COMPONENT_SET'].includes(n.type)?n:await read(()=>n.getMainComponentAsync(),{operation:'getMainComponentAsync',nodeId:f.id,resourceId:null});value=mainValue(m);}
   }
   assertCurrent();if(hash(value)!==hash(f.value))throw factFailure(f,value,'value-mismatch',hash,stage);
  });

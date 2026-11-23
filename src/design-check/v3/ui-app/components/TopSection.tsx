@@ -26,11 +26,11 @@ const pluginBuild = typeof __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__ === 'string
 type ControlId = 'pageTypeId' | 'channelId' | 'pickerLabel' | 'shellAuditEnabled' | 'compact' | 'experimentalContractV2Enabled' | 'showExpectedCustomizations' | 'hideCustomizations' | 'captureExample';
 
 type TopSectionProps = {
-  controlAvailability: Record<ControlId, boolean>;
+  controlAvailability: Record<ControlId, boolean> & { connectCatalogs?: boolean };
   title: string;
   settingsHost?: HTMLElement | null;
   readContractData?: () => Promise<ContractData>;
-  proxy?: { available: boolean | null; version: string | null };
+  proxy?: { available: boolean | null; version: string | null; compatibility?: { state: string; message: string } | null };
   proxyError?: string;
   settingsMessage?: string;
   onProxyRefresh?: () => Promise<void>;
@@ -45,6 +45,7 @@ type TopSectionProps = {
   actionType: 'primary' | 'secondary';
   compact: boolean;
   shellAuditEnabled: boolean;
+  connectCatalogs?: boolean;
   showExpectedCustomizations: boolean;
   hideCustomizations: boolean;
   experimentalContractV2Enabled: boolean;
@@ -54,6 +55,7 @@ type TopSectionProps = {
   onPickerChange?: (pickerLabel: string) => boolean | void;
   onPageTypeChange?: (pageTypeId: PageTypeId) => void;
   onShellAuditToggle?: () => void;
+  onConnectCatalogsToggle?: () => void;
   onShowExpectedToggle?: () => void;
   onHideCustomizationsToggle?: () => void;
   onExperimentalContractV2Toggle?: () => void;
@@ -166,7 +168,7 @@ function SettingsPickerMenu({anchor, menuRef, label, onClose, children}: {
     const current = buttons.indexOf(document.activeElement as HTMLButtonElement);
     const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (current + (event.key === 'ArrowUp' ? -1 : 1) + buttons.length) % buttons.length;
     buttons[next].focus({preventScroll:true});
-  }}><OptionList className={styles.pickerMenu}>{children}</OptionList></div>, document.body);
+  }}><OptionList className={styles.pickerMenu}>{children}</OptionList></div>, anchor.current?.closest('dialog') ?? document.body);
 }
 
 export function TopSection({
@@ -189,6 +191,7 @@ export function TopSection({
   actionType,
   compact,
   shellAuditEnabled,
+  connectCatalogs = false,
   showExpectedCustomizations,
   hideCustomizations,
   experimentalContractV2Enabled,
@@ -197,6 +200,7 @@ export function TopSection({
   onPickerChange,
   onPageTypeChange,
   onShellAuditToggle,
+  onConnectCatalogsToggle,
   onExampleCapture,
 }: TopSectionProps): React.JSX.Element {
   const settingsButtonRef = useRef<HTMLButtonElement>(null);
@@ -266,10 +270,16 @@ export function TopSection({
 
     function handleKeyDown(event: KeyboardEvent): void {
       if (event.key === 'Escape') {
+        const dialog = pageTypeRootRef.current?.closest('dialog');
+        if (dialog && !dialog.contains(event.target as Node)) return;
         if (pickerOpen || workshopOpen) {
           event.preventDefault();
           closeSettingsPicker();
           return;
+        }
+        if (dialog) {
+          event.preventDefault();
+          if (pageTypeOpen) pageTypeRootRef.current?.querySelector('button')?.focus({preventScroll:true});
         }
         if (settingsOpen && settingsRootRef.current?.contains(document.activeElement)) settingsButtonRef.current?.focus();
         setSettingsOpen(false);
@@ -300,6 +310,7 @@ export function TopSection({
     selectedOption.label,
     selectedWorkshop.id,
     shellAuditEnabled ? 'shared-on' : 'shared-off',
+    connectCatalogs ? 'catalogs-on' : 'catalogs-off',
     showExpectedCustomizations ? 'expected-on' : 'expected-off',
     hideCustomizations ? 'customizations-hidden' : 'customizations-visible',
     experimentalContractV2Enabled ? 'contract-v2-on' : 'contract-v2-off',
@@ -310,7 +321,9 @@ export function TopSection({
     compact ? 'compact' : 'full',
   ].join(':');
 
-  const proxyStatus = proxy?.available === null ? 'Не проверен' : proxy?.available ? 'Подключён' : 'Недоступен';
+  const needsUpdate = proxy?.available === true && Boolean(proxy.compatibility?.state.startsWith('update-'));
+  const compatible = proxy?.compatibility?.state === 'compatible';
+  const proxyStatus = proxy?.available === null ? 'Не проверен' : needsUpdate ? 'Требуется обновление' : proxy?.available ? compatible ? 'Совместим' : 'Совместимость не проверена' : 'Недоступен';
   const proxyLabel = `Proxy${proxy?.version ? ` v${proxy.version}` : ''}`;
 
   const platformControl = (
@@ -377,9 +390,9 @@ export function TopSection({
           {proxy && <button
             type="button"
             className={styles.proxyBadge}
-            data-state={proxy.available === null ? 'unknown' : proxy.available ? 'connected' : 'unavailable'}
+            data-state={proxy.available === null ? 'unknown' : needsUpdate ? 'update-required' : proxy.available ? compatible ? 'connected' : 'unknown' : 'unavailable'}
             aria-label={`${proxyLabel}: ${proxyStatus}. Проверить подключение`}
-            title={[proxyStatus, proxy.available === false ? proxyError || 'Запусти локальный Proxy.' : '', 'Нажми, чтобы проверить подключение.'].filter(Boolean).join('\n')}
+            title={[proxyStatus, needsUpdate ? proxy.compatibility?.message : proxy.available === false ? proxyError || 'Запусти локальный Proxy.' : '', 'Нажми, чтобы проверить подключение.'].filter(Boolean).join('\n')}
             disabled={!onProxyRefresh}
             onClick={() => { void onProxyRefresh?.(); }}
           >
@@ -422,11 +435,23 @@ export function TopSection({
             className={styles.switchRow}
             disabled={actionLoading || !controlAvailability.shellAuditEnabled}
             title={!controlAvailability.shellAuditEnabled ? 'Эта настройка ещё не подключена к проверке v4' : undefined}
-            aria-pressed={shellAuditEnabled}
+            aria-pressed={!shellAuditEnabled}
             onClick={onShellAuditToggle}
           >
-            <span className={styles.switchText}>Проверять шаред</span>
-            <span className={[styles.switchTrack, shellAuditEnabled ? styles.switchTrackActive : ''].filter(Boolean).join(' ')}>
+            <span className={styles.switchText}>Пропускать шаред</span>
+            <span className={[styles.switchTrack, !shellAuditEnabled ? styles.switchTrackActive : ''].filter(Boolean).join(' ')}>
+              <span className={styles.switchThumb} />
+            </span>
+          </button>
+          <button
+            type="button"
+            className={styles.switchRow}
+            disabled={actionLoading || !controlAvailability.connectCatalogs || !onConnectCatalogsToggle}
+            aria-pressed={connectCatalogs}
+            onClick={onConnectCatalogsToggle}
+          >
+            <span className={styles.switchText}>Подключить каталоги</span>
+            <span className={[styles.switchTrack, connectCatalogs ? styles.switchTrackActive : ''].filter(Boolean).join(' ')}>
               <span className={styles.switchThumb} />
             </span>
           </button>

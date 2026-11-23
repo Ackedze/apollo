@@ -5,7 +5,7 @@ function proxyBusy(body) {
   return values.includes(true) ? true : values.includes(false) ? false : null;
 }
 // Existing /analyze wire contract observed in v3 and Proxy. Opt-in only: no network on mount.
-function createExistingDialoguePort({ request, endpoint, createSessionId }) {
+function createExistingDialoguePort({ request, endpoint, createSessionId, readStatus }) {
   if (typeof request !== 'function' || typeof createSessionId !== 'function') throw new TypeError('Explicit request and session identity ports are required.');
   const url = new URL(endpoint);
   if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.pathname !== '/analyze' || url.search || url.hash) throw new TypeError('Expected an explicit /analyze endpoint.');
@@ -19,6 +19,7 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
   }
   return { cancelScope: 'client-only', resetSession() { sessionId = null; },
     async status({ signal } = {}) {
+      if (readStatus) return readStatus({ signal });
       const response = await request(new URL('/health', url).href, { method: 'GET', signal });
       const body = await response.json();
       return { available: response.ok && body.ok === true, version: typeof body.proxy?.version === 'string' ? body.proxy.version : null, busy: proxyBusy(body) };
@@ -64,4 +65,4 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
       return { dialogueLibrary: ['ab','abm'].includes(body.dialogueLibrary) ? body.dialogueLibrary : undefined, answerBlocks, text: body.result, source: body.source || source, returnedSource: body.source ?? null, provider: body.provider ?? null, knowledgeRelease: body.knowledgeRelease ?? null };
     } };
 }
-module.exports = { createExistingDialoguePort };
+module.exports = { createExistingDialoguePort, proxyBusy };

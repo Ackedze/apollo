@@ -1,9 +1,9 @@
 const test=require('node:test'),assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs'),path=require('node:path');
 const {fixture,request,settle}=require("./document-audit.test");
-function bundled(f){
+function bundled(f,Clock=Date){
  const original=f.api.ui.postMessage;
  f.api.ui.postMessage=m=>{original(m);if(m.type==='resolve-contracts')queueMicrotask(()=>f.api.ui.onmessage({type:'contracts-resolved',requestId:m.requestId,error:'Proxy offline'}));};
- vm.runInNewContext(fs.readFileSync(path.join(__dirname,"../dist/code.js"),'utf8'),{figma:f.api,__html__:'',TextEncoder,setTimeout,clearTimeout});return f;
+ vm.runInNewContext(fs.readFileSync(path.join(__dirname,"../dist/code.js"),'utf8'),{figma:f.api,__html__:'',TextEncoder,setTimeout,clearTimeout,Date:Clock});return f;
 }
 test('actual main publishes document results despite a failing independent contract audit',async()=>{
  const f=fixture(),main=f.component('old',true,'key');f.component('latest-key',true,'key');f.theme('base');f.page.selection=[f.instance('instance',main)];bundled(f);
@@ -19,4 +19,25 @@ test('actual main validates current page for empty selection; page theme still h
 test('actual main uses PAGE explicit Theme aliases while checking an individual instance sublayer',async()=>{
  const f=fixture();f.theme('base','page-alias');f.theme(null,'scene-alias');for(const c of f.collections.values())c.key='invented-same-library-theme';const frame=f.node('frame'),instance=f.instance('instance',null,frame),nested=f.node('sublayer','TEXT',instance);nested.resolvedVariableModes={'scene-alias':'base'};f.page.selection=[nested];bundled(f);await f.api.ui.onmessage(request(f,'nested'));
  const result=await settle(f,'document-audit-result','nested');assert.equal(result.result.checks[2].status,'complete');assert.equal(result.result.checks[2].findings[0].status,'theme-mismatch');assert.equal(result.result.checks[2].findings[0].evidence.aliasCount,2);assert.equal(result.result.context.selectionSignature,'sublayer');f.emit('close');
+});
+
+test('actual main receives Stop while cached Figma identities are still being read',async()=>{
+ const f=fixture(),root=f.node('root'),main=f.component('remote',true,'fixture-key');let reads=0,stopTimer;
+ let elapsed=Date.now();class Clock extends Date{static now(){return elapsed;}}
+ for(let i=0;i<512;i++){
+  const instance=f.instance('instance-'+i,main,root);
+  instance.getMainComponentAsync=async()=>{
+   elapsed++;
+   if(++reads===1)stopTimer=setTimeout(()=>{void f.api.ui.onmessage({type:'document-audit-cancel',schemaVersion:'apollo.document-audit.v1',requestId:'cached-stop'});},0);
+   return main;
+  };
+ }
+ f.page.selection=[root];bundled(f,Clock);
+ try{
+  await f.api.ui.onmessage(request(f,'cached-stop'));
+  await settle(f,'document-audit-cancelled','cached-stop');
+  assert(reads<512,'Stop must reach main before all cached identity reads finish');
+  await new Promise(resolve=>setTimeout(resolve,5));
+  assert.equal(f.messages.some(m=>m.type==='document-audit-result'&&m.requestId==='cached-stop'),false);
+ }finally{clearTimeout(stopTimer);f.emit('close');}
 });

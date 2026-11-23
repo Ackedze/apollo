@@ -8,14 +8,53 @@ function focusValid(m) { return closed(m,['type','schemaVersion','requestId','ru
 function resultValid(r) {
  try {
  if(JSON.stringify(r).length > 4 * 1024 * 1024) return false;
- if(!closed(r,['runId','context','checks','observedAt','coverage']) || !text(r.runId,100) || !contextValid(r.context) || !Number.isFinite(r.observedAt) || r.coverage!=='native-subsets-only' || !Array.isArray(r.checks) || r.checks.length<3 || r.checks.length>6) return false;
+ if(!closed(r,['runId','context','checks','observedAt','coverage']) || !text(r.runId,100) || !contextValid(r.context) || !Number.isFinite(r.observedAt) || r.coverage!=='native-subsets-only' || !Array.isArray(r.checks) || r.checks.length<3 || r.checks.length>7) return false;
  const seen=new Set();
  return ['local','freshness','theme'].every(id=>r.checks.some(c=>c.id===id)) && r.checks.every(c=>{
-  if(!closed(c,['id','scope','status','findings','gaps','checked','categoryComplete']) || !['local','freshness','theme','font','detached','customStyles'].includes(c.id) || seen.has(c.id) || !text(c.scope) || !['complete','incomplete','not-applicable','running'].includes(c.status) || c.categoryComplete!==false || !Number.isInteger(c.checked) || c.checked<0 || !Array.isArray(c.gaps) || c.gaps.length>2000 || !c.gaps.every(v=>text(v,200)) || !Array.isArray(c.findings) || c.findings.length>2000)return false;
+  if(!closed(c,['id','scope','status','findings','gaps','checked','categoryComplete']) || !['local','freshness','theme','font','detached','customStyles','deprecatedStyles'].includes(c.id) || seen.has(c.id) || !text(c.scope) || !['complete','incomplete','not-applicable','running'].includes(c.status) || c.categoryComplete!==false || !Number.isInteger(c.checked) || c.checked<0 || !Array.isArray(c.gaps) || c.gaps.length>2000 || !c.gaps.every(v=>text(v,200)) || !Array.isArray(c.findings) || c.findings.length>2000)return false;
   seen.add(c.id);
-  return c.findings.every(f=>closed(f,['findingId','status','name','message','componentKey','owner','occurrences','targets','evidence']) && text(f.findingId,150) && ['local','current','update','unknown','theme-mismatch','theme-current','font-mismatch','font-current','detached','custom-style'].includes(f.status) && text(f.name,500) && text(f.message,2000) && (f.componentKey===null || text(f.componentKey,150)) && (f.owner===null || closed(f.owner,['id','name','pageId']) && [f.owner.id,f.owner.name,f.owner.pageId].every(v=>text(v,500))) && Array.isArray(f.occurrences) && f.occurrences.length<=1000 && f.occurrences.every(v=>text(v,100)) && Array.isArray(f.targets) && f.targets.length<=1001 && f.targets.every(t=>closed(t,['id','kind','nodeId','pageId']) && text(t.id,150) && ['occurrence','owner','page-anchor'].includes(t.kind) && text(t.nodeId,100) && t.pageId===r.context.pageId) && f.evidence && typeof f.evidence==='object' && !Array.isArray(f.evidence) && JSON.stringify(f.evidence).length<4000);
+  return c.findings.every(f=>closed(f,['findingId','status','name','message','componentKey','owner','occurrences','targets','evidence']) && text(f.findingId,150) && ['local','current','update','unknown','theme-mismatch','theme-current','font-mismatch','font-current','detached','custom-style','deprecated-style'].includes(f.status) && text(f.name,500) && text(f.message,2000) && (f.componentKey===null || text(f.componentKey,150)) && (f.owner===null || closed(f.owner,['id','name','pageId']) && [f.owner.id,f.owner.name,f.owner.pageId].every(v=>text(v,500))) && Array.isArray(f.occurrences) && f.occurrences.length<=1000 && f.occurrences.every(v=>text(v,100)) && Array.isArray(f.targets) && f.targets.length<=1001 && f.targets.every(t=>closed(t,['id','kind','nodeId','pageId']) && text(t.id,150) && ['occurrence','owner','page-anchor'].includes(t.kind) && text(t.nodeId,100) && t.pageId===r.context.pageId) && f.evidence && typeof f.evidence==='object' && !Array.isArray(f.evidence) && JSON.stringify(f.evidence).length<4000);
  });
  } catch (_) { return false; }
 }
-function failureValid(v){try{return closed(v,['schemaVersion','errorId','requestId','code','stage','factKind','factId','nodeId','resourceId','reason','changedFields','expectedHash','actualHash'])&&v.schemaVersion==='apollo.native-audit-failure.v1'&&/^native:[a-f0-9]{24}$/.test(v.errorId)&&text(v.requestId,150)&&v.code==='NATIVE_FACTS_CHANGED'&&text(v.stage,100)&&['node','main','identity','pageModes','explicitModes','sceneModes','detached','styles','style','variable','collection'].includes(v.factKind)&&text(v.factId,250)&&(v.nodeId===null||text(v.nodeId,250))&&(v.resourceId===null||text(v.resourceId,250))&&['node-unavailable','value-mismatch'].includes(v.reason)&&Array.isArray(v.changedFields)&&v.changedFields.length<=24&&v.changedFields.every(s=>text(s,200))&&[v.expectedHash,v.actualHash].every(s=>typeof s==='string'&&/^[a-f0-9]{64}$/.test(s));}catch(_){return false;}}
-module.exports={SCHEMA,platforms,contextValid,requestValid,focusValid,resultValid,failureValid};
+const readOperations=['getMainComponentAsync','importComponentByKeyAsync','importComponentSetByKeyAsync','getNodeByIdAsync','getStyleByIdAsync','variables.getVariableByIdAsync','variables.getVariableCollectionByIdAsync','readNativeStyles','deprecatedStyles.index','catalogAuditPolicy.index'];
+const readReasons=['access-denied','not-found-or-unpublished','network','timeout','invalid-response','unavailable','cancelled','unknown'];
+const errorNames=['Error','TypeError','RangeError','ReferenceError','SyntaxError','AbortError','DOMException','FigmaError'];
+function failureValid(v){try{
+ const version2=v?.schemaVersion==='apollo.native-audit-failure.v2',keys=['schemaVersion','errorId','requestId','code','stage','factKind','factId','nodeId','resourceId','reason','changedFields','expectedHash','actualHash'];
+ if(!closed(v,version2?keys.concat('read'):keys)||!['apollo.native-audit-failure.v1','apollo.native-audit-failure.v2'].includes(v.schemaVersion)||!/^native:[a-f0-9]{24}$/.test(v.errorId)||!text(v.requestId,150)||!text(v.stage,100)||!text(v.factId,250)||!Array.isArray(v.changedFields)||v.changedFields.length>24||!v.changedFields.every(s=>text(s,200)))return false;
+ if(v.factKind==='operation'){
+  if(typeof v.code!=='string'||!/^[A-Z][A-Z0-9_]{0,79}$/.test(v.code)||v.reason!=='read-failed'||v.changedFields.length!==0||v.expectedHash!==null||v.actualHash!==null)return false;
+  if(!version2)return v.nodeId===null&&v.resourceId===null;
+  return (v.nodeId===null||text(v.nodeId,250))&&(v.resourceId===null||text(v.resourceId,250))
+   &&closed(v.read,['operation','sourceCode','sourceReason','sourceName','sourceMessageHash'])&&readOperations.includes(v.read.operation)
+   &&(v.read.sourceCode===null||typeof v.read.sourceCode==='string'&&/^[A-Za-z0-9_:-]{1,80}$/.test(v.read.sourceCode))
+   &&readReasons.includes(v.read.sourceReason)&&errorNames.includes(v.read.sourceName)&&typeof v.read.sourceMessageHash==='string'&&/^[a-f0-9]{64}$/.test(v.read.sourceMessageHash);
+ }
+ if(version2)return false;
+ return v.code==='NATIVE_FACTS_CHANGED'&&['node','main','identity','parentIdentity','pageModes','explicitModes','sceneModes','detached','styles','style','variable','collection'].includes(v.factKind)&&(v.nodeId===null||text(v.nodeId,250))&&(v.resourceId===null||text(v.resourceId,250))&&['node-unavailable','value-mismatch'].includes(v.reason)&&[v.expectedHash,v.actualHash].every(s=>typeof s==='string'&&/^[a-f0-9]{64}$/.test(s));
+ }catch(_){return false;}}
+let failureSequence=0;
+function readFailureReason(error){
+ const message=typeof error?.message==='string'?error.message.slice(0,4096):'',code=typeof error?.code==='string'&&/^[A-Za-z0-9_:-]{1,80}$/.test(error.code)?error.code:'';
+ const source=code+' '+message;
+ return /access.denied|permission|forbidden|not authorized|HTTP_40[13]/i.test(source)?'access-denied'
+  :/not.found|does not exist|could not find|unpublished|not published|HTTP_404/i.test(source)?'not-found-or-unpublished'
+  :/timed?.?out|timeout/i.test(source)?'timeout':/network|offline|failed to fetch|connection|ENOTFOUND|ECONN/i.test(source)?'network'
+  :/invalid.response|response.invalid|invalid.*index|index.invalid|JSON|SyntaxError/i.test(source)?'invalid-response':/cancelled|canceled|AbortError/i.test(source)?'cancelled'
+  :/unavailable|HTTP_5[0-9]{2}/i.test(source)?'unavailable':'unknown';
+}
+function failureDiagnostic(error,requestId,stage,hash,identity){
+ const supplied=error?.code||error?.message,code=typeof supplied==='string'&&/^[A-Z][A-Z0-9_]{0,79}$/.test(supplied)?supplied:'NATIVE_READ_FAILED';
+ const diagnostic=Object.assign({schemaVersion:'apollo.native-audit-failure.v1',errorId:'native:'+hash([requestId,identity,code,stage,++failureSequence]).slice(0,24),requestId,code},error?.nativeFailure||{stage,factKind:'operation',factId:stage,nodeId:null,resourceId:null,reason:'read-failed',changedFields:[],expectedHash:null,actualHash:null});
+ const context=error?.nativeRead;
+ if(!error?.nativeFailure&&readOperations.includes(context?.operation)){
+  const message=typeof error?.message==='string'?error.message.slice(0,4096):'',sourceCode=typeof error?.code==='string'&&/^[A-Za-z0-9_:-]{1,80}$/.test(error.code)?error.code:/^[A-Z][A-Z0-9_]{0,79}$/.test(message)?message:null;
+  const sourceReason=readFailureReason(error);
+  diagnostic.schemaVersion='apollo.native-audit-failure.v2';diagnostic.factId=context.operation;
+  diagnostic.nodeId=text(context.nodeId,250)?context.nodeId:null;diagnostic.resourceId=text(context.resourceId,250)?context.resourceId:null;
+  diagnostic.read={operation:context.operation,sourceCode,sourceReason,sourceName:errorNames.includes(error?.name)?error.name:'Error',sourceMessageHash:hash(message)};
+ }
+ return diagnostic;
+}
+module.exports={SCHEMA,platforms,contextValid,requestValid,focusValid,resultValid,failureValid,failureDiagnostic,readFailureReason};

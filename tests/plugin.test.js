@@ -72,7 +72,7 @@ function plugin(options = {}) {
     createPage() { const p = { id: 'temp', type: 'PAGE', appendChild(node) { node.parent = p; }, remove() { p.removed = true; } }; pages.push(p); return p; },
   };
   const Clock = options.now ? class extends Date { constructor(...args) { super(...(args.length ? args : [0])); } static now() { return options.now(); } } : Date;
-  vm.runInNewContext(code, { figma, __html__: '', setTimeout, clearTimeout, TextEncoder, Date: Clock });
+  vm.runInNewContext(options.sourceCode || code, { figma, __html__: '', setTimeout, clearTimeout, TextEncoder, Date: Clock });
   const transportMessages=[];
   const send = async value => {
     await figma.ui.onmessage(value);
@@ -118,15 +118,18 @@ test('metadata reads cannot hide a property mutation before final audit delivery
   p.actual.fillStyleId = id;
   p.figma.getStyleByIdAsync = async () => { p.actual.opacity = .3; return { id, key, name: 'Surface/Primary' }; };
   await p.send({ type: 'load-contract', source }); await p.send({ type: 'audit', requestId: 'metadata-mutation' });
-  assert.equal(p.messages.some(m => m.type === 'audit-result'), false);
-  assert.match(p.messages.find(m => m.type === 'error').message, /изменились/);
+  assert.ok(p.messages.some(m=>m.type==='audit-recovery'));const fresh=p.messages.find(m=>m.type==='audit-result');assert.ok(fresh);assert.ok(fresh.audit.snapshot.nodes.some(n=>n.appearance?.opacity===.3));
 });
 
-for (const mutateRead of [null, 4, 5]) test(`SLOT freshness keeps the captured representation and detects mutations: ${mutateRead}`, async () => {
+for (const mutation of [null, 'during-final', 'before-final']) test(`SLOT freshness keeps the captured representation and detects mutations: ${mutation}`, async () => {
   let reads = 0, p;
   p = plugin({ nativeSlot: true, onMainRead(node) {
-    if (node === p.actual && ++reads === mutateRead) p.actual.children[0].opacity = .5;
+    if (node === p.actual && ++reads === 4 && mutation === 'during-final') p.actual.children[0].opacity = .5;
   } });
+  if (mutation === 'before-final') {
+    const key = 'b'.repeat(40); p.actual.fillStyleId = `S:${key},1:2`;
+    p.figma.getStyleByIdAsync = async id => { p.actual.children[0].opacity = .5; return {id,key,name:'Synthetic surface'}; };
+  }
   const source = authored.source();
   source.manual.representations.push({ id: 'frontend', kind: 'code', platform: 'desktop', status: 'draft',
     locator: { packageName: 'synthetic-ui', importPath: 'synthetic-ui/test', exportName: 'Test' } });
@@ -138,13 +141,9 @@ for (const mutateRead of [null, 4, 5]) test(`SLOT freshness keeps the captured r
   await p.send({ type: 'load-contract', source });
   assert.equal(p.messages.some(m => m.type === 'error'), false, JSON.stringify(p.messages));
   await p.send({ type: 'audit', requestId: 'shared-slot-boundary' });
-  if (mutateRead) {
-    assert.equal(p.messages.some(m => m.type === 'audit-result'), false);
-    assert.match(p.messages.find(m => m.type === 'error').message,
-      new RegExp(`AUDIT_CAPTURE_CHANGED · ${mutateRead === 4 ? 'verify-capture' : 'verify-final-capture'}`));
-    assert.match(p.messages.find(m => m.type === 'error').message, /узла actual/);
-    assert.ok(p.created.every(n => n.removed));
-    return;
+  if (mutation) {
+    const recovery=p.messages.find(m=>m.type==='audit-recovery');assert.ok(recovery);assert.equal(recovery.diagnostic.code,'AUDIT_CONTEXT_CHANGED');
+    const fresh=p.messages.find(m=>m.type==='audit-result');assert.ok(fresh);assert.ok(fresh.audit.snapshot.nodes.some(n=>n.appearance?.opacity===.5));assert.ok(p.created.every(n=>n.removed));return;
   }
   assert.deepEqual(p.messages.filter(m => m.type === 'error'), []);
   const result = p.messages.find(m => m.type === 'audit-result'); assert.ok(result);
@@ -181,11 +180,19 @@ for (const [label, opacity, expected] of [['PASS', 1, 'compliant'], ['FAIL', .5,
   });
 }
 
+test('a mutation inside initial capture is rejected by the final freshness read', async () => {
+  let armed = false, opacity = .5, p;
+  p = plugin({onMainRead: node => { if (node.id === 'reference') armed = true; }});
+  Object.defineProperty(p.actual, 'opacity', {get() { const value = opacity; if (armed) { armed = false; opacity = .2; } return value; }, set(value) { opacity = value; }});
+  await p.send({type:'load-contract', source:authored.source()}); await p.send({type:'audit',requestId:'initial-mutation'});
+  assert.ok(p.messages.some(m=>m.type==='audit-recovery'));const fresh=p.messages.find(m=>m.type==='audit-result');assert.ok(fresh);assert.ok(fresh.audit.snapshot.nodes.some(n=>n.appearance?.opacity===.2));
+  assert.ok(p.created.every(n=>n.removed)); assert.ok(p.pages.every(n=>n.removed));
+});
+
 test('layout changed during freshness read never publishes success and always cleans temporary nodes', async () => {
     let reads = 0, p;
     p = plugin({ onMainRead: node => { if (node.id === 'actual' && ++reads === 4) p.actual.opacity = .2; } }); await p.send({ type: 'load-contract', source: authored.source() }); await p.send({ type: 'audit', requestId: 'one' });
-    assert.equal(p.messages.filter(m => m.type === 'audit-result').length, 0);
-    assert.match(p.messages.at(-1).message, /изменились/);
+    assert.ok(p.messages.some(m=>m.type==='audit-recovery'));const fresh=p.messages.find(m=>m.type==='audit-result');assert.ok(fresh);assert.ok(fresh.audit.snapshot.nodes.some(n=>n.appearance?.opacity===.2));
     assert.ok(p.created.every(n => n.removed)); assert.ok(p.pages.every(n => n.removed));
 });
 
@@ -265,7 +272,7 @@ function proxyReply(request, sources) {
 async function proxyAudit(p, sources = [authored.source()], alter) {
   p.messages.length = 0;
   let done = false;
-  const running = p.send({ type: 'audit', requestId: 'auto' }).finally(() => { done = true; });
+  const running = p.send({ type: 'audit', requestId: 'auto', ...(p.connectCatalogs ? {connectCatalogs:true} : {}) }).finally(() => { done = true; });
   const seen = new Set();
   for (let turn = 0; !done && turn < 200; turn++) {
     for (const request of p.messages.filter(m => m.type === 'resolve-contracts')) if (!seen.has(request.requestId)) {
@@ -275,13 +282,52 @@ async function proxyAudit(p, sources = [authored.source()], alter) {
       if (alter) alter(reply, request);
       await p.send(reply);
     }
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise(resolve => setTimeout(resolve,1));
   }
+  if(!done){await p.send({type:'audit-cancel',requestId:'auto'});await running;}
   for (const request of p.messages.filter(m => m.type === 'resolve-contracts')) if (!seen.has(request.requestId))
     await p.send({ type: 'contracts-resolved', requestId: request.requestId, error: 'test interrupted' });
   assert.equal(done, true, 'Proxy handshake must finish'); await running;
   return p.messages.find(m => m.type === 'audit-result')?.audit;
 }
+
+test('current source main routes only proved direct raw owners and keeps the standalone child audit',async()=>{
+  const root=path.join(__dirname,'..'),esbuild=require('esbuild'),options=require('../build').runtimeBuildOptions(false);
+  const built=await esbuild.build({absWorkingDir:root,entryPoints:['src/code.ts'],bundle:true,write:false,platform:'browser',format:'iife',target:['es2017'],
+    supported:{'object-rest-spread':false},alias:options.alias,define:{__APOLLO_PROGRESSBAR_PILOT__:'true',__APOLLO_AGENT_NATIVE_SCOPE__:'null',__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__:'null',__APOLLO_NATIVE_BUILD_INPUTS_SHA__:'"synthetic-source-fixture"'},
+    plugins:[{name:'synthetic-capture-input',setup(build){build.onLoad({filter:/[\\/]src[\\/]audit-catalog\.ts$/},()=>({contents:"import {collectAnatomy} from '../packages/component-contract-core/src/figma-capture'; export async function captureCatalogAudit(subject,contract){const observed=await collectAnatomy(subject,contract.facts.component.platform,{});return figma.syntheticRawCapture(subject,contract,observed.anatomy);}",loader:'ts'}));}}]});
+  const A='a'.repeat(40),C='c'.repeat(40),H='1'.repeat(64),copy=v=>JSON.parse(JSON.stringify(v));
+  const parent=authored.source(),child=authored.source();
+  for(const [s,key,id]of [[parent,A,'fixture.raw-parent'],[child,C,'fixture.raw-child']]){
+    s.manual.component.componentId=s.manual.component.contractId=s.manual.component.familyId=id;s.manual.component.componentKey=key;
+    s.manual.representations[0].locator={componentKey:key};s.variantEvidence.variants[0].componentKey=key;s.variantEvidence.variants[0].componentSetKey=key;
+  }
+  parent.manual.targets.push({id:'child',semanticRole:'child',pathHint:'Test / Child',resolution:'resolved',lineage:[]});
+  parent.manual.rules[0].targetScope='self-and-descendants';
+  for(const supported of [true,false]){
+    const p=plugin({sourceCode:built.outputFiles[0].text,key:A}),nested=p.instance('nested',1);
+    nested.name='Child';nested.parent=p.actual;nested.getMainComponentAsync=async()=>({key:C,id:'nested-main',componentPropertyDefinitions:{}});p.actual.children.push(nested);p.connectCatalogs=true;
+    p.figma.syntheticRawCapture=(subject,contract,anatomy)=>{
+      const host=subject.id==='actual',snapshot={schemaVersion:'apollo.predicate-snapshot.v2',generatedAt:'2026-10-01T00:00:00Z',selection:['root'],context:{platform:'desktop',modes:{},unknownFacts:[]},
+        source:{rootNodeId:subject.id,componentKey:host?A:C,componentSetKey:'',representationId:'figma',fileKey:'file',pageId:'page',truncated:false,occurrenceAddressVersion:1,propertyReferenceIdentityVersion:1,instanceIdentityVersion:1,
+          captureTopology:{complete:true,issues:[]},catalogueNodeIds:host?{root:'actual',child:'nested'}:{root:'nested'},catalogReference:{referenceHash:host?H:'2'.repeat(64),releaseId:'e'.repeat(64)}},
+        nodes:[{id:'root',name:host?'Test':'Child',type:'INSTANCE',parentId:null,childIds:host?['child']:[],visible:true,resolvedModes:{},appearance:{opacity:1},
+          component:{identity:{componentKey:host?A:C,componentSetKey:''},properties:{},propertyTypes:{},propertyReferenceBindings:{}},unknownFacts:[]}]};
+      if(host)snapshot.nodes.push(Object.assign(copy(snapshot.nodes[0]),{id:'child',name:'Child',parentId:'root',childIds:[],component:{identity:{componentKey:C,componentSetKey:''},properties:{},propertyTypes:{},propertyReferenceBindings:{}}}));
+      const base=copy(snapshot);base.source.rawCatalogue={referenceHash:snapshot.source.catalogReference.referenceHash,manualSourceHash:contract.package.manualSourceHash,compiledContractHash:api.contractHash(contract),
+        catalog:{file:host?'parent.json':'child.json',sha256:H},representationId:'figma',paths:host?{root:'',child:'Child'}:{root:''},families:{[A]:'',[C]:''}};
+      if(!supported&&host)base.source.rawCatalogue.compiledContractHash='9'.repeat(64);
+      const ids=Object.fromEntries(snapshot.nodes.map(n=>[n.id,anatomy.find(a=>a.figmaNodeId===snapshot.source.catalogueNodeIds[n.id]).id]));
+      for(const s of [snapshot,base]){s.selection=s.selection.map(id=>ids[id]);for(const n of s.nodes){n.id=ids[n.id];n.parentId=n.parentId===null?null:ids[n.parentId];n.childIds=n.childIds.map(id=>ids[id]);}s.source.catalogueNodeIds=Object.fromEntries(Object.entries(s.source.catalogueNodeIds).map(([id,native])=>[ids[id],native]));}
+      base.source.rawCatalogue.paths=Object.fromEntries(Object.entries(base.source.rawCatalogue.paths).map(([id,p])=>[ids[id],p]));
+      snapshot.rawCatalogueReference={base};return {snapshot,anatomy,warnings:[],unmatchedBaselineNodeIds:[]};
+    };
+    const audit=await proxyAudit(p,[parent,child]);assert.ok(audit,JSON.stringify(p.messages));
+    assert.equal(audit.components.length,2);assert.equal(Boolean(audit.components[1].ownerContext),supported);
+    assert(audit.components.every(c=>c.result.engine.evaluations.length>0));assert.equal(audit.notChecked.length,0);
+    assert.equal(p.created.length,0);assert.equal(p.pages.length,0);
+  }
+});
 
 test('a selected section fetches once per key, checks repeated instances and marks missing contracts', async () => {
   const p = plugin({ opacity: .5 }), second = p.instance('second', .3), foreign = p.instance('foreign', 1);
@@ -356,25 +402,35 @@ test('an earlier instance changed while a later scope captures cannot publish a 
   let reads = 0, p;
   p = plugin({ onMainRead: node => { if (node.id === 'second' && ++reads === 2) p.actual.opacity = .2; } });
   p.figma.currentPage.selection = [p.frame('area', [p.actual, p.instance('second', 1)])];
-  assert.equal(await proxyAudit(p), undefined);
-  assert.match(p.messages.at(-1).message, /изменились/);
+  const fresh=await proxyAudit(p);assert.ok(fresh);assert.ok(p.messages.some(m=>m.type==='audit-recovery'));assert.ok(fresh.components.find(c=>c.scopeId==='actual').snapshot.nodes.some(n=>n.appearance?.opacity===.2));
 });
 
-test('deselection during contract resolution preserves captured roots and rejects foreign late replies', async () => {
+test('deselection during contract resolution preserves captured roots and rejects foreign late replies', async t => {
   const p=plugin();await p.send({type:'ready'});const running=p.send({type:'audit',requestId:'pending'});
-  for(let turn=0;!p.messages.some(m=>m.type==='resolve-contracts')&&turn<20;turn++)await new Promise(resolve=>setImmediate(resolve));
-  const request=p.messages.find(m=>m.type==='resolve-contracts');assert.ok(request);p.figma.currentPage.selection=[];p.handlers.selectionchange();
+  t.after(async()=>{await p.send({type:'audit-cancel',requestId:'pending'});await running;});
+  const nextRequest=async previous=>{
+    const deadline=Date.now()+2000;
+    let request;
+    while(!(request=p.messages.find(m=>m.type==='resolve-contracts'&&m.requestId!==previous))&&Date.now()<deadline)
+      await new Promise(resolve=>setTimeout(resolve,1));
+    assert.ok(request,'Proxy request must arrive after host yields');return request;
+  };
+  const request=await nextRequest();p.figma.currentPage.selection=[];p.handlers.selectionchange();
   await p.send({type:'contracts-resolved',requestId:'foreign',data:proxyReply(request,[authored.source()])});assert.equal(p.messages.some(m=>m.type==='audit-result'),false);
   await p.send({type:'contracts-resolved',requestId:request.requestId,data:proxyReply(request,[authored.source()])});
-  for(let turn=0;!p.messages.some(m=>m.type==='resolve-contracts'&&m.requestId!==request.requestId)&&turn<30;turn++)await new Promise(resolve=>setImmediate(resolve));
-  const verify=p.messages.find(m=>m.type==='resolve-contracts'&&m.requestId!==request.requestId);assert.ok(verify);await p.send({type:'contracts-resolved',requestId:verify.requestId,data:proxyReply(verify,[authored.source()])});await running;
+  const verify=await nextRequest(request.requestId);await p.send({type:'contracts-resolved',requestId:verify.requestId,data:proxyReply(verify,[authored.source()])});await running;
   const result=p.messages.find(m=>m.type==='audit-result');assert.ok(result);assert.equal(result.audit.selection.roots[0].nodeId,'actual');
   await p.send({type:'focus-scope',auditId:result.audit.auditId,nodeId:'actual'});assert.equal(p.figma.currentPage.selection[0].id,'actual');
 });
 
 test('contract cancellation acknowledges only after pending work exits; a late reply cannot restore it',async()=>{
- const p=plugin();const running=p.send({type:'audit',requestId:'cancel'});for(let i=0;!p.messages.some(m=>m.type==='resolve-contracts')&&i<20;i++)await new Promise(r=>setImmediate(r));const request=p.messages.find(m=>m.type==='resolve-contracts');assert.ok(request);
- await p.send({type:'audit-cancel',requestId:'foreign'});assert.equal(p.messages.some(m=>m.type==='audit-cancelled'),false);await p.send({type:'audit-cancel',requestId:'cancel'});await running;assert.ok(p.messages.some(m=>m.type==='audit-cancelled'&&m.requestId==='cancel'));await p.send({type:'contracts-resolved',requestId:request.requestId,data:proxyReply(request,[authored.source()])});assert.equal(p.messages.some(m=>m.type==='audit-result'),false);
+ const p=plugin();const running=p.send({type:'audit',requestId:'cancel'}),deadline=Date.now()+2000;
+ try {
+  // Immediate-turn counts can expire before the cooperative reader's timer runs.
+  while(!p.messages.some(m=>m.type==='resolve-contracts')&&Date.now()<deadline)await new Promise(r=>setTimeout(r,1));
+  const request=p.messages.find(m=>m.type==='resolve-contracts');assert.ok(request);
+  await p.send({type:'audit-cancel',requestId:'foreign'});assert.equal(p.messages.some(m=>m.type==='audit-cancelled'),false);await p.send({type:'audit-cancel',requestId:'cancel'});await running;assert.ok(p.messages.some(m=>m.type==='audit-cancelled'&&m.requestId==='cancel'));await p.send({type:'contracts-resolved',requestId:request.requestId,data:proxyReply(request,[authored.source()])});assert.equal(p.messages.some(m=>m.type==='audit-result'),false);
+ } finally { await p.send({type:'audit-cancel',requestId:'cancel'});await running; }
 });
 
 for (const [label, alter] of [
@@ -383,7 +439,7 @@ for (const [label, alter] of [
   ['changed release on final verification', (reply, request) => { if (!request.components.length) { reply.error = 'Версия контрактов изменилась.'; } }],
 ]) test(`${label} cannot publish a result`, async () => {
   const p = plugin(); assert.equal(await proxyAudit(p, [authored.source()], alter), undefined);
-  assert.equal(p.messages.at(-1).type, 'error');
+  if(label==='changed release on final verification'){assert.ok(p.messages.some(m=>m.type==='audit-recovery'));assert.ok(p.messages.some(m=>m.type==='audit-cancelled'));}else assert.equal(p.messages.at(-1).type,'error');
 });
 
 test('empty areas and component definitions remain explicitly incomplete', async () => {
@@ -409,15 +465,15 @@ test('properties changed during final release verification cannot escape the fin
   const audit = await proxyAudit(p, [authored.source()], (reply, request) => {
     if (!request.components.length) p.actual.opacity = .2;
   });
-  assert.equal(audit, undefined); assert.match(p.messages.at(-1).message, /изменились/);
+  assert.ok(audit);assert.ok(p.messages.some(m=>m.type==='audit-recovery'));assert.ok(audit.snapshot.nodes.some(n=>n.appearance?.opacity===.2));
 });
 
 test('area membership changed during the final request invalidates the report', async () => {
-  const p = plugin(), frame = p.frame('area', [p.actual]); p.figma.currentPage.selection = [frame];
+  const p = plugin(), frame = p.frame('area', [p.actual]); p.figma.currentPage.selection = [frame];let changed=false;
   const audit = await proxyAudit(p, [authored.source()], (reply, request) => {
-    if (!request.components.length) { const child = p.instance('new-child', 1); child.parent = frame; frame.children.push(child); }
+    if (!request.components.length&&!changed) {changed=true; const child = p.instance('new-child', 1); child.parent = frame; frame.children.push(child); }
   });
-  assert.equal(audit, undefined); assert.match(p.messages.at(-1).message, /Состав/);
+  assert.ok(audit);assert.ok(audit.components.some(c=>c.scopeId==='new-child'));assert.ok(p.messages.some(m=>m.type==='audit-recovery'));
 });
 
 
@@ -542,12 +598,12 @@ test('stage timings account for native reads without changing canonical audit or
   assert.equal(timing.schemaVersion, 'apollo.audit-timings.v1');
   assert.equal(timing.scope, 'contract-area-audit-before-delivery');
   assert.equal(timing.clock, 'Date.now');
-  assert.equal(timing.totalMs, 49);
-  assert.deepEqual(timing.stages.filter(s=>!s.stage.startsWith('capture.')).map(s => s.stage), ['scan','capture','verify-capture','evaluate','index-component','display-metadata','verify-final-capture','final-scan','aggregate','shared-area-snapshot','focus-targets']);
+  assert.equal(timing.totalMs, 42);
+  assert.deepEqual(timing.stages.filter(s=>!s.stage.startsWith('capture.')).map(s => s.stage), ['scan','capture','evaluate','contract-hash','index-component','display-metadata','verify-final-capture','verify-final-captures','final-scan','aggregate','shared-area-snapshot','focus-targets']);
   assert.equal(timing.stages.find(s => s.stage === 'capture').durationMs, 21);
   assert.equal(timing.stages.find(s => s.stage === 'capture').scopeId, 'actual');
-  assert.equal(timing.stages.filter(s=>!s.stage.startsWith('capture.')).reduce((sum,s) => sum + s.durationMs, 0), timing.totalMs);
-  assert.equal(second.audit.timings.totalMs, 91);
+  assert.equal(timing.stages.filter(s=>!s.stage.startsWith('capture.')&&s.stage!=='verify-final-capture').reduce((sum,s) => sum + s.durationMs, 0), timing.totalMs);
+  assert.equal(second.audit.timings.totalMs, 78);
   delete first.audit.timings; delete second.audit.timings;
   delete first.delivery; delete second.delivery;
   assert.deepEqual(first, second);

@@ -16,3 +16,21 @@ test('unsupported alias versions are rejected and historical packages retain str
  delete c.runtimePolicy.instanceMainComponentAliasesVersion;c.package.sourceExportVersion='component-contract-editor@0.2.88';loadRuntimeContract(c);
  const result=auditContractSnapshot(f.snapshot,c);assert.equal(result.engine.evaluations.at(-1).classification,'human-review');assert.equal(result.coverage.executionComplete,false);
 });
+
+test('canonical-main opt-in restores only independently proved aliases and preserves source identity guards',()=>{
+ const f=aliasFixture(core),contract=f.compile().contract;
+ assert.equal(contract.runtimePolicy.instanceMainComponentAliasesVersion,1);
+ const restored=auditContractSnapshot(f.snapshot,contract);
+ assert.equal(restored.coverage.executionComplete,true);
+ for(const mutate of [
+  s=>s.nodes.find(n=>n.id==='glyph-4').component.sourceIdentity.sourceNodeId='foreign-source',
+  s=>s.nodes.find(n=>n.id==='glyph-4').component.sourceIdentity.ownerMainComponentId='foreign-main',
+  s=>s.nodes.find(n=>n.id==='glyph-4').component.sourceIdentity.ownerComponentKey='foreign-key',
+  s=>s.nodes.find(n=>n.id==='icon-4').unknownFacts=['component.identity.mainComponentId'],
+ ]){
+  const changed=clone(f.snapshot);mutate(changed);
+  const result=auditContractSnapshot(changed,contract);
+  assert.equal(result.coverage.executionComplete,false);
+  assert.ok(result.engine.evaluations.some(e=>e.classification==='human-review'));
+ }
+});

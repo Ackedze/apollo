@@ -3,6 +3,7 @@ import { snapshotPaths } from './snapshot-topology';
 import { matchesCaptureRepresentation } from './capture-representation';
 import { resolveComponentProperty } from './component-property-identity';
 import { matchesTargetRole } from './root-target';
+import { declaredTargetMembershipKey } from './declared-target-membership';
 
 const record = (v: unknown): Record<string, any> => v && typeof v === 'object' ? v as Record<string, any> : {};
 const unknown = (n: Record<string, unknown>, fact: string) => ((n.unknownFacts || []) as string[])
@@ -35,23 +36,31 @@ export function materializeTargetSemanticFacts(snapshot: PreviewSnapshot, contra
     const anchor = available?.present === true || (resolved?.length === 1 && resolved[0].resolution === 'resolved'
       && candidates.length === 1 && resolved[0].nodeId === String(candidates[0].id));
     const absent = available?.present === false && candidates.length === 0;
+    const native = target.length === 1 && contract.runtimePolicy.nativeTargetUsageFactsVersion === 1
+      && contract.runtimePolicy.nativeTargetPropertyFactsVersion === 1
+      ? record(record(root.nativeTargetPropertiesV1)[declaredTargetMembershipKey(target[0].id)]) : {};
+    // This proof is recomputed by materializeNativeTargetProperties. It grants
+    // read-only API facts, never a semantic role or a nested visual baseline.
+    const nativeKnown = typeof native.componentSetKey === 'string' && Boolean(native.componentSetKey)
+      && native.componentSetKey === native.referenceComponentSetKey;
     const targetKnown = Boolean(paths && identityKnown && reps.length === 1 && bindings.length === 1
       && binding && (binding.path === 'visibility.effective' || binding.path.startsWith('component.properties.'))
       && [undefined, 'identity'].includes(binding.transform)
       && target.length === 1 && target[0].resolution === 'resolved'
       && contract.facts.targets.filter(t => t.semanticRole === role).length === 1
-      && (absent || (anchor && candidates.length === 1)));
+      && (absent || (anchor && candidates.length === 1) || nativeKnown));
     const fact = `semanticApi.${property.id}`;
     const sourceFact = `ruleScopeV1.targets.${role}.visible`;
     const isVisibility = binding?.path === 'visibility.effective';
-    const visible = targetKnown && !unknown(root, sourceFact) ? record(record(root.ruleScopeV1).targets)[role]?.visible : undefined;
+    const visible = nativeKnown ? native.effectiveVisible
+      : targetKnown && !unknown(root, sourceFact) ? record(record(root.ruleScopeV1).targets)[role]?.visible : undefined;
     let value: unknown = isVisibility ? visible : undefined;
-    if (targetKnown && !isVisibility && !absent && candidates.length === 1) {
-      const node = candidates[0], data = record(node.component);
+    if (targetKnown && !isVisibility && !absent && (nativeKnown || candidates.length === 1)) {
+      const node = nativeKnown ? undefined : candidates[0], data = nativeKnown ? native : record(node?.component);
       const resolved = resolveComponentProperty(binding!.path.slice('component.properties.'.length), data,
         property.valueType === 'boolean' ? ['BOOLEAN'] : property.kind === 'variant' ? ['VARIANT'] : ['TEXT', 'VARIANT']);
-      if ('name' in resolved && !unknown(node, `component.properties.${resolved.name}`)
-        && !unknown(node, `component.propertyTypes.${resolved.name}`)) {
+      if ('name' in resolved && (!node || !unknown(node, `component.properties.${resolved.name}`)
+        && !unknown(node, `component.propertyTypes.${resolved.name}`))) {
         const raw = record(data.properties)[resolved.name];
         if ((property.valueType === 'boolean' ? typeof raw === 'boolean' : typeof raw === 'string')
           && (!property.domain || property.domain.includes(raw))) value = raw;

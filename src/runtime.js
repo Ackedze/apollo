@@ -3,14 +3,20 @@ const engine = require('@apollo/predicate-engine');
 const dependencies = require('@apollo/component-contract-dependencies');
 const { CONTRACT_SCHEMA, assertRuntimeContract, contractEvaluationMode, collectContractKeys, collectContractRules, collectContractDependencies } = require("./contract-profile");
 const authoring = require("./authoring-source");
-const { collectContractOwnedParts } = require('./area-ownership');
+const { collectContractOwnedParts, hiddenContractTarget, emptyOwnedTextScope, scopeOwnerBaselineCaptureWarnings } = require('./area-ownership');
 const RUNTIME_VERSION = '0.4.1';
 
 function loadRuntimeContract(contract, options) {
   return assertRuntimeContract(contract, engine, options);
 }
 
-function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
+function canUseDirectRawOwnerContext(snapshot, contract, owner) {
+  const host = JSON.parse(JSON.stringify(owner.snapshot));
+  host.componentDependencyCaptures = [{nodeId:owner.nodeId,nodeMap:owner.nodeMap,snapshot}];
+  return Boolean(dependencies.validatedDirectRawOwnerCapture(host,owner.nodeId,owner.contract,contract).ownerBaseline);
+}
+
+function auditContractSnapshot(snapshot, inputContract, options, ownerContext, captureDiagnostics) {
   const mode = contractEvaluationMode(options), contract = loadRuntimeContract(inputContract, options);
   if (!snapshot || snapshot.schemaVersion !== 'apollo.predicate-snapshot.v2'
     || !Array.isArray(snapshot.nodes) || !Array.isArray(snapshot.selection)
@@ -46,11 +52,15 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
   if (owner) {
     boundCapture(owner.snapshot, 0);
     const parent = loadRuntimeContract(owner.contract, owner.evaluationMode ? { evaluationMode: owner.evaluationMode } : undefined);
-    const parts = collectContractOwnedParts(owner.snapshot, parent).filter(part => part.snapshotNodeId === owner.nodeId);
+    const raw = Boolean(owner.snapshot.rawCatalogueReference?.base?.source?.rawCatalogue);
+    const ownerEvaluations = raw ? core.evaluateCompiledContract(owner.snapshot,
+      owner.evaluationMode === 'authoring-preview' ? core.prepareAuthoringPreviewContract(parent) : parent).evaluations : undefined;
+    const parts = collectContractOwnedParts(owner.snapshot, parent, ownerEvaluations).filter(part => part.snapshotNodeId === owner.nodeId);
     const host = JSON.parse(JSON.stringify(owner.snapshot));
     host.componentDependencyCaptures = (host.componentDependencyCaptures || []).filter(capture => capture.nodeId !== owner.nodeId);
     host.componentDependencyCaptures.push({ nodeId: owner.nodeId, nodeMap: owner.nodeMap, snapshot });
-    const proof = parts.length === 1 && dependencies.validatedDependencyCapture(host, owner.nodeId, contract);
+    const proof = parts.length === 1 && (raw ? dependencies.validatedDirectRawOwnerCapture(host, owner.nodeId, parent, contract)
+      : dependencies.validatedDependencyCapture(host, owner.nodeId, contract));
     if (!proof?.snapshot || !proof.nodeMap || contract.capabilities.facts.some(fact => fact.startsWith('baseline.effective')) && !proof.ownerBaseline) {
       const error = new TypeError('Enclosing component evidence is unavailable or inconsistent');
       error.code = 'APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE';
@@ -58,9 +68,22 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     }
     snapshot = proof.snapshot;
     ownerBaseline = proof.ownerBaseline;
-    const parentResult = core.evaluateCompiledContract(owner.snapshot, owner.evaluationMode === 'authoring-preview'
-      ? core.prepareAuthoringPreviewContract(parent) : parent);
-    for (const evaluation of parentResult.evaluations) {
+    // Baseline facts retain the enclosing authority, but child guards operate
+    // in child-relative coordinates (not the parent's reference path).
+    const prefix = ownerBaseline?.[snapshot.selection[0]]?.provenance?.referencePath;
+    if (typeof prefix === 'string' && prefix) for (const baseline of Object.values(ownerBaseline)) {
+      const path = baseline.provenance?.referencePath;
+      if (typeof path === 'string' && (path === prefix || path.startsWith(prefix + ' / '))) {
+        baseline.provenance = { ...baseline.provenance, enclosingReferencePath: path,
+          referencePath: path === prefix ? '' : path.slice(prefix.length + 3) };
+      }
+    }
+    const hasOwnerFillConstraint = parent.customizationPolicy.some(policy => policy.status !== 'deprecated'
+      && policy.permission === 'constrained' && policy.capability === 'appearance.fill'
+      && (policy.targetScope || 'self') === 'self');
+    const parentEvaluations = hasOwnerFillConstraint ? ownerEvaluations || core.evaluateCompiledContract(owner.snapshot,
+      owner.evaluationMode === 'authoring-preview' ? core.prepareAuthoringPreviewContract(parent) : parent).evaluations : [];
+    for (const evaluation of parentEvaluations) {
       if (evaluation.applicability !== 'applicable' || !['compliant', 'violation'].includes(evaluation.classification)) continue;
       const ir = parent.rules.find(rule => rule.ruleId === evaluation.ruleId);
       const policy = parent.customizationPolicy.find(rule => rule.id === ir?.source?.anchor);
@@ -90,12 +113,34 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     ruleId: entry.id, route: entry.execution.route,
   }));
   const missingRules = contract.rules.filter((rule) => !result.evaluations.some((entry) => entry.ruleId === rule.ruleId)).map((rule) => rule.ruleId);
+  const hiddenTargetScopes = [], emptyOwnedTextScopes = [];
+  let checkedSnapshot;
+  for (const entry of result.evaluations) {
+    if (entry.classification !== 'not-applicable' || entry.applicability !== 'not-applicable'
+      || entry.trace?.reason !== 'selector matched no visible nodes') continue;
+    const ir = contract.rules.find(rule => rule.ruleId === entry.ruleId);
+    const policy = contract.customizationPolicy.find(rule => rule.id === ir?.source?.anchor);
+    if (policy?.targetScope === 'self-and-descendants'
+      && (ir.assert?.actual?.fact?.startsWith('text.') || ir.assert?.actual?.fact === 'appearance.typography.styleId')) {
+      const proof = emptyOwnedTextScope(snapshot, contract, policy.id);
+      if (proof) emptyOwnedTextScopes.push({ ruleId: entry.ruleId, ...proof });
+    }
+    // Never exempt a recursive, presence or visibility assertion by its label.
+    if (!policy || (policy.targetScope || 'self') !== 'self' || policy.capability === 'visibility'
+      || !['matches-effective-baseline','one-of','equals','compare'].includes(ir.assert?.predicate)
+      || ir.assert?.actual?.fact === 'visible') continue;
+    checkedSnapshot ||= core.prepareValidationSnapshot(snapshot, contract, undefined, ownerBaseline);
+    const proof = hiddenContractTarget(checkedSnapshot, contract, policy.targetId, ownerBaseline);
+    if (proof) hiddenTargetScopes.push({ ruleId: entry.ruleId, ...proof });
+  }
+  const hiddenRules = new Set(hiddenTargetScopes.concat(emptyOwnedTextScopes).map(proof => proof.ruleId));
   const uncertain = result.evaluations.filter((entry) => !['compliant', 'allowed', 'violation', 'not-applicable'].includes(entry.classification)
-    || entry.trace?.reason === 'selector matched no visible nodes' || entry.trace?.reason === 'rule authority is not active'
+    || entry.trace?.reason === 'selector matched no visible nodes' && !hiddenRules.has(entry.ruleId)
+    || entry.trace?.reason === 'rule authority is not active'
     || contract.runtimePolicy.memberCollectionsVersion === 1 && entry.collection?.missing?.length
       && !(entry.applicability === 'not-applicable' && entry.trace?.truth === 'false')).length;
   const incompleteDependencies = (result.dependencyRuns || []).filter((run) => !['executed', 'not-applicable'].includes(run.status)).length;
-  const captureIncomplete = snapshot.source?.truncated === true
+  const captureIncomplete = Boolean(snapshot.source?.catalogReference?.failures?.length) || snapshot.source?.truncated === true
     || snapshot.source?.captureTopology?.complete === false
     || Boolean(snapshot.source?.captureTopology?.issues?.length);
   const audit = {
@@ -107,6 +152,8 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
       schemaVersion: contract.schemaVersion, manualSourceHash: contract.package.manualSourceHash,
     },
     engine: result,
+    ...(hiddenTargetScopes.length ? { hiddenTargetScopes } : {}),
+    ...(emptyOwnedTextScopes.length ? { emptyOwnedTextScopes } : {}),
     ...(ownerPropertyRules.length ? { ownerFieldConstraints: ownerPropertyRules } : {}),
     coverage: {
       scope: 'compiled-predicate-execution',
@@ -117,6 +164,9 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     },
   };
   if (mode === 'authoring-preview') Object.assign(audit, { evaluationMode: mode, sourceStatus: contract.status, Ready: false });
+  if (captureDiagnostics) Object.assign(audit, {
+    captureDiagnostics: scopeOwnerBaselineCaptureWarnings(captureDiagnostics, snapshot, ownerBaseline),
+  });
   return audit;
 }
 
@@ -131,7 +181,7 @@ function replayArchivedReport(report) {
 }
 
 module.exports = {
-  CONTRACT_SCHEMA, RUNTIME_VERSION, loadRuntimeContract, auditContractSnapshot, replayArchivedReport,
+  CONTRACT_SCHEMA, RUNTIME_VERSION, loadRuntimeContract, auditContractSnapshot, replayArchivedReport, canUseDirectRawOwnerContext,
   SOURCE_SCHEMA: authoring.SOURCE_SCHEMA, loadAuthoringSource: authoring.loadAuthoringSource, sourceFromFiles: authoring.sourceFromFiles,
   linkSourcePackages: authoring.linkSourcePackages,
   reviewAuthoringSource: authoring.reviewAuthoringSource,

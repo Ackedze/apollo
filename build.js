@@ -46,8 +46,7 @@ function runtimeBuildOptions(write = true) {
 }
 
 async function build() {
-  await Promise.all(['component-contract-core/build.js', 'generation-core/build.js',
-    'adapter-figma/build.js', 'adapter-frontend/build.js', 'pattern-core/build.cjs'].map(script =>
+  await Promise.all(['component-contract-core/build.js', 'generation-core/build.js', 'pattern-core/build.cjs'].map(script =>
     runNode(process.execPath, [path.join(root, 'packages', script)], { cwd: root })));
   for (const file of [runtimePath, enginePath, registryPath]) {
     if (!fs.existsSync(file)) {
@@ -57,14 +56,14 @@ async function build() {
   const dist = path.join(root, "./dist");
   fs.mkdirSync(dist, { recursive: true });
   const result = await esbuild.build(runtimeBuildOptions());
-  const agentScopePath=process.env.APOLLO_AGENT_NATIVE_SCOPE_PATH;
-  let agentScope=null,agentScopeInput=null;
-  if(agentScopePath){const file=path.resolve(agentScopePath),bytes=fs.readFileSync(file);agentScope=JSON.parse(bytes);if(agentScope.schemaVersion!=='apollo.general-native-read-scope.v1'||agentScope.status!=='ADMITTED_CONFIGURATION_ONLY_ACTUAL_NATIVE_NOT_RUN'||agentScope.acceptedWriteOperations?.length!==0||agentScope.limits?.treeTraversal!==false||agentScope.limits?.maxNodes!==1||!Array.isArray(agentScope.destination?.allowedNodeIds)||agentScope.destination.allowedNodeIds.length!==1)throw Error('AGENT_NATIVE_SCOPE_INVALID');agentScopeInput={path:file,sha256:crypto.createHash('sha256').update(bytes).digest('hex')};}
+  const auditPreparation=await esbuild.build({absWorkingDir:root,entryPoints:['src/v3-audit/data-preparation.ts'],outfile:path.join(dist,'v3-audit-preparation.cjs'),bundle:true,platform:'node',format:'cjs',target:['node18'],metafile:true});
+  if(process.env.APOLLO_AGENT_NATIVE_SCOPE_PATH||process.env.APOLLO_NATIVE_DIAGNOSTIC_INPUTS_PATH)throw Error('LEGACY_GENERATION_BUILD_CONFIGURATION_RETIRED');
+  const agentScope=null,agentScopeInput=null;
   const agentProtocol=await esbuild.build({absWorkingDir:root,entryPoints:["src/generation/agent/protocol.js"],outfile:path.join(dist,'agent-protocol.cjs'),bundle:true,platform:'node',format:'cjs',target:['node18'],alias:aliases,metafile:true});
   const agentFigmaProtocol=await esbuild.build({absWorkingDir:root,entryPoints:["src/generation/agent/figma/protocol.js"],outfile:path.join(dist,'agent-figma-protocol.cjs'),bundle:true,platform:'node',format:'cjs',target:['node18'],alias:aliases,metafile:true});
   const agentFigmaPostconditions=await esbuild.build({absWorkingDir:root,entryPoints:["src/generation/agent/figma/postconditions.js"],outfile:path.join(dist,'agent-figma-postconditions.cjs'),bundle:true,platform:'node',format:'cjs',target:['node18'],alias:aliases,metafile:true});
   fs.writeFileSync(path.join(dist,'agent-figma-provider-descriptor.json'),JSON.stringify({schemaVersion:'apollo.agent-figma-provider-descriptor.v1',sourceHash:require(path.join(dist,'agent-figma-postconditions.cjs')).SOURCE_HASH,protocol:'agent-figma-protocol.cjs',postconditions:'agent-figma-postconditions.cjs',observation:'apollo.agent-figma-observation.v3',snapshot:'apollo.agent-figma-run-snapshot.v3',Ready:false},null,2)+'\n');
-  const diagnosticInputs = await require("./scripts/native-diagnostic-inputs.cjs").prepareDiagnosticInputs(root);
+  const diagnosticInputs = null;
   fs.writeFileSync(path.join(dist, 'native-diagnostic-inputs.json'), JSON.stringify(diagnosticInputs, null, 2) + '\n');
   const mainOptions = {
     absWorkingDir: root, entryPoints: ['src/code.ts'], outfile: path.join(dist, 'code.js'),
@@ -76,11 +75,12 @@ async function build() {
   // Collect actual UI dependencies before sealing the build hash; the UI build uses that seal later.
   const uiOptions = {absWorkingDir: root, entryPoints: ['src/ui.js'], outfile: path.join(dist, 'ui.js'), loader: { '.module.css': 'local-css' }, bundle: true, platform: 'browser', format: 'iife', target: ['es2020'], write: false, alias: aliases, metafile: true, define: {'process.env.NODE_ENV': '"production"', __APOLLO_PLUGIN_VERSION__: JSON.stringify(require('./package.json').version), __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__: '"pending"', __APOLLO_PROGRESSBAR_PILOT__: 'true', __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: JSON.stringify('http://localhost:3001/v1/analyze/codex/runs')}};
   const uiInputs = await esbuild.build(uiOptions);
-  const readPortInputs = ['build.js','scripts/contract-catalog.cjs','scripts/generation-package-inputs.js','scripts/load-generation-packages.js','scripts/static-producer-review-inputs.cjs','scripts/static-review-consumer-binding.cjs','src/ui.html',
-    // Resolver/config metadata affects the actual UI bundle as well as imported JS/CSS bytes.
-    'src/design-check/tsconfig.json','tsconfig.json','package.json','tsconfig.json','package.json',
-    'scripts/agent-run-inputs.cjs','scripts/agent-figma-current-consumer.cjs','scripts/agent-generation-skills.cjs','instructions/agent-generation/skill-profile.json','scripts/agent-frontend-workspace.cjs','scripts/agent-page-background.cjs','instructions/agent-generation/frontend.md','instructions/agent-generation/figma.md','instructions/agent-generation/figma-owned.md','instructions/agent-generation/figma-owned-mapping.json','packages/generation-core/src/agent-types.ts','node_modules/react/package.json','node_modules/react-dom/package.json','node_modules/scheduler/package.json'];
-  const inputs = Array.from(new Set(Object.keys(result.metafile.inputs).concat(Object.keys(main.metafile.inputs), Object.keys(uiInputs.metafile.inputs),Object.keys(agentProtocol.metafile.inputs),Object.keys(agentFigmaProtocol.metafile.inputs),Object.keys(agentFigmaPostconditions.metafile.inputs),readPortInputs))).filter(input => input !== '<define:__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__>' && input !== '<define:__APOLLO_AGENT_NATIVE_SCOPE__>').sort().map((input) => {
+  const readPortInputs = ['build.js','manifest.json','src/ui.html','src/design-check/tsconfig.json','tsconfig.json','package.json','instructions/landing/figma-workflow.md','instructions/agent-generation/figma-owned-mapping.json','node_modules/react/package.json','node_modules/react-dom/package.json','node_modules/scheduler/package.json'];
+  const inlinedInputs = new Set(['<define:__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__>', '<define:__APOLLO_AGENT_NATIVE_SCOPE__>']);
+  if (Object.keys(main.metafile.inputs).concat(Object.keys(uiInputs.metafile.inputs)).some(file => path.basename(file) === 'athena-audit.json')) {
+    throw new Error('The Athena index must be delivered separately from the Figma plugin.');
+  }
+  const inputs = Array.from(new Set(Object.keys(result.metafile.inputs).concat(Object.keys(main.metafile.inputs), Object.keys(uiInputs.metafile.inputs),Object.keys(auditPreparation.metafile.inputs),Object.keys(agentProtocol.metafile.inputs),Object.keys(agentFigmaProtocol.metafile.inputs),Object.keys(agentFigmaPostconditions.metafile.inputs),readPortInputs))).filter(input => !inlinedInputs.has(input)).sort().map((input) => {
     const absolutePath = path.resolve(root, input);
     if (path.relative(repository, absolutePath).startsWith('..')) {
       throw new Error(`Build reads code outside the Apollo repository: ${input}`);
@@ -91,22 +91,27 @@ async function build() {
       sha256: crypto.createHash('sha256').update(bytes).digest('hex'),
     };
   });
-  fs.writeFileSync(path.join(dist, 'build-inputs.json'), JSON.stringify({
+  const buildInputs = JSON.stringify({
     documentType: 'apollo-v4-local-build-inputs',
     runtimeVersion: JSON.parse(fs.readFileSync(path.join(coreRoot, "./package.json"))).version,
     profileVersion: require(path.join(dist, 'runtime.cjs')).RUNTIME_VERSION,
     agentNativeScopeInput:agentScopeInput,
     nativeDiagnosticInputsHash: require(path.join(dist, 'runtime.cjs')).contractHash(diagnosticInputs),
     inputs,
-  }, null, 2) + '\n');
-  const buildInputsHash = crypto.createHash('sha256').update(fs.readFileSync(path.join(dist, 'build-inputs.json'))).digest('hex');
+  }, null, 2) + '\n';
+  const buildInputsHash = crypto.createHash('sha256').update(buildInputs).digest('hex');
   mainOptions.define.__APOLLO_NATIVE_BUILD_INPUTS_SHA__ = JSON.stringify(buildInputsHash);
-  await esbuild.build(mainOptions);
+  const code = (await esbuild.build(Object.assign({}, mainOptions, { write: false }))).outputFiles[0].contents;
   uiOptions.define.__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__ = JSON.stringify(buildInputsHash);
   const ui = await esbuild.build(uiOptions);
-  fs.writeFileSync(path.join(dist, 'ui.html'), fs.readFileSync(path.join(root, "./src/ui.html"), 'utf8')
+  const html = fs.readFileSync(path.join(root, "./src/ui.html"), 'utf8')
     .replace('__APOLLO_UI_CSS__', () => ui.outputFiles.find(file => file.path.endsWith('.css')).text.replace(/<\/style/gi, '<\\/style'))
-    .replace('__APOLLO_UI__', () => ui.outputFiles.find(file => file.path.endsWith('.js')).text.replace(/<\/script/gi, '<\\/script')));
+    .replace('__APOLLO_UI__', () => ui.outputFiles.find(file => file.path.endsWith('.js')).text.replace(/<\/script/gi, '<\\/script'));
+  const pluginBytes = code.length + Buffer.byteLength(html);
+  if (pluginBytes > 15_000_000) throw new Error(`Figma plugin is ${pluginBytes} bytes. The size limit is 15 MB.`);
+  fs.writeFileSync(path.join(dist, 'code.js'), code);
+  fs.writeFileSync(path.join(dist, 'ui.html'), html);
+  fs.writeFileSync(path.join(dist, 'build-inputs.json'), buildInputs);
   console.log('Apollo built from the shared ComponentContract core.');
 }
 

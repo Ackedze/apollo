@@ -6,8 +6,10 @@ const { assertRuntimeContract } = require("./contract-profile");
 const SOURCE_SCHEMA = 'apollo.component-contract-source.v1-experimental';
 const MANUAL_SCHEMA = 'apollo.component-contract.manual.v2-experimental';
 const hashPattern = /^[a-f0-9]{64}$/;
-function invalid(message) {
-  const error = new TypeError(message); error.code = 'APOLLO_V4_SOURCE_INVALID'; throw error;
+function invalid(message, projection) {
+  const error = new TypeError(message); error.code = 'APOLLO_V4_SOURCE_INVALID';
+  if(projection)error.sourceProjection=projection;
+  throw error;
 }
 function assertManual(manual) {
   if (!manual || manual.schemaVersion !== MANUAL_SCHEMA || manual.documentType !== 'component-contract-manual') {
@@ -80,7 +82,8 @@ function loadAuthoringSource(input, options) {
       const stamp = source.projectionStamp;
       if (!stamp || !/^component-contract-editor@0\.2\.\d+$/.test(stamp.sourceExportVersion || '') || !hashPattern.test(stamp.compiledHash || '')) invalid('Некорректный штамп проекции.');
       contract.package.sourceExportVersion = stamp.sourceExportVersion;
-      if (engine.stableHash(contract) !== stamp.compiledHash) invalid('Manual и факты не воспроизводят закреплённую проекцию.');
+      const actualHash=engine.stableHash(contract);
+      if (actualHash !== stamp.compiledHash) invalid('Manual и факты не воспроизводят закреплённую проекцию.',{componentId,revision:manual.metadata.revision,sourceExportVersion:stamp.sourceExportVersion,expectedHash:stamp.compiledHash,actualHash});
     }
     assertRuntimeContract(contract, engine, options);
     const sourceHash = engine.stableHash(source), previous = identities.get(componentId);

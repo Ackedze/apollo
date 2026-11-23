@@ -7,10 +7,10 @@ const PAGE_TYPES = Object.freeze([
 const PLATFORMS = Object.freeze(['Desktop', 'MobileWeb', 'iOS', 'Android']);
 const CHANNELS = Object.freeze(['b2b', 'b2c', 'site', 'invest']);
 const DEFAULT_SETTINGS = Object.freeze({ pageTypeId: null, channelId: 'b2b', pickerLabel: 'Desktop',
-  compact: false, shellAuditEnabled: false, showExpectedCustomizations: true,
+  compact: false, shellAuditEnabled: false, connectCatalogs: false, showExpectedCustomizations: true,
   hideCustomizations: false, experimentalContractV2Enabled: false });
 const PREFERENCE_VERSION = 'apollo.design-check-ui-preferences.v1';
-const CONTEXT_FIELDS = new Set(['pageTypeId', 'channelId', 'pickerLabel', 'shellAuditEnabled', 'experimentalContractV2Enabled']);
+const CONTEXT_FIELDS = new Set(['pageTypeId', 'channelId', 'pickerLabel', 'shellAuditEnabled', 'connectCatalogs', 'experimentalContractV2Enabled']);
 function validSetting(key, value) {
   if (key === 'pageTypeId') return value === null || PAGE_TYPES.some(option => option.id === value);
   if (key === 'channelId') return CHANNELS.includes(value);

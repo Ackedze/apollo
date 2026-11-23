@@ -1,0 +1,332 @@
+'use strict';
+const p=require('./transport'),{nativeMetrics}=require('./ui-model');
+const {textReplacements,normalizeUnverifiedTexts,confirmedTextReplacements}=require('./text-review-model');
+const {createRunTrace,readTrace,MAX_SESSIONS}=require('./run-trace');
+const compactIndexPath='/v1/audit-data/compact-index';
+const compactIndexUrl='https://ackedze.github.io/design-system_ab/JSONS/apollo/indexes/athena-audit.json';
+const maxIndexBytes=32*1024*1024;
+const messages={UX_WRITER_SKILL_UNAVAILABLE:'Обнови данные Proxy до версии с UX-writer.',UX_WRITER_CHECKER_UNAVAILABLE:'Proxy не смог запустить проверку типографики. Проверь установку Proxy.',UX_WRITER_DATA_CHANGED:'Данные UX-writer изменились. Повтори проверку.',UX_WRITER_RESPONSE_INVALID:'Ответ UX-writer не удалось привязать к слоям. Повтори проверку.',AUDIT_DATA_CHANGED_RELOAD_REQUIRED:'Данные Proxy изменились. Закрой и заново открой Apollo.',AUDIT_SOURCE_CHANGED:'Макет изменился. Повтори проверку.',AUDIT_SCOPE_UNAVAILABLE:'Проверенная область недоступна. Выбери область и повтори проверку.',AUDIT_SHARED_SCOPE_EXCLUDED:'Вся выделенная область относится к шареду. Чтобы проверить её, выключи «Пропускать шаред».',AUDIT_DATA_PACKAGE_MISSING:'В Proxy нет пакета данных V3. Обнови данные Proxy.',AUDIT_DATA_READ_TIMEOUT:'Proxy не завершил чтение данных. Проверь подключение и повтори запуск.',AUDIT_OBSERVER_UNAVAILABLE:'Нельзя подтвердить актуальность макета. Повтори проверку перед исправлением.',AUDIT_BUSY:'Дождись завершения текущего действия.',AUDIT_ACTION_SOURCE_CHANGED:'Свойства слоя изменились. Повтори проверку перед исправлением.',AUDIT_CANCELLED:'Проверка остановлена.',AUDIT_ACTION_FAILED:'Исправление не завершено. Проверь повторный результат.',AUDIT_FAILED:'Не удалось завершить проверку.',AUDIT_SESSION_UNAVAILABLE:'Результат больше не доступен. Повтори проверку.'};
+const uncertain=new Set(['node-unreadable','notification-unavailable','outside-observation','unobserved-property','identity-unconfirmed','identity-unavailable','topology-notification']);
+function sourceChange(value){if(!value||typeof value.reason!=='string'||!/^[-a-z]{1,80}$/.test(value.reason))return null;return{reason:value.reason,stage:['capture','operation','retained'].includes(value.stage)?value.stage:null,nodeId:typeof value.nodeId==='string'?value.nodeId.slice(0,200):null,fields:Array.isArray(value.fields)?value.fields.filter(field=>typeof field==='string').slice(0,32).map(field=>field.slice(0,80)):[]};}
+const indexMessages={
+ AUDIT_TEXT_DIFF_TOO_COMPLEX:'Не удалось безопасно сохранить оформление текста. Внеси эту замену вручную.',
+ AUDIT_TEXT_UNCONFIRMED:'Не удалось подтвердить замену текста. Проверь слой и повтори проверку.',
+ AUDIT_TEXT_VALUE_INVALID:'Предложение содержит недопустимые символы. Исправь текст перед заменой.',
+ AUDIT_TEXT_FONT_UNAVAILABLE:'Не удалось загрузить шрифты слоя. Проверь доступ к шрифтам и повтори замену.',
+ AUDIT_ACTION_UNCONFIRMED:'Не удалось подтвердить привязку токена. Проверь слой и повтори проверку.',
+ AUDIT_ATHENA_INDEX_UNAVAILABLE:'Не удалось загрузить индексы Athena. Проверь подключение и повтори проверку.',
+ AUDIT_ATHENA_INDEX_INVALID:'Данные Athena не прошли проверку. Обнови пакет данных Proxy или повтори проверку позже.',
+};
+const readable=(code,cause)=>code==='AUDIT_SOURCE_CHANGED'&&uncertain.has(cause?.reason)?'Не удалось подтвердить актуальность области. Повтори проверку.':code==='AUDIT_SOURCE_CHANGED'&&cause?.reason==='context-invalidated'?'Контекст проверки изменился. Запусти проверку заново.':indexMessages[code]||messages[code]||(/^AUDIT_DATA_|^AUDIT_PACKAGE_|^AUDIT_TOKEN_/.test(code||'')?'Не удалось проверить пакет данных V3. Обнови код и данные Proxy, затем повтори запуск.':'Действие не завершено. Повтори проверку.');
+const inputKeyHeader='X-Apollo-Input-Key';
+function createInputKey(){
+ try{return Array.from(globalThis.crypto.getRandomValues(new Uint8Array(32)),byte=>byte.toString(16).padStart(2,'0')).join('');}
+ catch{return null;}
+}
+function downloadJson(name,content){
+ const url=URL.createObjectURL(new Blob([content],{type:'application/json'})),link=document.createElement('a');
+ link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),0);
+}
+function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http://localhost:3001',onChange=()=>{},statistics=null,onStart=()=>{},pollDelay=700}){
+ let sequence=0,closed=false,active=null,operation=null;
+ let agentInputAccess=null;
+ const listeners=new Set(),reads=new Map(),operations=new Map();
+ const traces={components:[],texts:[]},droppedTraces={components:0,texts:0};
+ function traceEntry(kind,requestId,runId){
+  const history=traces[kind];if(!history)return null;let entry=history.find(v=>v.requestId===requestId&&v.runId===runId);
+  if(!entry){
+   entry={requestId,runId,ui:null,native:null};
+   if(history.length===MAX_SESSIONS){
+    const acceptedRunId=kind==='components'?state.runId:state.texts.runId;
+    const olderOperation=history.findIndex(session=>session.requestId!==session.runId);
+    const evict=olderOperation>=0?olderOperation:history.findIndex(session=>session.requestId!==acceptedRunId);
+    history.splice(evict,1);
+    droppedTraces[kind]++;
+   }
+   history.push(entry);
+  }
+  return entry;
+ }
+ const kindForRun=runId=>active?.requestId===runId?active.kind:state.runId===runId?'components':state.texts.runId===runId?'texts':null;
+ function uiTrace(requestId,runId,kind){const trace=createRunTrace({requestId,runId,kind,side:'ui'});const entry=traceEntry(kind,requestId,runId);if(entry)entry.ui=trace;return trace;}
+ let pluginBuildId=null;
+ function nativeTrace(message,kind,requestId,runId){const trace=readTrace(message.trace);if(trace?.side==='native'&&trace.kind===kind&&trace.requestId===requestId&&trace.runId===runId){const entry=traceEntry(kind,requestId,runId);if(entry)entry.native=trace;if(trace.pluginBuildId)pluginBuildId=trace.pluginBuildId;}}
+ function relayTrace(ownerId){for(const kind of ['components','texts']){const entry=traces[kind].find(v=>v.requestId===ownerId);if(entry?.ui)return entry.ui;}return null;}
+ let state={result:null,runId:null,stale:false,paintFixes:[],texts:{result:null,capture:null,runId:null,stale:false},agentInput:{available:false,loading:false,error:''},attempts:{components:null,texts:null},busy:false,stopping:false,kind:null,progress:'',error:'',notice:'',sourceChange:null,operation:{busy:false,status:'idle',message:''}};
+ const emit=patch=>{if(closed)return;state=Object.assign({},state,patch);onChange(state);for(const listener of listeners)listener();};
+ const id=prefix=>prefix+'-'+(++sequence);
+ async function json(path,options){const response=await request(endpoint+path,options),value=await response.json();if(!response.ok||value?.success===false||value?.error)throw Error(value?.error||'AUDIT_DATA_UNAVAILABLE');return value;}
+ async function loadCompactIndex(signal,onProgress){
+  const local=new AbortController(),abortLocal=()=>local.abort();
+  signal.addEventListener('abort',abortLocal,{once:true});
+  if(signal.aborted)abortLocal();
+  try{
+   let response,source='proxy';
+   const timer=setTimeout(abortLocal,3000);
+   try{response=await request(endpoint+compactIndexPath,{signal:local.signal,cache:'no-store',redirect:'error'});}
+   catch(error){if(signal.aborted)throw error;}
+   finally{clearTimeout(timer);}
+   if(!response||response.status===404)source='repository';
+   else if(!response.ok){
+    const failure=[409,503].includes(response.status)?await response.json().catch(()=>null):null;
+    if(failure?.error==='AUDIT_ATHENA_INDEX_MISSING')source='repository';
+    else if(failure?.error==='AUDIT_ATHENA_INDEX_INVALID'||failure?.error==='AUDIT_DATA_ASSET_MISMATCH')throw Error('AUDIT_ATHENA_INDEX_INVALID');
+    else throw Error('AUDIT_ATHENA_INDEX_UNAVAILABLE');
+   }
+   if(source==='repository'){
+    if(signal.aborted)throw Error('AUDIT_CANCELLED');
+    onProgress('Качаем индексы');
+    try{response=await request(compactIndexUrl,{signal,credentials:'omit',cache:'no-cache',redirect:'error'});}
+    catch{throw Error('AUDIT_ATHENA_INDEX_UNAVAILABLE');}
+   }
+   if(!response.ok)throw Error('AUDIT_ATHENA_INDEX_UNAVAILABLE');
+   if(source==='proxy')onProgress('Читаем индексы Athena из Proxy…');
+   if(Number(response.headers.get('content-length'))>maxIndexBytes)throw Error('AUDIT_ATHENA_INDEX_INVALID');
+   const bytes=await response.arrayBuffer();
+   if(!bytes.byteLength||bytes.byteLength>maxIndexBytes)throw Error('AUDIT_ATHENA_INDEX_INVALID');
+   let text;
+   try{text=new TextDecoder('utf-8',{fatal:true}).decode(bytes);}
+   catch{throw Error('AUDIT_ATHENA_INDEX_INVALID');}
+   return {source,text};
+  }finally{signal.removeEventListener('abort',abortLocal);}
+ }
+ function cancelOperations(runId,code){for(const[requestId,task]of operations)if(task.runId===runId){task.trace.add('operation-cancelled',{code},true);operations.delete(requestId);send({type:'v3-audit-cancel',schemaVersion:p.BRIDGE,requestId});task.reject(Error(code));}}
+ function current(work){if(closed||active!==work||work.cancelled||work.stale)throw Error(work.stale?'AUDIT_SOURCE_CHANGED':'AUDIT_CANCELLED');}
+ function begin(requestId,kind,settings,recheck=false,sourceRunId=null){
+  settings=JSON.parse(JSON.stringify(settings));
+  const work={requestId,kind,settings,cancelled:false,stale:false,phase:'capture',abort:new AbortController(),trace:uiTrace(requestId,requestId,kind)};active=work;work.trace.add(recheck?'recheck-start':'run-start',{stage:work.phase});
+  if(kind==='components')statistics?.start(requestId,'native-document',settings.pickerLabel,recheck?'recheck':'check',sourceRunId);
+  onStart(requestId,recheck);
+  if(kind==='texts'){agentInputAccess=null;state=Object.assign({},state,{agentInput:{available:false,loading:false,error:''}});}
+  emit({stale:kind==='components'&&state.runId?true:state.stale,texts:kind==='texts'?Object.assign({},state.texts,{stale:!!state.texts.runId}):state.texts,busy:true,stopping:false,kind,progress:recheck?'Перепроверяем область…':'Подключаем данные проверки…',error:'',notice:'',sourceChange:null,operation:recheck?{busy:true,status:'refreshing',message:'Перепроверяем область…'}:{busy:false,status:'idle',message:''}});return work;
+ }
+ function finish(work,error=null,cancelled=false){
+  if(active!==work)return;
+  work.trace.add('run-terminal',{stage:work.phase,code:error?.message,outcome:cancelled?'cancelled':error?'error':'success'},!!error||cancelled);
+  if(work.kind==='components'&&(error||cancelled))statistics?.finish(work.requestId,'native-document',null,cancelled?'cancelled':'failed');
+  const modelFailed=!!error&&!cancelled&&work.modelFailed===true;
+  const attempt={requestId:work.requestId,kind:work.kind,settings:work.settings,phase:work.phase,cancelled,error:error?.message||null,modelFailed,capture:work.capture||null};
+  const errorMessage=modelFailed?'Модель не справилась с анализом. '+(messages[error.message]?readable(error.message,state.sourceChange):'Повтори анализ.'):error?readable(error.message,state.sourceChange):'';
+  active=null;emit({attempts:Object.assign({},state.attempts,{[work.kind]:attempt}),busy:false,stopping:false,progress:'',error:cancelled?'':errorMessage,notice:cancelled?(work.phase==='model'?'Ожидание остановлено. Проверка текстов на сервере может продолжаться.':'Проверка остановлена. Предыдущий результат сохранён.'):'',operation:{busy:false,status:cancelled?'cancelled':error?'error':'success',message:''}});
+ }
+ async function serve(message){
+  if(!p.dataRequest(message)||reads.has(message.requestId))return;
+  const abort=new AbortController(),task={abort,ownerRequestId:message.ownerRequestId},trace=relayTrace(message.ownerRequestId);reads.set(message.requestId,task);
+  trace?.add('data-relay-start',{dataRequestId:message.requestId,resource:message.operation,dataId:message.dataId,assetId:message.fileId});
+  try{const path=message.operation==='manifest'?'/v1/audit-data/manifest':`/v1/audit-data/${message.dataId}/assets/${message.fileId}`;
+   const result=message.operation==='compact-index'?await loadCompactIndex(abort.signal,progress=>{
+    const work=active;
+    if(!closed&&reads.get(message.requestId)===task&&work?.kind==='components'&&
+      work.requestId===message.ownerRequestId&&!work.cancelled&&!work.stale)emit({progress});
+   }):await json(path,{signal:abort.signal,cache:'no-store'});
+   if(closed||reads.get(message.requestId)!==task)return;
+   trace?.add('data-relay-result',{dataRequestId:message.requestId,outcome:'success',resource:result.source});
+   send({type:'v3-audit-data-response',schemaVersion:p.VERSION,requestId:message.requestId,ownerRequestId:message.ownerRequestId,result});
+  }catch(error){if(!closed&&reads.get(message.requestId)===task){const code=/^AUDIT_[A-Z_]+$/.test(error.message)?error.message:'AUDIT_DATA_UNAVAILABLE';trace?.add('data-relay-result',{dataRequestId:message.requestId,outcome:'error',code},true);send({type:'v3-audit-data-response',schemaVersion:p.VERSION,requestId:message.requestId,ownerRequestId:message.ownerRequestId,error:code});}}
+  finally{if(reads.get(message.requestId)===task)reads.delete(message.requestId);}
+ }
+ function rpc(type,runId,payload={}){
+  const requestId=id('v3-operation'),kind=kindForRun(runId),trace=uiTrace(requestId,runId,kind);trace.add('operation-start',{stage:type.replace('v3-audit-','')});return new Promise((resolve,reject)=>{operations.set(requestId,{resolve,reject,runId,kind,trace});try{send(Object.assign({type,schemaVersion:p.BRIDGE,requestId,runId},payload));}catch(error){trace.add('operation-error',{code:error.message},true);operations.delete(requestId);reject(error);}});
+ }
+ async function analyze(work,capture){
+  const uxWriter=Array.isArray(capture.textReport.facts.scopes);
+  let modelPending=true;
+  try{
+   current(work);work.phase='model';work.capture=capture;work.trace.add('stage',{stage:work.phase});
+   emit({progress:'Проверяем тексты по редакционным правилам…'});
+   const report=uxWriter?Object.assign({},capture.textReport,{reportKind:'apollo-ux-writer-report'}):capture.textReport;
+   const inputKey=uxWriter?createInputKey():null;
+   const headers={'Content-Type':'application/json'};
+   if(inputKey)headers[inputKeyHeader]=inputKey;
+   let value=await json('/v1/analyze/codex/runs',{method:'POST',headers,body:JSON.stringify({report}),signal:work.abort.signal});current(work);
+   let run=value.run;if(!run||!p.id(run.id))throw Error('AUDIT_FAILED');const remoteId=run.id;
+   while(true){
+    current(work);
+    if(run.id!==remoteId)throw Error('AUDIT_FAILED');
+    if(inputKey&&run.agentInputAvailable===true&&!agentInputAccess){
+     agentInputAccess={runId:remoteId,key:inputKey};
+     emit({agentInput:{available:true,loading:false,error:''}});
+    }
+    if(run.status==='failed')throw Error(uxWriter&&typeof run.error?.code==='string'?run.error.code:'AUDIT_FAILED');
+    if(run.status==='completed'){
+     let validation=run.validation;
+     if(!validation||!Array.isArray(validation.findings))throw Error('AUDIT_FAILED');
+     const nodes=new Set(capture.textReport.facts.texts.map(fact=>fact.node.id));
+     if(uxWriter){
+       const targets=new Set((capture.textTargets||[]).map(target=>target.nodeId));
+       if(validation.skillId!=='ux-writer-v2'||!Array.isArray(validation.coverageGaps)||!validation.coverageGaps.every(value=>typeof value==='string')
+         ||validation.findings.some(finding=>!nodes.has(finding?.nodeId)||!targets.has(finding.nodeId)||!Array.isArray(finding.sources)))throw Error('UX_WRITER_RESPONSE_INVALID');
+      if(Object.prototype.hasOwnProperty.call(validation,'unverifiedTexts'))validation=Object.assign({},validation,{unverifiedTexts:normalizeUnverifiedTexts(validation.unverifiedTexts,nodes,targets)});
+     }else if(typeof validation.responseMarkdown!=='string'||validation.findings.some(finding=>finding.nodeId&&!nodes.has(finding.nodeId)))throw Error('AUDIT_FAILED');
+     modelPending=false;
+     await rpc('v3-audit-verify',work.requestId);current(work);
+     emit({texts:{result:validation,capture,runId:work.requestId,settings:work.settings,stale:false,drafts:{},applied:{}}});finish(work);return;
+    }
+    emit({progress:typeof run.message==='string'&&run.message.trim()?run.message:'Проверяем тексты по редакционным правилам…'});
+    await new Promise(resolve=>{const timer=setTimeout(done,pollDelay);function done(){clearTimeout(timer);work.abort.signal.removeEventListener('abort',done);resolve();}work.abort.signal.addEventListener('abort',done,{once:true});});current(work);
+    value=await json('/v1/analyze/codex/runs/'+encodeURIComponent(remoteId),{signal:work.abort.signal,cache:'no-store'});current(work);run=value.run;if(!run)throw Error('AUDIT_FAILED');
+   }
+  }catch(error){
+   work.modelFailed=uxWriter&&modelPending&&(['AUDIT_FAILED','UX_WRITER_RESPONSE_INVALID'].includes(error.message)||
+    !messages[error.message]&&!/^UX_WRITER_|^AUDIT_|^CODEX_INPUT_BUDGET_/.test(error.message));
+   finish(work,error,work.cancelled);
+  }
+ }
+ const api={
+  getState:()=>state,subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);},busy:()=>Boolean(active||operation),
+  snapshot(kind='components'){
+   if(!['components','texts'].includes(kind))throw Error('AUDIT_REQUEST_INVALID');
+   const saved=kind==='components'?state.result:state.texts.result,attempt=state.attempts[kind],work=active?.kind===kind?active:null;
+   const acceptedRunId=kind==='components'?state.runId:state.texts.runId,capture=kind==='components'?state.result:state.texts.capture;
+   const settings=(kind==='components'?state.resultSettings:state.texts.settings)||work?.settings||attempt?.settings||null;
+   const stale=kind==='components'?state.stale:state.texts.stale;
+   const originalPayload=saved?(kind==='components'?saved:{capture,validation:saved}):null;
+   return JSON.parse(JSON.stringify({engine:'apollo-v3',kind,runId:acceptedRunId||work?.requestId||attempt?.requestId||null,pluginBuildId,dataId:capture?.dataId||work?.capture?.dataId||attempt?.capture?.dataId||null,settings,
+    hasAcceptedResult:!!saved,status:!saved?'diagnostic':work?'checking-with-saved-result':stale?'stale':'accepted',stale:!!stale,
+    pending:work?{requestId:work.requestId,phase:work.phase,settings:work.settings,stopping:!!work.cancelled}:null,
+    error:state.kind===kind?state.error:'',notice:state.kind===kind?state.notice:'',operation:Object.assign({},state.operation,{runId:operation?.runId||null}),
+    lastAttempt:attempt?{requestId:attempt.requestId,phase:attempt.phase,cancelled:attempt.cancelled,error:attempt.error,modelFailed:attempt.modelFailed}:null,
+    originalPayload,staleActionIds:kind==='components'&&state.staleActionIds?.length?state.staleActionIds:undefined,
+    paintFixes:kind==='components'&&state.paintFixes.length?state.paintFixes:undefined,sourceChange:state.sourceChange,trace:{droppedSessions:droppedTraces[kind],sessions:traces[kind].map(entry=>({requestId:entry.requestId,runId:entry.runId,ui:entry.ui?.snapshot()||null,native:entry.native}))},diagnosticCapture:saved?null:work?.capture||attempt?.capture||null}));
+  },
+  download(kind='components'){
+   const snapshot=api.snapshot(kind),name='apollo-v3-'+kind+'-'+(snapshot.runId||'diagnostic').replace(/[^a-zA-Z0-9_-]/g,'-')+'.json';
+   downloadJson(name,JSON.stringify(snapshot,null,2));return snapshot;
+  },
+  async downloadAgentInput(){
+   const access=agentInputAccess;
+   if(closed||!access||!state.agentInput.available||state.agentInput.loading)return;
+   emit({agentInput:{available:true,loading:true,error:''}});
+   let unavailable=false;
+   try{
+    const response=await request(endpoint+'/v1/analyze/codex/runs/'+encodeURIComponent(access.runId)+'/input',{
+     headers:{[inputKeyHeader]:access.key},cache:'no-store',signal:AbortSignal.timeout(15000),
+    });
+    unavailable=response.status===404;
+    if(!response.ok||!response.headers.get('content-type')?.startsWith('application/json'))throw Error('UX_WRITER_INPUT_UNAVAILABLE');
+    const content=await response.text();
+    if(closed||agentInputAccess!==access)return;
+    downloadJson('apollo-ux-writer-input-'+access.runId+'.json',content);
+    emit({agentInput:{available:true,loading:false,error:''}});
+   }catch{
+    if(!closed&&agentInputAccess===access)emit({agentInput:{available:!unavailable,loading:false,
+     error:unavailable?'Исходный JSON больше недоступен. Запусти проверку заново.':'Не удалось скачать исходный JSON. Попробуй ещё раз.'}});
+   }
+  },
+  async readData(){const value=await json('/v1/audit-data/manifest',{cache:'no-store'});if(value?.schemaVersion!=='apollo.v3-audit-data.v1'||!p.hash(value.dataId)||!Array.isArray(value.files)||!value.files.every(file=>p.hash(file.id)&&Array.isArray(file.roles)))throw Error('AUDIT_DATA_INVALID');return value;},
+  start({requestId,kind='components',uiPreferences:settings}){
+   if(closed||api.busy())return false;begin(requestId,kind,settings);
+   send({type:'v3-audit-run',schemaVersion:p.BRIDGE,requestId,kind,channel:settings.pickerLabel,pageType:settings.pageTypeId,shellAuditEnabled:settings.shellAuditEnabled});return true;
+  },
+  stop(){
+   if(operation||!active||active.cancelled)return false;
+   const work=active;work.trace.add('cancel-request',{stage:work.phase});work.cancelled=true;work.abort.abort();send({type:'v3-audit-cancel',schemaVersion:p.BRIDGE,requestId:work.requestId});
+   cancelOperations(work.requestId,'AUDIT_CANCELLED');
+   if(work.phase==='model')finish(work,null,true);else emit({stopping:true,progress:'Останавливаем проверку…'});return true;
+  },
+  invalidate(){
+   for(const kind of ['components','texts']){const runId=active?.kind===kind?active.requestId:kind==='components'?state.runId:state.texts.runId;relayTrace(runId)?.add('context-invalidated',{callsite:'ui-context-invalidate'},true);}
+   send({type:'v3-audit-invalidate',schemaVersion:p.BRIDGE,requestId:id('v3-context')});
+   if(state.runId||state.texts.runId)emit({stale:!!state.runId,texts:Object.assign({},state.texts,{stale:!!state.texts.runId})});
+   if(active){active.stale=true;active.abort.abort();send({type:'v3-audit-cancel',schemaVersion:p.BRIDGE,requestId:active.requestId});if(active.phase==='model'){cancelOperations(active.requestId,'AUDIT_SOURCE_CHANGED');finish(active,Error('AUDIT_SOURCE_CHANGED'));}}
+  },
+  async focus(runId,focusActionId){
+  if(closed||api.busy()||!kindForRun(runId)||!p.id(focusActionId))return false;
+  try{await rpc('v3-audit-focus',runId,{focusActionId});return true;}
+  catch(error){
+   if(!closed&&!api.busy()&&kindForRun(runId)&&error.message!=='AUDIT_CANCELLED')
+    emit({texts:runId===state.texts.runId&&error.reply?.stale?Object.assign({},state.texts,{stale:true}):state.texts,
+     stale:state.stale||runId===state.runId&&error.reply?.stale===true,
+     operation:{busy:false,status:'error',message:readable(error.message)}});
+   return false;
+  }
+ },
+  async action(actionId){if(!state.result?.mutationAvailable)return false;return api.operate('v3-audit-action',state.runId,{actionId});},
+  editText(nodeId,text){
+   if(api.busy()||state.texts.stale||typeof text!=='string'||!state.texts.result?.findings?.some(f=>f.nodeId===nodeId&&typeof f.replacement==='string'))return false;
+   emit({texts:Object.assign({},state.texts,{drafts:Object.assign({},state.texts.drafts,{[nodeId]:text})})});return true;
+  },
+  async replaceTexts(nodeIds){
+   const replacements=textReplacements(state.texts,nodeIds);
+   if(!replacements.length)return false;
+   return api.operate('v3-audit-text-replace',state.texts.runId,{replacements});
+  },
+  async operate(type,runId,payload){
+   const saved=runId===state.runId?{stale:state.stale}:runId===state.texts.runId?state.texts:null;
+   if(closed||api.busy()||!saved||saved.stale||type==='v3-audit-action'&&state.staleActionIds?.includes(payload.actionId))return false;
+   const task={runId};operation=task;emit({operation:{busy:true,status:'applying',message:'Применяем исправление…'}});
+   try{const reply=await rpc(type,runId,payload);if(operation!==task)return false;
+    if(reply.recheckRequestId){operation=null;begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}
+    else{
+     operation=null;
+     const paintFix=reply.paintFix;
+     const paintFixes=type==='v3-audit-action'&&runId===state.runId&&typeof paintFix?.nodeId==='string'&&['fill','stroke'].includes(paintFix.field)
+      ?state.paintFixes.concat({nodeId:paintFix.nodeId,field:paintFix.field}):state.paintFixes;
+     emit({paintFixes,texts:type==='v3-audit-text-replace'&&runId===state.texts.runId?Object.assign({},state.texts,{stale:state.texts.stale||!!reply.stale,applied:confirmedTextReplacements(state.texts,runId,payload.replacements,reply.textReplacements)}):state.texts,operation:{busy:false,status:'success',message:reply.message||''}});
+    }return true;
+   }catch(error){
+    if(operation!==task)return false;
+    operation=null;const reply=error.reply;
+    if(reply?.recheckRequestId){begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}
+    else{
+     const textAction=type==='v3-audit-text-replace';
+     const textStale=textAction&&['AUDIT_SOURCE_CHANGED','AUDIT_ACTION_SOURCE_CHANGED','AUDIT_SCOPE_UNAVAILABLE','AUDIT_SESSION_UNAVAILABLE'].includes(error.message);
+     const message=textAction&&error.message==='AUDIT_ACTION_FAILED'?'Не удалось завершить замену текста. Повтори проверку текстов.':readable(error.message);
+     emit({stale:state.stale||runId===state.runId&&reply?.stale===true,
+      texts:runId===state.texts.runId?Object.assign({},state.texts,{stale:state.texts.stale||!!reply?.stale||textStale,applied:textAction?confirmedTextReplacements(state.texts,runId,payload.replacements,reply?.textReplacements):state.texts.applied}):state.texts,
+      operation:{busy:false,status:'error',message:message+(textAction&&reply?.mutationStarted?' Заменено текстовых слоёв: '+Object.keys(confirmedTextReplacements(state.texts,runId,payload.replacements,reply.textReplacements)).length+'. Часть текста могла измениться. Повтори проверку текстов.':'')}});
+    }return false;
+   }
+  },
+  accept(message){
+   if(closed)return!!message?.type?.startsWith('v3-audit-');
+   if(message?.type==='v3-audit-data-request'){void serve(message);return true;}
+   if(message?.type==='v3-audit-data-cancel'){
+    if(message.schemaVersion!==p.VERSION||!p.exact(message,['type','schemaVersion','requestId','ownerRequestId']))return true;
+    const task=reads.get(message.requestId);if(task?.ownerRequestId===message.ownerRequestId){relayTrace(task.ownerRequestId)?.add('data-relay-cancelled',{dataRequestId:message.requestId});reads.delete(message.requestId);task.abort.abort();}return true;
+   }
+   if(!message?.type?.startsWith('v3-audit-')||message.schemaVersion!==p.BRIDGE)return false;
+   if(message.type==='v3-audit-invalidated'){
+    const kind=kindForRun(message.runId);if(kind)nativeTrace(message,kind,message.runId,message.runId);
+    if(message.runId===state.runId||message.runId===state.texts.runId)emit({sourceChange:sourceChange(message.sourceChange)});
+    if(message.runId===state.runId)emit({stale:true});if(message.runId===state.texts.runId)emit({texts:Object.assign({},state.texts,{stale:true})});
+    if(message.runId===active?.requestId){active.stale=true;active.abort.abort();if(active.phase==='model'){cancelOperations(active.requestId,'AUDIT_SOURCE_CHANGED');finish(active,Error('AUDIT_SOURCE_CHANGED'));}}return true;
+   }
+    if(message.type==='v3-audit-actions-invalidated'){
+     if(message.runId===state.runId&&Array.isArray(message.actionIds)&&message.actionIds.every(p.id)){
+      nativeTrace(message,'components',message.runId,message.runId);
+      emit({staleActionIds:Array.from(new Set((state.staleActionIds||[]).concat(message.actionIds)))});
+     }
+     return true;
+    }
+   if(message.type.startsWith('v3-audit-operation-')){
+    const task=operations.get(message.requestId);if(!task||task.runId!==message.runId)return true;
+    nativeTrace(message,task.kind,message.requestId,task.runId);task.trace.add('operation-terminal',Object.assign({},sourceChange(message.sourceChange)||{},{code:message.code,outcome:message.type==='v3-audit-operation-result'?'success':'error',mutationStarted:message.mutationStarted}),message.type!=='v3-audit-operation-result');
+    operations.delete(message.requestId);
+    if(message.type==='v3-audit-operation-result')task.resolve(message);else task.reject(Object.assign(Error(message.code||'AUDIT_ACTION_FAILED'),{reply:message}));return true;
+   }
+   const work=active;if(!work||message.requestId!==work.requestId)return true;
+   if(message.type==='v3-audit-progress'){if(!work.cancelled&&!work.stale&&typeof message.progress?.message==='string'){if(work.progressStage!==message.progress.stage){work.progressStage=message.progress.stage;work.trace.add('stage',{stage:message.progress.stage,checked:message.progress.checked,total:message.progress.total});}emit({progress:message.progress.message});}return true;}
+   if(message.type==='v3-audit-cancelling'){emit({stopping:true});return true;}
+   if(message.type==='v3-audit-error'||message.type==='v3-audit-cancelled'){nativeTrace(message,work.kind,work.requestId,work.requestId);if(message.sourceChange)emit({sourceChange:sourceChange(message.sourceChange)});finish(work,Error(message.code||'AUDIT_FAILED'),work.cancelled);return true;}
+   if(message.type==='v3-audit-result'){
+    if(work.cancelled||work.stale){finish(work,Error('AUDIT_SOURCE_CHANGED'),work.cancelled);return true;}
+    const result=message.result;
+    if(message.kind!==work.kind||result?.runId!==work.requestId||!p.hash(result.dataId)||!Array.isArray(result.textReport?.facts?.texts)||work.kind==='components'&&!result.visibleViews){finish(work,Error('AUDIT_FAILED'));return true;}
+    nativeTrace(message,work.kind,work.requestId,work.requestId);work.trace.add('native-result',{stage:'capture',dataId:result.dataId});
+    work.capture=result;
+    if(work.kind==='texts')void analyze(work,result);
+    else{
+     const staleActionIds=Array.isArray(message.staleActionIds)?message.staleActionIds.filter(p.id):[];
+     statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));
+     emit({result,runId:work.requestId,resultSettings:work.settings,stale:false,staleActionIds,paintFixes:[],sourceChange:sourceChange(message.sourceChange)});
+     finish(work);
+    }return true;
+   }
+   return true;
+  },
+  close(){closed=true;active?.abort.abort();if(active)send({type:'v3-audit-cancel',schemaVersion:p.BRIDGE,requestId:active.requestId});for(const task of reads.values())task.abort.abort();reads.clear();for(const task of operations.values())task.reject(Error('AUDIT_CANCELLED'));operations.clear();listeners.clear();},
+ };
+ return api;
+}
+module.exports={createV3UiClient,readable};

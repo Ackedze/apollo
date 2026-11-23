@@ -1,4 +1,5 @@
 import type { JsonValue, PreviewSnapshot } from './types';
+import { textPaintRuns } from '../predicate/text-paint-ranges.js';
 
 const TYPES = new Set(['GRADIENT_LINEAR', 'GRADIENT_RADIAL', 'GRADIENT_ANGULAR', 'GRADIENT_DIAMOND']);
 const record = (v: unknown): Record<string, unknown> => v && typeof v === 'object' && !Array.isArray(v) ? v as Record<string, unknown> : {};
@@ -65,6 +66,7 @@ export function materializeGradientPaintEvidence(snapshot: PreviewSnapshot): voi
         // Presence is separate from completeness. Otherwise fact-present in a
         // selector can silently remove a node whose baseline paint is unknown.
         if (Object.prototype.hasOwnProperty.call(appearance, kind)) present[kind] = true;
+        if (kind === 'fill' && node.type === 'TEXT' && appearance.fill === null && textPaintRuns(source)) continue;
         const missing = Object.prototype.hasOwnProperty.call(appearance, kind) && !Array.isArray(appearance[kind])
           ? [''] : gradientPaintIssues(appearance[kind]);
         if (!missing.length) continue;

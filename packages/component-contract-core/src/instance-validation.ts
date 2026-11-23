@@ -44,6 +44,11 @@ export function effectiveFacts(node: Record<string, unknown>, includeDimensions 
     if (Object.keys(bounds).length) result.bounds = bounds;
     // Reference-only evidence must not alter host-context equality for legal swaps.
     if (node.propertyActivityV1) result.propertyActivityV1 = node.propertyActivityV1;
+    const unknown = Array.isArray(node.unknownFacts) ? node.unknownFacts : [];
+    if (node.textFillEvidenceV1 && !unknown.some(path => ['appearance.fill', 'textFillEvidenceV1', 'text.characters']
+      .some(fact => path === fact || fact.startsWith(path + '.') || path.startsWith(fact + '.')))) {
+      result.textFillEvidenceV1 = node.textFillEvidenceV1;
+    }
   }
   return result;
 }
@@ -80,7 +85,11 @@ export function materializeEffectiveBaseline(
       const path = actualPaths?.get(String(node.id));
       const isolated = path !== undefined && comparison.boundaries.find(b=>withinBoundary(path,b.actualPath));
       const referencePath = path !== undefined ? correspondingPath(comparison, path) : undefined;
-      const expected = referencePath !== undefined && comparison.complete && !isolated ? byPath.get(referencePath) : undefined;
+      // Native occurrence correspondence already proves each mapped branch.
+      // A missing sibling keeps overall coverage incomplete, not every baseline.
+      const nativeBranch = actual.source?.occurrenceAddressVersion === 1 && ref.occurrenceAddressVersion === 1
+        && comparison.referencePaths?.[''] === '' && (path === '' || Boolean(record(record(node.component).sourceIdentity).sourceNodeId));
+      const expected = referencePath !== undefined && (comparison.complete || nativeBranch) && !isolated ? byPath.get(referencePath) : undefined;
       if (!expected || expected.type !== node.type) {
         unmatchedNodeIds.push(String(node.id));
         return {...node,baseline:{effective:{}},baselineProvenance:{status:'unresolved',reason:isolated ? isolated.reason : 'structural-identity-unresolved'}};

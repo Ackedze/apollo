@@ -1,19 +1,23 @@
+const {verifyCatalogPolicy}=require('./catalog-policy');
+const {verifyDeprecatedStyles}=require('./deprecated-styles');
 const {resolveNativeNode,currentPageTarget}=require("../canvas-target");
-const {boundedRead}=require("./reads");
+const {boundedRead,cooperativeRead,retryableRead}=require("./reads");
 const {ACTION_SCHEMA,actionRequestValid,buildActionData,performAction}=require("./actions");
-const {SCHEMA,requestValid,focusValid,resultValid}=require("./protocol");
+const {SCHEMA,requestValid,focusValid,resultValid,failureDiagnostic:makeFailureDiagnostic}=require("./protocol");
 const {collect,recheck,signature,pageOf}=require("./engine");
 const {impact,mergeObservation}=require("./scoped-recheck");
 const {createNotificationProof,observationNodes}=require("./notification-proof");
 const {REFRESH_TIMEOUT_MS}=require("./budgets");
-function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,timeoutMs=15000,refreshTimeoutMs=REFRESH_TIMEOUT_MS,observeSelection=true,isBusy=()=>false,onMutation=()=>{},onRecheckStart=null,bindingAdapter=null}){
- let sequence=0,active=null,session=null,page=null,nodeListener=null,started=false,epoch=0,observerAvailable=false,actionTask=null,lastActionReply=null,actionSequence=0,focusTask=null,refreshTask=null,bindingSequence=0;
+const {trace}=require('./trace');
+function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,timeoutMs=15000,refreshTimeoutMs=REFRESH_TIMEOUT_MS,observeSelection=true,isBusy=()=>false,onMutation=()=>{},onRecheckStart=null,bindingAdapter=null,deprecatedStyleReader=null,catalogPolicyReader=null}){
+ let sequence=0,active=null,session=null,page=null,nodeListener=null,started=false,epoch=0,observerAvailable=false,actionTask=null,lastActionReply=null,actionSequence=0,focusTask=null,refreshTask=null,bindingSequence=0,observerTask=null;
  const errors={NATIVE_FACTS_CHANGED:'Свойства или зависимости изменились. Повторите проверку.',NATIVE_CONTEXT_CHANGED:'Страница или платформа изменились. Повторите проверку.',NATIVE_TIMEOUT:'Чтение заняло слишком много времени. Повторите проверку.',NATIVE_RESULT_STALE:'Результат устарел. Повторите проверку.'};
- function invalidate(reason='NATIVE_RESULT_STALE'){
+ function failureDiagnostic(error,requestId,ticket=sequence,stage='native-read'){const diagnostic=makeFailureDiagnostic(error,requestId,stage,hash,[ticket,now()]);if(diagnostic.code==='NATIVE_FACTS_CHANGED')trace('facts-changed',Object.assign({runId:requestId},diagnostic));return diagnostic;}
+ function invalidate(reason='NATIVE_RESULT_STALE',diagnostic=null){
   epoch++;
   if(refreshTask){const task=refreshTask;refreshTask=null;task.notificationProof?.close();sequence++;clearTimeout(task.timer);task.operations?.fail?.();post({type:'document-recheck-error',schemaVersion:SCHEMA,requestId:task.requestId,runId:task.old.runId,message:errors[reason]||errors.NATIVE_RESULT_STALE});}
   if(actionTask)finishAction(actionTask,{status:'error',refreshAllowed:false,message:'Исходные данные изменились. Повторите проверку.'});
-  if(session){const runId=session.runId;session=null;if(active){sequence++;active=null;}post({type:'document-audit-invalidated',schemaVersion:SCHEMA,runId,reason});}
+  if(session){const runId=session.runId;session=null;if(active){sequence++;active=null;}const reply={type:'document-audit-invalidated',schemaVersion:SCHEMA,runId,reason};if(diagnostic)reply.diagnostic=diagnostic;post(reply);}
  }
  function bind(){
   if(page&&nodeListener)try{page.off('nodechange',nodeListener);}catch(_){/* fail closed below */}
@@ -26,48 +30,64 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
   const s=session;if(!s||actionTask?.applying)return;const relevant=new Set(s.facts.filter(f=>!['collection','variable','style'].includes(f.kind)).map(f=>f.id));
   if(Array.isArray(event?.nodeChanges)&&!event.nodeChanges.some(c=>relevant.has(c.id)||c.node?.parent&&c.node.parent.type!=='PAGE'&&relevant.has(c.node.parent.id)))return;
   if(refreshTask){await refreshTask.notificationProof.notify();return;}
-  const revision=++epoch;
-  let timer;
-  const guard=()=>{if(session!==s||epoch!==revision)throw Error('NATIVE_OBSERVER_SUPERSEDED');};
-  try{
-   await Promise.race([recheck(api,s.facts,{hash,assertCurrent:guard}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('NATIVE_TIMEOUT')),timeoutMs);})]);
-   guard();s.epoch=revision;
-  }catch(e){if(session===s&&epoch===revision)invalidate(e.message==='NATIVE_FACTS_CHANGED'?'NATIVE_FACTS_CHANGED':'NATIVE_RESULT_STALE');}
-  finally{clearTimeout(timer);}
+  if(observerTask?.session===s){observerTask.serial++;return observerTask.promise;}
+  const task={session:s,serial:1,promise:null};observerTask=task;const revision=++epoch;
+  const guard=()=>{if(session!==s||observerTask!==task||epoch!==revision)throw Error('NATIVE_OBSERVER_SUPERSEDED');};
+  task.promise=(async()=>{
+   while(true){const serial=task.serial;guard();
+    try{await recheck(api,s.facts,{hash,assertCurrent:guard,stage:'observer-recheck',readOperation:read=>cooperativeRead(read,1200,guard)});guard();if(serial===task.serial){s.epoch=revision;return;}}
+    catch(error){guard();if(error.message==='NATIVE_FACTS_CHANGED'){invalidate('NATIVE_FACTS_CHANGED',failureDiagnostic(error,s.runId,revision));return;}if(!retryableRead(error))throw error;await cooperativeRead(()=>new Promise(resolve=>setTimeout(resolve,250)),100,guard);}
+    await new Promise(resolve=>setTimeout(resolve,0));
+   }
+  })().catch(error=>{if(session===s&&observerTask===task&&epoch===revision)invalidate('NATIVE_RESULT_STALE',failureDiagnostic(error,s.runId,revision,'observer-recheck'));}).finally(()=>{if(observerTask===task)observerTask=null;});return task.promise;
  }
- function selected(){if(active&&api.currentPage.id!==active.context.pageId){sequence++;active=null;invalidate('NATIVE_CONTEXT_CHANGED');}if(session&&api.currentPage.id!==session.context.pageId)invalidate('NATIVE_CONTEXT_CHANGED');}
- const changed=()=>{sequence++;active=null;invalidate('NATIVE_CONTEXT_CHANGED');bind();};
+
+ function selected(){if(session&&api.currentPage.id!==session.context.pageId)invalidate('NATIVE_CONTEXT_CHANGED');}
+ const changed=()=>{if(!active){sequence++;invalidate('NATIVE_CONTEXT_CHANGED');}bind();};
  function start(){if(started)return;started=true;bind();try{if(observeSelection)api.on('selectionchange',selected);api.on('currentpagechange',changed);api.on('close',stop);}catch(_){observerAvailable=false;}}
  function stop(){if(refreshTask)invalidate();if(actionTask)finishAction(actionTask,{status:'cancelled',refreshAllowed:false,message:'Операция остановлена.'});sequence++;active=null;session=null;if(page&&nodeListener)try{page.off('nodechange',nodeListener);}catch(_){}try{if(observeSelection)api.off('selectionchange',selected);api.off('currentpagechange',changed);api.off('close',stop);}catch(_){}started=false;}
  async function run(m){
   if(refreshTask)invalidate();
-  if(actionTask){post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:'ACTION_BUSY',message:'Дождитесь завершения действия.'});return;}
-  const roots=Array.from(api.currentPage.selection);
-  if(api.currentPage.id!==m.context.pageId||signature(roots)!==m.context.selectionSignature){post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:'NATIVE_CONTEXT_CHANGED',message:errors.NATIVE_CONTEXT_CHANGED});return;}
-  const ticket=++sequence,deadline=now()+timeoutMs;session=null;active={ticket,requestId:m.requestId,context:m.context};let latest=null,timer;
-  const assertCurrent=()=>{if(now()>deadline)throw Error('NATIVE_TIMEOUT');if(sequence!==ticket||api.currentPage.id!==m.context.pageId||roots.some(n=>n.removed||pageOf(n)?.id!==m.context.pageId))throw Error('NATIVE_CONTEXT_CHANGED');};
+  if(actionTask){post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:'ACTION_BUSY',message:'Дождитесь завершения действия.',diagnostic:failureDiagnostic(Error('ACTION_BUSY'),m.requestId,sequence,'request-start')});return;}
+  const ticket=++sequence;let roots=[],stage='selection',attempt=0,attemptGeneration=0;
+  session=null;active={ticket,requestId:m.requestId,context:m.context};
+  trace('audit-start',{runId:m.requestId,stage:'native',nodeId:m.context.selectionSignature});
+  const guard=()=>{if(sequence!==ticket)throw Error('NATIVE_CANCELLED');if(api.currentPage.id!==m.context.pageId||roots.some(n=>n.removed||pageOf(n)?.id!==m.context.pageId))throw Error('NATIVE_CONTEXT_CHANGED');};
+  const progress=message=>{guard();post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,message,stage});};
+  const readOperation=read=>cooperativeRead(read,Math.max(10,Math.min(timeoutMs,1200)),guard,()=>progress('Ожидаем данные Figma. Проверка продолжается…'));
   const resultFor=observation=>({runId:m.requestId,context:m.context,checks:observation.checks,observedAt:now(),coverage:'native-subsets-only'});
-  const register=(observation,actionsAllowed=false)=>{const result=resultFor(observation);if(!resultValid(result))throw Error('NATIVE_RESPONSE_INVALID');session={runId:m.requestId,context:m.context,facts:observation.facts,targets:observation.targets,result,observation,roots,epoch,expires:now()+60000};if(actionsAllowed)session.actions=buildActionData(observation,m.requestId,m.context,hash);return result;};
-  const checkpoint=async observation=>{
-   const captured={checks:JSON.parse(JSON.stringify(observation.checks)),facts:observation.facts.slice(),targets:new Map(observation.targets),nodes:new Map(observation.nodes),units:new Map(Array.from(observation.units||[],([id,values])=>[id,new Set(values)])),modeGraph:new Map(observation.modeGraph||[]),resolvedStyles:new Map(observation.resolvedStyles||[])};
-   await recheck(api,captured.facts,{hash,assertCurrent,stage:'checkpoint-recheck',timeoutMs:Math.max(1,Math.min(1200,deadline-now()))});assertCurrent();latest=captured;
-   const result=register(latest);post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,result});
-  };
   try{
-   const work=async()=>{const observation=await collect(api,m.context,{hash,assertCurrent,limits,roots,onProgress:checkpoint,readTimeoutMs:()=>Math.max(0,Math.min(limits?.readMs||1200,deadline-now()-Math.min(2000,timeoutMs*.25)))});await recheck(api,observation.facts,{hash,assertCurrent,timeoutMs:Math.max(1,Math.min(1200,deadline-now()))});assertCurrent();return observation;};
-   const observation=await Promise.race([work(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('NATIVE_TIMEOUT')),timeoutMs);})]);
-   assertCurrent();
-   if(!observerAvailable)for(const c of observation.checks)if(c.status!=='not-applicable'){c.status='incomplete';c.gaps.push('current-page-observer-unavailable');}
-   await recheck(api,observation.facts,{hash,assertCurrent,timeoutMs:Math.max(1,Math.min(1200,deadline-now()))});assertCurrent();
-   // Action suggestions depend on Proxy catalogs; native verdicts do not.
-   const result=register(observation,true);active=null;post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});if(bindingAdapter)void refreshBindings(m.requestId);
-  }catch(e){if(sequence===ticket){
-   if(latest&&['NATIVE_TIMEOUT','NATIVE_READ_TIMEOUT'].includes(e.message)){
-    for(const c of latest.checks)if(c.status==='running'){c.status='incomplete';c.gaps.push('checker-timeout');}
-    const result=register(latest,true);active=null;sequence++;post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});
-   }else{active=null;session=null;sequence++;const diagnostic=e.nativeFailure?Object.assign({schemaVersion:'apollo.native-audit-failure.v1',errorId:'native:'+hash([m.requestId,ticket,now(),e.nativeFailure]).slice(0,24),requestId:m.requestId,code:e.message},e.nativeFailure):null;post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:e.message,message:errors[e.message]||'Не удалось прочитать данные макета. Повторите проверку.',diagnostic});}
-  }}finally{clearTimeout(timer);}
+   while(api.currentPage.id!==m.context.pageId){if(sequence!==ticket)return;post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,stage,message:'Ожидаем исходную страницу. Выделенная область сохранена…'});await cooperativeRead(()=>new Promise(resolve=>setTimeout(resolve,250)),100,()=>{if(sequence!==ticket)throw Error('NATIVE_CANCELLED');});}
+   // Both branches read the requested roots, never a later cursor selection.
+   roots=signature(Array.from(api.currentPage.selection))===m.context.selectionSignature?Array.from(api.currentPage.selection):await Promise.all(m.context.selectionSignature.split('|').filter(Boolean).map(id=>resolveNativeNode(api,id,{read:readOperation,guard})));
+   if(roots.some(n=>!n)||signature(roots)!==m.context.selectionSignature)throw Error('NATIVE_CONTEXT_CHANGED');guard();
+   while(sequence===ticket){
+    attempt++;const revision=++attemptGeneration;const assertAttempt=()=>{guard();if(attemptGeneration!==revision)throw Error('NATIVE_ATTEMPT_SUPERSEDED');};const readAttempt=read=>cooperativeRead(read,Math.max(10,Math.min(timeoutMs,1200)),assertAttempt,()=>progress('Ожидаем данные Figma. Проверка продолжается…'));let latest=null;
+    const checkpoint=async observation=>{
+     assertAttempt();stage='checkpoint-recheck';
+     const captured={checks:JSON.parse(JSON.stringify(observation.checks)),facts:observation.facts.slice(),targets:new Map(observation.targets),nodes:new Map(observation.nodes),units:new Map(Array.from(observation.units||[],([id,values])=>[id,new Set(values)])),modeGraph:new Map(observation.modeGraph||[]),resolvedStyles:new Map(observation.resolvedStyles||[])};
+     await recheck(api,captured.facts,{hash,assertCurrent:assertAttempt,stage,readOperation:readAttempt});assertAttempt();latest=captured;
+     post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,result:resultFor(latest),stage});stage='collect';
+    };
+    try{
+     stage='collect';progress(attempt===1?'Читаем свойства, стили и токены…':'Перечитываем изменившиеся данные Figma…');
+     const observation=await collect(api,m.context,{hash,assertCurrent:assertAttempt,limits,roots,deprecatedStyleReader,catalogPolicyReader,onProgress:checkpoint,readOperation:readAttempt,onTrace:(event,data)=>trace(event,Object.assign({runId:m.requestId,attempt},data)),onReadFailure:error=>{assertAttempt();if(!retryableRead(error)||['deprecatedStyles.index','catalogAuditPolicy.index'].includes(error.nativeRead?.operation))post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,stage,diagnostic:failureDiagnostic(error,m.requestId,[ticket,attempt],stage)});}});
+     if(!observerAvailable)for(const c of observation.checks)if(c.status!=='not-applicable'){c.status='incomplete';c.gaps.push('current-page-observer-unavailable');}
+     stage='deprecated-style-index-recheck';await verifyDeprecatedStyles(deprecatedStyleReader,observation,{guard:assertAttempt,onReadFailure:error=>post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,stage,diagnostic:failureDiagnostic(error,m.requestId,[ticket,attempt],stage)})});assertAttempt();stage='catalog-policy-recheck';await verifyCatalogPolicy(catalogPolicyReader,observation,{guard:assertAttempt,onReadFailure:error=>post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,stage,diagnostic:failureDiagnostic(error,m.requestId,[ticket,attempt],stage)})});assertAttempt();stage='final-recheck';await recheck(api,observation.facts,{hash,assertCurrent:assertAttempt,stage,readOperation:readAttempt});assertAttempt();
+     const result=resultFor(observation);if(!resultValid(result))throw Error('NATIVE_RESPONSE_INVALID');
+     session={runId:m.requestId,context:m.context,facts:observation.facts,targets:observation.targets,result,observation,roots,epoch,expires:now()+60000};session.actions=buildActionData(observation,m.requestId,m.context,hash);
+     active=null;trace('audit-complete',{runId:m.requestId,attempt,stage:'native',count:observation.facts.length});post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});if(bindingAdapter)void refreshBindings(m.requestId);return;
+    }catch(error){
+     attemptGeneration++;if(sequence!==ticket)return;
+     const diagnostic=failureDiagnostic(error,m.requestId,[ticket,attempt],stage);
+     if(!['NATIVE_FACTS_CHANGED','NATIVE_READ_TIMEOUT','NATIVE_TIMEOUT','NATIVE_CONTEXT_CHANGED','NATIVE_READ_FAILED','NATIVE_OBSERVER_SUPERSEDED'].includes(diagnostic.code)&&!/(TEMPORAR|UNAVAILABLE)/.test(diagnostic.code))throw error;
+     post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,message:'Данные изменились или чтение задержалось. Повторяем захват…',stage,diagnostic});
+     await cooperativeRead(()=>new Promise(resolve=>setTimeout(resolve,Math.min(2000,100*attempt))),100,()=>{if(sequence!==ticket)throw Error('NATIVE_CANCELLED');});
+    }
+   }
+  }catch(error){if(sequence===ticket){active=null;session=null;sequence++;const diagnostic=failureDiagnostic(error,m.requestId,[ticket,attempt],stage);post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:diagnostic.code,message:errors[diagnostic.code]||'Не удалось прочитать данные макета. Диагностика сохранена.',diagnostic});}}
  }
+
  async function refreshBindings(runId){
   if(!bindingAdapter)return;
   if(active?.requestId===runId)return;
@@ -92,7 +112,7 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
    invalidatesCurrent=true;focusTask=m;
    const deadline=now()+timeoutMs;
    const guard=()=>{if(actionTask||focusTask!==m||session!==s||epoch!==s.epoch||now()>deadline||api.currentPage.id!==s.context.pageId)throw Error('NATIVE_RESULT_STALE');};
-   guard();const work=async()=>{await recheck(api,s.facts,{hash,assertCurrent:guard});const n=await resolveNativeNode(api,target.nodeId,{read:fn=>boundedRead(fn,1200,guard),guard});guard();return n;};
+   guard();const work=async()=>{if(f.status==='deprecated-style'&&s.result.checks.find(c=>c.id==='deprecatedStyles')?.findings.includes(f)){await verifyDeprecatedStyles(deprecatedStyleReader,s.observation,{guard});if(f.status==='unknown')throw Error('NATIVE_RESULT_STALE');}await recheck(api,s.facts,{hash,assertCurrent:guard});const n=await resolveNativeNode(api,target.nodeId,{read:fn=>boundedRead(fn,1200,guard),guard});guard();return n;};
    const n=await Promise.race([work(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('NATIVE_RESULT_STALE')),timeoutMs);})]);guard();
    if(!currentPageTarget(n,s.context.pageId))throw Error('NATIVE_RESULT_STALE');
    focus(n);
@@ -109,9 +129,11 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
    guard();task.notificationProof.assertStable();const retained=old.facts.filter(f=>!plan.ids.has(f.id)&&!(plan.action.kind==='theme'&&f.kind==='pageModes'));
    await recheck(api,retained,{hash,assertCurrent:guard});guard();task.notificationProof.assertStable();
    progress('Перепроверяем изменения в макете…');
-   const fresh=await collect(api,old.context,{hash,assertCurrent:guard,limits,roots:plan.roots,scoped:true,onProgress:async observation=>{guard();for(const fact of observation.facts){const key=fact.kind+':'+fact.id,previous=task.notificationFacts.get(key);if(previous&&hash(previous.value)!==hash(fact.value))throw Error('NATIVE_FACTS_CHANGED');task.notificationFacts.set(key,fact);}guard();},readTimeoutMs:()=>Math.max(0,Math.min(1200,task.deadline-now()))});guard();
+   const fresh=await collect(api,old.context,{hash,assertCurrent:guard,limits,roots:plan.roots,scoped:true,deprecatedStyleReader,catalogPolicyReader,onProgress:async observation=>{guard();for(const fact of observation.facts){const key=fact.kind+':'+fact.id,previous=task.notificationFacts.get(key);if(previous&&hash(previous.value)!==hash(fact.value))throw Error('NATIVE_FACTS_CHANGED');task.notificationFacts.set(key,fact);}guard();},readTimeoutMs:()=>Math.max(0,Math.min(1200,task.deadline-now()))});guard();
    task.notificationProof.assertStable();const contract=await task.operations.run(guard,progress);guard();task.notificationProof.assertStable();
    plan.includeCurrent();const observation=mergeObservation(old.observation,fresh,plan);
+   if(old.observation.deprecatedIndexId&&old.observation.deprecatedIndexId!==fresh.deprecatedIndexId)throw Error('NATIVE_FACTS_CHANGED');
+   observation.stylePolicyIndexId=fresh.stylePolicyIndexId;await verifyCatalogPolicy(catalogPolicyReader,observation,{guard});guard();observation.deprecatedIndexId=fresh.deprecatedIndexId;await verifyDeprecatedStyles(deprecatedStyleReader,observation,{guard});guard();
    const bindings=bindingAdapter?await bindingAdapter.resolve(observation,old.context,guard,contract):new Map();guard();
    progress('Подтверждаем актуальность результатов…');
    await recheck(api,observation.facts,{hash,assertCurrent:guard});await task.operations.verify?.(guard);guard();task.notificationProof.assertStable();
@@ -171,9 +193,9 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
   if(m?.type==='document-action-request'){void runAction(m);return true;}
   if(m?.type==='document-action-cancel'){if(Object.keys(m).length===3&&m.schemaVersion===ACTION_SCHEMA&&typeof m.requestId==='string'){if(actionTask?.requestId===m.requestId)finishAction(actionTask,{status:'cancelled',message:actionTask.applied?'Изменение выполнено; ожидание подтверждения остановлено. Повторите проверку.':'Действие остановлено.'});else if(lastActionReply?.requestId===m.requestId)post(lastActionReply);}return true;}
   if(!m||!['document-audit-request','document-audit-focus','document-audit-cancel'].includes(m.type))return false;
-  if(m.type==='document-audit-cancel'){if(Object.keys(m).length===3&&m.schemaVersion===SCHEMA&&typeof m.requestId==='string'&&(active?.requestId===m.requestId||session?.runId===m.requestId)){if(actionTask)finishAction(actionTask,{status:'cancelled',refreshAllowed:false,message:'Действие остановлено вместе с проверкой.'});sequence++;active=null;session=null;post({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:m.requestId});}return true;}
+  if(m.type==='document-audit-cancel'){if(Object.keys(m).length===3&&m.schemaVersion===SCHEMA&&typeof m.requestId==='string'&&(active?.requestId===m.requestId||session?.runId===m.requestId)){if(actionTask)finishAction(actionTask,{status:'cancelled',refreshAllowed:false,message:'Действие остановлено вместе с проверкой.'});trace('audit-stop',{runId:m.requestId,stage:'native'});sequence++;active=null;session=null;post({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:m.requestId});}return true;}
   if(m.type==='document-audit-request'){
-   if(!requestValid(m)){post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:typeof m.requestId==='string'?m.requestId.slice(0,100):'',code:'NATIVE_REQUEST_INVALID',message:'Параметры проверки документа несовместимы. Повторите запуск.'});return true;}
+   if(!requestValid(m)){post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:typeof m.requestId==='string'?m.requestId.slice(0,100):'',code:'NATIVE_REQUEST_INVALID',message:'Параметры проверки документа несовместимы. Повторите запуск.',diagnostic:failureDiagnostic(Error('NATIVE_REQUEST_INVALID'),typeof m.requestId==='string'?m.requestId.slice(0,100):'invalid-request',sequence,'request-validation')});return true;}
    void run(m);return true;
   }
   if(!focusValid(m)){post({type:'document-audit-focus-result',schemaVersion:SCHEMA,requestId:typeof m.requestId==='string'?m.requestId.slice(0,100):'',runId:m.runId,success:false,message:'Запрос перехода несовместим.'});return true;}

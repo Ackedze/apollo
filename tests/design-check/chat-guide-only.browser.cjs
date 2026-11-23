@@ -3,6 +3,8 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {pathToFileURL}=require('node:url');
 const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
+const requirements=require('../../src/compatibility-requirements.json');
+const compatibility={protocolVersion:requirements.protocolVersion,data:{state:'ready',version:'a'.repeat(64),schemaVersion:requirements.dataSchemaVersion,profileVersion:requirements.dataProfiles[0],deliveryProfile:requirements.deliveryProfile,generatedAt:requirements.minDataGeneratedAt}};
 (async()=>{
  const output=process.env.DESIGN_CHECK_QA_ROOT;if(!output)throw Error('Set DESIGN_CHECK_QA_ROOT');fs.mkdirSync(output,{recursive:true});
  const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH});
@@ -13,7 +15,7 @@ const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
   await page.addInitScript(()=>{window.emitPlugin=value=>window.dispatchEvent(new MessageEvent('message',{source:window,data:{pluginMessage:value}}));parent.postMessage=value=>{if(value.pluginMessage?.type==='design-check-ui-request')void window.__guideOnlyBridge(value.pluginMessage);};});
   await page.route(/^https?:/,async route=>{
    const url=new URL(route.request().url());if(url.origin!=='http://localhost:3001')return route.abort();let body={};
-   if(url.pathname==='/health')body={ok:true,agent:{busy:false},proxy:{version:'fixture'},capabilities:{dialoguePlatformRouting:true}};
+   if(url.pathname==='/health')body={ok:true,agent:{busy:false},proxy:{version:requirements.minProxyVersion},compatibility,capabilities:{dialoguePlatformRouting:true}};
    if(url.pathname==='/analyze'){
     const payload=JSON.parse(route.request().postData());payloads.push(payload);
     const text='**Подпись кнопки описывает действие.**\n\nГайд: HIG — [Buttons](https://developer.apple.com/design/human-interface-guidelines/buttons)';

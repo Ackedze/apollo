@@ -7,6 +7,7 @@ const crypto = { createHash: function (algorithm) {
     digest: function (format) { if (format !== 'hex') throw new Error('Only hex digest is supported'); return sha256Hex(value); } };
 } };
 const registry = require('../schemas/apollo-predicate-capabilities.v1.json');
+const { textPaintRuns } = require('./text-paint-ranges');
 
 const TRUTH = Object.freeze({ TRUE: 'true', FALSE: 'false', UNKNOWN: 'unknown' });
 const APPLICABILITY = Object.freeze({
@@ -335,7 +336,7 @@ function validateRule(rule) {
 
 function unknownFactMatches(unknownFacts, factPath) {
   return (unknownFacts || []).some((unknownPath) => (
-    unknownPath === factPath || factPath.startsWith(`${unknownPath}.`)
+    unknownPath === factPath || factPath.startsWith(`${unknownPath}.`) || unknownPath.startsWith(`${factPath}.`)
   ));
 }
 
@@ -447,6 +448,14 @@ function resolveValue(valueRef, subject, snapshot) {
   }
   const factPath = valueRef.fact;
   if (unknownFactMatches(subject.unknownFacts, factPath)) {
+    const resolved = readObjectPath(subject, factPath);
+    const explicitlyUnknown = (subject.unknownFacts || []).some(path => path === factPath || path.startsWith(`${factPath}.`));
+    // A proved scalar refines an unknown ancestor, never a container or an explicit gap.
+    if (Array.isArray(subject.knownFacts) && subject.knownFacts.includes(factPath) && !explicitlyUnknown
+      && resolved.state === 'known' && (typeof resolved.value === 'boolean'
+        || typeof resolved.value === 'number' && Number.isFinite(resolved.value))) {
+      return Object.assign({}, resolved, { factPaths: [factPath] });
+    }
     return { state: 'unknown', value: undefined, factPaths: [factPath] };
   }
   if (factPath.startsWith('page.context.')) {
@@ -640,10 +649,21 @@ function evaluateExpression(expression, subject, snapshot) {
   if (['all', 'any', 'not'].includes(expression.predicate)) {
     return evaluateLogicExpression(expression, subject, snapshot);
   }
-  const actual = resolveValue(expression.actual, subject, snapshot);
-  const expected = expression.expected
+  let actual = resolveValue(expression.actual, subject, snapshot);
+  let expected = expression.expected
     ? resolveValue(expression.expected, subject, snapshot)
     : { state: 'known', value: null, factPaths: [] };
+  if (expression.predicate === 'matches-effective-baseline' && subject.type === 'TEXT'
+    && expression.actual?.fact === 'appearance.fill' && expression.expected?.fact === 'baseline.effective.appearance.fill'
+    && (subject.appearance?.fill === null || subject.baseline?.effective?.appearance?.fill === null)) {
+    const resolveRuns = (source, prefix, value) => {
+      const paths = ['appearance.fill', 'textFillEvidenceV1', 'text.characters'].map(p => prefix + p);
+      const runs = paths.some(p => unknownFactMatches(subject.unknownFacts, p)) ? undefined : textPaintRuns(source, deepEqual);
+      return { state: runs ? 'known' : 'unknown', value: runs, factPaths: Array.from(new Set(value.factPaths.concat(paths))) };
+    };
+    actual = resolveRuns(subject, '', actual);
+    expected = resolveRuns(subject.baseline?.effective, 'baseline.effective.', expected);
+  }
   const factPaths = Array.from(new Set([...actual.factPaths, ...expected.factPaths])).sort();
 
   if (expression.predicate === 'exists') {

@@ -524,6 +524,14 @@ function assertionFor(
   return { selectRoot: false, reason: `Constraint ${constraint.type} is not compilable.` };
 }
 
+function uniqueCapabilityFacts(values: string[]): string[] {
+  // Preserve the published fact-path order without depending on the host's collation.
+  return Array.from(new Set(values.filter(Boolean))).sort((left, right) => {
+    const a = left.toLowerCase(), b = right.toLowerCase();
+    return a < b ? -1 : a > b ? 1 : left < right ? -1 : left > right ? 1 : 0;
+  });
+}
+
 function sourceCapabilities(rule: RuleIr): CompiledContract['capabilities'] {
   const selectors = ['selection-root', String((rule.select as Record<string, unknown>).traverse || 'self')];
   const serialized = JSON.stringify(rule);
@@ -531,14 +539,14 @@ function sourceCapabilities(rule: RuleIr): CompiledContract['capabilities'] {
   const operators = Array.from(serialized.matchAll(/"predicate":"([^"]+)"/g)).map((match) => match[1]);
   return {
     selectors: uniqueSorted(selectors),
-    facts: uniqueSorted(facts),
+    facts: uniqueCapabilityFacts(facts),
     operators: uniqueSorted(operators),
     remediations: rule.remediation ? [String((rule.remediation as Record<string, unknown>).kind || '')].filter(Boolean) : [],
   };
 }
 
 export function compileManualSource(manual: ManualSource, variantEvidence?: VariantEvidence, dependencyContracts: CompiledContract[] = []): CompileResult {
-  const identityErrors = declaredTargetIdentityErrors({version:manual.metadata.declaredTargetIdentityVersion,configurationVersion:manual.metadata.declaredTargetConfigurationVersion,targets:manual.targets,representations:manual.representations});
+  const identityErrors = declaredTargetIdentityErrors({version:manual.metadata.declaredTargetIdentityVersion,configurationVersion:manual.metadata.declaredTargetConfigurationVersion,portableSwapVersion:manual.metadata.portableSwapIdentityVersion,targets:manual.targets,representations:manual.representations});
   if (manual.metadata.declaredTargetIdentityVersion !== undefined && !variantEvidence) identityErrors.push('independent variant anatomy is required');
   if (identityErrors.length) throw Object.assign(new Error('DECLARED_TARGET_IDENTITY_UNSUPPORTED: ' + identityErrors.join('; ')),{code:'DECLARED_TARGET_IDENTITY_UNSUPPORTED'});
   if (variantEvidence) {
@@ -968,7 +976,7 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
     nonExecutableRules,
     capabilities: {
       selectors: uniqueSorted(capabilityParts.flatMap((part) => part.selectors)),
-      facts: uniqueSorted(capabilityParts.flatMap((part) => part.facts)),
+      facts: uniqueCapabilityFacts(capabilityParts.flatMap((part) => part.facts)),
       operators: uniqueSorted(capabilityParts.flatMap((part) => part.operators)),
       remediations: uniqueSorted(capabilityParts.flatMap((part) => part.remediations)),
     },
@@ -1026,7 +1034,7 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
           .filter((path): path is string => !!path).map(path => path.split(' / ').slice(1).join(' / '));
         return Object.values(variantEvidence?.structures || {}).some(nodes =>
           nodes.some(node => node.type === 'SLOT' && paths.includes(node.path)));
-      })) ? { nativeSlotTargetsVersion: 1 as const } : {}),
+      })) ? { nativeSlotTargetsVersion: manual.metadata.nativeSlotTargetsVersion === 2 ? 2 as const : 1 as const } : {}),
       ...(configurations || semanticTargetVisibility || manual.rules.some(rule => rule.boundaryPolicy || rule.targetApplicability || rule.constraints.some(c => c.mapping || (c.type==='propertyForbidden' && c.targetRoles?.length))) ? { ruleScopeFactsVersion: 1 as const } : {}),
       ...(semanticTargetVisibility ? { semanticTargetVisibilityVersion: 1 as const } : {}),
       ...(transitions.length ? { transitionFactsVersion: 1 as const } : {}),
@@ -1054,6 +1062,19 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
     bindDeclaredTargetRuleSelectors(contract);
   }
   if (contract.capabilities.facts.some(f => f.startsWith('textContentV1.'))) contract.runtimePolicy.textContentFactsVersion = 1;
+  // Usage reads need exact native occurrence proof, independently of visual baseline.
+  const nativeUsageFacts: string[] = [];
+  for (const property of manual.metadata.nativeTargetUsageFactsVersion === 1 ? manual.semanticApi : []) for (const binding of property.bindings) {
+    const target = manual.targets.find(t => t.id === binding.targetId);
+    if (!target?.identityBindingsV1?.length || binding.ownedOccurrence || binding.nativeSlotBinding) continue;
+    const field = binding.path === 'visibility.effective' ? 'effectiveVisible'
+      : binding.path.startsWith('component.properties.') ? 'properties.' + binding.path.slice('component.properties.'.length) : undefined;
+    if (field) nativeUsageFacts.push('nativeTargetPropertiesV1.' + declaredTargetMembershipKey(target.id) + '.' + field);
+  }
+  if (nativeUsageFacts.length) {
+    contract.capabilities.facts = [...new Set(contract.capabilities.facts.concat(nativeUsageFacts))].sort();
+    contract.runtimePolicy.nativeTargetUsageFactsVersion = 1;
+  }
   if (contract.capabilities.facts.some(f => f.startsWith('nativeTargetPropertiesV1.'))) contract.runtimePolicy.nativeTargetPropertyFactsVersion = 1;
   if (contract.runtimePolicy.textContentFactsVersion === 1 || contract.runtimePolicy.nativeTargetPropertyFactsVersion === 1) contract.package.sourceExportVersion = 'component-contract-editor@0.2.94';
   if (contract.runtimePolicy.declaredTargetIdentityVersion === 3) contract.package.sourceExportVersion = 'component-contract-editor@0.2.95';
@@ -1063,6 +1084,11 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
   }
 
   if (contract.runtimePolicy.nativeInstanceReplacementsVersion===1) contract.package.sourceExportVersion='component-contract-editor@0.2.108';
+  if (manual.metadata.portableSwapIdentityVersion === 1) {
+    contract.runtimePolicy.portableSwapIdentityVersion = 1;
+    contract.package.sourceExportVersion = 'component-contract-editor@0.2.109';
+  }
+  if (contract.runtimePolicy.nativeSlotTargetsVersion === 2) contract.package.sourceExportVersion = 'component-contract-editor@0.2.110';
   return decorateDependencyUsages(manual, { contract, issues });
 }
 

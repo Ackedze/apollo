@@ -8,10 +8,18 @@ function createDesignCheckController(options = {}) {
   const sourceOnly = options.preferenceScope === 'agent-source';
   const listeners = new Set(), revisions = {}, settingCapabilities = options.settingCapabilities || {};
   let destroyed = false, sequence = 0, loadSequence = 0, saveQueue = Promise.resolve();
-  let activeChat = null, activeAudit = null, proxySequence = 0;
+  let activeChat = null, activeAudit = null, proxySequence = 0, pendingCheck=null, preflightPending=false;
+  async function prepareOperation(before = options.beforeOperation) {
+    if (preflightPending) return false;
+    preflightPending=true;
+    try { await before(); return !destroyed; }
+    catch { return false; }
+    finally { preflightPending=false; }
+  }
   let state = { settings: clone(DEFAULT_SETTINGS), selectedTab: 'current', view: 'audit', mode: 'check',
     settingsNotice: '', preferenceStatus: 'session-only', preferenceError: '',
-    auditReady: false, auditBusy: false, auditProgress: '', auditStale: false, auditError: '', audit: null, contextKey: null,
+    auditReady: false, auditBusy: false, auditStopping:false, auditCancelled:false,auditNotice:'',auditFailures:[], auditProgress: '', auditStale: false, auditError: '', audit: null, contextKey: null,
+    v3Audit: options.auditEngine === 'v3' ? {result:null,runId:null,stale:false,texts:{result:null,capture:null,runId:null,stale:false},busy:false,kind:null,progress:'',error:'',notice:''} : null,
     documentPageAvailable: false, documentActions:null,documentAction:{busy:false,status:'idle',message:''},
     documentAudit: { status: 'idle', requestId: null, result: null, error: '' },
     tabs: Object.fromEntries(definitions.map(tab => [tab.id, { status: 'not-connected', count: null, items: [] }])),
@@ -41,13 +49,13 @@ function createDesignCheckController(options = {}) {
       ? items.filter(item => item.classification !== 'allowed') : items.slice();
   }
   function preferences() {
-    // v3 runtime flags are deliberately session-only. Restored UI is never an accepted audit context.
-    const settings = {};
+    // Other v3 runtime flags stay session-only; catalog choice is restored as a preference, never as audit evidence.
+    const settings = { connectCatalogs: state.settings.connectCatalogs };
     if (!sourceOnly) for (const key of ['pageTypeId', 'channelId', 'pickerLabel', 'compact', 'showExpectedCustomizations', 'hideCustomizations']) settings[key] = state.settings[key];
     return { schemaVersion: PREFERENCE_VERSION, settings, agentSource: state.chat.source };
   }
   function persist(key) {
-    if (sourceOnly && key !== 'agentSource') return Promise.resolve();
+    if (sourceOnly && key !== 'agentSource' && key !== 'connectCatalogs') return Promise.resolve();
     if (!options.preferences?.save) return Promise.resolve();
     const value = preferences();
     emit({ preferenceStatus: 'saving', preferenceError: '' });
@@ -64,7 +72,7 @@ function createDesignCheckController(options = {}) {
       const value = await options.preferences.load();
       if (destroyed || ticket !== loadSequence) return;
       if (value == null) { emit({ preferenceStatus: 'ready' }); return; }
-      const keys = sourceOnly ? [] : ['pageTypeId', 'channelId', 'pickerLabel', 'compact', 'showExpectedCustomizations', 'hideCustomizations'];
+      const keys = sourceOnly ? ['connectCatalogs'] : ['pageTypeId', 'channelId', 'pickerLabel', 'compact', 'showExpectedCustomizations', 'hideCustomizations', 'connectCatalogs'];
       if (value.schemaVersion !== PREFERENCE_VERSION || !value.settings || typeof value.settings !== 'object'
         || Object.keys(value.settings).some(key => !keys.includes(key) || !validSetting(key, value.settings[key]))
         || !['langflow', 'codex'].includes(value.agentSource)) throw new TypeError('Сохранённые настройки несовместимы. Тип страницы не подтверждён.');
@@ -87,8 +95,9 @@ function createDesignCheckController(options = {}) {
     if (key === 'pickerLabel' && value !== state.settings.pickerLabel && (state.chat.busy || state.chat.proxy.busy === true)) return false;
     revisions[key] = (revisions[key] || 0) + 1;
     const settings = Object.assign({}, state.settings); settings[key] = value;
-    emit({ settings, selectedTab: selectVisibleTab(settings), settingsNotice: CONTEXT_FIELDS.has(key)
-      ? 'Настройка выбрана. Применение в проверке требует подключённого обработчика.' : '' });
+    emit({ settings, selectedTab: selectVisibleTab(settings), settingsNotice: key === 'connectCatalogs'
+      ? (value ? 'Каталожный пилот включён.' : 'Каталожный пилот выключен.')
+      : CONTEXT_FIELDS.has(key) ? 'Настройка выбрана. Применение в проверке требует подключённого обработчика.' : '' });
     if (options.onSettingChange) {
       const current = revisions[key];
       const reject = error => { if (revisions[key] === current) emit({ settingsNotice: error.message || 'Не удалось применить настройку.' }); };
@@ -107,34 +116,65 @@ function createDesignCheckController(options = {}) {
     emit({ mode, chat: Object.assign({}, state.chat, { open: false }) }); return true;
   }
   function setView(view) {
-    if (!['audit', 'report', 'texts'].includes(view)) return false;
+    if (!['audit', 'report'].includes(view)) return false;
     emit({ view }); options.onViewChange?.(view); return true;
   }
-  function setAudit(audit) {
+  function setAudit(audit,extra={}) {
     if (!audit?.auditId || !Array.isArray(audit.result?.engine?.evaluations)) throw new TypeError('Expected an existing v4 audit result.');
     activeAudit = null;
     const tabs = clone(state.tabs);
     const items = audit.result.engine.evaluations.filter(entry => !finalClassifications.has(entry.classification) || entry.classification === 'allowed');
     if (tabs.changes) tabs.changes = { status: 'available', count: items.length, items,
       scope: audit.result.coverage?.scope || null, executionComplete: audit.result.coverage?.executionComplete === true };
-    emit({ audit, auditBusy: false, auditProgress: '', auditStale: false, auditError: '', tabs });
+    emit(Object.assign({ audit, auditBusy: false, auditStopping:false,auditCancelled:false,auditNotice:'',auditProgress: '', auditStale: false, auditError: '', tabs },extra));
   }
   function setDocumentPageAvailable(value) {
     if (state.documentPageAvailable !== Boolean(value)) emit({ documentPageAvailable: Boolean(value) });
   }
   function beginContractAudit(requestId) {
-    activeAudit = requestId;
-    emit({ auditStale: Boolean(state.audit), auditBusy: true, auditProgress: '', auditError: '' });
+    // A late storage reply cannot change the mechanism of an accepted run.
+    revisions.connectCatalogs = (revisions.connectCatalogs || 0) + 1;
+    activeAudit = requestId;if(pendingCheck?.requestId===requestId){pendingCheck.needsContract=true;pendingCheck.contract=null;}
+    emit({ auditStopping:false,auditCancelled:false,auditNotice:'',auditStale: Boolean(state.audit), auditBusy: true, auditProgress: '', auditError: '' });
   }
   async function startDocumentAudit() {
+    if(options.auditEngine==='v3')return startAudit();
     if (!state.documentPageAvailable || state.documentAction.busy || state.auditBusy || ['loading','cancelling'].includes(state.documentAudit.status) || destroyed || !options.onDocumentAudit) return false;
-    const requestId = `design-check-audit-${++sequence}`;
+    if (options.beforeOperation && !await prepareOperation()) return false;
+    if (options.beforeOperation && (!state.auditReady || state.auditBusy || state.documentAction.busy || ['loading','cancelling'].includes(state.documentAudit.status))) return false;
+    revisions.connectCatalogs = (revisions.connectCatalogs || 0) + 1;
+    emit({auditNotice:''});const requestId = `design-check-audit-${++sequence}`;pendingCheck={requestId,needsContract:false,contract:null,native:null,previousDocument:state.documentAudit,contractError:null};
     try { await options.onDocumentAudit({ requestId, uiPreferences: clone(state.settings) }); }
     catch (error) { emit({ documentAudit: { status: state.documentAudit.result ? 'stale' : 'error', requestId, result: state.documentAudit.result, error: error.message || 'Не удалось начать проверку документа.' } }); }
     return true;
   }
+  function recordAuditFailure(value){if(!require('../document-audit/protocol').failureValid(value)||state.auditFailures.some(v=>v.errorId===value.errorId))return;const all=state.auditFailures.concat(value);emit({auditFailures:all.length<=20?all:[all[0],...all.slice(-19)]});}
+  function failedPair(){
+    const old=pendingCheck.previousDocument,native=pendingCheck.native,history=native?.failures||state.documentAudit.failures,error=pendingCheck.contractError;
+    const fresh=native?.status==='available'&&native.result?.runId===pendingCheck.requestId+':native'&&require('../document-audit/protocol').resultValid(native.result);
+    pendingCheck=null;
+    emit({auditBusy:false,auditStopping:false,auditStale:Boolean(state.audit),auditError:error,auditProgress:'',documentAudit:Object.assign({},fresh?native:old,{status:fresh?'available':old.result?'stale':'error',progress:'',failures:history,error:fresh?'Проверки свойств, стилей и токенов сохранены. Правила компонентов не проверены.':'Новая проверка не завершена. Доступные результаты сохранены.'})});
+  }
   function setDocumentAudit(value) {
-    emit({ documentAudit: value });
+    if(pendingCheck&&value.requestId===pendingCheck.requestId+':native'&&value.status!=='available')pendingCheck.native=null;
+    if(pendingCheck&&value.requestId===pendingCheck.requestId+':native'&&['available','error'].includes(value.status)&&pendingCheck.needsContract){
+      pendingCheck.native=value.status==='available'?value:Object.assign({},value,{result:value.result?.runId===value.requestId?value.result:null});
+      if(pendingCheck.contractError){failedPair();return;}
+      if(!pendingCheck.contract){emit({documentAudit:Object.assign({},state.documentAudit,{status:'loading',progress:'Ожидаем проверку контрактов…',failures:value.failures})});return;}
+      const contract=pendingCheck.contract,native=pendingCheck.native;pendingCheck=null;setAudit(contract,{documentAudit:native});return;
+    }
+    emit({documentAudit:value,auditStopping:state.auditStopping&&(state.auditBusy||value.status==='cancelling')});
+  }
+  function stopAudit(reason='user'){
+    if(destroyed||state.auditStopping||state.documentAction.busy||!state.auditBusy&&!['loading','cancelling'].includes(state.documentAudit.status)||!options.onStopAudit)return false;
+    const nativeFailure=pendingCheck?.native?.status==='error'?pendingCheck.native:null;
+    // A failed native branch has no pending cancellation reply to clear loading.
+    const documentAudit=nativeFailure?Object.assign({},state.documentAudit,{status:state.documentAudit.result?'stale':'error',error:nativeFailure.error,progress:'',cancelled:true}):state.documentAudit;
+    pendingCheck=null;emit({documentAudit,auditStopping:true,auditNotice:reason==='offline'?'Потеряно соединение с интернетом. Проверка остановлена; доступные результаты сохранены.':'Проверка остановлена. Доступные результаты сохранены.'});options.onStopAudit();return true;
+  }
+  function acceptAuditCancelled(requestId){
+    if(!requestId||activeAudit!==requestId)return false;
+    activeAudit=null;pendingCheck=null;emit({auditBusy:false,auditCancelled:true,auditProgress:'',auditError:'',auditStopping:state.documentAudit.status==='cancelling'});return true;
   }
   function setTabData(id, data) {
     if (!Object.hasOwn(state.tabs, id) || !data || !['available', 'not-connected', 'incomplete'].includes(data.status)
@@ -143,15 +183,29 @@ function createDesignCheckController(options = {}) {
   }
   function acceptAuditResult(requestId, audit) {
     if (destroyed || !requestId || activeAudit !== requestId) return false;
+    if(pendingCheck?.requestId===requestId&&pendingCheck.needsContract){pendingCheck.contract=audit;if(!pendingCheck.native){emit({auditBusy:false,auditProgress:'Ожидаем проверку документа…'});return true;}const native=pendingCheck.native;pendingCheck=null;setAudit(audit,{documentAudit:native});return true;}
     setAudit(audit); return true;
   }
   function acceptAuditError(requestId, message) {
     if (destroyed || !requestId || activeAudit !== requestId) return false;
-    activeAudit = null; emit({ auditBusy: false, auditProgress: '', auditError: message }); return true;
+    activeAudit=null;if(pendingCheck?.requestId===requestId){pendingCheck.contractError=message;if(pendingCheck.native){failedPair();return true;}}emit({auditBusy:false,auditStopping:false,auditProgress:'',auditError:message}); return true;
   }
-  async function startAudit() {
+  function setV3AuditState(value){
+    if(options.auditEngine!=='v3'||destroyed)return;
+    emit({v3Audit:value,auditBusy:value.busy,auditStopping:value.stopping===true,auditProgress:value.progress||'',auditError:value.error||'',auditNotice:value.notice||'',auditStale:value.stale===true,auditCancelled:!!value.notice&&!value.error,documentAction:value.operation||{busy:false,status:'idle',message:''}});
+  }
+  async function startAudit(kind='components') {
     if (!state.auditReady || state.auditBusy || !options.onAudit) return false;
-    const requestId = `design-check-audit-${++sequence}`; beginContractAudit(requestId);
+    const before = options.beforeAudit ? () => options.beforeAudit(kind) : options.beforeOperation;
+    if (before && !await prepareOperation(before)) return false;
+    if (!state.auditReady || state.auditBusy) return false;
+    const requestId = `design-check-audit-${++sequence}`;
+    if(options.auditEngine==='v3'){
+      emit({auditBusy:true,auditStopping:false,auditCancelled:false,auditProgress:'Подключаем данные проверки…',auditError:'',auditNotice:''});
+      try{const accepted=await options.onAudit({requestId,kind,uiPreferences:clone(state.settings)});if(accepted===false)emit({auditBusy:false});}
+      catch(error){emit({auditBusy:false,auditError:error.message||'Не удалось начать проверку.'});}return true;
+    }
+    beginContractAudit(requestId);
     try {
       const result = await options.onAudit({ requestId, uiPreferences: clone(state.settings) });
       if (!destroyed && activeAudit === requestId && result) setAudit(result);
@@ -168,7 +222,8 @@ function createDesignCheckController(options = {}) {
     if (destroyed || !proxy || ![true, false, null].includes(proxy.available)) return;
     ++proxySequence;
     const busy = typeof proxy.busy === 'boolean' ? proxy.busy : null;
-    setChat({ proxy: { available: proxy.available, version: typeof proxy.version === 'string' ? proxy.version : null, busy },
+    setChat({ proxy: { available: proxy.available, version: typeof proxy.version === 'string' ? proxy.version : null, busy,
+      compatibility: proxy.compatibility || (proxy.available === false ? null : state.chat.proxy.compatibility) || null },
       notice: busy === false ? '' : state.chat.notice });
   }
   async function refreshProxyStatus() {
@@ -203,6 +258,11 @@ function createDesignCheckController(options = {}) {
     let dispatched = false;
     setChat({ busy: true, error: '', notice: '' });
     try {
+      if (options.beforeOperation) {
+        const ready = await prepareOperation();
+        if (destroyed || activeChat?.requestId !== requestId || activeChat.contextKey !== state.contextKey) return false;
+        if (!ready) { activeChat = null; setChat({ busy: false }); return false; }
+      }
       if (options.dialogue.status) {
         const proxy = await options.dialogue.status({ signal: abort.signal });
         if (destroyed || activeChat?.requestId !== requestId || activeChat.contextKey !== state.contextKey) return false;
@@ -248,7 +308,7 @@ function createDesignCheckController(options = {}) {
     emit({ contextKey: key, chat: Object.assign({}, state.chat, { busy: false, messages: [], error: '', notice: '', unreadCount: 0 }) });
   }
   return { getState: () => state, subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); },
-    getVisibleTabs, getTabItems, restorePreferences, updateSetting, selectTab, setView, setMode, setAudit, setTabData, setDocumentAudit, setDocumentPageAvailable, beginContractAudit, startDocumentAudit, setDocumentActions:value=>emit({documentActions:value}),setDocumentAction:value=>emit({documentAction:value}),actOnDocumentFinding:(findingId,targetId,actionId)=>options.onDocumentAction?.(findingId,targetId,actionId),hasDocumentAuditPort: () => Boolean(options.onDocumentAudit), focusDocumentFinding: (findingId, targetId) => options.onDocumentFocus?.(findingId, targetId), acceptAuditResult, acceptAuditError,
+    getVisibleTabs, getTabItems, setV3AuditState, restorePreferences, updateSetting, selectTab, setView, setMode, setAudit, setTabData, setDocumentAudit, setDocumentPageAvailable, beginContractAudit, startDocumentAudit, stopAudit,acceptAuditCancelled,recordAuditFailure, setDocumentActions:value=>emit({documentActions:value}),setDocumentAction:value=>emit({documentAction:value}),actOnDocumentFinding:(findingId,targetId,actionId)=>options.onDocumentAction?.(findingId,targetId,actionId),hasDocumentAuditPort: () => Boolean(options.onDocumentAudit), focusDocumentFinding: (findingId, targetId) => options.onDocumentFocus?.(findingId, targetId), acceptAuditResult, acceptAuditError,
     setAuditProgress: (requestId,message)=>{if(activeAudit===requestId)emit({auditProgress:message});}, setAuditStale: ()=>emit({auditStale:true}),
     setAuditReady: ready => emit({ auditReady: ready === true && Boolean(options.onAudit) }), startAudit,
     invalidateAudit, openChat, closeChat, setAgentSource, sendChat, cancelChat, setContext, refreshProxyStatus, setProxyStatus,

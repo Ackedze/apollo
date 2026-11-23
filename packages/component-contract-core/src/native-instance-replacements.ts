@@ -1,5 +1,5 @@
 import type { CompiledContract, ManualSource, PreviewSnapshot, TypedConstraint } from './types';
-import { configurationDeclaredTargetReferenceHash } from './declared-target-identity';
+import { configurationDeclaredTargetReferenceHash, portableSwapDeclaredTargetReferenceHash } from './declared-target-identity';
 import { declaredTargetMembershipKey } from './declared-target-membership';
 import { stableHash } from './stable';
 
@@ -93,7 +93,7 @@ export function materializeInstanceReplacements(snapshot: PreviewSnapshot, contr
     if (record(record(root.variantAvailability).targets)[d.targetRole]?.present===false) {Object.assign(f,{present:false,ownershipKnown:true});continue;}
     if (matches.length!==1) continue;
     const b=matches[0],source=b.nativeSource,expected=ref.nodeProperties[b.referencePath];
-    if (!source||b.nodeType!=='INSTANCE'||b.configurationReferenceHash!==configurationDeclaredTargetReferenceHash(ref)
+    if (!source||b.nodeType!=='INSTANCE'||(b.portableSwapReferenceHash ? !contract.runtimePolicy.portableSwapIdentityVersion || b.portableSwapReferenceHash!==portableSwapDeclaredTargetReferenceHash(ref,snapshot.source?.swapComponentKeys) : b.configurationReferenceHash!==configurationDeclaredTargetReferenceHash(ref))
       ||source.ownerComponentKey!==identity.componentKey||ref.nodes.filter(n=>n.path===b.referencePath&&n.type==='INSTANCE').length!==1
       ||expected?.sourceIdentity?.sourceNodeId!==source.sourceNodeId||expected.sourceIdentity.ownerComponentKey!==identity.componentKey
       ||expected.sourceIdentity.ownerMainComponentId!==identity.mainComponentId||!key(expected.identity?.componentSetKey)) continue;

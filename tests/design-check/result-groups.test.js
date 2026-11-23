@@ -12,6 +12,14 @@ test('unchecked groups remain unknown, with no invented total',()=>{
   const result=summary(state());
   assert.equal(result.total,null);assert.deepEqual(result.groups.map(group=>group.count),[null,null,null]);
 });
+test('fresh native findings survive a contract failure without showing old contract counters as current',()=>{
+ const value=state();value.auditError='SOURCE_INVALID';value.auditStale=true;
+ value.tabs.changes={status:'available',items:[{evaluationId:'old',classification:'violation'}],executionComplete:true};
+ check(value,'customStyles',[{findingId:'fresh-style',status:'custom-style'}]);
+ const result=summary(value);assert.equal(result.groups.find(g=>g.id==='styles').count,1);
+ assert.equal(result.groups.find(g=>g.id==='components').categories.find(c=>c.id==='changes').count,null);
+ assert.equal(result.incomplete,true);assert.ok(result.coverageDetails.some(c=>c.id==='contracts'));assert.notEqual(auditQuality(result),'clean');
+});
 test('repeated native presentation and repeated contract evaluation are counted once',()=>{
   const value=state(),entry={evaluationId:'same',classification:'violation'};
   value.tabs.changes={status:'available',items:[entry],executionComplete:true};
@@ -62,7 +70,7 @@ test('yellow-only findings keep neutral mood; any confirmed red finding takes pr
  check(value,'customStyles',[{findingId:'fill',status:'custom-style'}]);assert.equal(auditQuality(summary(value)),'violation');assert.equal(summary(value).total,5);
  value.documentAudit.result.checks.pop();value.tabs.changes.items.push({classification:'violation',evaluationId:'red'});assert.equal(auditQuality(summary(value)),'violation');
  value.tabs.changes.executionComplete=false;assert.equal(auditQuality(summary(value)),'violation');
- value.documentAudit.status='stale';assert.equal(auditQuality(summary(value)),'unchecked');
+ value.documentAudit.status='stale';assert.equal(auditQuality(summary(value)),'violation');
 });
 test('current theme is clean; theme mismatch is red and unavailable theme remains yellow',()=>{
  for(const [status,expected] of [['theme-current','clean'],['theme-mismatch','violation'],['unknown','warning']]){

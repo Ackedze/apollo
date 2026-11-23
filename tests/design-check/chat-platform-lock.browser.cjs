@@ -3,6 +3,8 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {pathToFileURL}=require('node:url');
 const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
+const requirements=require('../../src/compatibility-requirements.json');
+const compatibility={protocolVersion:requirements.protocolVersion,data:{state:'ready',version:'a'.repeat(64),schemaVersion:requirements.dataSchemaVersion,profileVersion:requirements.dataProfiles[0],deliveryProfile:requirements.deliveryProfile,generatedAt:requirements.minDataGeneratedAt}};
 (async()=>{
  const output=process.env.DESIGN_CHECK_QA_ROOT;if(!output)throw Error('Set DESIGN_CHECK_QA_ROOT');fs.mkdirSync(output,{recursive:true});
  const browser=await chromium.launch({headless:true});let release;
@@ -17,7 +19,7 @@ const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
   await page.route(/^https?:/,async route=>{
    const url=new URL(route.request().url());if(url.origin!=='http://localhost:3001')return route.abort();
    let body={};
-   if(url.pathname==='/health')body={ok:true,proxy:{version:'fixture'},agent:{busy:serverBusy},capabilities:{dialoguePlatformRouting:true}};
+   if(url.pathname==='/health')body={ok:true,proxy:{version:requirements.minProxyVersion},compatibility,agent:{busy:serverBusy},capabilities:{dialoguePlatformRouting:true}};
    if(url.pathname==='/analyze'){
     const payload=JSON.parse(route.request().postData());payloads.push(payload);
     if(payloads.length===1){serverBusy=true;started();await hold;serverBusy=false;}

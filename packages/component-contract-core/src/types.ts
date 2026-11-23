@@ -190,6 +190,8 @@ export type DeclaredTargetBindingV1 = {
   portableReferenceHash?: string;
   /** Opt-in configuration v1/v2: native structure and types, independent of root TEXT/BOOLEAN values. */
   configurationReferenceHash?: string;
+  portableSwapReferenceHash?: string;
+  absent?: true;
   referencePath: string;
   nodeType: string;
   nativeSource?: { sourceNodeId: string; ownerComponentKey: string; ownerMainComponentId: string };
@@ -447,10 +449,13 @@ export type ManualSource = {
   metadata: {
     declaredTargetIdentityVersion?: 1 | 2 | 3;
     declaredTargetConfigurationVersion?: 1 | 2;
+    portableSwapIdentityVersion?: 1;
     ruleOwnershipVersion?: 1;
     publicRepresentationBoundaryVersion?: 1;
+    nativeSlotTargetsVersion?: 2;
     dependencyCompletionVersion?: 1;
     instanceMainComponentAliasesVersion?: 1;
+    nativeTargetUsageFactsVersion?: 1;
     owners: {
       generated: 'athena-cli';
       manual: string;
@@ -578,6 +583,7 @@ export type PreviewSnapshot = {
     }>;
   };
   source?: {
+    swapComponentKeys?: Record<string, string>;
     /** Independent reference dimensions captured by Editor 0.2.30+. */
     geometryCaptureVersion?: 1;
     gradientPaintCaptureVersion?: 1;
@@ -587,6 +593,7 @@ export type PreviewSnapshot = {
     instanceSourceIdentityVersion?: 1;
     /** Capture/consumer opt-in; canonical keys may have distinct file-local main IDs. */
     instanceMainComponentAliasesVersion?: 1;
+    nativeTargetUsageFactsVersion?: 1;
     /** Opt-in occurrence addresses; unmarked historical captures retain name paths. */
     occurrenceAddressVersion?: 1;
     instanceSourceIdentityCapture?: {version:1;owners:Array<{mainComponentId:string;componentKey:string;status:string;sourceInstanceId?:string;reason?:string}>};
@@ -776,12 +783,14 @@ export type CompiledContract = {
     configuredNativePropertyConformanceVersion?: 1;
     declaredTargetIdentityVersion?: 1 | 2 | 3;
     declaredTargetConfigurationVersion?: 1 | 2;
+    portableSwapIdentityVersion?: 1;
     representationEvidenceVersion?: 1;
     crossRepresentationBindingsVersion?: 1 | 2;
     rootTargetAliasesVersion?: 1;
     dependencySubjectConditionsVersion?: 1;
     assetIdentityLockVersion?: 1;
     instanceMainComponentAliasesVersion?: 1;
+    nativeTargetUsageFactsVersion?: 1;
     memberCollectionsVersion?: 1;
     directChildDependenciesVersion?: 1;
     occurrenceAddressVersion?: 1;
@@ -801,7 +810,7 @@ export type CompiledContract = {
     nativeSourceContinuityVersion?: 1;
     dependencyCompletionVersion?: 1;
     slotTargetFactsVersion?: 1;
-    nativeSlotTargetsVersion?: 1;
+    nativeSlotTargetsVersion?: 1 | 2;
     transitionFactsVersion?: 1;
     ruleOwnershipVersion?: 1;
     validationIntentVersion?: 1 | 2;

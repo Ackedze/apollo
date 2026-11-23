@@ -8,10 +8,15 @@
     "figma"
   ],
   "documentAccess": "dynamic-page",
+  "enablePrivatePluginApi": true,
   "networkAccess": {
     "allowedDomains": [
-      "http://localhost:3001"
+      "http://localhost:3001",
+      "https://ackedze.github.io/design-system_ab/JSONS/apollo/indexes/athena-audit.json"
     ],
-    "reasoning": "Connect to Apollo Proxy for contracts, audit explanations and screen generation."
-  }
+    "reasoning": "Use Apollo Proxy for data and AI features. When Proxy is unreachable, download the Athena design-check index from the design-system repository."
+  },
+  "permissions": [
+    "currentuser"
+  ]
 }

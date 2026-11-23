@@ -74,3 +74,38 @@ test('visual edits during export and unclassifiable events remain conservative r
  }
  const h=fixture();h.bridge.start();h.root.exportAsync=async()=>{h.pageEvents.get('nodechange')({nodeChanges:[{type:'DELETE',id:'9:9',node:{id:'9:9',type:'FRAME',removed:true}}]});return Buffer.alloc(64);};await assert.rejects(h.bridge.capture('capture:inflight-removal'),/CAPTURE_STALE/);h.bridge.close();
 });
+
+async function nativeRequest(f, captureId, operation, nodeId = null) {
+ const requestId=operation+':'+f.posts.length;
+ f.bridge.accept({type:'progressbar-native-request',requestId,operation,captureId,nodeId});
+ await new Promise(resolve=>setTimeout(resolve,10));
+ const reply=f.posts.find(p=>p.requestId===requestId);assert.ok(reply);return reply;
+}
+test('completed read-only findings remain focusable after clearing or changing the selection',async()=>{
+ const f=fixture();f.bridge.start();const c=await f.bridge.capture('capture:completed');
+ assert.equal((await nativeRequest(f,c.captureId,'complete')).result,true);
+ f.api.currentPage.selection=[];await new Promise(resolve=>setTimeout(resolve,0));
+ assert.equal(f.posts.some(p=>p.type==='progressbar-invalidated'),false);
+ assert.equal((await nativeRequest(f,c.captureId,'focus','1:2')).result,true);
+ f.api.currentPage.selection=[{id:'9:9'}];await new Promise(resolve=>setTimeout(resolve,0));
+ assert.equal((await nativeRequest(f,c.captureId,'focus','1:2')).result,true);
+ assert.equal(f.exports(),1);f.bridge.close();
+});
+test('selection changes before completion still invalidate the pending capture even if selection returns',async()=>{
+ const f=fixture();f.bridge.start();const c=await f.bridge.capture('capture:pending');
+ f.api.currentPage.selection=[];await new Promise(resolve=>setTimeout(resolve,0));f.api.currentPage.selection=[f.root];await new Promise(resolve=>setTimeout(resolve,0));
+ assert.equal((await nativeRequest(f,c.captureId,'complete')).error,'PROGRESSBAR_CAPTURE_STALE');
+ assert.ok(f.posts.some(p=>p.type==='progressbar-invalidated'));f.bridge.close();
+});
+test('completion and saved navigation refuse changed facts, deleted targets, page changes and later visual edits',async()=>{
+ const a=fixture();a.bridge.start();const captured=await a.bridge.capture('capture:changed');a.text.characters='Changed';
+ assert.equal((await nativeRequest(a,captured.captureId,'complete')).error,'PROGRESSBAR_CAPTURE_STALE');a.bridge.close();
+ for(const change of ['text','visual','removed','page']){
+  const f=fixture();f.bridge.start();const c=await f.bridge.capture('capture:'+change);assert.equal((await nativeRequest(f,c.captureId,'complete')).result,true);
+  if(change==='text')f.text.characters='Changed without event';
+  if(change==='visual')f.pageEvents.get('nodechange')({nodeChanges:[{type:'PROPERTY_CHANGE',id:f.instance.id,node:f.instance,properties:['fills']}]});
+  if(change==='removed')f.instance.removed=true;
+  if(change==='page')f.api.currentPage={id:'0:2',selection:[]};
+  assert.equal((await nativeRequest(f,c.captureId,'focus','1:2')).error,change==='removed'?'PROGRESSBAR_CAPTURE_INCOMPLETE':'PROGRESSBAR_CAPTURE_STALE',change);assert.equal(f.focus.length,0);f.bridge.close();
+ }
+});

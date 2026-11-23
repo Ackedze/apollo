@@ -8,18 +8,27 @@ test('native failure preserves only the correlated bounded diagnostic for export
  const f=setup();f.port.start('run',f.state.settings);const d=diagnostic('run:native');f.port.accept({type:'document-audit-error',schemaVersion:SCHEMA,requestId:'run:native',message:'Failed native recheck',diagnostic:d});assert.deepEqual(f.state.documentAudit.diagnostic,d);assert.equal(f.state.documentAudit.status,'error');assert.equal(f.port.focus('finding','target'),false);
  f.port.start('next',f.state.settings);assert.equal(f.state.documentAudit.diagnostic,null);f.port.accept({type:'document-audit-error',schemaVersion:SCHEMA,requestId:'next:native',message:'Failed native recheck',diagnostic:Object.assign(diagnostic('next:native'),{snapshot:{characters:'PRIVATE'}})});assert.equal(f.state.documentAudit.diagnostic,null);f.port.invalidate('');
 });
+test('v1 and contextual v2 failures survive successful recovery without exposing raw exception text',()=>{
+ const {failureDiagnostic,failureValid}=require('../../src/document-audit/protocol'),{readError}=require('../../src/document-audit/reads'),hash=v=>require('node:crypto').createHash('sha256').update(JSON.stringify(v)).digest('hex');
+ const f=setup();f.port.start('run',f.state.settings);const legacy=diagnostic('run:native');
+ const detailed=failureDiagnostic(readError(Object.assign(Error('Permission denied PRIVATE'),{code:'LIBRARY_ACCESS_DENIED'}),{operation:'importComponentByKeyAsync',nodeId:'a',resourceId:'b'.repeat(40)}),'run:native','collect',hash,1);
+ assert.ok(failureValid(legacy)&&failureValid(detailed));
+ for(const d of [legacy,detailed])f.port.accept({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:'run:native',diagnostic:d});
+ f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'run:native',result:result('run:native')});assert.equal(f.state.documentAudit.status,'available');assert.deepEqual(f.state.documentAudit.failures,[legacy,detailed]);
+ assert.equal(f.state.documentAudit.failures[1].read.sourceReason,'access-denied');assert.equal(JSON.stringify(f.state.documentAudit.failures).includes('PRIVATE'),false);f.port.invalidate('');
+});
 test('document client rejects late and context-mismatched replies independently of contract state',()=>{const f=setup();f.port.start('old',f.state.settings);f.port.start('new',f.state.settings);f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'old:native',result:result('old:native')});assert.equal(f.state.documentAudit.status,'loading');const r=result('new:native');r.context.platform='iOS';f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'new:native',result:r});assert.equal(f.state.documentAudit.status,'error');f.port.invalidate('');});
 test('settings/context invalidation cancels only the current document request and discards its late data',()=>{const f=setup();f.port.start('run',f.state.settings);f.port.invalidate();assert.ok(f.messages.some(m=>m.type==='document-audit-cancel'&&m.requestId==='run:native'));f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'run:native',result:result('run:native')});assert.equal(f.state.documentAudit.status,'idle');assert.equal(f.state.documentAudit.result,null);});
 test('client rejects a forged result claiming complete whole-category coverage',()=>{const f=setup();f.port.start('run',f.state.settings);const r=result('run:native');r.checks[0].categoryComplete=true;f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'run:native',result:r});assert.equal(f.state.documentAudit.status,'error');f.port.invalidate('');});
 test('no focus request can be created for a target absent from accepted native evidence',()=>{const f=setup();f.port.start('run',f.state.settings);f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'run:native',result:result('run:native')});assert.equal(f.port.focus('invented','node-id'),false);assert.equal(f.messages.some(m=>m.type==='document-audit-focus'),false);f.port.invalidate('');});
-test('missing native reply times out and sends cancellation, without touching contract/generation state',async()=>{const f=setup();f.port.start('run',f.state.settings);await new Promise(r=>setTimeout(r,40));assert.equal(f.state.documentAudit.status,'cancelling');assert.ok(f.messages.some(m=>m.type==='document-audit-cancel'));f.port.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:'run:native'});assert.equal(f.state.documentAudit.status,'error');f.port.invalidate('');});
+test('slow native reply stays active until explicit Stop, then waits for its ACK',async()=>{const f=setup();f.port.start('run',f.state.settings);await new Promise(r=>setTimeout(r,40));assert.equal(f.state.documentAudit.status,'loading');assert.equal(f.messages.some(m=>m.type==='document-audit-cancel'),false);assert.equal(f.port.stop(),true);assert.equal(f.state.documentAudit.status,'cancelling');f.port.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:'run:native'});assert.equal(f.state.documentAudit.status,'idle');assert.equal(f.state.documentAudit.cancelled,true);f.port.invalidate('');});
 
 test('a cancelled read explains retained partial facts without claiming the whole audit failed',async()=>{
  const f=setup();f.port.start('run',f.state.settings);const partial=result('run:native');partial.checks[1].status='running';
  f.port.accept({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:'run:native',result:partial});
- await new Promise(r=>setTimeout(r,40));f.port.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:'run:native'});
+ await new Promise(r=>setTimeout(r,40));f.port.stop();f.port.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:'run:native'});
  assert.equal(f.state.documentAudit.result,partial);assert.equal(f.state.documentAudit.status,'stale');
- assert.match(f.state.documentAudit.error,/Доступные результаты сохранены/);assert.equal(f.port.focus('unknown','unknown'),false);f.port.invalidate('');
+ assert.equal(f.state.documentAudit.error,'');assert.equal(f.state.documentAudit.cancelled,true);assert.equal(f.port.focus('unknown','unknown'),false);f.port.invalidate('');
 });
 
 test('malformed foreign packets and cyclic native evidence cannot crash the UI client',()=>{const f=setup();assert.equal(f.port.accept({type:{}}),false);f.port.start('run',f.state.settings);const r=result('run:native');r.extra=r;assert.doesNotThrow(()=>f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'run:native',result:r}));assert.equal(f.state.documentAudit.status,'error');f.port.invalidate('');});
@@ -33,6 +42,14 @@ test('aggregate branch busy blocks a second launch until contract terminal reply
 });
 
 function acceptedSnapshot(){const f=setup();f.port.start('run',f.state.settings);const r=result('run:native');r.checks[0].findings=[{findingId:'finding',status:'local',name:'Local',message:'Local definition',componentKey:null,owner:null,occurrences:['a'],targets:[{id:'target',kind:'occurrence',nodeId:'focus-node',pageId:'page'}],evidence:{synthetic:true}}];f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'run:native',result:r});return Object.assign(f,{result:r});}
+test('post-result invalidation keeps its correlated diagnostic and the old findings',()=>{
+ const f=acceptedSnapshot(),d=diagnostic('run:native');f.port.accept({type:'document-audit-invalidated',schemaVersion:SCHEMA,runId:'run:native',reason:'NATIVE_FACTS_CHANGED',diagnostic:d});
+ assert.equal(f.state.documentAudit.status,'stale');assert.equal(f.state.documentAudit.result,f.result);assert.deepEqual(f.state.documentAudit.diagnostic,d);assert.equal(f.state.documentAudit.requestId,'run:native');assert.equal(f.port.focus('finding','target'),false);f.port.invalidate('');
+});
+for(const kind of ['foreign','extra','wrong-reason'])test('invalidation rejects '+kind+' diagnostic',()=>{
+ const f=acceptedSnapshot(),d=diagnostic(kind==='foreign'?'other:native':'run:native');if(kind==='extra')d.snapshot={characters:'PRIVATE'};
+ f.port.accept({type:'document-audit-invalidated',schemaVersion:SCHEMA,runId:'run:native',reason:kind==='wrong-reason'?'NATIVE_CONTEXT_CHANGED':'NATIVE_FACTS_CHANGED',diagnostic:d});assert.equal(f.state.documentAudit.status,'stale');assert.equal(f.state.documentAudit.result,f.result);assert.equal(f.state.documentAudit.diagnostic,null);f.port.invalidate('');
+});
 for(const cause of ['main-invalidation','page','settings','focus-error','focus-timeout'])test('visible snapshot survives '+cause+' and stale actions stay blocked',async()=>{
  const f=acceptedSnapshot();assert.equal(f.state.documentAudit.status,'available');
  if(cause==='main-invalidation')f.port.accept({type:'document-audit-invalidated',schemaVersion:SCHEMA,runId:'run:native'});
@@ -50,7 +67,7 @@ for(const order of ['selection-first','reply-first'])test('confirmed own focus k
  assert.equal(f.state.documentAudit.status,'available');assert.equal(f.state.documentAudit.result,f.result);f.port.invalidate('');
 });
 test('rerun loading, timeout and invalid reply keep the old snapshot; only a correlated valid run replaces it',async()=>{
- const f=acceptedSnapshot();f.port.start('new',f.state.settings);assert.equal(f.state.documentAudit.result,f.result);assert.equal(f.state.documentAudit.status,'loading');await new Promise(r=>setTimeout(r,40));assert.equal(f.state.documentAudit.status,'cancelling');f.port.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:'new:native'});assert.equal(f.state.documentAudit.result,f.result);assert.equal(f.state.documentAudit.status,'stale');
+ const f=acceptedSnapshot();f.port.start('new',f.state.settings);assert.equal(f.state.documentAudit.result,f.result);assert.equal(f.state.documentAudit.status,'loading');await new Promise(r=>setTimeout(r,40));assert.equal(f.state.documentAudit.status,'loading');f.port.stop();assert.equal(f.state.documentAudit.status,'cancelling');f.port.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:'new:native'});assert.equal(f.state.documentAudit.result,f.result);assert.equal(f.state.documentAudit.status,'stale');
  f.port.start('last',f.state.settings);const invalid=result('last:native');invalid.context.pageId='wrong';f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'last:native',result:invalid});assert.equal(f.state.documentAudit.result,f.result);
  f.port.start('good',f.state.settings);const good=result('good:native');f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'good:native',result:good});assert.equal(f.state.documentAudit.result,good);assert.equal(f.state.documentAudit.status,'available');f.port.invalidate('');
 });

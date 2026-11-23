@@ -33,7 +33,7 @@ function impact(observation,action,context){
  result.includeCurrent=()=>{const stack=result.roots.slice();while(stack.length){const n=stack.pop();if(!n||n.removed)continue;ids.add(n.id);if('children'in n)stack.push(...n.children);}};
  result.includeCurrent();return result;
 }
-function stableFinding(check,f){return JSON.stringify([check.id,f.owner?.id||null,f.evidence.sourceNodeId||null,['theme','font'].includes(check.id)?'page':f.owner?'owner':f.occurrences.slice().sort(),f.evidence.property||null,f.componentKey||null]);}
+function stableFinding(check,f){return JSON.stringify([check.id,f.owner?.id||null,f.evidence.sourceNodeId||null,['theme','font'].includes(check.id)?'page':f.owner?'owner':f.occurrences.slice().sort(),f.evidence.property||null,f.evidence.styleKey||null,f.componentKey||null]);}
 function touches(check,f,plan){return ['theme','font'].includes(check.id)||plan.ids.has(f.owner?.id)||plan.ids.has(f.evidence.sourceNodeId)||f.occurrences.some(id=>plan.ids.has(id))||f.targets.some(t=>plan.ids.has(t.nodeId));}
 function mergeObservation(old,fresh,plan){
  const stale=new Set(),checks=old.checks.map(previous=>{

@@ -87,10 +87,16 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await picker.click(); await page.keyboard.press('Tab'); assert.equal(await menu.count(), 0);
     assert.equal(await settings.evaluate(node => node === document.activeElement), true);
 
-    for (const name of ['Тексты', 'Генерация', 'Открыть чат с Apollo', 'Навыки', 'Проверка']) {
+    for (const name of ['Генерация', 'Открыть чат с Apollo', 'Тулзы', 'Проверка']) {
       await page.getByRole('navigation', { name: 'Разделы Apollo' }).getByRole('button', { name, exact: true }).click();
       assert.equal(await picker.isVisible(), true); assert.equal(await picker.innerText(), 'Android');
       await geometry(800);
+      if (name === 'Тулзы') {
+        await page.getByRole('button', { name: 'Проверка текстов', exact: true }).click();
+        const textTool = page.getByRole('dialog', { name: 'Проверка текстов', exact: true });
+        assert.equal(await textTool.getByRole('button', { name: 'Android', exact: true }).isVisible(), true);
+        await textTool.getByRole('button', { name: 'Закрыть проверку текстов', exact: true }).click();
+      }
     }
     for (const width of [440, 400]) {
       await page.setViewportSize({ width, height: 860 });

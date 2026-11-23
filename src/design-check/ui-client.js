@@ -35,8 +35,14 @@ function createUiClient(send, { timeoutMs = 10000 } = {}) {
   }, resize: compact => request('resize', { compact }),
   preferences: {
     async load() { const value = await request('agent-source-get', {}); return value === null ? null
-      : { schemaVersion: PREFERENCE_VERSION, settings: {}, agentSource: value.source }; },
-    save(value) { return request('agent-source-set', { schemaVersion: SOURCE_SCHEMA, source: value.agentSource }); },
+      : { schemaVersion: PREFERENCE_VERSION, settings: value.connectCatalogs === undefined ? {} : { connectCatalogs: value.connectCatalogs }, agentSource: value.source }; },
+    save(value) {
+      if (Object.hasOwn(value.settings || {}, 'connectCatalogs') && typeof value.settings.connectCatalogs !== 'boolean')
+        return Promise.reject(new TypeError('Настройка каталогов должна быть логическим значением.'));
+      const payload = { schemaVersion: SOURCE_SCHEMA, source: value.agentSource };
+      if (value.settings?.connectCatalogs === true) payload.connectCatalogs = true;
+      return request('agent-source-set', payload);
+    },
   } };
 }
 module.exports = { createUiClient };

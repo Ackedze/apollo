@@ -1,14 +1,10 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {SESSION_SCHEMA,BRIDGE_SCHEMA,STORAGE_KEY,validSession,createSessionBridge}=require("../src/generation/session/protocol");
 const {createSessionClient}=require("../src/generation/session/client");
-const {createPromptConversation}=require("../src/generation/prompt/conversation");
-function session(){const chat=createPromptConversation();chat.submit('Synthetic screen');chat.receive({spec:{id:'synthetic',unresolved:[]},executionAllowed:false,sessionId:'must-not-persist'});
- return {schemaVersion:SESSION_SCHEMA,conversation:chat.snapshot(),composer:'Pending refinement',platform:'desktop',viewport:{width:'1600',height:'900'},dirty:true};}
-test('snapshot restores the original prompt, last draft and pending composer without execution metadata',()=>{
- const value=session();assert(validSession(value));assert.doesNotMatch(JSON.stringify(value),/sessionId|executionAllowed|status|receipt|pins/);
- const messages=[],chat=createPromptConversation(m=>messages.push(m));chat.restore(value.conversation);value.conversation.draft.id='mutated';
- assert.equal(messages.length,2);assert.match(chat.submit('Continue'),/Synthetic screen/);assert.match(chat.submit('Again'),/"id":"synthetic"/);
- assert.doesNotMatch(chat.submit('Last'),/mutated/);
+function session(){return {schemaVersion:SESSION_SCHEMA,conversation:{messages:[{role:'user',text:'Synthetic screen'},{role:'assistant',text:'Historical draft',spec:{id:'synthetic',unresolved:[]}}],draft:{id:'synthetic',unresolved:[]}},composer:'Pending refinement',platform:'desktop',viewport:{width:'1600',height:'900'},dirty:true};}
+test('historical draft content remains readable without restoring execution authority',async()=>{
+ const value=session(),sent=[],client=createSessionClient(m=>sent.push(m));assert(validSession(value));assert.doesNotMatch(JSON.stringify(value),/sessionId|executionAllowed|status|receipt|pins/);
+ const loaded=client.load(),request=sent[0];client.accept({type:'generation-session-result',schemaVersion:BRIDGE_SCHEMA,requestId:request.requestId,operation:'load',result:value});assert.deepEqual(await loaded,value);assert.equal(sent.length,1);assert.equal(sent[0].operation,'load');
 });
 test('closed session schema rejects readiness, corrupt display, deep/oversized and cyclic payloads',()=>{
  for(const mutate of [s=>s.sessionId='fake',s=>s.conversation.messages[1].spec.unresolved=null,s=>s.conversation.messages[1].spec.capabilityGaps=[{}],

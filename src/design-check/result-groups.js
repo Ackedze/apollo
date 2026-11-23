@@ -4,10 +4,10 @@ const groups = [
   { id: 'patterns', title: 'Паттерны', tabs: [], description: 'Правила сочетания компонентов и построения экранов.' },
 ];
 const tabTitles = { changes: 'Кастомы', deprecated: 'Устаревшие', update: 'Пора обновить', detached: 'Детач', local: 'Локальные', customStyles: 'Кастомы', deprecatedStyles: 'Устаревшие', detachedStyles: 'Детач', localStyles: 'Локальные' };
-const checkIds = { local: 'local', current: 'freshness', update: 'freshness', themization: 'theme', detached: 'detached', customStyles: 'customStyles' };
+const checkIds = { local: 'local', current: 'freshness', update: 'freshness', themization: 'theme', detached: 'detached', customStyles: 'customStyles', deprecatedStyles: 'deprecatedStyles' };
 const final = new Set(['compliant', 'allowed', 'not-applicable', 'current', 'theme-current', 'font-current']);
 function coverageDetails(state, categories) {
-  const titles={local:'Локальные компоненты',freshness:'Версии компонентов',theme:'Темизация страницы',font:'Шрифт страницы',detached:'Происхождение слоёв',customStyles:'Стили и токены'};
+  const titles={local:'Локальные компоненты',freshness:'Версии компонентов',theme:'Темизация страницы',font:'Шрифт страницы',detached:'Происхождение слоёв',customStyles:'Стили и токены',deprecatedStyles:'Устаревшие стили'};
   const details=(state.documentAudit.result?.checks||[]).filter(check=>check.status==='incomplete').map(check=>{
     const gaps=(check.gaps||[]).filter(gap=>gap!=='v3-catalog-policy-not-connected');
     const reason=!gaps.length&&check.id==='customStyles'&&(check.gaps||[]).includes('v3-catalog-policy-not-connected')&&!check.findings.some(f=>f.status==='unknown')?'Дополнительные правила и исключения дизайн-системы пока не подключены. Связи со стилями и токенами проверены.'
@@ -15,6 +15,7 @@ function coverageDetails(state, categories) {
       :gaps.some(gap=>gap.includes('limit'))?'Проверена только часть выбранной области.'
       :check.id==='font'?'Не удалось подтвердить режим шрифта страницы.'
       :check.id==='theme'?'Не удалось подтвердить режим темы страницы.'
+      :check.id==='deprecatedStyles'?'Индекс устаревания или связь части стилей с библиотекой недоступны.'
       :check.id==='customStyles'?'Связи части слоёв со стилями или токенами недоступны.'
       :'Источники или свойства части слоёв недоступны.';
     return{id:check.id,title:titles[check.id]||check.id,reason};
@@ -30,6 +31,7 @@ function baseCheck(result) {
     findings: checks.flatMap(check => check.findings), gaps: Array.from(new Set(checks.flatMap(check => check.gaps || []))), checked: checks.reduce((sum, check) => sum + (check.checked || 0), 0) };
 }
 function summarizeTab(state, tab, items) {
+  if(tab.id==='changes'&&state.auditError&&state.documentAudit.status==='available')return{id:tab.id,title:tabTitles[tab.id],connected:false,count:null,entries:[],issues:[],incomplete:true};
   const check = tab.id === 'themization' ? baseCheck(state.documentAudit.result) : state.documentAudit.result?.checks.find(value => value.id === checkIds[tab.id]);
   const entries = check ? check.findings.filter(f => tab.id === 'current' ? f.status === 'current' : tab.id === 'update' ? ['update', 'unknown'].includes(f.status) : true) : items;
   const connected = Boolean(check) || state.tabs[tab.id]?.status !== 'not-connected' && Boolean(state.tabs[tab.id]);
@@ -57,16 +59,16 @@ function buildResultGroups(state, tabs, getItems) {
   const available = categories.some(category => category.connected);
   return { groups: summaries, theme, total: available ? collectUnique(categories) : null,
     stale: state.auditStale || state.documentAudit.status === 'stale',
-    incomplete: categories.some(category => category.connected && category.incomplete),coverageDetails:coverageDetails(state,categories) };
+    incomplete: categories.some(category => category.incomplete && (category.connected || category.id==='changes')),coverageDetails:coverageDetails(state,categories) };
 }
 /** Presentation only: the mascot uses the same red/yellow meanings as finding cards. */
 /** @returns {'unchecked' | 'clean' | 'warning' | 'violation'} */
 function auditQuality(summary, busy = false) {
-  if (busy || summary.total === null || summary.stale) return 'unchecked';
+  if (busy || summary.total === null) return 'unchecked';
   const categories = summary.groups.flatMap(group => group.categories).concat(summary.theme || []);
   const red = categories.some(category => category.issues.some(entry => entry.classification
     ? entry.classification === 'violation' : !['unknown','update','local','detached'].includes(entry.status)));
   if (red) return 'violation';
-  return summary.total > 0 || summary.incomplete ? 'warning' : 'clean';
+  return summary.total > 0 || summary.incomplete ? 'warning' : summary.stale ? 'unchecked' : 'clean';
 }
 module.exports = { buildResultGroups, auditQuality, baseCheck };

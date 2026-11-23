@@ -79,7 +79,7 @@ export function buildEditorValidationReport(result: Record<string, unknown>, com
     if (binding && binding.resolution !== 'resolved') add(rule.id, `Цель требует сопоставления: ${targetResolutionReason(binding.reason)}. Ручная привязка не изменена.`);
     if (rule.execution?.route === 'delegated') add(rule.id, `Внешние правила не исполнялись в этой проверке: ${(rule.execution.externalRuleIds || []).join(', ')}.`);
     if (rule.execution?.route === 'context-only') add(rule.id, 'Правило пока не подключено к автоматической проверке (context-only).');
-    if (checkedSnapshot && compiled.contract.runtimePolicy.nativeSlotTargetsVersion === 1
+    if (checkedSnapshot && [1,2].includes(compiled.contract.runtimePolicy.nativeSlotTargetsVersion || 0)
       && ['allowed', 'constrained'].includes(rule.permission)) {
       for (const control of rule.controlPaths.filter(path => path.kind === 'slot-api' && path.contentOwnership === 'external')) {
         const ownerTarget = control.ownerTargetId ? manual.targets.find(entry => entry.id === control.ownerTargetId) : undefined;

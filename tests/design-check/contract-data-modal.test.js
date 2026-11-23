@@ -113,3 +113,12 @@ test('header platform follows restored preferences and remains available outside
   h.update({pickerLabel:'MobileWeb',actionLoading:true});await tick();assert.equal(h.button('MobileWeb').disabled,true);
  });
 });
+test('V3 data is separate from generation and a changed package explicitly requires reopening Apollo',async()=>{
+ const dom=new JSDOM('<div id="root"></div>',{runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document;let close;
+ w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
+ const current=Object.assign(data(),{auditDataLoadedId:'c'.repeat(64),auditData:{schemaVersion:'apollo.v3-audit-data.v1',dataId:'b'.repeat(64),files:[{id:'a'.repeat(64),source:{repo:'synthetic',path:'JSONS/core/Example.catalog.json'},roles:['components-catalog'],channels:['Desktop'],sha256:'d'.repeat(64),bytes:100}]}});
+ try{w.eval(bundle+'\nwindow.ModalTest=ModalTest;');close=w.ModalTest.mount(d.querySelector('#root'),()=>Promise.resolve(current));d.querySelector('[aria-label="Открыть настройки Apollo"]').click();await tick();Array.from(d.querySelectorAll('button')).find(button=>button.textContent==='Посмотреть данные').click();await tick();
+  const dialog=d.querySelector('dialog');assert.match(dialog.textContent,/В Proxy новый набор данных.*заново открой Apollo/s);assert.match(dialog.textContent,/Каталог компонентов/);assert.match(dialog.textContent,/JSONS\/core\/Example.catalog.json/);assert.equal(dialog.querySelectorAll('table').length,2);
+  const tables=dialog.querySelectorAll('table');assert.equal(tables[0].querySelectorAll('thead th').length,3);assert.equal(tables[1].querySelectorAll('thead th').length,4);assert.equal(Array.from(tables[1].querySelectorAll('thead th')).some(th=>th.textContent==='Проверка'),false);assert.match(tables[1].textContent,/LongComponentNameForCurrentData/);
+ }finally{close?.();w.close();}
+});

@@ -3,6 +3,8 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {pathToFileURL}=require('node:url');
 const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
+const requirements=require('../../src/compatibility-requirements.json');
+const compatibility={protocolVersion:requirements.protocolVersion,data:{state:'ready',version:'a'.repeat(64),schemaVersion:requirements.dataSchemaVersion,profileVersion:requirements.dataProfiles[0],deliveryProfile:requirements.deliveryProfile,generatedAt:requirements.minDataGeneratedAt}};
 (async()=>{
  const output=process.env.DESIGN_CHECK_QA_ROOT;if(!output)throw Error('Set DESIGN_CHECK_QA_ROOT');fs.mkdirSync(output,{recursive:true});
  const browser=await chromium.launch({headless:true});
@@ -16,7 +18,7 @@ const {createUiMainBridge}=require('../../src/design-check/ui-protocol');
    const url=new URL(route.request().url());if(url.origin!=='http://localhost:3001')return route.abort();
    let status=200,body={};
    if(url.pathname==='/health'&&mode==='cancel-preflight'){healthStarted();await holdHealth;}
-   if(url.pathname==='/health')body={ok:true,proxy:{version:'fixture'},agent:{busy:mode==='preflight'||mode==='blocked'},capabilities:{dialoguePlatformRouting:true}};
+   if(url.pathname==='/health')body={ok:true,proxy:{version:requirements.minProxyVersion},compatibility,agent:{busy:mode==='preflight'||mode==='blocked'},capabilities:{dialoguePlatformRouting:true}};
    if(url.pathname==='/analyze'){
     payloads.push(JSON.parse(route.request().postData()));
     if(mode==='race'){mode='blocked';status=429;body={success:false,code:'APOLLO_AGENT_BUSY',error:'AI-агент уже обрабатывает другой запрос Apollo. Токены: всего 0.'};}

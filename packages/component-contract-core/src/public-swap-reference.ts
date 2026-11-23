@@ -6,6 +6,14 @@ export type PublicSwapSlot = { referencePath: string; bindingPath: string; canon
 const parent = (path: string) => path.split(' / ').slice(0, -1).join(' / ');
 const inside = (path: string, boundary: string) => path === boundary || path.startsWith(boundary + ' / ');
 
+function allowedSwapPolicies(target: SemanticTarget, representationId: string, shape: PublicSwapShape) {
+  return shape.policies.filter(p => p.targetId === target.id && p.targetScope === 'self'
+    && p.capability === 'component.swap' && p.permission === 'allowed' && p.status !== 'deprecated'
+    && p.applicability.scopeStatus === 'confirmed' && p.applicability.variants === 'all' && p.applicability.modes === 'all'
+    && (!p.applicability.platforms.length || shape.representations.some(r => r.id === representationId && p.applicability.platforms.includes(r.platform)))
+    && !p.targetApplicability && !p.propertyApplicability);
+}
+
 /** Permission narrows the projection; an independent typed port and native source prove its boundary. */
 export function publicSwapSlots(reference: Reference, shape: PublicSwapShape): PublicSwapSlot[] {
   const root = reference.nodeProperties[''], slots: PublicSwapSlot[] = [];
@@ -16,11 +24,7 @@ export function publicSwapSlots(reference: Reference, shape: PublicSwapShape): P
     if (bindings.length !== 1 || bindings[0].nodeType !== 'INSTANCE' || !bindings[0].nativeSource) continue;
     const binding = bindings[0], source = binding.nativeSource!;
     if (source.ownerComponentKey !== root.identity.componentKey) continue;
-    const policies = shape.policies.filter(p => p.targetId === target.id && p.targetScope === 'self'
-      && p.capability === 'component.swap' && p.permission === 'allowed' && p.status !== 'deprecated'
-      && p.applicability.scopeStatus === 'confirmed' && p.applicability.variants === 'all' && p.applicability.modes === 'all'
-      && (!p.applicability.platforms.length || shape.representations.some(r => r.id === binding.representationId && p.applicability.platforms.includes(r.platform)))
-      && !p.targetApplicability && !p.propertyApplicability);
+    const policies = allowedSwapPolicies(target, binding.representationId, shape);
     const candidates = reference.nodes.filter(n => {
       const value = reference.nodeProperties[n.path], native = value?.sourceIdentity;
       return n.type === 'INSTANCE' && native?.version === 1 && native.sourceNodeId === source.sourceNodeId
@@ -74,6 +78,33 @@ export function projectPublicSwapReference(reference: Reference, shape: PublicSw
     };
     delete projected.properties[slot.property];
     delete projected.nodeProperties[''].properties[slot.property];
+  }
+  return projected;
+}
+
+/** Only proven external ports with no consumer in this variant may disappear from its identity pin. */
+export function projectInactivePublicSwapReference(reference: Reference, shape: PublicSwapShape): Reference {
+  const projected = projectPublicSwapReference(reference, shape), slots = publicSwapSlots(reference, shape);
+  const root = reference.nodeProperties[''], result = projected.nodeProperties[''];
+  for (const target of shape.targets) {
+    const bindings = target.identityBindingsV1?.filter(b => b.componentKey === reference.componentKey && b.componentSetKey === reference.componentSetKey) || [];
+    if (bindings.length !== 1 || !slots.some(s => s.bindingPath === bindings[0].referencePath)) continue;
+    const ports = allowedSwapPolicies(target, bindings[0].representationId, shape).flatMap(p => p.controlPaths)
+      .filter(c => c.kind === 'slot-api' && c.target === target.id && c.contentOwnership === 'external' && c.exclusive === true && c.ownerTargetId === undefined)
+      .map(c => c.property!);
+    for (const property of new Set(ports)) {
+      if (slots.some(s => s.property === property) || reference.propertyReferences.includes(property)
+        || Object.values(reference.nodeProperties).some(n => n.propertyReferences.includes(property)
+          || Object.values(n.propertyReferenceBindings || {}).includes(property))) continue;
+      if (reference.propertyTypes[property] !== 'INSTANCE_SWAP' || root.propertyTypes[property] !== 'INSTANCE_SWAP'
+        || typeof reference.properties[property] !== 'string' || root.properties[property] !== reference.properties[property]
+        || reference.definedProperties?.filter(p => p === property).length !== 1
+        || root.definedProperties?.filter(p => p === property).length !== 1) continue;
+      delete projected.properties[property]; delete result.properties[property];
+      delete projected.propertyTypes[property]; delete result.propertyTypes[property];
+      projected.definedProperties = projected.definedProperties!.filter(p => p !== property);
+      result.definedProperties = result.definedProperties!.filter(p => p !== property);
+    }
   }
   return projected;
 }

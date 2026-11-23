@@ -50,9 +50,11 @@ async function run() {
     await page.evaluate(() => designCheckController.updateSetting('hideCustomizations', true)); assert.equal(await page.getByRole('button', { name: 'Кастомизации Не проверено', exact: true }).count(), 0); checks++;
     await page.getByRole('button', { name: 'Паттерны', exact: true }).click();
     assert.match(await page.getByRole('region', { name: 'Паттерны', exact: true }).innerText(), /Draft/); checks++;
-    await page.getByRole('button', { name: 'Тексты', exact: true }).click();
-    assert.match(await page.getByRole('region', { name: 'Тексты', exact: true }).innerText(), /не подключена/); checks++;
-    await page.getByRole('button', { name: 'Компоненты', exact: true }).click();
+    await page.getByRole('button', { name: 'Тулзы', exact: true }).click();
+    await page.getByRole('button', { name: 'Проверка текстов', exact: true }).click();
+    assert.match(await page.getByRole('dialog', { name: 'Проверка текстов', exact: true }).innerText(), /не подключена/); checks++;
+    await page.keyboard.press('Escape');
+    await page.getByRole('button', { name: 'Проверка', exact: true }).click();
     await page.getByRole('button', { name: 'Открыть чат с Apollo' }).click();
     assert.equal(await page.getByRole('textbox', { name: 'Вопрос Apollo' }).isDisabled(), true); checks++;
     assert.equal(await page.getByRole('region', { name: 'Чат с Apollo', exact: true }).count(), 1); checks++;

@@ -4,7 +4,7 @@ export type NativeDiagnosticObserver = {
  cleanup:'confirmed'|'unknown';
 };
 /** Event subscription only. Never loads, enumerates or modifies any page. */
-export function createCurrentPageDiagnosticObserver(api:Pick<PluginAPI,'currentPage'|'on'|'off'>,invalidate:()=>void){
+export function createCurrentPageDiagnosticObserver(api:Pick<PluginAPI,'currentPage'|'on'|'off'>,invalidate:(event?:NodeChangeEvent)=>void){
  let page:PageNode|null=null,callback:((event:NodeChangeEvent)=>void)|null=null;
  let running=false,pageListener=false,closeListener=false,cleanup=true;
  function detach(){
@@ -16,7 +16,7 @@ export function createCurrentPageDiagnosticObserver(api:Pick<PluginAPI,'currentP
   try{
    const current=api.currentPage;
    if(current.removed)return;
-   const listener=()=>{if(running&&page===current&&callback===listener&&api.currentPage===current)invalidate();};
+   const listener=(event:NodeChangeEvent)=>{if(running&&page===current&&callback===listener&&api.currentPage===current)invalidate(event);};
    page=current;callback=listener;
    try{current.on('nodechange',listener);}catch{callback=null;}
   }catch{page=null;callback=null;}

@@ -16,7 +16,7 @@ export function materializeRuleScopeFacts(snapshot: PreviewSnapshot, contract: C
   const childPaths: string[] = [];
   let ownershipUnknown = !paths;
   if (contract.customizationPolicy.some(rule => rule.boundaryPolicy === 'component-owned@1')) {
-    if (contract.runtimePolicy.nativeSlotTargetsVersion === 1) {
+    if ([1,2].includes(contract.runtimePolicy.nativeSlotTargetsVersion || 0)) {
       const nativeTargets = new Set(contract.customizationPolicy.filter(rule => rule.status !== 'deprecated'
         && ['allowed', 'constrained'].includes(rule.permission)).flatMap(rule => rule.controlPaths
         .filter(control => control.kind === 'slot-api' && control.contentOwnership === 'external').map(control => control.target)));
@@ -26,7 +26,14 @@ export function materializeRuleScopeFacts(snapshot: PreviewSnapshot, contract: C
         if (record(record(root?.variantAvailability).targets)[target?.semanticRole || '']?.present === false && nodes.length === 0) continue;
         // BOOLEAN/INSTANCE slots retain their existing behavior. This addition
         // handles only proven native SLOT descendants, never the slot boundary.
-        if (nodes.length === 1 && nodes[0].type === 'INSTANCE') continue;
+        if (nodes.length === 1 && nodes[0].type === 'INSTANCE') {
+          const boundary = record(nodes[0].slotBoundaryV1);
+          if (boundary.contentOwnership === 'external' && boundary.evidence === 'native-instance-swap-reference') {
+            const path = paths?.get(String(nodes[0].id));
+            if (path) childPaths.push(path); else ownershipUnknown = true;
+          }
+          continue;
+        }
         if (nodes.length !== 1 || nodes[0].type !== 'SLOT'
           || record(nodes[0].slotBoundaryV1).contentOwnership !== 'external') { ownershipUnknown = true; continue; }
         const path = paths?.get(String(nodes[0].id));
@@ -46,6 +53,9 @@ export function materializeRuleScopeFacts(snapshot: PreviewSnapshot, contract: C
     for (const dependency of contract.componentDependencies || []) {
       if (dependency.issue || dependencyPinIssue(dependency, dependency.contract)) { ownershipUnknown = true; continue; }
       for (const binding of dependency.bindings) {
+        const raw = (snapshot as any).rawCatalogueReference?.base?.source?.rawCatalogue;
+        if (raw?.manualSourceHash === contract.package.manualSourceHash
+          && (snapshot as any).rawCatalogueInactiveDependencies?.includes(dependency.componentId + ':' + binding.id)) continue;
         const resolved = resolveFixedNestedBinding(snapshot, dependency, binding, false, contract);
         if (resolved.status === 'inactive') continue;
         if (resolved.status !== 'active' || !resolved.nodeId || !resolved.identityValid

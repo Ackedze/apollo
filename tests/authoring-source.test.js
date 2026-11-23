@@ -32,6 +32,14 @@ test('compiled-only input and a bare manual without facts are rejected', () => {
   assert.throws(() => runtime.loadAuthoringSource(require("./fixtures").contract()), { code: 'APOLLO_V4_SOURCE_INVALID' });
   assert.throws(() => runtime.loadAuthoringSource(fixture.source().manual), /факты/);
 });
+test('a projection refusal identifies the component and hashes without exposing source contents',()=>{
+ const source=fixture.source();source.projectionStamp={sourceExportVersion:'component-contract-editor@0.2.108',compiledHash:'0'.repeat(64)};
+ assert.throws(()=>runtime.loadAuthoringSource(source),error=>{
+  assert.equal(error.code,'APOLLO_V4_SOURCE_INVALID');assert.equal(error.sourceProjection.componentId,source.manual.component.componentId);
+  assert.equal(error.sourceProjection.expectedHash,'0'.repeat(64));assert.match(error.sourceProjection.actualHash,/^[a-f0-9]{64}$/);
+  assert.deepEqual(Object.keys(error.sourceProjection).sort(),['actualHash','componentId','expectedHash','revision','sourceExportVersion']);return true;
+ });
+});
 
 test('Editor compact anatomy can be reused but a stale or altered projection cannot supply norms', () => {
   const s = fixture.source(), c = runtime.loadAuthoringSource(s).contract;
@@ -88,6 +96,31 @@ test('plugin source loader reproduces stamped word limits from the source compil
     assert.equal(runtime.contractHash(loaded.contract), source.projectionStamp.compiledHash);
     assert.equal(JSON.stringify(source), before);
     source.projectionStamp.compiledHash = '0'.repeat(64);
+    assert.throws(() => context.__loadSource(source), /не воспроизводят/);
+  } finally { f.emit('close'); }
+});
+
+test('stamped capability facts load unchanged when the plugin has code-unit localeCompare', () => {
+  const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
+  const source = fixture.source();
+  source.manual.rules[0].constraints = [
+    { type: 'propertyDomain', fact: 'appearance.effects', values: [[]] },
+    { type: 'propertyDomain', fact: 'appearance.effectStyleId', values: ['style-key'] },
+  ];
+  const compiled = runtime.loadAuthoringSource(source).contract;
+  compiled.package.sourceExportVersion = 'component-contract-editor@0.2.108';
+  source.projectionStamp = { sourceExportVersion: compiled.package.sourceExportVersion, compiledHash: runtime.contractHash(compiled) };
+  const code = fs.readFileSync(path.join(__dirname, '../dist/code.js'), 'utf8'), end = code.lastIndexOf('\n})();');
+  assert(end > 0);
+  const f = require('./document-audit.test.js').fixture(), context = vm.createContext({ figma: f.api, __html__: '', TextEncoder, setTimeout, clearTimeout });
+  try {
+    vm.runInContext('String.prototype.localeCompare = function(other) { return this < other ? -1 : this > other ? 1 : 0; };', context);
+    vm.runInContext(code.slice(0, end) + '\nglobalThis.__loadSource = runtime.loadAuthoringSource;' + code.slice(end), context);
+    const before = JSON.stringify(source), loaded = context.__loadSource(source);
+    assert.equal(runtime.contractHash(loaded.contract), source.projectionStamp.compiledHash);
+    assert.deepEqual(JSON.parse(JSON.stringify(loaded.contract.capabilities.facts)), compiled.capabilities.facts);
+    assert.equal(JSON.stringify(source), before);
+    source.manual.rules[0].constraints[1].values = ['changed-style-key'];
     assert.throws(() => context.__loadSource(source), /не воспроизводят/);
   } finally { f.emit('close'); }
 });

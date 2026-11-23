@@ -1,5 +1,5 @@
 'use strict';
-const p=require('./protocol');
+const p=require('./protocol'),{createFiling}=require('./filing');
 const histogram=values=>{const counts={};for(const value of values)if(p.id(value))counts[value]=(counts[value]||0)+1;return counts;};
 function metrics(origin,result){
  if(origin==='contract-area'&&result.statisticsMetrics)return result.statisticsMetrics;
@@ -23,11 +23,12 @@ function metrics(origin,result){
  }
  return{classifications,coverage:{complete,unknown,byStatus},components,rules};
 }
-function createReport({reportId,runId,sourceReportId=null,origin,operation='check',status='completed',startedAt,durationMs,versions={},platform=null,result=null,excludeFromAnalytics=false}){
+function createReport({reportId,runId,sourceReportId=null,origin,operation='check',status='completed',startedAt,durationMs,versions={},platform=null,result=null,excludeFromAnalytics=false,userName=null,finishedAt=null}){
  const observed=result?metrics(origin,result):null;
  const report={schemaVersion:2,reportKind:'apollo-audit-metrics',reportId,runId,sourceReportId,origin,operation,status:status==='completed'&&observed?.coverage.complete===false?'partial':status,startedAt,durationMs,
   versions:{plugin:versions.plugin||null,build:versions.build||null,runtime:versions.runtime||null,data:origin==='contract-area'?result?.release?.id||null:versions.data||null,knowledge:result?.knowledge?.contentVersion||versions.knowledge||null},
   scope:{platform,rootCount:result?.selection?.roots?.length??(result?.context?.selectionSignature?result.context.selectionSignature.split('|').length:null),scannedNodes:result?.selection?.scannedNodes??null},metrics:observed,excludeFromAnalytics};
+ if(userName!==null)Object.assign(report,createFiling(userName,origin,finishedAt||new Date(startedAt)));
  if(!p.valid(report))throw Error('AUDIT_STATISTICS_REPORT_INVALID');return report;
 }
 module.exports={createReport,metrics};

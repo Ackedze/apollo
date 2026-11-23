@@ -46,8 +46,14 @@ export function validateManualSource(manual: ManualSource): ValidationIssue[] {
   if (manual.schemaVersion !== 'apollo.component-contract.manual.v2-experimental') {
     error('SCHEMA_VERSION', '/schemaVersion', 'Unsupported manual source schema version.');
   }
+  if (manual.metadata.nativeSlotTargetsVersion !== undefined && manual.metadata.nativeSlotTargetsVersion !== 2) error('NATIVE_SLOT_TARGETS_VERSION', '/metadata/nativeSlotTargetsVersion', 'Unsupported SLOT absence proof version.');
   if (manual.metadata.instanceMainComponentAliasesVersion !== undefined && manual.metadata.instanceMainComponentAliasesVersion !== 1) {
     error('INSTANCE_MAIN_COMPONENT_ALIASES_VERSION', '/metadata/instanceMainComponentAliasesVersion', 'Unsupported native main identity aliases.');
+  }
+  if (manual.metadata.nativeTargetUsageFactsVersion !== undefined && (manual.metadata.nativeTargetUsageFactsVersion !== 1
+    || ![1,2,3].includes(manual.metadata.declaredTargetIdentityVersion || 0)
+    || !manual.semanticApi.some(p => p.bindings.some(b => b.targetId && manual.targets.some(t => t.id === b.targetId && t.identityBindingsV1?.length))))) {
+    error('NATIVE_TARGET_USAGE_VERSION', '/metadata/nativeTargetUsageFactsVersion', 'Native usage facts require version1 and explicit independent target bindings.');
   }
   if (manual.metadata.ruleOwnershipVersion !== undefined && manual.metadata.ruleOwnershipVersion !== 1) {
     error('RULE_OWNERSHIP_VERSION', '/metadata/ruleOwnershipVersion', 'Unsupported rule ownership model.');
@@ -191,7 +197,7 @@ export function validateManualSource(manual: ManualSource): ValidationIssue[] {
     }
   });
 
-  for (const message of declaredTargetIdentityErrors({version:manual.metadata.declaredTargetIdentityVersion,configurationVersion:manual.metadata.declaredTargetConfigurationVersion,targets:manual.targets,representations:manual.representations})) {
+  for (const message of declaredTargetIdentityErrors({version:manual.metadata.declaredTargetIdentityVersion,configurationVersion:manual.metadata.declaredTargetConfigurationVersion,portableSwapVersion:manual.metadata.portableSwapIdentityVersion,targets:manual.targets,representations:manual.representations})) {
     error('DECLARED_TARGET_IDENTITY', '/targets', message);
   }
   for (const message of nativeSourceContinuityErrors(manual.targets)) error('TARGET_NATIVE_SOURCE_CONTINUITY', '/targets', message);

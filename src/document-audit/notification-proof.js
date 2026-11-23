@@ -1,3 +1,4 @@
+const {cooperativeRead}=require('./reads');
 // Notifications indicate when to verify an observation, not whether it changed.
 // These synchronous fields cover the native scene projections read by the consumer.
 // Async identities/resources still require guarded native/contract rechecks below.
@@ -10,11 +11,11 @@ function plain(value,seen=new Set()){
  if(seen.has(value))throw Error('NATIVE_OBSERVATION_UNAVAILABLE');seen.add(value);
  const result=Array.isArray(value)?value.map(v=>plain(v,seen)):Object.fromEntries(Object.keys(value).sort().map(k=>[k,plain(value[k],seen)]));seen.delete(value);return result;
 }
-function nodeEvidence(n){
+function nodeEvidence(n,children){
  const value={id:n.id,type:n.type,name:n.name,removed:!!n.removed,parent:n.parent?.id||null};
  if(n.removed)return value;
  if(n.type==='PAGE'||n.type==='DOCUMENT'){if(n.type==='PAGE')value.explicitVariableModes=plain(n.explicitVariableModes);return value;}
- if('children'in n)value.children=Array.from(n.children).map(c=>c.id);
+ if('children'in n)value.children=Array.from(children??n.children).map(c=>c.id);
  for(const field of sceneFields)if(field in n)value[field]=plain(n[field]);
  if(n.type==='TEXT'&&typeof n.getStyledTextSegments==='function')value.textSegments=plain(n.getStyledTextSegments(['textStyleId','fontName','fontSize','lineHeight','letterSpacing','textDecoration','textCase','fills']));
  return value;
@@ -34,16 +35,17 @@ function createNotificationProof({nodes,hash,guard=()=>{},verify=async()=>{},onE
   if(closed)return Promise.resolve(false);
   try{assertStable();}catch(e){invalidate(e);return Promise.resolve(false);}
   serial++;
-  if(!pending){const work=async()=>{for(let attempt=0;attempt<32;attempt++){const version=serial;assertStable();let timer;
-   try{await Promise.race([verify(assertCurrent),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('NATIVE_TIMEOUT')),timeoutMs);})]);assertStable();}finally{clearTimeout(timer);}
+  if(!pending){const work=async()=>{while(true){const version=serial;assertStable();
+   const verification=verify(assertCurrent);await cooperativeRead(()=>verification,timeoutMs,assertStable);assertStable();
    if(version===serial){verified=version;return true;}
-  }throw Error('NATIVE_OBSERVER_SUPERSEDED');};
+   await new Promise(resolve=>setTimeout(resolve,0));
+  }};
    pending=work().catch(e=>{invalidate(e);return false;}).finally(()=>{pending=null;});
   }
   return pending;
  }
  async function settle(){if(pending)await pending;assertStable();}
- async function finish(publish){for(let attempt=0;attempt<32;attempt++){await settle();if(!pending&&verified===serial){assertStable();return publish();}}throw Error('NATIVE_OBSERVER_SUPERSEDED');}
+ async function finish(publish){while(true){await settle();if(!pending&&verified===serial){assertStable();return publish();}await new Promise(resolve=>setTimeout(resolve,0));}}
  return{notify,settle,finish,assertCurrent,assertStable,hasPending:()=>Boolean(pending),close:()=>{closed=true;}};
 }
-module.exports={createNotificationProof,observationNodes};
+module.exports={createNotificationProof,observationNodes,nodeEvidence};

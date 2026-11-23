@@ -59,10 +59,6 @@ jobs:
 
             const matchesAny = (patterns) => paths.some((path) => patterns.some((pattern) => pattern.test(path)));
             const risk = matchesAny(r3Patterns) ? 'R3' : matchesAny(r2Patterns) ? 'R2' : paths.some((path) => path.startsWith('src/')) ? 'R1' : 'R0';
-            // Apollo currently has one trusted maintainer. Keep the gate enforceable
-            // until a second maintainer can provide an independent trusted approval.
-            const requiredApprovals = 1;
-
             const reviews = await github.paginate(github.rest.pulls.listReviews, {
               owner,
               repo,
@@ -70,36 +66,21 @@ jobs:
               per_page: 100,
             });
             const decisiveStates = new Set(['APPROVED', 'CHANGES_REQUESTED', 'DISMISSED']);
-            const latestByReviewer = new Map();
-            for (const review of reviews) {
-              if (!review.user || review.user.login.endsWith('[bot]') || !decisiveStates.has(review.state)) continue;
-              latestByReviewer.set(review.user.login, review);
-            }
-            const currentApprovals = Array.from(latestByReviewer.values()).filter(
-              (review) => review.state === 'APPROVED' && review.commit_id === pull.head.sha,
-            );
-            const trustedPermissions = new Set(['write', 'maintain', 'admin']);
-            const approvals = [];
-            for (const review of currentApprovals) {
-              const permission = await github.rest.repos.getCollaboratorPermissionLevel({
-                owner,
-                repo,
-                username: review.user.login,
-              });
-              if (trustedPermissions.has(permission.data.permission)) approvals.push(review);
-            }
+            const latestOwnerReview = reviews.filter((review) =>
+              review.user?.login.toLowerCase() === 'ackedze' && decisiveStates.has(review.state),
+            ).at(-1);
+            const ownerApproved = latestOwnerReview?.state === 'APPROVED'
+              && latestOwnerReview.commit_id === pull.head.sha;
 
             await core.summary
               .addHeading('Apollo review policy')
               .addTable([
-                [{ data: 'Risk', header: true }, { data: 'Required approvals', header: true }, { data: 'Current approvals', header: true }],
-                [risk, String(requiredApprovals), String(approvals.length)],
+                [{ data: 'Risk', header: true }, { data: 'Current owner approval', header: true }],
+                [risk, ownerApproved ? 'Approved' : 'Pending'],
               ])
-              .addRaw('\nSingle-maintainer mode: one current trusted approval is required for every risk level.\n')
               .addDetails('Changed files', paths.map((path) => `- ${path}`).join('\n'))
               .write();
 
-            core.notice(`Apollo review risk ${risk}: ${approvals.length}/${requiredApprovals} current trusted approvals.`);
-            if (approvals.length < requiredApprovals) {
-              core.setFailed(`${risk} requires ${requiredApprovals} trusted approval(s) for head ${pull.head.sha}; found ${approvals.length}.`);
+            if (!ownerApproved) {
+              core.setFailed(`${risk} requires @Ackedze approval for head ${pull.head.sha}.`);
             }

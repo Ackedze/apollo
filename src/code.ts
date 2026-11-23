@@ -1,41 +1,30 @@
+import {createV3NativePort} from './v3-audit/native-port';
 import { createCurrentPageDiagnosticObserver } from "./generation/native/observer";
-import { createNativeDiagnostic, type DiagnosticInputs } from "./generation/native/diagnostic";
-import { createNativeDiagnosticBridge } from "./generation/native/diagnostic-bridge";
-declare const __APOLLO_NATIVE_DIAGNOSTIC_INPUTS__: DiagnosticInputs | null;
 declare const __APOLLO_NATIVE_BUILD_INPUTS_SHA__: string;
-import { GenerationController } from "./generation/controller";
-import { createGenerationFrontendPort } from "./generation/frontend/port";
-import { createGenerationProxyPort } from "./generation/proxy/port";
-import { createGenerationFigmaHost } from "./generation/figma/host";
-import { createGenerationNativeCapture } from "./generation/figma/capture";
-import { readAcceptedNativeBinding, acceptedPrimitivePolicy } from "./generation/native/bindings";
 import { captureInstanceAudit, collectAnatomy } from "../packages/component-contract-core/src/figma-capture";
+import { captureCatalogAudit } from './audit-catalog';
 import { selectedTargetPathHint } from "../packages/component-contract-core/src/occurrence-address";
 import { applyAuditPlatform } from './audit-platform';
 import { snapshotPaths } from "../packages/component-contract-core/src/snapshot-topology";
 import { allowedComponentPropertyNames } from "../packages/component-contract-core/src/instance-validation";
 import { nativeSlotCapturePlan } from "../packages/component-contract-core/src/native-slot-capture";
 import { scanArea, selectionSignature, AREA_IDENTITY_BUDGET_MS } from "./area-scan";
-import { collectContractOwnedParts } from "./area-ownership";
+import { collectContractOwnedParts, collectPermittedExternalParts } from "./area-ownership";
 import { scopeNativeSlotCaptureWarnings } from "./native-slot-diagnostics";
 import { validatedDependencyCapture, resolveFixedNestedBinding } from "../packages/component-contract-core/src/component-dependencies";
 const runtime = require("./runtime"), engine = require('@apollo/predicate-engine');
 const {auditDelivery,createAuditReportBridge}=require("./audit-report");
 declare const __html__: string;
 const { createUiMainBridge } = require("./design-check/ui-protocol");
-declare const __APOLLO_AGENT_NATIVE_SCOPE__: any;
-const {createAgentNativeBroker}=require("./generation/agent/native");
-const {createAgentFigmaBroker}=require("./generation/agent/figma/embedded");
-import {createAgentFigmaPolicy} from "./generation/agent/figma/policy";
-const {createAgentDraftStorage}=require("./generation/agent/storage");
-const {createMcpScope}=require("./generation/agent/mcp/scope");
 const { createSessionBridge } = require("./generation/session/protocol");
 const { createDocumentAuditBridge } = require("./document-audit/bridge");
 const {createLayerNamesBridge}=require("./skills/layer-names/native");
 const {createReglyphBridge}=require("./skills/reglyph/native");
 const {resolveNativeNode,currentPageTarget}=require("./canvas-target");
 const {contractFocusTargets}=require("./audit-focus");
-const {boundedRead}=require("./document-audit/reads");
+const {boundedRead,cooperativeRead,readScheduling,setHostYieldTransport,completeHostYield}=require("./document-audit/reads");
+const {trace:auditTrace}=require('./document-audit/trace');
+const {verifyFinalCaptures}=require('./audit-final-captures');
 const {minimalRoots}=require("./document-audit/scoped-recheck");
 const {createNotificationProof,observationNodes}=require("./document-audit/notification-proof");
 const { collectAuditDisplayMetadata } = require("./audit-display-resources");
@@ -47,32 +36,16 @@ const catalogPort=createCatalogPort(post);
 const catalogReaders=createCatalogReaders(catalogPort,figma,engine.stableHash);
 const { DISPLAY_METADATA_BUDGET_MS } = require("./document-audit/budgets");
 const tokenJournalBridge=require("./token-journal-native").createTokenJournalBridge({storage:figma.clientStorage,post});
-const auditStatisticsBridge=require('./audit-statistics/native').createStatisticsBridge({storage:figma.clientStorage,post});
+const auditStatisticsBridge=require('./audit-statistics/native').createStatisticsBridge({storage:figma.clientStorage,post,hash:engine.stableHash});
 const designCheckUiBridge = createUiMainBridge({ storage: figma.clientStorage, resize: (width: number, height: number) => figma.ui.resize(width, height), post });
-const agentDraftStorage=createAgentDraftStorage({storage:figma.clientStorage,post});
 const generationSessionBridge = createSessionBridge({ storage: figma.clientStorage, post });
-// Only Proxy supplies fresh canonical source and Code Connect evidence.
-const generationProxy = createGenerationProxyPort(post, runtime.contractHash);
-const generationFigmaHost = createGenerationFigmaHost({ api: figma, hash: runtime.contractHash, readContext: generationProxy.readContext,
-  readBinding: readAcceptedNativeBinding, primitives: acceptedPrimitivePolicy,
-  capture: createGenerationNativeCapture(runtime, async mapping => {
-    const reply = await requestContracts('generation-native:' + (++nativeScopeSequence), [{ componentKey: mapping.figma.componentKey }]);
-    return reply;
-  }) });
-const generationFrontend = createGenerationFrontendPort(post,runtime.contractHash,generationProxy.readContext);
-const generationController = new GenerationController({ hash: runtime.contractHash, readContext: generationProxy.readContext, figma: generationFigmaHost,frontend:generationFrontend.host });
-let nativeDiagnosticEpoch = 0;
-const nativePageObserver = createCurrentPageDiagnosticObserver(figma,invalidateNativeDiagnostic);
-const nativeDiagnostic = createNativeDiagnostic({api:figma, hash:runtime.contractHash, inputs:__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__, buildInputsSha256:__APOLLO_NATIVE_BUILD_INPUTS_SHA__, readContext:generationProxy.readContext, epoch:()=>nativeDiagnosticEpoch, observer:()=>nativePageObserver.snapshot()});
-const nativeDiagnosticBridge = createNativeDiagnosticBridge(post,nativeDiagnostic);
-const agentNativeBroker=createAgentNativeBroker({api:figma,scope:__APOLLO_AGENT_NATIVE_SCOPE__,hash:engine.stableHash,epoch:()=>nativeDiagnosticEpoch,observer:()=>nativePageObserver.snapshot(),post});
-const agentFigmaBroker=createAgentFigmaBroker({api:figma,hash:engine.stableHash,post,policy:createAgentFigmaPolicy({api:figma,flushDraft:()=>agentDraftStorage.flush(),evaluateRuleIR:require("./generation/agent/figma/rule-ir").createReadOnlyRuleIR({contracts:require("./generation/agent/figma/principal-contracts.json")})})});
-const agentMcpScope=createMcpScope({api:figma,hash:engine.stableHash,post,evaluateRuleIR:require("./generation/agent/figma/rule-ir").createReadOnlyRuleIR({contracts:require("./generation/agent/figma/principal-contracts.json")})});
-function invalidateNativeDiagnostic(){nativeDiagnosticEpoch++;agentNativeBroker.invalidate();nativeDiagnosticBridge.invalidate();post({type:'native-diagnostic-invalidated'});}
-let nativeScopeSequence = 0;
+let v3Port:ReturnType<typeof createV3NativePort>|null=null,v3Revision=0;
+const nativePageObserver = createCurrentPageDiagnosticObserver(figma,event=>{if(event)v3Port?.observeChange(event);else{v3Revision++;v3Port?.invalidate();}invalidateNativeDiagnostic();});
+function invalidateNativeDiagnostic(){post({type:'native-diagnostic-invalidated'});}
 let busy = false, generation = 0, lastAudit: any = null, selectionId = '', localMode = false;
 const localContracts = new Map<string, any>(), focusNodes = new Map<string, string>();
 const pending = new Map<string, { resolve: (value: any) => void; reject: (error: Error) => void; timer: any }>();
+let activeAuditRun:any=null;
 let activeArea: {requestId:string; pageId:string; cancelling:boolean} | null = null, auditPageId = '', lastAreaRequestId='';
 let areaPage: PageNode | null = null, areaObservedIds = new Set<string>(), verifyLastArea: ((operationGuard?:()=>void)=>Promise<void>) | null = null;
 let contractFocusRegistry=new Map<string,any>(),contractFocusTask:any=null,lastAuditRevision:number|null=null,areaSession:any=null,areaNotificationProof:any=null;
@@ -80,17 +53,25 @@ function invalidateArea(){areaNotificationProof?.close();areaNotificationProof=n
 function observeArea(event:NodeChangeEvent){if(documentAuditBridge.isActionApplying())return;if(event.nodeChanges?.some(change=>areaObservedIds.has(change.id)||('node' in change&&change.node&&'parent' in change.node&&change.node.parent&&areaObservedIds.has(change.node.parent.id)))){if(documentAuditBridge.observeRefreshChange())return;if(areaNotificationProof)void areaNotificationProof.notify();else invalidateArea();}}
 function bindAreaPage(){if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);areaPage=figma.currentPage;if(typeof areaPage.on==='function')areaPage.on('nodechange',observeArea);}
 
-let reglyphBridge:any=null;
-const documentAuditBridge = createDocumentAuditBridge({ api: figma, hash: engine.stableHash, post, observeSelection: false, isBusy:()=>busy||Boolean(contractFocusTask)||Boolean(reglyphBridge?.busy()), onMutation:()=>{invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}, onRecheckStart:beginScopedRecheck, bindingAdapter:createBindingAdapter(catalogReaders.readCatalogs,(nodeId,property,context,data)=>{if(data)return findReferenceCandidate(data,nodeId,property);if(lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==context.pageId||!areaSession||selectionSignature(areaSession.roots)!==context.selectionSignature)return null;return findReferenceCandidate(areaSession,nodeId,property);},catalogReaders.verifyCatalog), focus: (node: SceneNode) => {
+let reglyphBridge:any=null,landingCanvas:any=null,figmaAuditBridge:any=null;
+const documentAuditBridge = createDocumentAuditBridge({ catalogPolicyReader:require('./document-audit/catalog-policy').createCatalogPolicyReader(catalogPort,engine.stableHash), deprecatedStyleReader:require('./document-audit/deprecated-styles').createDeprecatedStyleReader(catalogPort,engine.stableHash), api: figma, hash: engine.stableHash, post, observeSelection: false, isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||Boolean(reglyphBridge?.busy()), onMutation:()=>{invalidateArea();invalidateNativeDiagnostic();}, onRecheckStart:beginScopedRecheck, bindingAdapter:createBindingAdapter(catalogReaders.readCatalogs,(nodeId,property,context,data)=>{if(data)return findReferenceCandidate(data,nodeId,property);if(lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==context.pageId||!areaSession||selectionSignature(areaSession.roots)!==context.selectionSignature)return null;return findReferenceCandidate(areaSession,nodeId,property);},catalogReaders.verifyCatalog), focus: (node: SceneNode) => {
   selectionId = selectionSignature([node]); figma.currentPage.selection = [node]; figma.viewport.scrollAndZoomIntoView([node]);
 } });
-const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,observer:()=>nativePageObserver.snapshot(),isBusy:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy()),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}});
-reglyphBridge=createReglyphBridge({api:figma,post,isBusy:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}});
+figmaAuditBridge=require('./figma-audit/native').createFigmaAuditBridge({api:figma,hash:engine.stableHash,post,isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy())||layerNamesBridge.isApplying()});
+const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,observer:()=>nativePageObserver.snapshot(),isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy()),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
+reglyphBridge=createReglyphBridge({api:figma,post,isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
+landingCanvas=require('./landing/context-native').createLandingCanvasBridge({api:figma,hash:engine.stableHash,post,buildId:__APOLLO_NATIVE_BUILD_INPUTS_SHA__,isUnavailable:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy()});
+v3Port=createV3NativePort({post,useCompactIndex:true,pluginVersion:require('../package.json').version,readRevision:()=>v3Revision,
+ isUnavailable:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy(),
+ canMutate:()=>{const observation=nativePageObserver.snapshot();return observation.status==='available'&&observation.pageId===figma.currentPage.id;},
+ onBusy:value=>{busy=value;},onMutation:()=>{v3Revision++;v3Port?.invalidate();documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
+
 function post(value: any) { figma.ui.postMessage(value); }
 const auditReportBridge=createAuditReportBridge({post,read:(id:string)=>{
   if(busy||documentAuditBridge.isActionBusy()||lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==figma.currentPage.id||lastAudit?.auditId!==id)throw Error('AUDIT_REPORT_STALE');
   return lastAudit;
 }});
+function statisticsUserName():string|null {try{return figma.currentUser?.name||null;}catch(_){return null;}}
 function refreshSelection() {
   documentAuditBridge.selectionChanged();
   reglyphBridge?.selectionChanged();
@@ -98,17 +79,21 @@ function refreshSelection() {
   const nodes = figma.currentPage.selection, id = selectionSignature(nodes), invalidated = selectionId !== id;
   if (invalidated) {
     selectionId = id;
-    // Selection remains an input to the next area audit. Generation-native RPCs
-    // retain their own existing selection-bound invalidation contract.
-    for (const [requestId,request] of pending) if(requestId.startsWith('generation-native:')) {clearTimeout(request.timer);request.reject(new Error('Выделение изменилось. Повторите проверку.'));pending.delete(requestId);}
   }
-  post({ type: 'selection', pageId: figma.currentPage.id, id, name: nodes.length === 1 ? nodes[0].name : nodes.length ? `Выбрано областей: ${nodes.length}` : '', valid: nodes.length > 0, invalidated });
+  post({ type: 'selection', statisticsUserName: statisticsUserName(), pageId: figma.currentPage.id, id, name: nodes.length === 1 ? nodes[0].name : nodes.length ? `Выбрано областей: ${nodes.length}` : '', valid: nodes.length > 0, invalidated });
 }
-function requestContracts(requestId: string, components: any[], releaseId?: string): Promise<any> {
+function requestContracts(requestId: string, components: any[], releaseId?: string, guard?:()=>void): Promise<any> {
+  return requestContractData(requestId,{type:'resolve-contracts',components,releaseId},guard);
+}
+function requestCatalogReference(requestId:string,selection:any,releaseId:string|undefined,guard:()=>void):Promise<any>{
+  return requestContractData(requestId,{type:'resolve-catalog-reference',selection,releaseId},guard);
+}
+function requestContractData(requestId:string,payload:any,guard?:()=>void):Promise<any>{
   return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => { pending.delete(requestId); reject(new Error('Прокси не ответил. Проверьте ApolloProxyControl и повторите аудит.')); }, 30000);
+    const monitor=()=>{const request=pending.get(requestId);if(!request)return;try{guard?.();request.timer=setTimeout(monitor,100);}catch(error){pending.delete(requestId);post({type:'resolve-contracts-cancel',requestId});reject(error);}};
+    const timer=guard?setTimeout(monitor,100):setTimeout(()=>{pending.delete(requestId);reject(new Error('Прокси не ответил. Проверьте ApolloProxyControl и повторите аудит.'));},30000);
     pending.set(requestId, { resolve, reject, timer });
-    post({ type: 'resolve-contracts', requestId, components, releaseId });
+    post(Object.assign({requestId},payload));
   });
 }
 function registerLocal(source: any) {
@@ -147,13 +132,20 @@ function appendUiRules(contract: any, scopeId: string, rules: any[], snapshot?: 
   }
   for (const pin of contract.componentDependencies || []) appendUiRules(pin.contract, scopeId, rules);
 }
-function checkCapture(scope: any, contract: any, captured: any) {
+async function withCaptureReads<T>(guard:()=>void,visit:(control:any)=>Promise<T>):Promise<T>{
+ let active=true;
+ const check=()=>{guard();if(!active)throw Error('AUDIT_CAPTURE_SUPERSEDED');};
+ const read=async(work:any)=>{let attempt=0;while(true){check();try{return await cooperativeRead(work,1000,check);}catch(error:any){check();const run=activeAuditRun;if(run){const diagnostic=require('./document-audit/protocol').failureDiagnostic(error,run.requestId,run.stage,engine.stableHash,[++attempt,Date.now()]);run.failures.push(diagnostic);if(run.failures.length>20)run.failures.splice(1,1);post({type:'audit-recovery',requestId:run.requestId,diagnostic,message:'Повторяем чтение источника Figma…'});}if(!require('./document-audit/reads').retryableRead(error))throw error;await cooperativeRead(()=>new Promise(resolve=>setTimeout(resolve,Math.min(2000,attempt*100))),100,check);}}};
+ try{return await visit({guard:check,read});}finally{active=false;}
+}
+function checkCapture(scope: any, contract: any, captured: any,guard:()=>void=()=>{}) {
   const plan = nativeSlotCapturePlan(contract), omissions = captured.snapshot.source?.nativeSlotCaptureScope?.omissions || [];
   const captureScope = omissions.length ? { manualSourceHash: contract.package.manualSourceHash,
     // Reuse the representation proved by capture; another adapter can expose the same port.
     boundaries: (plan?.boundaries || []).filter(boundary => boundary.representationId === captured.snapshot.source.representationId
       && omissions.some((entry: any) => entry.targetId === boundary.targetId && entry.property === boundary.property && entry.path === boundary.path)) } : undefined;
-  return collectAnatomy(scope, captured.snapshot.context.platform, Object.assign({}, scope.resolvedVariableModes), captureScope);
+  return withCaptureReads(guard,control=>collectAnatomy(scope, captured.snapshot.context.platform, Object.assign({}, scope.resolvedVariableModes), captureScope,
+    captured.preparedSourceTopology ? Object.assign({},control,{preparedSourceTopology:captured.preparedSourceTopology}) : control));
 }
 function attachSharedArea(data:any) {
   if (!progressBarPilot) return;
@@ -164,17 +156,48 @@ function attachSharedArea(data:any) {
   };
   data.sharedArea=require('./shared-area-capture').createSharedAreaCapture({scan:data.scan,captures:data.captures,roots:data.roots,auditId:report.auditId,pageId:auditPageId,hash:engine.stableHash,verify});
 }
+async function runAuditRequest(message:any){
+ if(activeAuditRun)throw Error('AUDIT_BUSY');
+ const run:any={requestId:message.requestId,cancelled:false,completed:false,stage:'selection',attempt:0,failures:[]};activeAuditRun=run;
+ const assertRun=()=>{if(run.cancelled||!run.completed&&activeAuditRun!==run)throw Error('AUDIT_CANCELLED');};
+ const context=message.context;
+ try{
+  if(context&&!require('./document-audit/protocol').contextValid(context))throw Error('AUDIT_REQUEST_INVALID');
+  const pageId=context?.pageId||figma.currentPage.id;
+  const roots:SceneNode[]=context?await Promise.all(context.selectionSignature.split('|').filter(Boolean).map((id:string)=>resolveNativeNode(figma,id,{read:(read:any)=>cooperativeRead(read,1000,assertRun),guard:assertRun}))):Array.from(figma.currentPage.selection);
+  if(!roots.length||roots.some(n=>!n))throw Error('AUDIT_ROOT_UNAVAILABLE');
+  while(!run.cancelled){
+   assertRun();run.attempt++;
+   try{
+    if(figma.currentPage.id!==pageId)throw Error('AUDIT_CONTEXT_CHANGED');
+    await audit(message.requestId,{platform:message.platform,connectCatalogs:message.connectCatalogs===true,roots,guard:assertRun});assertRun();run.completed=true;return;
+   }catch(error:any){
+    if(run.cancelled)return;
+    const changed=/(AUDIT_CONTEXT_CHANGED|AUDIT_CAPTURE_CHANGED|AUDIT_TOPOLOGY_CHANGED|NATIVE_FACTS_CHANGED|Результат устарел|^Версия контрактов изменилась)/i.test(error.message||'');
+    const transient=changed||/TIMEOUT|TEMPORAR|UNAVAILABLE/.test(error.code||error.message||'')||/^Прокси не ответил\./.test(error.message||'');
+    if(!transient)throw error;
+    const diagnostic=require('./document-audit/protocol').failureDiagnostic({code:changed?'AUDIT_CONTEXT_CHANGED':error.code||'PROXY_UNAVAILABLE'},message.requestId,run.stage,engine.stableHash,[run.attempt,Date.now()]);
+    run.failures.push(diagnostic);if(run.failures.length>20)run.failures.splice(1,1);
+    post({type:'audit-recovery',requestId:message.requestId,diagnostic,message:changed?'Данные изменились. Собираем и проверяем область заново…':'Ожидаем восстановление связи с Proxy…'});
+    await cooperativeRead(()=>new Promise(resolve=>setTimeout(resolve,Math.min(2000,run.attempt*100))),100,assertRun);
+   }
+  }
+ }catch(error:any){if(!run.cancelled){error.auditFailure=require('./document-audit/protocol').failureDiagnostic(error,message.requestId,run.stage,engine.stableHash,[run.attempt,Date.now()]);throw error;}}
+ finally{if(activeAuditRun===run)activeAuditRun=null;if(run.cancelled)post({type:'audit-cancelled',requestId:message.requestId});}
+}
 async function audit(requestId: string, options:any={}) {
   if (busy || reglyphBridge?.busy()) throw new Error('Проверка уже выполняется.');
   const roots:SceneNode[] = options.roots||Array.from(figma.currentPage.selection);
   if (!roots.length) throw new Error('Выделите область или слой, чтобы проверить компоненты.');
   const timingStarted = Date.now();
+  const readTimingStarted = readScheduling();
   const timings = { schemaVersion: 'apollo.audit-timings.v1',
     scope: options.quiet ? 'scoped-contract-audit-before-merge' : 'contract-area-audit-before-delivery',
-    clock: 'Date.now', totalMs: 0, stages: [] as {stage:string;durationMs:number;scopeId?:string}[] };
+    clock: 'Date.now', totalMs: 0, readScheduling: Object.assign({scope:'shared-reader-window'},readScheduling(readTimingStarted)), stages: [] as {stage:string;durationMs:number;scopeId?:string}[] };
   const time = (stage:string, scopeId?:string) => {
-    const started = Date.now();
-    return () => timings.stages.push(Object.assign({stage,durationMs:Math.max(0,Date.now()-started)},scopeId ? {scopeId} : {}));
+    const started = Date.now();if(activeAuditRun?.requestId===requestId)activeAuditRun.stage=stage;
+    auditTrace('phase-start',{runId:requestId,stage:'contract.'+stage,nodeId:scopeId});
+    return () => {const durationMs=Math.max(0,Date.now()-started);auditTrace('phase-end',{runId:requestId,stage:'contract.'+stage,nodeId:scopeId,durationMs});timings.stages.push(Object.assign({stage,durationMs},scopeId ? {scopeId} : {}));};
   };
   busy = true;if(!options.quiet){areaNotificationProof?.close();areaNotificationProof=null;verifyLastArea=null;lastAudit = null; focusNodes.clear();}
   const current = generation, pageId=figma.currentPage.id, fileMode = localMode;
@@ -184,10 +207,10 @@ async function audit(requestId: string, options:any={}) {
   try {
     progress('Собираем ключи компонентов в выделенной области…');
     let endStage = time('scan');
-    const scan = await scanArea(roots, assertCurrent,options.quiet?undefined:nodes=>{
+    const scan = await withCaptureReads(assertCurrent,control=>scanArea(roots, assertCurrent,options.quiet?undefined:nodes=>{
       areaObservedIds=new Set(nodes.keys());
       setAreaNotificationProof(nodes,async()=>assertCurrent(),assertCurrent);
-    });endStage();areaObservedIds=new Set([...(options.quiet&&areaSession?areaSession.scan.nodes.keys():[]),...scan.nodes.keys()]);
+    },control.read));endStage();areaObservedIds=new Set([...(options.quiet&&areaSession?areaSession.scan.nodes.keys():[]),...scan.nodes.keys()]);
     const components: any[] = [], notChecked: any[] = [], governedComponents: any[] = [], rules: any[] = [], warnings: string[] = [];
     let items = Array.from(localContracts.values()), releaseId: string | undefined = fileMode ? undefined : options.releaseId;
     const identityId = (identity: any) => JSON.stringify([identity.componentKey, identity.componentSetKey]);
@@ -198,7 +221,7 @@ async function audit(requestId: string, options:any={}) {
         requested.set(identityId(component), { componentKey: component.componentKey, componentSetKey: component.componentSetKey });
       progress('Получаем контракты компонентов через Proxy…');
       endStage = time('resolve-contracts');
-      const response = await requestContracts(requestId + ':resolve', Array.from(requested.values()), releaseId);
+      const response = await requestContracts(requestId + ':attempt-' + (activeAuditRun?.requestId===requestId?activeAuditRun.attempt:0) + ':resolve', Array.from(requested.values()), releaseId, assertCurrent);
       endStage();
       endStage = time('compile-contracts');
       assertCurrent();
@@ -224,7 +247,8 @@ async function audit(requestId: string, options:any={}) {
       if (resolutions.size !== requested.size) throw new Error('Прокси не ответил по всем ключам компонентов.');
       endStage();
     }
-    const covered = new Map<string, any>(), ownedParts = new Map<string, any>(), captures: any[] = [];
+    const covered = new Map<string, any>(), ownedParts = new Map<string, any>(), externalParts = new Map<string, any>(), captures: any[] = [];
+    const contractHashes = new Map<any, string>();
     for (const identity of scan.selection.components) {
       assertCurrent();
       if (covered.has(identity.nodeId)) { governedComponents.push(Object.assign({}, identity, covered.get(identity.nodeId))); continue; }
@@ -240,6 +264,11 @@ async function audit(requestId: string, options:any={}) {
       if (!item) {
         const ownership = identity.type === 'INSTANCE' && ownedParts.get(identity.nodeId);
         if (ownership) { governedComponents.push(Object.assign({}, identity, ownership)); continue; }
+        const external = externalParts.get(identity.nodeId);
+        if (external) {
+          notChecked.push(Object.assign({}, identity, external, { message: 'Содержимое разрешённого Slot или swap: граница проверена, собственные правила содержимого не проверены.' }));
+          continue;
+        }
         gap('contract-not-found', 'В прокси нет главного контракта этого компонента.'); continue;
       }
       if (identity.type !== 'INSTANCE') { gap('component-definition', 'Выбрано определение компонента: проверка экземпляра по независимому эталону не выполнена.'); continue; }
@@ -248,21 +277,20 @@ async function audit(requestId: string, options:any={}) {
       let captured: any;
       const endCapture = time('capture', subject.id);
       try {
-        captured = await captureInstanceAudit(subject, { componentKey: contract.facts.component.componentKey,
+        if (options.connectCatalogs && (!releaseId || fileMode)) throw Object.assign(Error('Для каталожного пилота подключите пакет данных через Proxy. (CATALOG_DATA_RELEASE_REQUIRED)'), {code:'CATALOG_DATA_RELEASE_REQUIRED'});
+        captured = options.connectCatalogs ? await withCaptureReads(assertCurrent, readControl => captureCatalogAudit(subject, contract, releaseId!,
+          selection => requestCatalogReference(requestId + ':catalog:' + subject.id + ':' + engine.stableHash(selection), selection, releaseId!, assertCurrent), readControl))
+          : await withCaptureReads(assertCurrent,readControl=>captureInstanceAudit(subject, {readControl, componentKey: contract.facts.component.componentKey,
           acceptedComponentKeys: Array.from(runtime.collectContractKeys(contract)), componentDependencyKeys: runtime.componentDependencyKeys(contract),
           directChildDependenciesVersion: contract.runtimePolicy.directChildDependenciesVersion,
           instanceMainComponentAliasesVersion: contract.runtimePolicy.instanceMainComponentAliasesVersion,
           representations: contract.facts.representations, allowedComponentProperties: allowedComponentPropertyNames(contract), platform: contract.facts.component.platform,
-          manualSourceHash: contract.package.manualSourceHash, expectedRootNodeId: subject.id, nativeSlotCapturePlan: nativeSlotCapturePlan(contract), includePreview: false,
-          onTiming:(stage,durationMs)=>timings.stages.push({stage:`capture.${stage}`,durationMs,scopeId:subject.id}),
-          captureTransitionContext: contract.runtimePolicy.transitionFactsVersion === 1 });
+          portableSwapIdentityVersion: contract.runtimePolicy.portableSwapIdentityVersion, manualSourceHash: contract.package.manualSourceHash, expectedRootNodeId: subject.id, nativeSlotCapturePlan: nativeSlotCapturePlan(contract), includePreview: false,
+          onTiming:(stage,durationMs)=>{auditTrace('phase-end',{runId:requestId,stage:'contract.capture.'+stage,nodeId:subject.id,durationMs});timings.stages.push({stage:`capture.${stage}`,durationMs,scopeId:subject.id});},
+          captureTransitionContext: contract.runtimePolicy.transitionFactsVersion === 1 }));
       } catch (error) { assertCurrent(); gap('capture-failed', error instanceof Error ? error.message : String(error)); continue; }
       finally { endCapture(); }
       assertCurrent();
-      endStage = time('verify-capture', subject.id);
-      const check = await checkCapture(subject, contract, captured);
-      if (engine.stableHash(captured.anatomy) !== engine.stableHash(check.anatomy)) throw new Error(`Свойства узла ${subject.id} изменились во время захвата. Повторите проверку. (AUDIT_CAPTURE_CHANGED · verify-capture)`);
-      endStage();
       endStage = time('evaluate', subject.id);
       applyAuditPlatform(captured.snapshot, contract, options.platform);
       const scopeId = subject.id, ownership = ownedParts.get(scopeId);
@@ -277,15 +305,26 @@ async function audit(requestId: string, options:any={}) {
         ownerContext = { snapshot: owner.captured.snapshot, contract: owner.contract,
           evaluationMode: owner.contract.status === 'draft' ? 'authoring-preview' : undefined,
           nodeId: ownership.snapshotNodeId, nodeMap };
+        // Attribution alone cannot replace a baseline; nested-variant raw owners stay standalone.
+        if (ownership.proofBasis === 'pinned-raw-catalogue' && !runtime.canUseDirectRawOwnerContext(captured.snapshot, contract, ownerContext)) ownerContext = undefined;
       }
-      try { result = runtime.auditContractSnapshot(captured.snapshot, contract, item.evaluationOptions, ownerContext); }
+      const diagnostics = scopeNativeSlotCaptureWarnings(captured);
+      try { result = runtime.auditContractSnapshot(captured.snapshot, contract, item.evaluationOptions, ownerContext, diagnostics); }
       catch (error) { if ((error as any)?.code !== 'APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE') throw error;
         endStage(); gap('owner-context-unavailable', 'Не подтверждён эталон вложенного компонента в текущей сборке. Повторите проверку.'); continue; }
       endStage();
+      Object.assign(diagnostics, result.captureDiagnostics);
+      delete result.captureDiagnostics;
+      // The compiled source is immutable for this audit; release freshness is rechecked below.
+      if (!contractHashes.has(contract)) {
+        const endHash = time('contract-hash');
+        contractHashes.set(contract, engine.stableHash(contract));
+        endHash();
+      }
       endStage = time('index-component', subject.id);
-      const auditId = engine.stableHash({ root: scopeId, generation: current, snapshot: engine.snapshotHash(captured.snapshot), contract: engine.stableHash(contract) });
-      const diagnostics = scopeNativeSlotCaptureWarnings(captured);
+      const auditId = engine.stableHash({ root: scopeId, generation: current, snapshot: engine.snapshotHash(captured.snapshot), contract: contractHashes.get(contract) });
       const component = { scopeId, name: identity.name, library: contract.package.library, auditId, release: item.release, result, snapshot: captured.snapshot,
+        referenceOrigin:captured.referenceOrigin || 'live-library',
         warnings: diagnostics.warnings, baselineDiagnostics: diagnostics.baselineDiagnostics };
       if (ownerContext) Object.assign(component, { ownerContext: { scopeId: owner.subject.id,
         nodeId: ownerContext.nodeId, nodeMap: ownerContext.nodeMap } });
@@ -298,17 +337,21 @@ async function audit(requestId: string, options:any={}) {
       for (const run of result.engine.dependencyRuns || []) if (run.status === 'executed' && run.nodeId && map.has(run.nodeId)) {
         covered.set(map.get(run.nodeId)!, { byScopeId: scopeId, dependencyId: run.dependencyId, reason: 'pinned-dependency-executed' });
       }
-      function registerParts(snapshot: any, ownerContract: any, nodeMap: Record<string, string>) {
+      function registerParts(snapshot: any, ownerContract: any, nodeMap: Record<string, string>, evaluations?: any[]) {
         const ownerNodeId = map.get(nodeMap[snapshot.selection[0]]);
         if (!ownerNodeId) return;
-        for (const part of collectContractOwnedParts(snapshot, ownerContract)) {
+        for (const part of collectContractOwnedParts(snapshot, ownerContract, evaluations)) {
           const id = map.get(nodeMap[part.snapshotNodeId]);
           if (id) ownedParts.set(id, Object.assign({}, part, { byScopeId: scopeId, ownerNodeId }));
         }
       }
       const localMap: Record<string, string> = {};
       captured.snapshot.nodes.forEach((node: any) => { localMap[node.id] = node.id; });
-      registerParts(captured.snapshot, contract, localMap);
+      registerParts(captured.snapshot, contract, localMap, result.engine.evaluations);
+      for (const part of collectPermittedExternalParts(captured.snapshot, contract)) {
+        const id = map.get(String(part.snapshotNodeId));
+        if (id) externalParts.set(id, Object.assign({}, part, { byScopeId: scopeId }));
+      }
       for (const run of result.engine.dependencyRuns || []) if (run.status === 'executed' && run.nodeId) {
         const pin = contract.componentDependencies?.find((pin: any) => pin.id === run.dependencyId
           && pin.componentId === run.componentId && pin.compiledHash === run.compiledHash);
@@ -329,21 +372,18 @@ async function audit(requestId: string, options:any={}) {
     if (releaseId) {
       endStage = time('verify-release');
       progress('Подтверждаем версию контрактов через Proxy…');
-      const verified = await requestContracts(requestId + ':verify', [], releaseId);
+      const verified = await requestContracts(requestId + ':attempt-' + (activeAuditRun?.requestId===requestId?activeAuditRun.attempt:0) + ':verify', [], releaseId, assertCurrent);
       if (verified.releaseId !== releaseId) throw new Error('Версия контрактов изменилась. Повторите проверку.');
       endStage();
     }
-    // Recheck every earlier scope after later asynchronous captures, plus the
-    // visible membership and identity of the entire selected area.
-    for (const capture of captures) {
-      assertCurrent();
-      endStage = time('verify-final-capture', capture.subject.id);
-      const check = await checkCapture(capture.subject, capture.contract, capture.captured);
-      if (engine.stableHash(check.anatomy) !== engine.stableHash(capture.captured.anatomy)) throw new Error(`Свойства узла ${capture.subject.id} изменились во время захвата. Повторите проверку. (AUDIT_CAPTURE_CHANGED · verify-final-capture)`);
-      endStage();
-    }
+    // One final reread covers changes during capture and later asynchronous work;
+    // provisional evaluations are never delivered before this check succeeds.
+    const endVerification=time('verify-final-captures');
+    await verifyFinalCaptures(captures,{guard:assertCurrent,hash:engine.stableHash,time:(id:string)=>time('verify-final-capture',id),
+      check:(capture:any,guard:()=>void)=>checkCapture(capture.subject,capture.contract,capture.captured,guard)});
+    endVerification();
     endStage = time('final-scan');
-    const finalScan = await scanArea(roots, assertCurrent);
+    const finalScan = await withCaptureReads(assertCurrent,control=>scanArea(roots,assertCurrent,undefined,control.read));
     if (engine.stableHash(finalScan.topology) !== engine.stableHash(scan.topology)) throw new Error('Состав или свойства выбранной области изменились. Повторите проверку. (AUDIT_TOPOLOGY_CHANGED · final-scan)');
     assertCurrent();
     endStage();
@@ -353,33 +393,36 @@ async function audit(requestId: string, options:any={}) {
     if (scan.selection.issues.includes('area-identity-read-failed')) warnings.push('Figma отклонила чтение части источников компонентов. Проверка неполная. (AREA_IDENTITY_READ_FAILED)');
     const result = runtime.aggregateAreaResult(components, notChecked, scan.selection, governedComponents);
     const auditId = engine.stableHash({ selection: scan.selection, components: components.map(component => component.auditId), generation: current });
-    const report:any = { schemaVersion: 'apollo.area-audit.v1-experimental', mode: 'selected-area', auditId,
+    const report:any = { recoveryDiagnostics:activeAuditRun?.requestId===requestId?activeAuditRun.failures.slice():[], schemaVersion: 'apollo.area-audit.v1-experimental', mode: 'selected-area', auditId,
       release: { id: releaseId, channel: fileMode ? 'local-file' : 'local-pilot' }, selection: scan.selection,
+      referenceMechanism:options.connectCatalogs ? 'catalog-pilot' : 'live-library',
       components, notChecked, governedComponents, result, warnings };
     if(components.length===1)report.snapshot=components[0].snapshot;
     endStage();
     // Diagnostics are outside canonical snapshots and audit identity. Delivery/render time is excluded.
     report.timings = timings;
     timings.totalMs = Math.max(0,Date.now()-timingStarted);
-    const data={audit:report,rules,displayMetadata,scan,captures,roots,platform:options.platform};
+    timings.readScheduling = Object.assign({scope:'shared-reader-window'},readScheduling(readTimingStarted));
+    const data={audit:report,rules,displayMetadata,scan,captures,roots,platform:options.platform,connectCatalogs:options.connectCatalogs===true};
     if(options.quiet)return data;
     auditPageId=pageId;lastAudit=report;lastAuditRevision=current;areaSession=data;
-    verifyLastArea=async(operationGuard=()=>{})=>{operationGuard();assertCurrent();for(const capture of captures){operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured);assertCurrent();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('Результат устарел. Повторите проверку.');operationGuard();}operationGuard();const checked=await scanArea(roots,()=>{assertCurrent();operationGuard();});assertCurrent();operationGuard();if(engine.stableHash(checked.topology)!==engine.stableHash(scan.topology))throw Error('Результат устарел. Повторите проверку.');};
+    verifyLastArea=async(operationGuard=()=>{})=>{operationGuard();assertCurrent();for(const capture of captures){operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured,()=>{assertCurrent();operationGuard();});assertCurrent();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('Результат устарел. Повторите проверку.');operationGuard();}operationGuard();const checked=await withCaptureReads(()=>{assertCurrent();operationGuard();},control=>scanArea(roots,()=>{assertCurrent();operationGuard();},undefined,control.read));assertCurrent();operationGuard();if(engine.stableHash(checked.topology)!==engine.stableHash(scan.topology))throw Error('Результат устарел. Повторите проверку.');};
     setAreaNotificationProof(scan.nodes,verifyLastArea,()=>{if(generation!==current||lastAudit!==report||figma.currentPage.id!==pageId)throw Error('NATIVE_CONTEXT_CHANGED');});
     endStage = time('shared-area-snapshot');attachSharedArea(data);endStage();
     endStage = time('focus-targets');
     const focus=buildContractFocus(components,captures,pageId,auditId);contractFocusRegistry=focus.registry;
     endStage();
     timings.totalMs = Math.max(0,Date.now()-timingStarted);
+    timings.readScheduling = Object.assign({scope:'shared-reader-window'},readScheduling(readTimingStarted));
     post(Object.assign({type:'audit-result',requestId},auditDelivery({audit:lastAudit,rules,displayMetadata,focusTargets:focus.sidecar})));
-  } finally { busy = false;lastAreaRequestId=requestId;const stopped=activeArea?.cancelling===true;activeArea=null;if(!options.quiet&&!lastAudit){areaNotificationProof?.close();areaNotificationProof=null;}if(options.quiet&&areaSession)areaObservedIds=new Set(areaSession.scan.nodes.keys());if(stopped)post({type:'audit-cancelled',requestId}); }
+  } finally { busy = false;lastAreaRequestId=requestId;const stopped=activeArea?.cancelling===true;activeArea=null;if(!options.quiet&&!lastAudit){areaNotificationProof?.close();areaNotificationProof=null;}if(options.quiet&&areaSession)areaObservedIds=new Set(areaSession.scan.nodes.keys());if(stopped&&!activeAuditRun)post({type:'audit-cancelled',requestId}); }
 }
 function buildContractFocus(components:any[],captures:any[],pageId:string,auditId:string){return contractFocusTargets({components,captures,pageId,auditId,hash:engine.stableHash,dependencyMap:(entry:any,capture:any)=>{let snapshot=capture.captured.snapshot,contract=capture.contract,dep=entry.dependency;let map:any=Object.fromEntries(snapshot.nodes.map((n:any)=>[n.id,n.id]));for(let depth=0;dep&&depth<8;depth++){const pins=(contract.componentDependencies||[]).filter((p:any)=>p.id===dep.dependencyId&&p.componentId===dep.componentId&&p.compiledHash===dep.compiledHash);if(pins.length!==1||!pins[0].contract)return null;const pin=pins[0],bindings=pin.bindings.filter((b:any)=>b.id===dep.bindingId);if(bindings.length!==1)return null;const resolved=resolveFixedNestedBinding(snapshot,pin,bindings[0],false,contract);if(resolved.status!=='active'||!resolved.nodeId||!resolved.identityValid)return null;const child=validatedDependencyCapture(snapshot,resolved.nodeId,pin.contract);if(!child.snapshot||!child.nodeMap)return null;const composed:any={};for(const [id,parentId] of Object.entries(child.nodeMap))if(map[parentId as string])composed[id]=map[parentId as string];map=composed;snapshot=child.snapshot;contract=pin.contract;dep=dep.nested;}return dep?null:map;}});}
 function setAreaNotificationProof(nodes:Map<string,SceneNode>,verify:any,guard:()=>void){areaNotificationProof?.close();areaNotificationProof=createNotificationProof({nodes:observationNodes(nodes.values()),hash:engine.stableHash,guard,verify:async(g:()=>void)=>{g();await verify(g);g();},onError:()=>invalidateArea()});}
 function beginScopedRecheck(plan:any,requestId:string){
  areaNotificationProof?.close();areaNotificationProof=null;
  const previous=areaSession,report=lastAudit,revision=++generation,pageId=figma.currentPage.id;
- invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();
+ invalidateNativeDiagnostic();
  const guard=()=>{if(generation!==revision||figma.currentPage.id!==pageId||lastAudit!==report&&lastAudit!==candidate?.audit)throw Error('NATIVE_CONTEXT_CHANGED');};
  const affectedScopes=new Set<string>();
  if(previous&&report){
@@ -397,14 +440,14 @@ function beginScopedRecheck(plan:any,requestId:string){
  const verify=async(operationGuard:()=>void)=>{
   guard();operationGuard();
   if(!candidate)return;
-  for(const capture of candidate.captures){guard();operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured);guard();operationGuard();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('NATIVE_FACTS_CHANGED');}
+  for(const capture of candidate.captures){guard();operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured,()=>{guard();operationGuard();});guard();operationGuard();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('NATIVE_FACTS_CHANGED');}
   const checked=await scanArea(previous.roots,()=>{guard();operationGuard();});guard();operationGuard();
   const sort=(topology:any[])=>topology.slice().sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));
   if(engine.stableHash(sort(checked.topology))!==engine.stableHash(sort(candidate.scan.topology)))throw Error('NATIVE_FACTS_CHANGED');
  };
  return{guard,verifyNotification:verify,run:async(operationGuard:()=>void,progress:(message:string)=>void=()=>{})=>{
   guard();operationGuard();if(!previous||!report)return null;
-  const fresh=plan.roots.length?await audit(requestId,{roots:plan.roots,quiet:true,releaseId:report.release.id,platform:previous.platform,onProgress:progress,guard:()=>{guard();operationGuard();}}):null;guard();operationGuard();if(fresh&&fresh.audit.release.id!==report.release.id)throw Error('NATIVE_CONTEXT_CHANGED');
+  const fresh=plan.roots.length?await audit(requestId,{roots:plan.roots,quiet:true,releaseId:report.release.id,platform:previous.platform,connectCatalogs:previous.connectCatalogs,onProgress:progress,guard:()=>{guard();operationGuard();}}):null;guard();operationGuard();if(fresh&&fresh.audit.release.id!==report.release.id)throw Error('NATIVE_CONTEXT_CHANGED');
   const incomplete=new Set<string>();
   for(const id of affectedScopes)if(!fresh?.audit.components.some((c:any)=>c.scopeId===id&&c.result.coverage?.executionComplete))incomplete.add(id);
   const components=previous.audit.components.filter((c:any)=>!affectedScopes.has(c.scopeId)||incomplete.has(c.scopeId));
@@ -435,7 +478,7 @@ function beginScopedRecheck(plan:any,requestId:string){
  },verify,commit:(data:any,operationGuard:()=>void)=>{
   guard();operationGuard();if(!data)return null;lastAudit=data.audit;lastAuditRevision=revision;areaSession=data;contractFocusRegistry=data.focusRegistry;areaObservedIds=new Set(data.scan.nodes.keys());auditPageId=pageId;
   // The commit changes the report identity; retain the same revision guard for future focus.
-  verifyLastArea=async(g=()=>{})=>{g();if(generation!==revision||figma.currentPage.id!==pageId||lastAudit!==data.audit)throw Error('NATIVE_RESULT_STALE');for(const c of data.captures){const check=await checkCapture(c.subject,c.contract,c.captured);g();if(generation!==revision||engine.stableHash(check.anatomy)!==engine.stableHash(c.captured.anatomy))throw Error('NATIVE_FACTS_CHANGED');}const checked=await scanArea(data.roots,g);g();const normalize=(rows:any[])=>rows.slice().sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));if(generation!==revision||engine.stableHash(normalize(checked.topology))!==engine.stableHash(normalize(data.scan.topology)))throw Error('NATIVE_FACTS_CHANGED');};
+  verifyLastArea=async(g=()=>{})=>{g();if(generation!==revision||figma.currentPage.id!==pageId||lastAudit!==data.audit)throw Error('NATIVE_RESULT_STALE');for(const c of data.captures){const check=await checkCapture(c.subject,c.contract,c.captured,g);g();if(generation!==revision||engine.stableHash(check.anatomy)!==engine.stableHash(c.captured.anatomy))throw Error('NATIVE_FACTS_CHANGED');}const checked=await withCaptureReads(g,control=>scanArea(data.roots,g,undefined,control.read));g();const normalize=(rows:any[])=>rows.slice().sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));if(generation!==revision||engine.stableHash(normalize(checked.topology))!==engine.stableHash(normalize(data.scan.topology)))throw Error('NATIVE_FACTS_CHANGED');};
   setAreaNotificationProof(data.scan.nodes,verifyLastArea,()=>{if(generation!==revision||lastAudit!==data.audit||figma.currentPage.id!==pageId)throw Error('NATIVE_CONTEXT_CHANGED');});
   attachSharedArea(data);
   return auditDelivery({audit:data.audit,rules:data.rules,displayMetadata:data.displayMetadata,focusTargets:data.focusTargets,staleScopeIds:data.staleScopeIds});
@@ -448,8 +491,9 @@ const progressBarPilot = typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && 
     readShared:(root:SceneNode)=>{const shared=areaSession?.sharedArea;if(!shared||shared.root!==root)return null;if(lastAuditRevision!==generation||shared.pageId!==figma.currentPage.id)throw Error('SHARED_AREA_STALE');return shared;} }) : null;
 progressBarPilot?.start();
 figma.showUI(__html__, { width: 800, height: 860, themeColors: true });
+const releaseHostYield = setHostYieldTransport((ticket:string) => post({type:'audit-host-yield',ticket}));
 figma.on('selectionchange', refreshSelection);
-bindAreaPage();figma.on('currentpagechange',()=>{invalidateArea();bindAreaPage();refreshSelection();});figma.on('close',()=>{if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);});
+bindAreaPage();figma.on('currentpagechange',()=>{landingCanvas?.pageChanged();invalidateArea();bindAreaPage();refreshSelection();});figma.on('close',()=>{v3Port?.close();releaseHostYield();landingCanvas?.close();if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);});
 async function focusAuditFinding(message:any){
   const report=lastAudit,revision=lastAuditRevision;
   const reply=(success:boolean,text='',nodeId?:string)=>post({type:'audit-focus-result',requestId:message.requestId,auditId:message.auditId,targetId:message.targetId,success,message:text,nodeId});
@@ -459,59 +503,55 @@ async function focusAuditFinding(message:any){
   const task={requestId:message.requestId,report,deadline:Date.now()+15000};contractFocusTask=task;
   const guard=()=>{if(generation!==revision||areaNotificationProof?.hasPending()||Date.now()>task.deadline||contractFocusTask!==task||lastAudit!==report||report.auditId!==message.auditId||auditPageId!==figma.currentPage.id||documentAuditBridge.isActionBusy())throw Error('Переход устарел. Повторите проверку.');};
   const timer=setTimeout(()=>{if(contractFocusTask===task){contractFocusTask=null;reply(false,'Переход остановлен по таймауту. Повторите проверку.');}},15000);
-  try{guard();if(verifyLastArea)await verifyLastArea(guard);guard();const node=await resolveNativeNode(figma,registered.target.nodeId,{read:(fn:any)=>boundedRead(fn,1200,guard),guard});guard();if(!currentPageTarget(node,registered.target.pageId))throw Error('Объект недоступен на проверенной странице.');guard();selectionId=selectionSignature([node]);guard();figma.currentPage.selection=[node];guard();figma.viewport.scrollAndZoomIntoView([node]);guard();reply(true,'Объект выбран в макете.',node.id);}
+  try{guard();assertFocusObservation(report,revision);const node=await resolveNativeNode(figma,registered.target.nodeId,{read:(fn:any)=>boundedRead(fn,1200,guard),guard});guard();assertFocusObservation(report,revision);if(!currentPageTarget(node,registered.target.pageId))throw Error('Объект недоступен на проверенной странице.');guard();selectionId=selectionSignature([node]);guard();figma.currentPage.selection=[node];guard();figma.viewport.scrollAndZoomIntoView([node]);guard();reply(true,'Объект выбран в макете.',node.id);}
   catch(e){if(contractFocusTask===task)reply(false,e instanceof Error?e.message:String(e));}
   finally{clearTimeout(timer);if(contractFocusTask===task)contractFocusTask=null;}
+}
+function assertFocusObservation(report:any,revision:number|null){
+  if(!report||lastAudit!==report||lastAuditRevision!==revision||generation!==revision||!areaNotificationProof||areaNotificationProof.hasPending()||auditPageId!==figma.currentPage.id)throw Error('Результат устарел. Повторите проверку.');
+  // Navigation retains the accepted finding; it does not issue a new audit verdict.
+  areaNotificationProof.assertStable();
 }
 // Official current-page subscription; no global document observer or page loads.
 nativePageObserver.start();
 documentAuditBridge.start();
 figma.ui.onmessage = async (message: any) => {
+ if(message?.type==='audit-host-yield-done'){
+  if(Object.keys(message).sort().join(',')==='ticket,type' && typeof message.ticket==='string' && message.ticket.length>0 && message.ticket.length<=150) completeHostYield(message.ticket);
+  return;
+ }
+  if (v3Port?.accept(message)) return;
+  if (landingCanvas.accept(message)) return;
   if (progressBarPilot?.accept(message)) return;
   if (catalogPort.accept(message) || contractDataBridge.accept(message) || auditReportBridge.accept(message)) return;
   if (auditStatisticsBridge.accept(message) || tokenJournalBridge.accept(message)) return;
   if (reglyphBridge.accept(message)) return;
+  if (figmaAuditBridge.accept(message)) return;
   if (layerNamesBridge.accept(message)) return;
   if (designCheckUiBridge.accept(message)) return;
   if (generationSessionBridge.accept(message)) return;
-  if (agentMcpScope.accept(message)||agentDraftStorage.accept(message)||agentNativeBroker.accept(message)||agentFigmaBroker.accept(message)) return;
   if (documentAuditBridge.accept(message)) return;
   if (!message || typeof message.type !== 'string') return;
   if(message.type==='audit-focus'){void focusAuditFinding(message);return;}
   if(message.type==='audit-focus-cancel'){if(Object.keys(message).length===2&&typeof message.requestId==='string'&&message.requestId.length<=150){if(contractFocusTask?.requestId===message.requestId)contractFocusTask=null;post({type:'audit-focus-cancelled',requestId:message.requestId});}return;}
   if(message.type==='audit-context-invalidated'){if(Object.keys(message).length===2&&lastAudit?.auditId===message.auditId)invalidateArea();return;}
   try {
-    if((documentAuditBridge.isActionBusy()||reglyphBridge.busy())&&['audit','load-contract','use-proxy','generation-prepare','generation-execute','native-diagnostic-request','focus','focus-scope'].includes(message.type))throw new Error('Дождитесь завершения действия с макетом.');
-    // Resolve RPC before busy checks: preparation is waiting for this response.
-    if (generationFrontend.accept(message)||generationProxy.accept(message)) return;
+    if((landingCanvas.busy()||documentAuditBridge.isActionBusy()||reglyphBridge.busy())&&['audit','load-contract','use-proxy','generation-prepare','generation-execute','native-diagnostic-request','focus','focus-scope'].includes(message.type))throw new Error('Дождитесь завершения действия с макетом.');
+    if(message.type==='contracts-progress'){
+      const run=activeAuditRun;if(run&&typeof message.requestId==='string'&&message.requestId.startsWith(run.requestId+':')&&pending.has(message.requestId)&&['PROXY_TIMEOUT','PROXY_UNAVAILABLE'].includes(message.code)){
+        const diagnostic=require('./document-audit/protocol').failureDiagnostic({code:message.code},run.requestId,run.stage,engine.stableHash,[message.requestId,Date.now()]);run.failures.push(diagnostic);if(run.failures.length>20)run.failures.splice(1,1);post({type:'audit-recovery',requestId:run.requestId,diagnostic,message:'Ожидаем ответ Proxy. Проверка продолжится автоматически…'});
+      }return;
+    }
     if (message.type === 'contracts-resolved') {
       const request = pending.get(message.requestId); if (!request) return;
       clearTimeout(request.timer); pending.delete(message.requestId);
-      if (message.error) request.reject(new Error(message.error)); else request.resolve(message.data);
+      if (message.error) request.reject(Object.assign(new Error(message.error),{code:message.code})); else request.resolve(message.data);
       return;
     }
-    if (message.type === 'generation-invalidate') { invalidateNativeDiagnostic(); generationController.invalidate(); generationProxy.invalidate(); generationFrontend.invalidate(); return; }
-    if (message.type === 'native-diagnostic-request') {
-      if(busy){post({type:'native-diagnostic-result',requestId:message.requestId,error:'NATIVE_DIAGNOSTIC_BUSY'});return;}
-      busy=true;try{await nativeDiagnosticBridge.handle(message);}finally{busy=false;}return;
-    }
-    if (message.type === 'generation-prepare' || message.type === 'generation-execute') {
-      if (busy) throw new Error('Дождитесь завершения текущей операции.');
-      busy = true;
-      try {
-        const result = message.type === 'generation-prepare'
-          ? await generationController.prepare(message.spec)
-          : await generationController.execute(message.sessionId, message.targets);
-        post({ type: 'generation-result', requestId: message.requestId, result });
-      } catch (error) {
-        post({ type: 'generation-error', requestId: message.requestId, message: error instanceof Error ? error.message : String(error) });
-      } finally { busy = false; }
-      return;
-    }
-    if (message.type === 'ready') { void catalogReaders.initialize(); refreshSelection(); return; }
+    if (message.type === 'ready') { refreshSelection(); return; }
     if (message.type === 'use-proxy') {
       if (busy) throw new Error('Дождитесь завершения проверки.');
-      generationController.invalidate(); generationProxy.invalidate(); generationFrontend.invalidate(); localMode = false; localContracts.clear(); generation++; lastAudit = null; focusNodes.clear();
+       localMode = false; localContracts.clear(); generation++; lastAudit = null; focusNodes.clear();
       post({ type: 'source-mode', mode: 'proxy' }); return;
     }
     if (message.type === 'load-contract') {
@@ -519,18 +559,25 @@ figma.ui.onmessage = async (message: any) => {
       const loaded = runtime.loadAuthoringSource(message.source), next = loaded.contract;
       if (message.release && (message.release.contractHash !== engine.stableHash(next) || message.release.sourceHash !== loaded.sourceHash
         || message.release.manualSourceHash !== next.package.manualSourceHash)) throw new Error('Авторский контракт не совпадает с выбранной версией пакета.');
-      generationController.invalidate(); generationProxy.invalidate(); generationFrontend.invalidate(); localContracts.clear(); registerLocal(message.source); localMode = true;
+       localContracts.clear(); registerLocal(message.source); localMode = true;
       generation++; lastAudit = null; focusNodes.clear();
       post({ type: 'contract-loaded', name: next.package.family || next.facts.component.family || next.package.id, revision: loaded.source.manual.metadata.revision });
       refreshSelection(); return;
     }
-    if(message.type==='audit-cancel'){if(activeArea&&activeArea.requestId===message.requestId){activeArea.cancelling=true;generation++;for(const [id,request] of pending)if(id.startsWith(message.requestId+':')){clearTimeout(request.timer);pending.delete(id);request.reject(new Error('Проверка области остановлена.'));}}else if(!activeArea&&lastAreaRequestId===message.requestId)post({type:'audit-cancelled',requestId:message.requestId});return;}
-    if (message.type === 'audit') { if (message.platform !== undefined && !['desktop','mobile-web','ios','android'].includes(message.platform)) throw new Error('Некорректная платформа проверки.'); await audit(message.requestId,{platform:message.platform}); void documentAuditBridge.refreshBindings(message.requestId+':native'); return; }
+    if(message.type==='audit-cancel'){
+      if(activeAuditRun?.requestId===message.requestId)activeAuditRun.cancelled=true;
+      if(activeArea&&activeArea.requestId===message.requestId){activeArea.cancelling=true;generation++;}
+      for(const [id,request]of pending)if(id.startsWith(message.requestId+':')){clearTimeout(request.timer);pending.delete(id);post({type:'resolve-contracts-cancel',requestId:id});request.reject(Error('AUDIT_CANCELLED'));}
+      if(!activeAuditRun&&!activeArea&&lastAreaRequestId===message.requestId)post({type:'audit-cancelled',requestId:message.requestId});return;
+    }
+    if (message.type === 'audit') { if (message.platform !== undefined && !['desktop','mobile-web','ios','android'].includes(message.platform)) throw new Error('Некорректная платформа проверки.');if(message.connectCatalogs!==undefined&&typeof message.connectCatalogs!=='boolean')throw Error('AUDIT_REQUEST_INVALID'); await runAuditRequest(message); void documentAuditBridge.refreshBindings(message.requestId+':native'); return; }
     if (message.type === 'focus' || message.type === 'focus-scope') {
-      if (!lastAudit || message.auditId !== lastAudit.auditId || auditPageId!==figma.currentPage.id) throw new Error('Результат устарел. Повторите проверку.');
-      if(verifyLastArea)await verifyLastArea();
-      const id = message.type === 'focus' ? focusNodes.get(message.evaluationId) : lastAudit.selection.components.find((component: any) => component.nodeId === message.nodeId)?.nodeId;
-      const node = id && await resolveNativeNode(figma,id);
+      const report=lastAudit,revision=lastAuditRevision;
+      const guard=()=>{if(!report||lastAudit!==report||report.auditId!==message.auditId||revision!==generation||auditPageId!==figma.currentPage.id)throw Error('Результат устарел. Повторите проверку.');};
+      guard();assertFocusObservation(report,revision);
+      const id = message.type === 'focus' ? focusNodes.get(message.evaluationId) : report.selection.components.find((component: any) => component.nodeId === message.nodeId)?.nodeId;
+      const node = id && await resolveNativeNode(figma,id,{read:(fn:any)=>boundedRead(fn,1200,guard),guard});
+      guard();assertFocusObservation(report,revision);
       if (!currentPageTarget(node,figma.currentPage.id)) throw new Error('Узел больше недоступен. Повторите проверку.');
       let page: BaseNode | null = node;
       while (page && page.type !== 'PAGE') page = page.parent;
@@ -538,5 +585,5 @@ figma.ui.onmessage = async (message: any) => {
       selectionId = selectionSignature([node as SceneNode]);
       figma.currentPage.selection = [node as SceneNode]; figma.viewport.scrollAndZoomIntoView([node as SceneNode]);
     }
-  } catch (error) { if(message.type==='audit'&&activeArea?.cancelling)return;post({ type: 'error', requestId: message.requestId, message: error instanceof Error ? error.message : String(error) }); }
+  } catch (error) { if(message.type==='audit'&&activeArea?.cancelling)return;if((error as any)?.sourceProjection)console.warn('[Apollo][contract-source]',JSON.stringify({requestId:message.requestId,projection:(error as any).sourceProjection}));post({ type: 'error', requestId: message.requestId, message: error instanceof Error ? error.message : String(error),diagnostic:(error as any)?.auditFailure||null }); }
 };

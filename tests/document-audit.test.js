@@ -7,7 +7,7 @@ function fixture(){
  const nodes=new Map(),collections=new Map(),events=new Map(),pageEvents=new Map(),calls=[],writes=[],messages=[];
  const page={id:'page',type:'PAGE',name:'Страница',parent:{id:'doc',type:'DOCUMENT'},children:[],selection:[],explicitVariableModes:{},on:(n,f)=>{if(!pageEvents.has(n))pageEvents.set(n,new Set());pageEvents.get(n).add(f);},off:(n,f)=>pageEvents.get(n)?.delete(f)};for(const prop of ['visible','resolvedVariableModes'])Object.defineProperty(page,prop,{configurable:true,get(){throw new TypeError('no such property '+prop+' on PAGE node');}});nodes.set(page.id,page);
  const sourcePage={id:'sources',type:'PAGE',name:'Определения',children:[],parent:page.parent};nodes.set(sourcePage.id,sourcePage);
- const api={currentPage:page,on:(n,f)=>{if(!events.has(n))events.set(n,new Set());events.get(n).add(f);},off:(n,f)=>events.get(n)?.delete(f),getNodeByIdAsync:async id=>nodes.get(id)||null,variables:{getVariableCollectionByIdAsync:async id=>collections.get(id)||null},importComponentByKeyAsync:async key=>{calls.push(key);const n=nodes.get('latest-'+key);if(!n)throw Error('denied');return n;},showUI(){},ui:{postMessage:m=>messages.push(JSON.parse(JSON.stringify(m)))},clientStorage:{getAsync:async()=>null,setAsync:async()=>{}},viewport:{scrollAndZoomIntoView:n=>writes.push(['focus',n.map(x=>x.id)])},createFrame:()=>{throw Error('corrective-write');}};
+ const api={currentPage:page,on:(n,f)=>{if(!events.has(n))events.set(n,new Set());events.get(n).add(f);},off:(n,f)=>events.get(n)?.delete(f),getNodeByIdAsync:async id=>nodes.get(id)||null,variables:{getVariableCollectionByIdAsync:async id=>collections.get(id)||null},importComponentByKeyAsync:async key=>{calls.push(key);const n=nodes.get('latest-'+key);if(!n)throw Error('denied');return n;},showUI(){},ui:{postMessage:m=>{messages.push(JSON.parse(JSON.stringify(m)));if(m.type==='v3-catalog-request'&&['deprecatedStyles','auditPolicy'].includes(m.operation))queueMicrotask(()=>api.ui.onmessage({type:'v3-catalog-response',requestId:m.requestId,data:null,error:'CATALOG_UNAVAILABLE'}));}},clientStorage:{getAsync:async()=>null,setAsync:async()=>{}},viewport:{scrollAndZoomIntoView:n=>writes.push(['focus',n.map(x=>x.id)])},createFrame:()=>{throw Error('corrective-write');}};
  function node(id,type='FRAME',parent=page,extra={}){const n=Object.assign({id,type,name:id,parent,visible:true,children:[],resolvedVariableModes:{}},extra);parent.children.push(n);nodes.set(id,n);return n;}
  function component(id,remote,key=id,parent=sourcePage){return node(id,'COMPONENT',parent,{remote,key});}
  function instance(id,main,parent=page){return node(id,'INSTANCE',parent,{getMainComponentAsync:async()=>main});}
@@ -41,16 +41,13 @@ if(require.main===module){
  test('focus keeps original roots through selection race during async recheck',async()=>{const f=fixture();f.theme();f.page.selection=[f.node('frame')];const b=bridge(f);b.accept(request(f));const m=await settle(f,'document-audit-result'),finding=m.result.checks[2].findings[0];const old=f.api.getNodeByIdAsync;f.api.getNodeByIdAsync=async id=>{f.page.selection=[];f.emit('selectionchange');return old(id);};b.accept({type:'document-audit-focus',schemaVersion:SCHEMA,requestId:'focus',runId:'run',findingId:finding.findingId,targetId:finding.targets[0].id});assert.equal((await settle(f,'document-audit-focus-result')).success,true);assert.equal(f.writes.length,1);b.stop();});
  test('cancelled, superseded and selection-changed runs cannot deliver late results',async()=>{for(const cause of ['cancel','supersede']){const f=fixture(),m=f.component('old',true,'key');f.component('latest-key',true,'key');f.page.selection=[f.instance('a',m)];let finish;f.api.importComponentByKeyAsync=()=>new Promise(r=>finish=r);const b=bridge(f);b.accept(request(f));while(!finish)await new Promise(r=>setTimeout(r,1));if(cause==='cancel')b.accept({type:'document-audit-cancel',schemaVersion:SCHEMA,requestId:'run'});else if(cause==='supersede'){f.page.selection=[];b.accept(request(f,'new','iOS'));}else{f.page.selection=[];f.emit('selectionchange');}finish(f.nodes.get('latest-key'));await new Promise(r=>setTimeout(r,5));assert.equal(f.messages.some(x=>x.type==='document-audit-result'&&x.requestId==='run'),false);b.stop();}});
  test('wrong cancellation id does not cancel a current run',async()=>{const f=fixture();f.theme();f.page.selection=[f.node('frame')];const b=bridge(f);b.accept(request(f));b.accept({type:'document-audit-cancel',schemaVersion:SCHEMA,requestId:'other'});await settle(f,'document-audit-result');b.stop();});
- test('bounded timeout does not leave a native run indefinitely pending',async()=>{const f=fixture(),m=f.component('old',true,'key');f.page.selection=[f.instance('a',m)];f.api.importComponentByKeyAsync=()=>new Promise(()=>{});const b=bridge(f,{timeoutMs:5,now:()=>0});b.accept(request(f));const result=await settle(f,'document-audit-result');assert.equal(result.result.checks[1].status,'incomplete');assert.equal(result.result.checks.some(c=>c.status==='running'),false);b.stop();});
-
- test('timeout before the first checkpoint emits an error and accepts the next request',async()=>{
-  const f=fixture(),m=f.component('old',true,'key');f.page.selection=[f.instance('a',m)];
-  f.api.importComponentByKeyAsync=()=>new Promise(()=>{});let reads=0;
-  const b=bridge(f,{timeoutMs:5,now:()=>reads++===0?0:6});
-  try{b.accept(request(f));const error=await settle(f,'document-audit-error');assert.equal(error.code,'NATIVE_TIMEOUT');assert.equal(f.messages.some(m=>m.type==='document-audit-result'),false);
-   f.component('latest-key',true,'key');f.api.importComponentByKeyAsync=async()=>f.nodes.get('latest-key');
-   b.accept(request(f,'next'));const result=await settle(f,'document-audit-result','next');assert.equal(result.result.checks.some(c=>c.status==='running'),false);
-  }finally{b.stop();}
+ test('a pending native read remains active until explicit cancellation and ignores late resolution',async()=>{
+  const f=fixture(),m=f.component('old',true,'key');f.page.selection=[f.instance('a',m)];let release;f.api.importComponentByKeyAsync=()=>new Promise(r=>release=r);const b=bridge(f,{timeoutMs:5});
+  try{b.accept(request(f));while(!release)await new Promise(r=>setTimeout(r,1));await new Promise(r=>setTimeout(r,20));assert.equal(f.messages.some(m=>m.type==='document-audit-error'||m.type==='document-audit-result'),false);b.accept({type:'document-audit-cancel',schemaVersion:SCHEMA,requestId:'run'});await settle(f,'document-audit-cancelled');release(m);await new Promise(r=>setTimeout(r,10));assert.equal(f.messages.some(m=>m.type==='document-audit-result'),false);}finally{b.stop();}
+ });
+ test('Stop before first checkpoint permits a new request without accepting the old late read',async()=>{
+  const f=fixture(),m=f.component('old',true,'key');f.page.selection=[f.instance('a',m)];let release;f.api.importComponentByKeyAsync=()=>new Promise(r=>release=r);const b=bridge(f,{timeoutMs:5});
+  try{b.accept(request(f));while(!release)await new Promise(r=>setTimeout(r,1));b.accept({type:'document-audit-cancel',schemaVersion:SCHEMA,requestId:'run'});f.component('latest-key',true,'key');f.api.importComponentByKeyAsync=async()=>f.nodes.get('latest-key');b.accept(request(f,'next'));const result=await settle(f,'document-audit-result','next');assert.equal(result.result.checks.some(c=>c.status==='running'),false);release(m);await new Promise(r=>setTimeout(r,10));assert.equal(f.messages.some(m=>m.type==='document-audit-result'&&m.requestId==='run'),false);}finally{b.stop();}
  });
 
  test('PAGE SceneNode-only getters throw; explicit page Theme alone is still checked for nested selection',async()=>{
@@ -81,6 +78,24 @@ if(require.main===module){
  test('late or forged focus cannot invalidate a newer registered result',async()=>{
   const f=fixture();f.theme();f.page.selection=[f.node('frame')];const b=bridge(f);b.accept(request(f,'new'));const r=await settle(f,'document-audit-result','new');
   b.accept({type:'document-audit-focus',schemaVersion:SCHEMA,requestId:'old-focus',runId:'old',findingId:r.result.checks[2].findings[0].findingId,targetId:'old-target'});await settle(f,'document-audit-focus-result','old-focus');assert.equal(f.messages.some(m=>m.type==='document-audit-invalidated'),false);b.stop();
+ });
+ test('one rejected physical import emits one contextual diagnostic while every occurrence remains UNKNOWN',async()=>{
+  const f=fixture(),key='a'.repeat(40),main=f.component('source',true,key),failures=[];let imports=0;
+  f.page.selection=['one','two','three'].map(id=>f.instance(id,main));
+  f.api.importComponentByKeyAsync=async()=>{imports++;throw Object.assign(Error('Permission denied for synthetic library'),{code:'LIBRARY_ACCESS_DENIED'});};
+  const o=await collect(f.api,f.context(),{hash,assertCurrent:()=>{},readOperation:fn=>Promise.resolve().then(fn),onReadFailure:e=>failures.push(e)});
+  assert.equal(imports,1);assert.equal(failures.length,1);assert.equal(failures[0].nativeRead.operation,'importComponentByKeyAsync');assert.equal(failures[0].nativeRead.resourceId,key);
+  assert.equal(o.checks.find(c=>c.id==='freshness').findings.filter(f=>f.status==='unknown').length,3);
+ });
+ test('same-millisecond native failures preserve distinct API identities and safe original reasons',()=>{
+  const {failureDiagnostic,failureValid}=require('../src/document-audit/protocol'),{readError}=require('../src/document-audit/reads');
+  const make=(error,key)=>failureDiagnostic(readError(error,{operation:'importComponentByKeyAsync',nodeId:'node',resourceId:key}),'run','collect',hash,[[1,1],1234]);
+  const denied=make(Object.assign(Error('Permission denied: PRIVATE SYNTHETIC MESSAGE'),{code:'LIBRARY_ACCESS_DENIED'}),'a'.repeat(40)),missing=make(Error('Component is not published'),'b'.repeat(40));
+  assert.notEqual(denied.errorId,missing.errorId);assert.ok(failureValid(denied)&&failureValid(missing));assert.equal(denied.schemaVersion,'apollo.native-audit-failure.v2');assert.equal(denied.read.sourceCode,'LIBRARY_ACCESS_DENIED');assert.equal(denied.read.sourceReason,'access-denied');assert.equal(missing.read.sourceReason,'not-found-or-unpublished');assert.equal(JSON.stringify(denied).includes('PRIVATE'),false);
+  const unknown=make(Error('Unexpected synthetic condition'),'c'.repeat(40));assert.equal(unknown.read.sourceReason,'unknown');assert.equal(unknown.read.sourceCode,null);
+  const token=make(Error('private_exception_token'),'c'.repeat(40));assert.equal(token.read.sourceCode,null);assert.equal(token.read.sourceReason,'unknown');assert.match(token.read.sourceMessageHash,/^[a-f0-9]{64}$/);assert.equal(JSON.stringify(token).includes('private_exception_token'),false);
+  for(const message of ['Network request failed','CATALOG_TIMEOUT','CATALOG_RESPONSE_INVALID'])assert.equal(make(Error(message),'d'.repeat(40)).read.sourceReason,{'Network request failed':'network',CATALOG_TIMEOUT:'timeout',CATALOG_RESPONSE_INVALID:'invalid-response'}[message]);
+  assert.equal(failureValid(Object.assign({},denied,{read:Object.assign({},denied.read,{rawMessage:'PRIVATE'})})),false);
  });
  test('request is closed and result coverage is always a native subset',()=>{const f=fixture();assert.equal(requestValid(request(f)),true);assert.equal(requestValid(Object.assign(request(f),{contractReady:true})),false);});
 }

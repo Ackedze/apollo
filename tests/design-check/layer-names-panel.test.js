@@ -31,6 +31,10 @@ test('catalog opens a labelled modal without starting, selection gates start, cl
   assert.equal(h.calls.start,0);assert.equal(dialog.open,true);assert.equal(dialog.parentElement,h.d.body);
   assert.equal(h.d.getElementById(dialog.getAttribute('aria-labelledby')).textContent,'Переназвать слои');
   assert.match(dialog.textContent,/Выбери область и запусти проверку/);assert.equal(h.button('Проверить названия').disabled,true);
+  const invitation=dialog.querySelector('.apollo-shared-stage.is-idle'),caption=invitation.querySelector('.apollo-shared-stage-copy>p'),description=invitation.querySelector('.apollo-shared-stage-description');
+  assert.equal(caption.textContent,'Предложу понятные названия по содержимому слоёв, а ты выберешь, какие применить');
+  assert.equal(description.textContent,'Выбери область и запусти проверку');assert.equal(caption.querySelectorAll('br').length,1);
+  assert.equal(h.w.getComputedStyle(caption).fontSize,'18px');assert.equal(h.w.getComputedStyle(description).fontSize,'14px');
   const dialogStyle=h.w.getComputedStyle(dialog);assert.equal(dialogStyle.position,'fixed');assert.equal(dialogStyle.inset,'8px');assert.equal(dialogStyle.borderRadius,'36px');
   h.set({validSelection:true});assert.equal(h.button('Проверить названия').disabled,false);
   h.set({available:false});assert.equal(h.button('Проверить названия').disabled,true);
@@ -111,22 +115,14 @@ test('floating footer uses its own intrinsic width and table reserves at most tw
 test('centered mascot and one current stage follow capture, context, registration and writes',async()=>{
  const h=harness({validSelection:true});try{
   await h.click('Переназвать слои');await h.click('Проверить названия');
-  const progress=()=>h.d.querySelector('.apollo-skill-progress'),current=()=>progress().querySelector('h3').textContent,style=node=>h.w.getComputedStyle(node);
+  const progress=()=>h.d.querySelector('.apollo-shared-stage'),current=()=>progress().querySelector('.apollo-shared-stage-copy>p').textContent,style=node=>h.w.getComputedStyle(node);
   assert.equal(current(),'Читаем выделенные слои…');
   assert.doesNotMatch(h.d.querySelector('main').textContent,/Выбери область/);
-  assert.equal(progress().classList.contains('design-check-sr-only'),false);
   assert.equal(h.d.querySelector('[role=status]').closest('[aria-busy=true]'),null,'live updates stay outside the busy content region');
-  assert.equal(progress().children.length,2);assert.equal(progress().querySelectorAll('.apollo-mascot.is-checking').length,1);
-  assert.equal(style(progress()).textAlign,'center');assert.equal(style(progress()).alignItems,'center');assert.equal(style(progress()).gap,'10px');
-  // JSDOM ignores selector specificity when the later global mascot rule is applied.
-  const mascotRule=Array.from(h.d.styleSheets[0].cssRules).find(r=>r.selectorText==='.apollo-skill-progress .apollo-mascot');
-  assert.equal(mascotRule.style.getPropertyValue('width'),'166px');assert.equal(mascotRule.style.getPropertyValue('height'),'166px');
-  const body=style(progress().querySelector('.apollo-mascot-body'));assert.equal(body.width,'144px');assert.equal(body.height,'144px');assert.equal(body.borderRadius,'50%');assert.equal(body.boxShadow,'none');
-  const header=parseFloat(style(h.d.querySelector('header')).flexBasis),top=parseFloat(style(h.d.querySelector('main')).paddingTop),bottom=parseFloat(style(h.d.querySelector('main')).paddingBottom);
-  for(const [width,height] of [[800,860],[1024,860],[800,600],[400,600]]){
-    const dialogHeight=height-16,center=8+header+top+(dialogHeight-header-top-bottom)/2;
-    assert.equal(center,height/2,`CSS clearance model centers progress at ${width}×${height}; not a pixel measurement`);
-  }
+  assert.equal(progress().children.length,2);
+  const mascot=progress().querySelector('img');assert.equal(mascot.width,162);assert.equal(mascot.height,166);
+  assert.match(mascot.src,/^data:image\/png;base64,/);
+  assert.equal(style(progress()).textAlign,'center');assert.equal(style(progress()).alignItems,'center');assert.equal(style(progress()).gap,'24px');
   h.set({status:'planning',run:{readCount:0,step:1}});assert.equal(current(),'Ожидаем ответ агента…');
   for(const [phase,label] of [['preparing','Подготавливаем запрос…'],['connecting','Ожидаем ответа сервиса…'],['waiting-agent','Ожидаем события от агента…'],['retrying','Агент повторяет подключение…'],['receiving','Получаем ответ агента…']]){
    h.set({diagnostics:{phase,elapsedMs:100,idleMs:0,events:[]},diagnosticsAt:Date.now()});assert.equal(current(),label);
@@ -138,9 +134,9 @@ test('centered mascot and one current stage follow capture, context, registratio
   await h.click('Закрыть навык');await h.click('Переназвать слои');assert.equal(h.calls.start,1);assert.equal(current(),'Уточняем содержимое слоёв…');
   h.set({status:'registering'});assert.equal(current(),'Проверяем актуальность предложений…');
   assert.doesNotMatch(progress().textContent,/%|осталось|секунд/i);
-  await h.click('Остановить');assert.equal(progress(),null);assert.match(h.d.querySelector('main').textContent,/Выбери область/);
+  await h.click('Остановить');assert.match(current(),/^Предложу понятные названия/);assert.equal(progress().querySelector('.apollo-shared-stage-description').textContent,'Выбери область и запусти проверку');assert(progress().classList.contains('is-idle'));
   for(const [status,label] of [['applying','Применяем выбранные названия…'],['undoing','Возвращаем прежние названия…']]){
-    h.set({status});assert.equal(current(),label);assert.equal(h.d.querySelectorAll('.apollo-skill-progress .apollo-mascot').length,1);assert.equal(h.d.querySelector('footer button').disabled,true);
+    h.set({status});assert.equal(current(),label);assert.equal(h.d.querySelectorAll('.apollo-shared-stage>img').length,1);assert.equal(h.d.querySelector('footer button').disabled,true);
   }
  }finally{h.destroy();}
 });
@@ -165,11 +161,12 @@ test('Skills is the last top navigation action and keeps existing mode and chat 
  try{
   w.eval(js+'\nwindow.SkillUi=SkillUi;');shell=w.SkillUi.mountNavigation(d.querySelector('#root'));await tick();
   const buttons=Array.from(d.querySelectorAll('nav[aria-label="Разделы Apollo"] > button'));
-  assert.deepEqual(buttons.map(b=>b.getAttribute('aria-label')),['Проверка','Тексты','Генерация','Открыть чат с Apollo','Навыки']);
-  buttons[4].click();await tick();assert.equal(shell.getState().mode,'skills');assert.equal(buttons[4].getAttribute('aria-pressed'),'true');
-  buttons[2].click();await tick();assert.equal(shell.getState().mode,'generation');
-  buttons[3].click();await tick();assert.equal(shell.getState().chat.open,true);
-  buttons[4].click();await tick();assert.equal(shell.getState().chat.open,false);assert.equal(shell.getState().mode,'skills');
-  buttons[0].click();await tick();assert.equal(shell.getState().mode,'check');assert.equal(shell.getState().view,'audit');
+  assert.deepEqual(buttons.map(b=>b.getAttribute('aria-label')),['Проверка','Генерация','Открыть чат с Apollo','Тулзы']);
+  const [design,generation,chat,tools]=buttons;
+  tools.click();await tick();assert.equal(shell.getState().mode,'skills');assert.equal(tools.getAttribute('aria-pressed'),'true');
+  generation.click();await tick();assert.equal(shell.getState().mode,'generation');
+  chat.click();await tick();assert.equal(shell.getState().chat.open,true);
+  tools.click();await tick();assert.equal(shell.getState().chat.open,false);assert.equal(shell.getState().mode,'skills');
+  design.click();await tick();assert.equal(shell.getState().mode,'check');assert.equal(shell.getState().view,'audit');
  }finally{shell?.destroy();w.close();}
 });

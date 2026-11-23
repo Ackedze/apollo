@@ -4,7 +4,7 @@ export const AREA_COMPONENT_LIMIT = 1000;
 export const AREA_IDENTITY_BUDGET_MS = 15000;
 export function selectionSignature(nodes: readonly SceneNode[]) { return nodes.map(node => node.id).sort().join('|'); }
 
-export async function scanArea(selection: readonly SceneNode[], assertCurrent: () => void, observe?: (nodes: Map<string, SceneNode>) => void) {
+export async function scanArea(selection: readonly SceneNode[], assertCurrent: () => void, observe?: (nodes: Map<string, SceneNode>) => void, readOperation?: <T>(work:()=>T|Promise<T>)=>Promise<T>) {
   const selected = new Set(selection.map(node => node.id));
   const roots = selection.filter(node => {
     let parent = node.parent;
@@ -41,7 +41,7 @@ export async function scanArea(selection: readonly SceneNode[], assertCurrent: (
           const started=Date.now(),timeoutMs=Math.max(0,identityDeadline-started);
           let issue='';
           try{
-            const main=node.type==='COMPONENT'?node:await boundedRead(()=>node.getMainComponentAsync(),timeoutMs,assertCurrent);
+            const main=node.type==='COMPONENT'?node:await (readOperation?readOperation(()=>node.getMainComponentAsync()):boundedRead(()=>node.getMainComponentAsync(),timeoutMs,assertCurrent));
             assertCurrent();identity.componentKey=main?.key||'';identity.componentSetKey=main?.parent?.type==='COMPONENT_SET'?main.parent.key:'';
             identity.componentName=main?.parent?.type==='COMPONENT_SET'?main.parent.name:main?.name||'';
             if(!identity.componentKey&&!identity.componentSetKey){issue='area-identity-unavailable';identity.identityRead={code:'AREA_IDENTITY_UNAVAILABLE',operation:'getMainComponentAsync',elapsedMs:Date.now()-started};}

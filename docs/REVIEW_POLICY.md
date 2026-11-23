@@ -13,10 +13,10 @@
 | R2 | Audit classification, snapshot/diff, assessment, filters, policies, reference loading, contracts, stats, Agent | 1 актуальный trusted approval от code owner |
 | R3 | Manifest permissions/domains, network transport, dependencies, workflows, build/release и privacy boundary | 1 актуальный trusted approval от code owner и явная security-проверка |
 
-Workflow `Review policy` вычисляет риск по изменённым путям. Approval считается актуальным, только если он относится к текущему head commit PR и оставлен участником с `write`, `maintain` или `admin` permission. Более строгая классификация имеет приоритет.
+Workflow `Review policy` вычисляет риск по изменённым путям. Более строгая классификация имеет приоритет. Workflow проверяет последнее решение @Ackedze и SHA коммита, который он одобрил.
 
 Для любого уровня риска требуется один актуальный approval владельца
-**@Ackedze**. Workflow проверяет trusted approval, а защита `main` дополнительно
+**@Ackedze**. Workflow проверяет его approval, а защита `main` дополнительно
 требует code owner review; `CODEOWNERS` назначает владельцем всех файлов @Ackedze.
 Предоставление участнику `Write` не делает его финальным ревьюером.
 Защита отклоняет устаревшие approvals, требует актуальной базы и обязательных

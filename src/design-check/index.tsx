@@ -77,7 +77,7 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
   }, [chat.open, controller, restoreFocus]);
   useEffect(() => { if (conversation.current) conversation.current.scrollTop = conversation.current.scrollHeight; }, [chat.messages, chat.busy, chat.error]);
   useEffect(() => {
-    if ((!chat.open && chat.proxy.busy !== true) || chat.busy) return;
+    if (!chat.open && chat.proxy.busy !== true && !chat.busy) return;
     const timer = window.setInterval(() => { void controller.refreshProxyStatus(); }, 3000);
     return () => window.clearInterval(timer);
   }, [chat.open, chat.busy, chat.proxy.busy, controller]);

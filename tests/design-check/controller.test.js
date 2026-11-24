@@ -387,6 +387,25 @@ test('errors and empty agent replies stay visible without fabricated messages', 
     assert.equal(controller.getState().chat.messages.length, 1); assert.ok(controller.getState().chat.error);
   }
 });
+test('health recovery clears a lost client wait after the server finishes', async () => {
+  let serverBusy = false, signal;
+  const controller = createDesignCheckController({ tabs, dialogue: {
+    status: async () => ({ available: true, version: 'test', busy: serverBusy }),
+    send: value => {
+      signal = value.signal; serverBusy = true;
+      return new Promise((resolve, reject) => value.signal.addEventListener('abort', () => reject(Object.assign(new Error('Aborted'), { name: 'AbortError' }))));
+    },
+  } });
+  const pending = controller.sendChat('lost response'); await tick();
+  await controller.refreshProxyStatus();
+  assert.equal(controller.getState().chat.busy, true);
+  serverBusy = false; await controller.refreshProxyStatus(); await pending;
+  assert.equal(signal.aborted, true);
+  assert.equal(controller.getState().chat.busy, false);
+  assert.equal(controller.getState().chat.error, 'Ответ сервера не дошёл до Apollo. Повтори вопрос.');
+  assert.deepEqual(controller.getState().chat.messages.map(entry => entry.role), ['user']);
+  controller.destroy();
+});
 test('dispose prevents delayed results from publishing into an unmounted UI', async () => {
   const reply = deferred(); let notifications = 0;
   const controller = createDesignCheckController({ tabs, dialogue: { cancelScope: 'client-only', send: () => reply.promise } });

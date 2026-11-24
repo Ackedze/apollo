@@ -222,9 +222,15 @@ function createDesignCheckController(options = {}) {
     if (destroyed || !proxy || ![true, false, null].includes(proxy.available)) return;
     ++proxySequence;
     const busy = typeof proxy.busy === 'boolean' ? proxy.busy : null;
-    setChat({ proxy: { available: proxy.available, version: typeof proxy.version === 'string' ? proxy.version : null, busy,
-      compatibility: proxy.compatibility || (proxy.available === false ? null : state.chat.proxy.compatibility) || null },
-      notice: busy === false ? '' : state.chat.notice });
+    const nextProxy = { available: proxy.available, version: typeof proxy.version === 'string' ? proxy.version : null, busy,
+      compatibility: proxy.compatibility || (proxy.available === false ? null : state.chat.proxy.compatibility) || null };
+    if (busy === true && activeChat && state.chat.busy) activeChat.serverBusyObserved = true;
+    if (busy === false && activeChat?.serverBusyObserved && state.chat.busy) {
+      const pending = activeChat; activeChat = null; pending.abort.abort();
+      setChat({ proxy: nextProxy, busy: false, notice: '', error: 'Ответ сервера не дошёл до Apollo. Повтори вопрос.' });
+      return;
+    }
+    setChat({ proxy: nextProxy, notice: busy === false ? '' : state.chat.notice });
   }
   async function refreshProxyStatus() {
     if (!options.dialogue?.status) return;
@@ -252,7 +258,7 @@ function createDesignCheckController(options = {}) {
     revisions.agentSource = (revisions.agentSource || 0) + 1;
     const requestId = `design-check-chat-${++sequence}`, source = state.chat.source;
     const dialogueLibrary=['iOS','Android'].includes(state.settings.pickerLabel)?'abm':'ab';
-    const abort = new AbortController(); activeChat = { requestId, abort, contextKey: state.contextKey };
+    const abort = new AbortController(); activeChat = { requestId, abort, contextKey: state.contextKey, serverBusyObserved: false };
     const history = state.chat.messages.filter(entry => ['user', 'assistant'].includes(entry.role)&& (dialogueLibrary!=='abm'||entry.dialogueLibrary!=='ab')).slice(dialogueLibrary==='abm'?-30:-12)
       .map(entry => ({ role: entry.role, text: entry.text.trim().slice(0, 8000) }));
     let dispatched = false;

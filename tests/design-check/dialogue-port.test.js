@@ -40,6 +40,26 @@ test('rejects transport errors, empty bodies and mismatched source identity', as
 });
 test('health means endpoint availability, separate from rule coverage', async () => {
   const { port, calls } = setup({ ok: true, proxy: { version: 'synthetic' }, codex: { configured: false } });
-  assert.deepEqual(await port.status(), { available: true, version: 'synthetic' });
+  assert.deepEqual(await port.status(), { available: true, version: 'synthetic', busy: null });
   assert.equal(calls[0].url, 'http://localhost:3001/health'); assert.equal(calls[0].request.method, 'GET');
+});
+
+
+test('busy health prevents dispatch and preserves cancellation; a racing busy response has a typed friendly error',async()=>{
+ for(const stage of ['health','post']){
+  let posts=0;
+  const port=createExistingDialoguePort({endpoint:'http://localhost:3001/analyze',createSessionId:()=> 'busy-fixture',request:async(url,options)=>{
+   if(url.endsWith('/health'))return {ok:true,json:async()=>({ok:true,capabilities:{dialoguePlatformRouting:true},agent:{busy:stage==='health'}})};
+   posts++;return {ok:false,status:429,json:async()=>({success:false,code:'APOLLO_AGENT_BUSY',error:'AI-агент уже обрабатывает другой запрос Apollo. Токены: всего 0.'})};
+  }});
+  await assert.rejects(port.send({...input(),dialoguePlatform:'iOS'}),error=>error.code==='APOLLO_AGENT_BUSY'&&!error.message.includes('Токены'));
+  assert.equal(posts,stage==='health'?0:1);
+ }
+});
+
+test('ABM transport permits thirty messages and still rejects larger histories',async()=>{
+ const history=Array.from({length:30},(_,i)=>({role:i%2?'assistant':'user',text:'Synthetic '+i}));
+ const port=createExistingDialoguePort({endpoint:'http://localhost:3001/analyze',createSessionId:()=> 'memory-fixture',request:async(_url,options)=>({ok:true,json:async()=>options.method==='GET'?{ok:true,capabilities:{dialoguePlatformRouting:true}}:{success:true,source:'codex',dialogueLibrary:'abm',result:'Reply'}})});
+ assert.equal((await port.send({...input(),dialoguePlatform:'iOS',dialogue:history})).text,'Reply');
+ await assert.rejects(port.send({...input(),dialoguePlatform:'iOS',dialogue:[...history,history[0]]}),/Unsupported/);
 });

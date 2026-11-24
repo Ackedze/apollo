@@ -13,6 +13,7 @@ import { tabDefinitions } from "./v3/config/tabs";
 import { createDesignCheckController } from "./controller";
 import { createExistingDialoguePort } from "./dialogue-port";
 import { MarkdownMessage } from "./MarkdownMessage";
+import { AssistantAnswer } from "./AssistantAnswer";
 import "./v3/shell.css";
 import "./integration.css";
 import "./new-shell.css";
@@ -55,6 +56,7 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
   const panel = useRef<HTMLDivElement>(null), input = useRef<HTMLTextAreaElement>(null);
   const conversation = useRef<HTMLDivElement>(null);
   const [draft, setDraft] = useState('');
+  const draftRevision = useRef(0);
   useLayoutEffect(() => {
     if (!chat.open || !input.current) return;
     input.current.style.height = 'auto';
@@ -74,12 +76,23 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
     return () => document.removeEventListener('keydown', leaveChat);
   }, [chat.open, controller, restoreFocus]);
   useEffect(() => { if (conversation.current) conversation.current.scrollTop = conversation.current.scrollHeight; }, [chat.messages, chat.busy, chat.error]);
+  useEffect(() => {
+    if ((!chat.open && chat.proxy.busy !== true) || chat.busy) return;
+    const timer = window.setInterval(() => { void controller.refreshProxyStatus(); }, 3000);
+    return () => window.clearInterval(timer);
+  }, [chat.open, chat.busy, chat.proxy.busy, controller]);
   const connected = chat.transport === 'configured';
   function submit(event: React.FormEvent) {
     event.preventDefault();
     if (chat.busy) { controller.cancelChat(); return; }
+    if (controller.getState().chat.busy) return;
     if (!draft.trim() || draft.length > 8000 || !connected) return;
-    void controller.sendChat(draft); setDraft('');
+    if (chat.proxy.busy === true) return;
+    const submitted = draft, revision = draftRevision.current;
+    setDraft('');
+    void controller.sendChat(submitted).then(accepted => {
+      if (!accepted && draftRevision.current === revision) setDraft(current => current || submitted);
+    });
   }
   if (!chat.open) return null;
   return <section id="apollo-chat-screen" className="design-check-chat-screen" role="region" aria-label="Чат с Apollo">
@@ -100,18 +113,19 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
           </div>}
           {chat.messages.map((message, index) => <article key={`${message.requestId}-${message.role}-${index}`} className={`message-card ${message.role}`}>
             {message.role === 'user' ? <div className="user-msg"><div className="user-msg__stack"><div className="user-msg__line"><div className="user-msg__container"><MarkdownMessage text={message.text} /></div></div></div></div>
-              : <div className="assistant-msg"><div className="assistant-msg__container"><div className="assistant-copy"><MarkdownMessage text={message.text} /></div><p className="design-check-provenance">Агент: {message.provider === 'alfagen' ? 'AlfaGen' : message.provider === 'claude' ? 'Claude' : message.provider === 'codex' ? 'Codex' : 'не указан прокси'} · база знаний: {message.knowledgeRelease == null ? 'версия не возвращена' : typeof message.knowledgeRelease === 'string' ? message.knowledgeRelease : JSON.stringify(message.knowledgeRelease)}. Ответ не меняет результат проверки по контракту.</p></div></div>}
+              : <div className="assistant-msg"><div className="assistant-msg__container"><div className="assistant-copy"><AssistantAnswer text={message.text} blocks={message.answerBlocks} provenance={message.dialogueLibrary === 'abm' ? null : <p className="design-check-provenance">Агент: {message.provider === 'alfagen' ? 'AlfaGen' : message.provider === 'claude' ? 'Claude' : message.provider === 'codex' ? 'Codex' : 'не указан прокси'} · база знаний: {message.knowledgeRelease == null ? 'версия не возвращена' : typeof message.knowledgeRelease === 'string' ? message.knowledgeRelease : JSON.stringify(message.knowledgeRelease)}. Ответ не меняет результат проверки по контракту.</p>} /></div></div></div>}
           </article>)}
           {chat.busy && <div className="assistant-actions loading" role="status"><span className="spinner" aria-hidden="true" /><span>Apollo думает</span></div>}
+          {!chat.busy && (chat.proxy.busy === true || chat.notice) && <p className="apollo-chat-waiting" role="status">{chat.notice || 'Apollo ещё обрабатывает запрос. Новый вопрос можно отправить, когда агент освободится.'}</p>}
           {chat.error && <p className="design-check-error" role="alert">{chat.error}</p>}
         </div>
       </section>
       <form className="agent-composer" onSubmit={submit}>
         <div className="apollo-message-field">
         <textarea className="agent-composer-input" ref={input} rows={1} aria-label="Вопрос Apollo" placeholder="Задайте вопрос" disabled={!connected || chat.busy}
-          value={draft} maxLength={8000} onChange={event => setDraft(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); } }} />
-        <button className={`agent-input-addon${chat.busy ? ' is-stop' : ''}`} type="submit" disabled={!connected || (!chat.busy && !draft.trim())}
-          aria-label={chat.busy ? 'Остановить ожидание ответа' : 'Отправить вопрос'} title={chat.busy ? 'Остановить ожидание. Серверный запрос может продолжаться.' : 'Отправить вопрос'}>
+          value={draft} maxLength={8000} onChange={event => { draftRevision.current++; setDraft(event.target.value); }} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); } }} />
+        <button className={`agent-input-addon${chat.busy ? ' is-stop' : ''}`} type="submit" disabled={!connected || (!chat.busy && (!draft.trim() || chat.proxy.busy === true))}
+          aria-label={chat.busy ? 'Остановить ожидание ответа' : 'Отправить вопрос'} title={chat.busy ? 'Остановить ожидание. Серверный запрос может продолжаться.' : chat.proxy.busy === true ? 'Apollo ещё обрабатывает запрос' : 'Отправить вопрос'}>
           {chat.busy ? <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" /></svg>
             : <img src={assets.sendCircle} alt="" />}
         </button>
@@ -245,7 +259,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
       actionLoading={activeScreen === 'check' && state.documentAction.busy} actionType={activeScreen === 'check' && state.documentAction.busy ? 'secondary' : 'primary'} compact={false}
       shellAuditEnabled={settings.shellAuditEnabled} connectCatalogs={v3?true:settings.connectCatalogs} showExpectedCustomizations={settings.showExpectedCustomizations}
       hideCustomizations={settings.hideCustomizations} experimentalContractV2Enabled={settings.experimentalContractV2Enabled}
-      controlAvailability={{ pageTypeId: !actionBusy, channelId: !actionBusy, pickerLabel: !actionBusy, compact: false,
+      controlAvailability={{ pageTypeId: !actionBusy, channelId: !actionBusy, pickerLabel: !actionBusy && !state.chat.busy && state.chat.proxy.busy !== true, compact: false,
         showExpectedCustomizations: capabilities.showExpectedCustomizations === true, hideCustomizations: true, shellAuditEnabled: capabilities.shellAuditEnabled === true, connectCatalogs: !v3&&!actionBusy,
         experimentalContractV2Enabled: capabilities.experimentalContractV2Enabled === true, captureExample: controller.hasCapturePort() }}
       onActionPress={() => {

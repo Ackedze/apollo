@@ -17,6 +17,7 @@ type PickerButtonProps = {
   iconSize?: IconSlotSize;
   className?: string;
   onPress?: () => void;
+  title?: string;
 };
 
 export function PickerButton({
@@ -29,6 +30,7 @@ export function PickerButton({
   iconSize = 16,
   className,
   onPress,
+  title,
 }: PickerButtonProps): React.JSX.Element {
   const buttonClassName = [
     styles.button,
@@ -45,6 +47,7 @@ export function PickerButton({
       type="button"
       className={buttonClassName}
       disabled={disabled}
+      title={title}
       aria-expanded={open}
       onClick={onPress}
     >

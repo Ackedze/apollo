@@ -110,3 +110,32 @@ for (const method of ['startAudit', 'startDocumentAudit']) test(method + ' reche
   const result = controller[method](); controller.setAuditReady(false); release();
   assert.equal(await result, false); assert.equal(calls, 0); assert.equal(controller.getState().auditBusy, false);
 });
+
+test('the shared compatibility reader preserves agent busy state for the platform picker', async () => {
+  const current = health(); current.agent = { busy: true }; current.codex = { busy: false };
+  const client = createCompatibilityClient({ endpoint: '/health', request: async () => ({ ok: true, json: async () => current }) });
+  const dialogue = require('../src/design-check/dialogue-port').createExistingDialoguePort({
+    endpoint: 'http://localhost:3001/analyze', createSessionId: () => 'fixture', readStatus: client.refresh,
+    request: async () => { throw Error('Status must use the shared reader'); },
+  });
+  const controller = createDesignCheckController({ dialogue });
+  await controller.refreshProxyStatus();
+  assert.equal(controller.getState().chat.proxy.compatibility.state, 'compatible');
+  assert.equal(controller.getState().chat.proxy.busy, true);
+  assert.equal(controller.updateSetting('pickerLabel', 'iOS'), false);
+  current.agent.busy = false; await controller.refreshProxyStatus();
+  assert.equal(controller.getState().chat.proxy.busy, false);
+  assert.equal(controller.updateSetting('pickerLabel', 'iOS'), true); controller.destroy();
+});
+
+test('Stop during the compatibility handshake preserves an unsent question and blocks late dispatch', async () => {
+  let release, sends = 0;
+  const controller = createDesignCheckController({ beforeOperation: () => new Promise(resolve => { release = resolve; }),
+    dialogue: { send: async () => { sends++; return { text: 'Unexpected reply' }; } } });
+  const sent = controller.sendChat('Unsent question');
+  assert.equal(controller.getState().chat.busy, true);
+  assert.equal(await controller.sendChat('Duplicate question'), false);
+  assert.equal(controller.cancelChat(), true); release();
+  assert.equal(await sent, false); assert.equal(sends, 0);
+  assert.deepEqual(controller.getState().chat.messages, []); controller.destroy();
+});

@@ -180,6 +180,63 @@
 
 .apollo-new #generation-panel .apollo-generation-options button:disabled { color:#62626b; cursor:default; }
 
+/* Same surface, radius and inset as overview cards in this shell. */
+.apollo-new .apollo-guide-recommendations { box-sizing:border-box; background:rgba(0,0,0,.04); border-radius:24px; padding:20px; margin:16px 0; overflow-wrap:anywhere; min-width:0; }
+.apollo-new .apollo-guide-recommendations__summary { display:flex; align-items:center; gap:16px; list-style:none; cursor:pointer; color:var(--apollo-text); }
+.apollo-new .apollo-guide-recommendations__summary::-webkit-details-marker { display:none; }
+.apollo-new .apollo-guide-recommendations__summary:focus { outline:none; }
+.apollo-new .apollo-guide-recommendations__heading { flex:1; min-width:0; }
+.apollo-new .apollo-guide-recommendations__title { display:block; font:600 16px/24px "Apollo Alfa",sans-serif; }
+.apollo-new .apollo-guide-recommendations__chevron { flex:0 0 7px; width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); margin:0 3px 4px; }
+.apollo-new .apollo-guide-recommendations[open] .apollo-guide-recommendations__chevron { transform:rotate(225deg); margin-bottom:-4px; }
+.apollo-new .apollo-guide-recommendations__content { padding-top:16px; }
+.apollo-new .apollo-guide-recommendations__family { margin:16px 0 8px; font:600 14px/20px "Apollo Alfa",sans-serif; }
+.apollo-new .apollo-guide-recommendations__content > div:first-child .apollo-guide-recommendations__family { margin-top:0; }
+.apollo-new .apollo-guide-recommendations__question { margin:16px 0 8px; }
+.apollo-new .apollo-guide-recommendations .markdown-root > .md-block:first-child { margin-top:0; }
+.apollo-new .apollo-guide-recommendations .markdown-root > .md-block:last-child { margin-bottom:0; }
+
+/* Answer hierarchy: source-grounded content stays outside the guide disclosure. */
+.apollo-new .apollo-answer-question { margin:24px 0 16px; }
+.apollo-new .apollo-answer-question .md-p,.apollo-new .apollo-guide-recommendations__question { font:600 16px/24px "Apollo Alfa",sans-serif; }
+.apollo-new .apollo-answer-rule { margin:0 0 24px; }
+.apollo-new .apollo-answer-rule .markdown-root > .md-block:first-child { margin-top:0; }
+.apollo-new .apollo-answer-rule .markdown-root > .md-block:last-child { margin-bottom:0; }
+.apollo-new .apollo-answer-pattern { font-size:14px; line-height:20px; }
+.apollo-new .apollo-answer-source { font:400 13px/20px "Apollo Alfa",sans-serif; color:var(--apollo-muted); margin:0 0 24px; }
+.apollo-new .apollo-answer-source span { color:var(--apollo-muted); }
+.apollo-new .apollo-answer-pattern a,.apollo-new .apollo-guide-recommendations a { color:inherit; text-decoration:underline; text-decoration-color:#b8b8be; text-underline-offset:4px; text-decoration-thickness:1px; }
+.apollo-new .apollo-guide-recommendations__icon { flex:0 0 18px; align-self:flex-start; margin-top:2px; color:var(--apollo-muted); }
+.apollo-new .apollo-guide-recommendations__summary { gap:12px; }
+.apollo-new .apollo-guide-recommendations__title { font-size:15px; line-height:21px; }
+.apollo-new .apollo-guide-recommendations__content { padding-top:20px; font-size:14px; line-height:21px; }
+.apollo-new .apollo-guide-recommendations__item + .apollo-guide-recommendations__item { border-top:1px solid rgba(0,0,0,.07); margin-top:18px; padding-top:18px; }
+.apollo-new .apollo-guide-recommendations__family { font:600 16px/24px "Apollo Alfa",sans-serif; color:var(--apollo-text); margin:0 0 8px; }
+.apollo-new .apollo-guide-recommendations__source { font-size:13px; line-height:20px; margin-top:8px; }
+.apollo-new .apollo-guide-recommendations__source { display:flex; align-items:baseline; gap:4px; }
+.apollo-new .apollo-guide-recommendations__source > span { color:var(--apollo-muted); }
+.apollo-new .apollo-answer-details { margin:16px 0 0; font:400 12px/18px "Apollo Alfa",sans-serif; color:var(--apollo-muted); }
+.apollo-new .apollo-answer-details > summary { display:flex; align-items:center; gap:6px; width:max-content; max-width:100%; list-style:none; cursor:pointer; }
+.apollo-new .apollo-answer-details > summary::-webkit-details-marker { display:none; }
+.apollo-new .apollo-answer-details[open] > summary span { transform:rotate(180deg); }
+.apollo-new .apollo-answer-details__content { padding-top:10px; overflow-wrap:anywhere; }
+.apollo-new .apollo-answer-details__content .design-check-provenance { margin:0; font-size:12px; line-height:18px; }
+
+.apollo-new .apollo-answer-pattern .md-p,.apollo-new .apollo-answer-pattern .md-list { font-size:14px; line-height:20px; }
+.apollo-new .apollo-answer-examples { margin-top:10px; }
+.apollo-new .apollo-answer-examples .md-p { font-size:14px; line-height:20px; }
+
+.apollo-new .apollo-guide-recommendations__source > .markdown-root { flex:0 1 auto; width:auto; min-width:0; }
+.apollo-new .apollo-guide-recommendations__document + .apollo-guide-recommendations__document { margin-top:18px; }
+
+.apollo-new .apollo-answer-separator { border:0; border-top:1px solid rgba(0,0,0,.08); margin:24px 0; }
+
+.apollo-new .apollo-chat-waiting { margin:16px 0; color:var(--apollo-muted); font:400 14px/20px "Apollo Alfa",sans-serif; }
+
+.apollo-new .apollo-answer-inline-guide { margin:0 0 24px; font-size:14px; line-height:20px; }
+
+.apollo-new .apollo-guide-recommendations__source .md-p { font-size:13px; line-height:20px; }
+
 /* Result pages retain the V3 card hierarchy with Apollo status and held actions. */
 .apollo-overview-group:disabled,.apollo-base-result:disabled { cursor:default; }
 .apollo-overview-group:disabled strong,.apollo-base-result:disabled > span:first-child { color:rgba(4,4,19,.55); }

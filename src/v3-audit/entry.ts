@@ -39,6 +39,7 @@ import { getPageName } from './utils/nodeHelpers';
 import type { createAuditDataClient } from './data-client';
 import type { AuditSceneSnapshot } from './source-observation';
 import { untimed, type createComponentTimings } from './component-timings';
+import {evaluateLiquidGlass,excludeResultNavigationBars,type LiquidGlassData} from './liquid-glass';
 
 export type V3AuditProgress = { stage:string; message:string; checked?:number };
 export type V3AuditOptions = {
@@ -53,6 +54,7 @@ export type V3AuditOptions = {
   onProgress(progress:V3AuditProgress):void;
   findingActions?:FindingActionRegistry;
   snapshot?:AuditSceneSnapshot;
+  liquidGlass?:LiquidGlassData;
 };
 let activeDataId:string|null=null;
 
@@ -253,6 +255,7 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
     }
     const node=await pending;guard();return node;
   };
+  const liquidGlassFamilies=new Map<string,string>();
   timings?.start();
   await collectAuditTargets(options.selection,state,options.channel,traversal,{shellAuditEnabled:options.shellAuditEnabled,dependencyConcurrency:4},{
     getComponentKeyCached:getKey,buildNodeSegments,getNodeById,throwIfCancelled:guard,indexed:{
@@ -299,12 +302,23 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
           updateReasons:reference?.status==='update'?['catalog-lifecycle']:[],
           resolvedReferenceVariantName:found.state==='found'?found.variantName:null,
           resolvedReferenceVariantKey:found.state==='found'&&found.variantName?key:null};
+        if(node.type==='INSTANCE'&&options.channel==='iOS'&&options.liquidGlass?.registry){
+          let main:ComponentNode|null=null;
+          try{main=await getMainComponent(node);}catch{guard();}
+          const finding=await evaluateLiquidGlass(node,main,options.liquidGlass,options.channel);guard();
+          if(finding&&snapshot?.isVisible(node)!==false){
+            if(finding.status==='violation')liquidGlassFamilies.set(node.id,finding.assessment.familyKey);
+            const entry=Object.assign({},item,{liquidGlassStatus:finding.status,liquidGlassReason:finding.assessment.reason});
+            state.liquidGlassEntries.push(entry);
+          }
+        }
         measureSync('componentProgress',()=>options.onProgress({stage:'components',message:`Проверяем ${node.name}`,checked:state.totalItems+1}));
         return item;
       },
     },
   }).finally(()=>timings?.finish());
   guard();
+  state.liquidGlassEntries=excludeResultNavigationBars(state.liquidGlassEntries,liquidGlassFamilies,traversal.sceneNodeById);
   state.relevanceBuckets.current=state.relevanceBuckets.current.filter(item=>!item.isLocal);
   options.onProgress({stage:'base',message:'Проверяем тему и шрифт страницы…'});
   const baseChecks=await checkPageBase(figma,options.channel,options.selection,guard,Array.from(traversal.sceneNodeById.values()),snapshot?.shouldSkipShared);guard();
@@ -336,8 +350,11 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
       return metadata?{type:'token',id,key:metadata.variableKey??null,name:metadata.label||name||id,library:metadata.library??null,sourceFile:metadata.sourceFile??null}:null;
     },
   },true);guard();
+  const liquidGlass={status:options.channel!=='iOS'?'not-applicable':options.liquidGlass?.registry?'connected':'unavailable',
+    error:options.liquidGlass?.error??null,registryId:options.liquidGlass?.registry?.registryId??null};
+  Object.assign(result.report,{liquidGlass:Object.assign({},liquidGlass,{findings:state.liquidGlassEntries})});
   return Object.assign({schemaVersion:'apollo.v3-audit-result.v1',runId:options.runId,dataId:index.dataId,checkState:state,baseChecks,
-    offlineCoverage:{gaps:index.inventoriesComplete?[]:['component-index-coverage-partial']}},result);
+    liquidGlass,offlineCoverage:{gaps:index.inventoriesComplete?[]:['component-index-coverage-partial']}},result);
 }
 
 export async function captureV3Texts(options:V3AuditOptions) {

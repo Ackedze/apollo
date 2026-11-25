@@ -113,7 +113,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
   if(!p.dataRequest(message)||reads.has(message.requestId))return;
   const abort=new AbortController(),task={abort,ownerRequestId:message.ownerRequestId},trace=relayTrace(message.ownerRequestId);reads.set(message.requestId,task);
   trace?.add('data-relay-start',{dataRequestId:message.requestId,resource:message.operation,dataId:message.dataId,assetId:message.fileId});
-  try{const path=message.operation==='manifest'?'/v1/audit-data/manifest':`/v1/audit-data/${message.dataId}/assets/${message.fileId}`;
+  try{const path=message.operation==='manifest'?'/v1/audit-data/manifest':message.operation==='legacy-components'?'/v1/audit-data/legacy-components':`/v1/audit-data/${message.dataId}/assets/${message.fileId}`;
    const result=message.operation==='compact-index'?await loadCompactIndex(abort.signal,progress=>{
     const work=active;
     if(!closed&&reads.get(message.requestId)===task&&work?.kind==='components'&&

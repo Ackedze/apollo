@@ -79,11 +79,14 @@
 .apollo-overview-group { box-sizing:border-box; padding:20px; border:0; border-radius:24px; background:rgba(0,0,0,.04); height:200px; display:flex; flex-direction:column; justify-content:space-between; text-align:left; color:inherit; cursor:pointer; }
 .apollo-overview-group:hover { background:rgba(0,0,0,.04); }
 .apollo-overview-group-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-.apollo-overview-group-heading strong { font-size:16px; line-height:24px; font-weight:500; }
+.apollo-overview-group-heading strong,.apollo-glyph26-banner-title { font-size:16px; line-height:24px; font-weight:500; }
 .apollo-group-count { min-width:24px; height:24px; box-sizing:border-box; padding:2px 5px; border-radius:99px; text-align:center; font-size:14px; line-height:20px; font-variant-numeric:tabular-nums; }
 .apollo-group-count.has-issues { color:white; background:#f52c20; }
 .apollo-overview-group-description { font-size:14px; line-height:20px; color:var(--apollo-muted); }
 .apollo-base-result { flex:0 0 64px; display:flex; align-items:center; justify-content:space-between; padding:20px; gap:12px; border:0; border-radius:24px; background:rgba(0,0,0,.04); color:var(--apollo-text); font-size:16px; line-height:24px; font-weight:500; cursor:pointer; text-align:left; }
+.apollo-glyph26-banner { box-sizing:border-box; display:flex; align-items:flex-start; gap:10px; min-height:64px; margin:0 0 8px; padding:20px; border-radius:24px; background:#dce9ff; color:var(--apollo-text); }
+.apollo-glyph26-banner-title { flex:1; min-width:0; overflow-wrap:anywhere; }
+.apollo-glyph26-banner .apollo-glyph26-banner-button { flex:none; height:24px; min-height:24px; padding:4px 8px; background:#fff; opacity:.9; }
 .apollo-audit-footer { box-sizing:border-box; margin:8px; flex:0 0 74px; border:1px solid #edeef0; border-radius:99px; background:rgba(255,255,255,.88); backdrop-filter:blur(2px); box-shadow:0 4px 24px rgba(0,0,0,.05); z-index:30; }
 .apollo-audit-footer [data-product] { height:72px; padding:12px; }
 .apollo-audit-footer button[aria-label="Тип страницы"],.apollo-audit-footer .design-check-page-picker { height:48px; min-height:48px; background:#f2f3f5; color:#18181b; border:0; }

@@ -5,6 +5,14 @@ import type { FindingActionRegistry } from './remediation/findingActionRegistry'
 import type { AuditSceneSnapshot } from './source-observation';
 
 const SCHEMA='apollo.v3-audit-bridge.v1';
+/** Export only known code locations and exception classes, never raw error text or stacks. */
+export function auditFailureDetails(error:any) {
+  const locations=[['readVariantProperties','text-properties'],['collectComponentContexts','text-context'],['collectApolloTextFacts','text-facts'],['buildApolloTextAuditReport','text-report'],['prepareV3AuditReports','audit-report'],['runOfflineComponentAudit','component-audit']];
+  const stack=typeof error?.stack==='string'?error.stack.split('\n').slice(1).join('\n'):'';
+  const location=locations.find(([name])=>new RegExp('\\b'+name+'\\b').test(stack));
+  const reasons:Record<string,string>={TypeError:'type-error',ReferenceError:'reference-error',RangeError:'range-error',SyntaxError:'syntax-error',Error:'runtime-error'};
+  return {callsite:location?.[1]??'audit-runtime',reason:reasons[error?.name]??'runtime-error'};
+}
 const requestId=(v:any)=>typeof v==='string'&&/^[a-zA-Z0-9:_-]{1,160}$/.test(v);
 function pageOf(node:BaseNode):PageNode|null {
   let current:BaseNode|null=node;
@@ -28,7 +36,7 @@ export function auditResultForUi(result:any) {
   }
   return Object.assign({schemaVersion:result.schemaVersion,runId:result.runId,dataId:result.dataId,
     visibleViews:views,report:result.report,textReport:result.textReport,baseChecks:result.baseChecks||[],textTargets:result.textTargets||[],mutationAvailable:result.mutationAvailable===true},
-    result.offlineCoverage?{offlineCoverage:result.offlineCoverage}:{});
+    result.offlineCoverage?{offlineCoverage:result.offlineCoverage}:{},result.glyph26?{glyph26:result.glyph26}:{});
 }
 
 export function createV3AuditBridge(options:{
@@ -102,6 +110,7 @@ export function createV3AuditBridge(options:{
       const code=(error as Error).message;
       work.terminal=true;
       options.post({type:work.cancelled?'v3-audit-cancelled':'v3-audit-error',schemaVersion:SCHEMA,requestId:work.requestId,
+        failure:auditFailureDetails(error),
         code:/^AUDIT_[A-Z_]+$/.test(code)?code:'AUDIT_FAILED'});
     } finally {if(active===work){active=null;options.onBusy?.(false);}}
   }

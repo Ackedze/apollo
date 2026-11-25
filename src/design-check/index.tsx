@@ -179,6 +179,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   const [checkedScope, setCheckedScope] = useState('');
   const pendingScope = useRef<{ name: string; audit: unknown; native: unknown; v3?:string|null } | null>(null);
   const [categoryId, setCategoryId] = useState<string | null>(null);
+  const [reglyphOpenRequest,setReglyphOpenRequest]=useState(0);
   function selectedScopeName() {
     const selection = document.getElementById('selection');
     if (selection?.dataset.validSelection === 'false') return '';
@@ -305,14 +306,14 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="m10 5-7 7 7 7M3 12h18" /></svg>
               {groupId === 'base' ? 'База' : selectedGroup?.title}
             </button>
-            <nav className="apollo-categories" aria-label="Категории проверки">{categoryButtons(primaryCategories)}</nav>
+            {groupId !== 'icons' && <nav className="apollo-categories" aria-label="Категории проверки">{categoryButtons(primaryCategories)}</nav>}
           </div>}
           {!groupId ? <AuditOverview progress={progress} summary={summary} busy={actionBusy}
             selectedScope={actionBusy ? pendingScope.current?.name ?? scope : scope}
             checkedScope={v3 ? acceptedScope : checkedScope} onOpen={openGroup}
             onBase={() => { setGroupId('base'); setCategoryId(null); controller.setView('audit'); controller.selectTab('themization'); }} />
           : <main className="apollo-results" aria-label="Результаты проверки">
-            {state.view === 'audit' && v3 && <V3Findings category={categories.find((category:any)=>category.id===activeCategoryId)} client={dataOptions.v3Client} runId={v3.runId} stale={v3.stale} staleActionIds={v3.staleActionIds} busy={actionBusy} mutationAvailable={v3.result?.mutationAvailable===true}/>}
+            {state.view === 'audit' && v3 && <V3Findings onOpenGlyph26={dataOptions.reglyphClient?()=>{dataOptions.reglyphClient.openReview(v3.runId);setReglyphOpenRequest(value=>value+1);}:undefined} category={categories.find((category:any)=>category.id===activeCategoryId)} client={dataOptions.v3Client} runId={v3.runId} stale={v3.stale} staleActionIds={v3.staleActionIds} busy={actionBusy} mutationAvailable={v3.result?.mutationAvailable===true}/>}
             {state.view === 'audit' && !v3 && <>
               <h2 className="design-check-sr-only">{groupId === 'base' ? 'База' : activeTab?.title || 'Результаты'}</h2>
               {!nativeCheck && (!data || data.status === 'not-connected') && <p className="placeholder">Проверка этой категории ещё не подключена.</p>}
@@ -334,7 +335,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
         </section>
         <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Тулзы">
           <SkillsPanel client={dataOptions.skillsClient} scopeName={scope}>
-            {dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient} />}
+            {dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient} openRequest={reglyphOpenRequest} />}
             {dataOptions.figmaAuditClient && <FigmaAuditSkill client={dataOptions.figmaAuditClient} />}
             {dataOptions.patternAuditClient && <PatternAuditSkill client={dataOptions.patternAuditClient} scopeName={scope} />}
             <button ref={textToolCard} className="apollo-skill-card" type="button" aria-labelledby="apollo-text-tool-card-title"

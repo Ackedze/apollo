@@ -1,5 +1,5 @@
 const final=new Set(['compliant','allowed','not-applicable']);
-const titles={changes:'Кастомы',unknown:'Не удалось проверить',deprecated:'Устаревшие',update:'Пора менять',detached:'Детач',local:'Локальные',wrongChannel:'Не тот канал',wrongChannelTypography:'Не тот канал',presets:'Пресеты',technical:'Технические',current:'В каталоге',changesWip:'Все отличия от эталона',customStyles:'Локальные',detachedStyles:'Без стиля или токена',deprecatedStyles:'Устаревшие',themization:'База'};
+const titles={changes:'Кастомы',unknown:'Не удалось проверить',deprecated:'Устаревшие',update:'Пора менять',detached:'Детач',local:'Локальные',wrongChannel:'Не тот канал',glyph26:'Иконки',wrongChannelTypography:'Не тот канал',presets:'Пресеты',technical:'Технические',current:'В каталоге',changesWip:'Все отличия от эталона',customStyles:'Локальные',detachedStyles:'Без стиля или токена',deprecatedStyles:'Устаревшие',themization:'База'};
 const groups=[{id:'styles',title:'Стили и токены',tabs:['customStyles','detachedStyles','deprecatedStyles','wrongChannelTypography'],description:'Стили, цвета и привязки к токенам.'},{id:'components',title:'Компоненты',tabs:['changes','deprecated','update','detached','local','wrongChannel'],description:'Библиотечные связи, версии и правила компонентов.'},{id:'patterns',title:'Паттерны',tabs:[],description:'Сочетание компонентов и проектировочные паттерны.'}];
 const channelLabel=channel=>channel==='MobileWeb'?'Mobile Web':channel;
 function classification(diffs){return diffs.some(diff=>diff.assessment?.verdict==='violation')?'violation':diffs.some(diff=>!diff.assessment||diff.assessment.verdict==='unknown')?'unknown':'allowed';}
@@ -84,6 +84,9 @@ function buildV3Groups(result,settings={},state={}){
   presets:(views.presets||[]).map(item=>row('preset:'+item.id,item,'warning','Проверь применение пресета.')),
   detached:(views.detached||[]).map(item=>row('detached:'+item.id,item,'warning',item.componentName?`Компонент ${item.componentName} раздетачен.`:'Компонент раздетачен.')),
   local:local.map(item=>row('local:'+item.id,item,'warning','Компонент вне подключённых каталогов DS.',{incomplete:item.relevance==='unknown'||Boolean(item.catalogLifecycle&&!item.reference)||item.status==='incomplete'||(item.gaps||[]).length>0})),
+  glyph26:(views.glyph26||[]).map(item=>row('glyph26:'+item.id,item,item.glyph26Status||'warning',item.glyph26Status==='violation'?'Устаревшая иконка, есть в Glyph-26':'Устаревшая иконка, может не быть в Glyph-26',{
+   informationMessage:item.glyph26Status==='violation'?'Устаревшая иконка: можно заменить автоматически, используй навык «Перевести на Glyph-26».':'Устаревшая иконка: при автоматической замене может потребовать вмешательство, используй навык «Перевести на Glyph-26».',
+  })),
   wrongChannel:(views.wrongChannel||[]).map(item=>row('channel:'+item.id,item,'violation','Компонент не соответствует выбранной платформе.')),
   wrongChannelTypography:(views.wrongChannelTypography||[]).map(item=>row(
    'typography-channel:'+item.id+':'+item.resource.type+':'+item.resource.key,item,'violation',
@@ -95,14 +98,18 @@ function buildV3Groups(result,settings={},state={}){
   themization:(result?.baseChecks||[]).filter(item=>!final.has(item.classification)).map(item=>row('base:'+item.id,item,item.classification,item.message,{displayName:item.id==='font'?'Шрифт страницы':'Темизация страницы',messages:item.status==='incomplete'||(item.gaps||[]).length?['Часть данных не удалось подтвердить. Проверка неполная.']:[]})).concat((views.themization||[]).map(item=>row('theme:'+item.id,item,'violation',item.recommendation?`Замени на ${item.recommendation}`:'Используется компонент со старой темизацией.',{displayName:item.name}))),
  };
  const categories=Object.fromEntries(Object.keys(titles).map(id=>[id,category(id,data[id]||[],!!result)]));
- const visible=groups.map(group=>Object.assign({},group,{categories:group.tabs.filter(id=>{
+ const mobileIcons=['iOS','Android'].includes(settings.pickerLabel);
+ const visible=groups.map(baseGroup=>{
+  const group=baseGroup.id==='patterns'&&mobileIcons?{id:'icons',title:'Иконки',tabs:['glyph26'],description:'Устаревшие иконки, которые необходимо заменить\nна Glyph-26'}:baseGroup;
+  return Object.assign({},group,{categories:group.tabs.filter(id=>{
   if(id==='wrongChannelTypography')return Array.isArray(views.wrongChannelTypography);
   return !(settings.hideCustomizations&&['changes','changesWip'].includes(id));
- }).map(id=>categories[id]),connected:!!result&&group.tabs.length>0}));
+ }).map(id=>categories[id]),connected:!!result&&group.tabs.length>0});});
  for(const group of visible)group.count=group.connected?new Set(group.categories.flatMap(category=>category.issues.map(row=>row.id))).size:null;
  const theme=['iOS','Android'].includes(settings.pickerLabel)?null:categories.themization;
  const active=visible.flatMap(group=>group.categories).concat(theme?[theme]:[]),issues=active.flatMap(category=>category.issues),coverage=active.concat(categories.unknown);
  const coverageDetails=coverage.filter(category=>category.incomplete).map(category=>({id:category.id,title:category.id==='unknown'?'Компоненты':category.title,reason:category.id==='unknown'?'Не удалось подтвердить часть компонентов. Причины сохранены в диагностике проверки.':'Есть изменения, для которых пока не удалось подтвердить правило. Подробности — в карточках.'}));
+ if(mobileIcons&&result&&(!result.glyph26||result.glyph26.status==='incomplete'))coverageDetails.push({id:'glyph26',title:'Иконки',reason:'Часть данных иконок не удалось подтвердить.'});
  if(result?.offlineCoverage?.gaps?.includes('component-index-coverage-partial'))coverageDetails.push({id:'athena-index',title:'Индексы Athena',reason:'Часть подключённых источников не покрыта индексом.'});
  if(result?.offlineCoverage?.gaps?.includes('capture-source-changed'))coverageDetails.push({id:'capture-source',title:'Актуальность макета',reason:'Часть данных могла измениться за время проверки. Найденные замечания доступны.'});
  if(result?.offlineCoverage?.gaps?.includes('capture-session-unavailable'))coverageDetails.push({id:'capture-session',title:'Исправления',reason:'Найденные замечания доступны. Не удалось подготовить исправления.'});

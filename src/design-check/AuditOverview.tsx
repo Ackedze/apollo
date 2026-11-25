@@ -36,7 +36,7 @@ export function AuditOverview({ progress, summary, busy, selectedScope, checkedS
       {summary.groups.map(group => <button key={group.id} type="button" className="apollo-overview-group" disabled={!group.connected || !group.count} onClick={() => onOpen(group)}
         aria-label={group.title + ': ' + (group.count === null ? 'проверка не подключена' : group.count + ' замечаний')}>
         <span className="apollo-overview-group-heading"><strong>{group.title}</strong>{group.count !== null && group.count > 0 && <span className="apollo-group-count has-issues">{group.count}</span>}</span>
-        <span className="apollo-overview-group-description">{group.id === 'styles' ? 'Детачи, переменные, устаревшие, кастомные стили и токены' : group.id === 'components' ? 'Детачи, локальные компоненты и нарушение правил применения' : 'Ошибки применения компонентных и проектировочных паттернов'}</span>
+        <span className="apollo-overview-group-description">{group.id === 'icons' ? group.description.split('\n').map((line,index)=><React.Fragment key={index}>{index>0&&<br/>}{line}</React.Fragment>) : group.id === 'styles' ? 'Детачи, переменные, устаревшие, кастомные стили и токены' : group.id === 'components' ? 'Детачи, локальные компоненты и нарушение правил применения' : 'Ошибки применения компонентных и проектировочных паттернов'}</span>
       </button>)}
     </div>
   </section>;

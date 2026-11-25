@@ -4,6 +4,22 @@ function load(relative){const b=esbuild.buildSync({entryPoints:[path.join(__dirn
 const {diffStructures}=load('structure/diff.ts');
 const node=extra=>Object.assign({id:1,parentId:null,path:'Root',name:'Root',type:'RECTANGLE',visible:true,radius:0},extra);
 const key='a'.repeat(40),other='b'.repeat(40),token='VariableID:'+key+'/1:1',changed='VariableID:'+other+'/1:2';
+test('audit failure diagnostics retain known locations without exporting raw exceptions',()=>{
+ const {auditFailureDetails}=load('bridge.ts');
+ const {createRunTrace,readTrace}=require('../src/v3-audit/run-trace');
+ const failure=new TypeError('Private canvas content');
+ failure.stack='TypeError: Private canvas content\n    at readVariantProperties (private-file:7:9)\n    at collectComponentContexts (private-file:8:1)';
+ const details=auditFailureDetails(failure);
+ assert.deepEqual(details,{callsite:'text-properties',reason:'type-error'});
+ const trace=createRunTrace({requestId:'failure',runId:'failure',kind:'components',side:'native'});
+ trace.add('capture-terminal',Object.assign({code:'AUDIT_FAILED',outcome:'error'},details),true);
+ const exported=readTrace(trace.snapshot());
+ assert.equal(exported.firstFailure.callsite,'text-properties');
+ assert.equal(exported.firstFailure.reason,'type-error');
+ assert(!JSON.stringify(exported).includes('Private'));
+ assert(!JSON.stringify(exported).includes('private-file'));
+ assert.deepEqual(auditFailureDetails({name:'Unknown',stack:'Error: collectApolloTextFacts'}),{callsite:'audit-runtime',reason:'runtime-error'});
+});
 const options={strict:true,isPaintToken:()=>true,resolveTokenLabel:id=>id,resolveVariableMetadata:id=>({variableId:id,variableKey:/VariableID:([a-f0-9]{40})/.exec(id)?.[1],variableName:null,collectionId:null,collectionName:null,modeNames:{}})};
 test('V3 paint semantics preserve token identity and detect detach/change even with equal RGBA',()=>{
  const base=node({fill:{color:'rgba(20,30,40,1)',token,paintTypes:['SOLID']}});

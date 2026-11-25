@@ -2,85 +2,16 @@ name: Review policy
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review, converted_to_draft, edited, closed]
   pull_request_review:
     types: [submitted, edited, dismissed]
 
-permissions:
-  contents: read
-  pull-requests: read
+permissions: {}
 
 jobs:
-  approvals:
-    name: Required approvals
+  event:
+    name: Review policy event
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     steps:
-      - name: Check risk and current approvals
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const pull = context.payload.pull_request;
-            if (!pull) {
-              core.setFailed('Review policy requires a pull_request payload.');
-              return;
-            }
-
-            if (pull.draft) {
-              core.notice('Draft pull request: approval gate is deferred.');
-              return;
-            }
-
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const pull_number = pull.number;
-            const files = await github.paginate(github.rest.pulls.listFiles, {
-              owner,
-              repo,
-              pull_number,
-              per_page: 100,
-            });
-            const paths = files.map((file) => file.filename);
-
-            const r3Patterns = [
-              /^\.github\/workflows\//,
-              /^manifest\.json$/,
-              /^package(-lock)?\.json$/,
-              /^build\.js$/,
-              /^SECURITY\.md$/,
-              /^src\/utils\/networkFetch\.ts$/,
-            ];
-            const r2Patterns = [
-              /^src\/code\.ts$/,
-              /^src\/create-check-state\.ts$/,
-              /^src\/(assessment|config|contracts|filters|policies|reference|services|stats|structure|types)\//,
-              /^src\/ui-app\/bridge\//,
-              /^src\/utils\/(componentKeyCache|nodeHelpers|variableBindingReset|variableCollectionId|variantProperties)\.ts$/,
-            ];
-
-            const matchesAny = (patterns) => paths.some((path) => patterns.some((pattern) => pattern.test(path)));
-            const risk = matchesAny(r3Patterns) ? 'R3' : matchesAny(r2Patterns) ? 'R2' : paths.some((path) => path.startsWith('src/')) ? 'R1' : 'R0';
-            const reviews = await github.paginate(github.rest.pulls.listReviews, {
-              owner,
-              repo,
-              pull_number,
-              per_page: 100,
-            });
-            const decisiveStates = new Set(['APPROVED', 'CHANGES_REQUESTED', 'DISMISSED']);
-            const latestOwnerReview = reviews.filter((review) =>
-              review.user?.login.toLowerCase() === 'ackedze' && decisiveStates.has(review.state),
-            ).at(-1);
-            const ownerApproved = latestOwnerReview?.state === 'APPROVED'
-              && latestOwnerReview.commit_id === pull.head.sha;
-
-            await core.summary
-              .addHeading('Apollo review policy')
-              .addTable([
-                [{ data: 'Risk', header: true }, { data: 'Current owner approval', header: true }],
-                [risk, ownerApproved ? 'Approved' : 'Pending'],
-              ])
-              .addDetails('Changed files', paths.map((path) => `- ${path}`).join('\n'))
-              .write();
-
-            if (!ownerApproved) {
-              core.setFailed(`${risk} requires @Ackedze approval for head ${pull.head.sha}.`);
-            }
+      - run: echo 'The trusted Owner approval gate refreshes the current PR state.'

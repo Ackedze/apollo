@@ -12,6 +12,7 @@ export interface CheckState {
     relevanceBuckets: Record<RelevanceStatus, AuditItem[]>
     themizationEntries: ThemeAuditEntry[]
     wrongChannelEntries: AuditItem[]
+    glyph26Entries: AuditItem[]
     wrongChannelTypographyEntries: WrongChannelTypographyEntry[]
     localLibraryItems: AuditItem[]
     presetItems: AuditItem[]
@@ -33,6 +34,7 @@ export const createCheckState = (): CheckState => {
           },
           themizationEntries: [],
           wrongChannelEntries: [],
+          glyph26Entries: [],
           wrongChannelTypographyEntries: [],
           localLibraryItems: [],
           presetItems: [],

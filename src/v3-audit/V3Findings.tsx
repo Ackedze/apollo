@@ -23,13 +23,14 @@ function FindingActions({actions=[],disabled,onAction}:{actions?:any[];disabled:
  return <SmallButton label={actions[0].label} disabled={disabled} singleIcon={false} onPress={()=>onAction(actions[0].id)}/>;
 }
 function FocusIcon(){return <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;}
-export function V3Findings({category,client,runId,stale,busy,mutationAvailable,staleActionIds=[]}:{category:any;client:any;runId:string|null;stale:boolean;busy:boolean;mutationAvailable:boolean;staleActionIds?:string[]}){
+export function V3Findings({category,client,runId,stale,busy,mutationAvailable,staleActionIds=[],onOpenGlyph26}:{category:any;client:any;runId:string|null;stale:boolean;busy:boolean;mutationAvailable:boolean;staleActionIds?:string[];onOpenGlyph26?:()=>void}){
  if(!category?.connected)return <p className="placeholder">Запусти проверку выбранной области.</p>;
  if(!category.entries.length)return <p className="placeholder">В этой категории замечаний нет.</p>;
  const disabled=stale||busy||!mutationAvailable||!runId;
  const staleActions=new Set(staleActionIds);
  const deprecatedStyles=category.id==='deprecatedStyles';
  return <div className="apollo-findings apollo-v3-findings">
+  {category.id==='glyph26'&&<div className="apollo-glyph26-banner"><span className="apollo-glyph26-banner-title">Для автозамены используй навык «Перевести на Glyph-26»</span><SmallButton label="Перейти" singleIcon={false} className="apollo-glyph26-banner-button" disabled={busy||!onOpenGlyph26} onPress={onOpenGlyph26}/></div>}
   {category.entries.map((row:any)=>{
    const tone=row.classification==='violation'?'violation':['compliant','allowed','not-applicable'].includes(row.classification)?'current':'warning';
    const actions=(items:any[]=[])=>{
@@ -41,7 +42,7 @@ export function V3Findings({category,client,runId,stale,busy,mutationAvailable,s
    return <ResultCard key={row.id} title={row.displayName||row.item.name||row.title} caption={row.library||undefined} onFocus={row.focusActionId&&!busy&&runId?()=>void client.focus(runId,row.focusActionId):undefined}
     indicator={<span className={`apollo-finding-status ${tone}`} role="img" aria-label={tone==='violation'?'Нарушение':tone==='warning'?'Замечание':'Соответствует'}>{tone==='current'?<span/>:<img src={tone==='warning'?assets.imgStatusWarning:assets.imgStatusCircle} width={36} height={36} alt=""/>}</span>}
     actions={<>{row.focusActionId&&<span><SmallButton focusTarget ariaLabel="Показать в макете" title={row.location} disabled={busy||!runId} icon={<FocusIcon/>} onPress={()=>void client.focus(runId,row.focusActionId)}/></span>}
-     <FindingInformation><p>{labels[row.classification]||row.classification}</p><p>{row.title}</p><p>{row.location}</p>{row.messages?.map((message:string,index:number)=><p key={index}>{message}</p>)}{row.diffs?.map((diff:any,index:number)=><DiffInfo key={index} diff={diff}/>)}{row.item?.evidence&&<details><summary>Основание проверки</summary><pre>{JSON.stringify(row.item.evidence,null,2)}</pre></details>}</FindingInformation>
+     <FindingInformation><p>{labels[row.classification]||row.classification}</p><p>{row.informationMessage||row.title}</p><p>{row.location}</p>{row.messages?.map((message:string,index:number)=><p key={index}>{message}</p>)}{row.diffs?.map((diff:any,index:number)=><DiffInfo key={index} diff={diff}/>)}{row.item?.evidence&&<details><summary>Основание проверки</summary><pre>{JSON.stringify(row.item.evidence,null,2)}</pre></details>}</FindingInformation>
     </>}>
     {row.diffs?.length?row.diffs.map((diff:any,index:number)=><ResultSubCard key={index} name={diff.assessment?.verdict==='unknown'&&diff.assessment?.message==='Контекстное правило не найдено'?'Нет правила для оценки этого изменения.':diff.assessment?.message||diff.message||row.title} actionSlot={actions(diff.actions)}
      valueLines={comparisons(diff).map((value:any)=>({label:value.property,values:[value.before,value.after]}))}>

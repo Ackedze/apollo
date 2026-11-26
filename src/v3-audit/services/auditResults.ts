@@ -27,6 +27,7 @@ export interface AuditResultViews {
     themization: CheckState['themizationEntries'];
     wrongChannel: CheckState['wrongChannelEntries'];
     liquidGlass: CheckState['liquidGlassEntries'];
+    glyph26: CheckState['glyph26Entries'];
     wrongChannelTypography: CheckState['wrongChannelTypographyEntries'];
     local: CheckState['localLibraryItems'];
     deprecatedStyles: CheckState['deprecatedStyleEntries'];
@@ -125,6 +126,7 @@ export function buildAuditResultViews(checkState: CheckState): AuditResultViews 
       themization: checkState.themizationEntries,
       wrongChannel: checkState.wrongChannelEntries,
       liquidGlass: checkState.liquidGlassEntries,
+      glyph26: checkState.glyph26Entries,
       wrongChannelTypography: checkState.wrongChannelTypographyEntries,
       local,
       deprecatedStyles: checkState.deprecatedStyleEntries,

@@ -1,11 +1,16 @@
 'use strict';
 const p = require('./protocol');
 const {createReglyphEngine} = require('./engine');
-function createReglyphBridge({api, post, isBusy = () => false, onMutation = () => {}, catalogs, detection}) {
+function createReglyphBridge({api, post, isBusy = () => false, onMutation = () => {}, catalogs, detection,readReview,onReplaced=()=>{},onUndo=()=>{}}) {
   const data = catalogs || {default:require('./default.json'),services:require('./services.json')};
   let context = null, contextRevision = -1, active = null, mutated = false;
   const engine = createReglyphEngine({api, catalogs:data, detection:detection || require('./detection.json'),
-    post:event => post({type:'reglyph-event',schemaVersion:p.SCHEMA,revision:active ? active.revision : contextRevision,requestId:active ? active.requestId : null,event}),
+    readReview:runId=>{if(!readReview)throw Error('Результат ревью недоступен. Повтори проверку в Apollo.');return readReview(runId,context.pickerLabel);},
+    post:event => {
+      post({type:'reglyph-event',schemaVersion:p.SCHEMA,revision:active ? active.revision : contextRevision,requestId:active ? active.requestId : null,event});
+      if(active?.operation==='replace'&&event.type==='done'&&Array.isArray(event.completedIds))onReplaced(event.completedIds);
+      if(active?.operation==='undo'&&event.type==='undo-complete')onUndo();
+    },
     assertActive:() => {
       if (!active || active.revision !== contextRevision || !p.supported(context)) throw Error('Контекст изменился. Проверьте иконки ещё раз.');
       if (isBusy()) throw Error('Дождитесь завершения другой операции Apollo.');

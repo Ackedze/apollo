@@ -3,7 +3,7 @@ const p = require('./protocol');
 const {activity}=require('../../token-journal-protocol');
 let clientSequence = 0;
 const {createPickerCatalog,pickerRepresentatives,searchText,rowIdentity,reviewGroup}=require('./catalog');
-function createReglyphClient({send,isBusy = () => false,onChange = () => {},onOperation=()=>null}) {
+function createReglyphClient({send,isBusy = () => false,onChange = () => {},onOperation=()=>null,onReplaced=()=>{},onUndo=()=>{}}) {
   const listeners = new Set(),queue = [],previewPending = new Map(),previewAttempts = new Map(),priorityPreviews = new Set(),retryTimers = new Map(),visiblePreviews = new Map();
   const identity = Date.now().toString(36)+'-'+(++clientSequence);
   let sequence=0,revision=0,active=null,opened=false,initialized=false,pickerCatalog=null,picker=null;
@@ -23,8 +23,10 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {},onOp
     while(queue.length && queue[0].operation==='preview' && state.images.has(queue[0].payload.key)){const cached=queue.shift();if(previewPending.get(cached.payload.key)===cached.previewToken)previewPending.delete(cached.payload.key);cached.resolve(null);}
     if(!queue.length)return;
     active=queue.shift();
+    if(active.operation==='replace')active.sourceIds=new Set(state.rows.flatMap(row=>row.ids));
     if(active.operation==='preview')previewAttempts.set(active.payload.key,(previewAttempts.get(active.payload.key) || 0)+1);
-    const scans=active.operation==='scan' || active.operation==='selection-decision' && active.payload.decision==='switch';
+    const scans=['scan','review'].includes(active.operation) || active.operation==='selection-decision' && active.payload.decision==='switch';
+    if(active.operation==='review')emit({status:'scanning',planStale:false,rows:[],observedRows:[],scopeName:'',error:'',errorCode:'',errorOperation:null,result:null,confirmation:null,selectionConfirmation:null,largePreview:null,progress:null});
     if(scans || active.operation==='replace')active.activity=activity(onOperation,scans?'reglyph-scan':'reglyph-replace');
     active.requestId='reglyph-'+identity+'-'+(++sequence);
     send({type:'reglyph-request',schemaVersion:p.SCHEMA,requestId:active.requestId,revision:active.revision,operation:active.operation,payload:active.payload});
@@ -121,7 +123,17 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {},onOp
   function accept(message) {
     if(!['reglyph-event','reglyph-result'].includes(message?.type))return false;
     if(message.schemaVersion!==p.SCHEMA)return true;
-    if(message.type==='reglyph-event'){if(message.revision===revision)receive(message.event);return true;}
+    if(message.type==='reglyph-event'){
+      if(message.revision!==revision)return true;
+      const event=message.event,owned=active&&message.requestId===active.requestId;
+      const completed=owned&&active.operation==='replace'&&event?.type==='done'&&Array.isArray(event.completedIds)
+        ?event.completedIds.filter(id=>typeof id==='string'&&active.sourceIds.has(id)&&!(event.remainingRows||[]).some(row=>row.ids.includes(id))):[];
+      const undone=owned&&active.operation==='undo'&&event?.type==='undo-complete';
+      receive(event);
+      if(completed.length)onReplaced(Array.from(new Set(completed)));
+      if(undone)onUndo();
+      return true;
+    }
     if(!active || message.requestId!==active.requestId)return true;
     const job=active;active=null;job.activity?.finish(job.revision!==revision?'cancelled':message.error || job.failed?'failed':'completed');
     if(message.error && job.revision===revision){if(job.background){if(job.payload.key){const errors=new Map(state.previewErrors);errors.set(job.payload.key,message.error);emit({previewErrors:errors});}}else if(state.planStale && ['scan','go-to'].includes(job.operation)){
@@ -158,6 +170,12 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {},onOp
   function selection(valid){emit({validSelection:valid});recoverSelection();}
   return {subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn);},getState:()=>state,accept,setContext,
     open(){opened=true;if(state.supported && !initialized && !queue.some(j=>j.operation==='ready') && active?.operation!=='ready')void request('ready');},
+    openReview(runId){
+      if(!state.supported||foreground()||isBusy()||typeof runId!=='string'||!/^[a-zA-Z0-9:_-]{1,160}$/.test(runId))return;
+      opened=true;discardPreviews();
+      if(!initialized)void request('ready');
+      void request('review',{runId});
+    },
     refresh(){const available=!isBusy();if(state.available!==available)emit({available});if(available)pump();},busy:foreground,
     selection(message){selection(message.valid);},
     decideSelection(decision){const confirmation=state.selectionConfirmation;if(!confirmation || foreground() || isBusy())return;if(decision==='switch')discardPreviews();emit({selectionConfirmation:null});void request('selection-decision',{token:confirmation.token,decision});},

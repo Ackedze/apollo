@@ -40,6 +40,7 @@ import type { createAuditDataClient } from './data-client';
 import type { AuditSceneSnapshot } from './source-observation';
 import { untimed, type createComponentTimings } from './component-timings';
 import {evaluateLiquidGlass,excludeResultNavigationBars,type LiquidGlassData} from './liquid-glass';
+import {glyph26Evaluator,glyph26RuleIds} from './glyph26';
 
 export type V3AuditProgress = { stage:string; message:string; checked?:number };
 export type V3AuditOptions = {
@@ -215,6 +216,8 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
     tokenLookups.set(id,lookup);
     return lookup;
   };
+  const glyph26Findings:any[]=[],glyph26Unknown:any[]=[];let glyph26Services=false;
+  const glyphCheck=['iOS','Android'].includes(options.channel)?glyph26Evaluator(getMainComponent,guard):null;
   const getReference=(key:string|null)=>{const found=index.find(key);return found.state==='found'?found.reference:null;};
   const traversal=createAuditTraversalContext({importComponentByKey:key=>measure('figmaImportComponentByKeyAsync',()=>figma.importComponentByKeyAsync(key)),
     customStyleOptions:{tokenLabelMap:labels,resolveStyleMetadata:style.resolveStyleMetadata,
@@ -302,6 +305,16 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
           updateReasons:reference?.status==='update'?['catalog-lifecycle']:[],
           resolvedReferenceVariantName:found.state==='found'?found.variantName:null,
           resolvedReferenceVariantKey:found.state==='found'&&found.variantName?key:null};
+        if(node.type==='INSTANCE'&&glyphCheck&&snapshot?.isVisible(node)!==false){
+          const assessment=await glyphCheck(node);guard();
+          if(['violation','warning'].includes(assessment.status)){
+            glyph26Findings.push({nodeId:node.id,name:node.name,path:item.fullPath,classification:assessment.status,
+              ruleId:assessment.ruleId,reason:assessment.reason,sourceKey:assessment.sourceKey,targetKey:assessment.targetKey});
+            state.glyph26Entries.push(Object.assign({},item,{glyph26Status:assessment.status,glyph26Reason:assessment.reason}));
+          }
+          else if(assessment.status==='service-pattern-required')glyph26Services=true;
+          else if(assessment.status==='unknown')glyph26Unknown.push({nodeId:node.id,reason:assessment.reason});
+        }
         if(node.type==='INSTANCE'&&options.channel==='iOS'&&options.liquidGlass?.registry){
           let main:ComponentNode|null=null;
           try{main=await getMainComponent(node);}catch{guard();}
@@ -352,9 +365,14 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
   },true);guard();
   const liquidGlass={status:options.channel!=='iOS'?'not-applicable':options.liquidGlass?.registry?'connected':'unavailable',
     error:options.liquidGlass?.error??null,registryId:options.liquidGlass?.registry?.registryId??null};
+  if(glyph26Services)for(const item of state.glyph26Entries)Object.assign(item,{glyph26Status:'warning',glyph26Reason:'service-pattern-required'});
+  if(glyph26Services)for(const finding of glyph26Findings)if(finding.classification==='violation'){finding.classification='warning';finding.ruleId=glyph26RuleIds.manual;finding.reason='service-pattern-required';}
+  const glyph26={status:!['iOS','Android'].includes(options.channel)?'not-applicable':!glyphCheck||glyph26Unknown.length?'incomplete':'complete',
+    source:'reglyph-bundled',findings:glyph26Findings,unknown:glyph26Unknown};
+  Object.assign(result.report,{glyph26});
   Object.assign(result.report,{liquidGlass:Object.assign({},liquidGlass,{findings:state.liquidGlassEntries})});
   return Object.assign({schemaVersion:'apollo.v3-audit-result.v1',runId:options.runId,dataId:index.dataId,checkState:state,baseChecks,
-    liquidGlass,offlineCoverage:{gaps:index.inventoriesComplete?[]:['component-index-coverage-partial']}},result);
+    liquidGlass,glyph26,offlineCoverage:{gaps:index.inventoriesComplete?[]:['component-index-coverage-partial']}},result);
 }
 
 export async function captureV3Texts(options:V3AuditOptions) {

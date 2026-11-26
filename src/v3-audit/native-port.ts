@@ -8,6 +8,7 @@ import { sha256Hex } from './utils/sha256';
 import { readOfflineAuditIndex, type OfflineAuditIndex } from './embedded-data';
 import {createComponentTimings} from './component-timings';
 import {readLiquidGlassRegistry} from './liquid-glass';
+import {readTrackedGlyph26} from './glyph26';
 declare const __APOLLO_NATIVE_BUILD_INPUTS_SHA__: string;
 const p=require('./transport');
 const {createRunTrace}=require('./run-trace');
@@ -23,6 +24,23 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
  const busy=()=>Boolean(capture||operation);
  const post=(message:any)=>{if(!closed)options.post(message);};
  const notifyBusy=()=>options.onBusy(busy());
+ function queueGlyph26Sync(scope:any){
+  if(closed||!scope.glyph26Tracked?.size)return;
+  const serial=scope.glyph26SyncSerial=(scope.glyph26SyncSerial||0)+1;
+  clearTimeout(scope.glyph26SyncTimer);
+  scope.glyph26SyncTimer=setTimeout(async()=>{
+   const current=()=>!closed&&accepted.get(scope.message.requestId)===scope&&scope.glyph26SyncSerial===serial&&figma.currentPage.id===scope.pageId&&(figma.fileKey||null)===scope.fileKey;
+   if(!current())return;
+   if(busy()||options.isUnavailable()){queueGlyph26Sync(scope);return;}
+   const guard=()=>{if(!current())throw Error('AUDIT_CANCELLED');if(busy()||options.isUnavailable())throw Error('AUDIT_BUSY');};
+   try{
+    const updates=await readTrackedGlyph26(Array.from(scope.glyph26Tracked),scope.rootIds,scope.pageId,guard,scope.glyph26Review.servicePattern);guard();
+    const payload=JSON.stringify(updates);if(payload===scope.glyph26LastSync)return;
+    scope.glyph26LastSync=payload;
+    post({type:'v3-audit-glyph26-sync',schemaVersion:p.BRIDGE,runId:scope.message.requestId,sequence:serial,updates});
+   }catch(error){if(current()&&(error as Error).message==='AUDIT_BUSY')queueGlyph26Sync(scope);}
+  },80);
+ }
  const traceFor=(scope:any)=>operation?.scope===scope?operation.trace:scope.trace;
  function context(scope:any){const revision=options.readRevision();return{stage:operation?.scope===scope?operation.stage:scope.stage,serial:scope.notificationSerial,pending:scope.notifications.size,invalidated:scope.invalidated,
   capturedRevision:scope.revision,revision,revisionChanged:revision!==scope.revision,mutationStarted:operation?.scope===scope&&operation.started===true};}
@@ -156,9 +174,18 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
      if(scope.stage!==message.progress?.stage){scope.stage=message.progress?.stage;scope.trace.add('stage',{stage:scope.stage,checked:scope.checked,total:message.progress?.total});}
     }
     const terminal=['v3-audit-result','v3-audit-error','v3-audit-cancelled'].includes(message.type);
-    if(terminal)scope.trace.add('capture-terminal',Object.assign({},message.code==='AUDIT_SOURCE_CHANGED'?sourceChange(scope,'capture'):{},context(scope),{code:message.code,outcome:message.type==='v3-audit-result'?'success':message.type==='v3-audit-cancelled'?'cancelled':'error',checked:scope.checked}),message.type!=='v3-audit-result');
+    if(terminal)scope.trace.add('capture-terminal',Object.assign({},message.code==='AUDIT_SOURCE_CHANGED'?sourceChange(scope,'capture'):{},context(scope),message.failure??{},{code:message.code,outcome:message.type==='v3-audit-result'?'success':message.type==='v3-audit-cancelled'?'cancelled':'error',checked:scope.checked}),message.type!=='v3-audit-result');
     if(message.type==='v3-audit-result'){
-     for(const[id,old]of accepted)if(old.message.kind===scope.message.kind)accepted.delete(id);
+     if(scope.message.kind==='components')scope.glyph26Review={
+      candidates:(message.result.visibleViews?.glyph26||[]).map((item:any)=>({id:item.id,key:item.componentKey})),
+      servicePattern:(message.result.glyph26?.findings||[]).some((item:any)=>item.reason==='service-pattern-required'),
+     };
+     scope.glyph26Tracked=new Set<string>();scope.glyph26Watch=new Set<string>(scope.rootIds);
+     for(const item of scope.glyph26Review?.candidates||[]){
+      let node=scope.observation.observedNode(item.id);
+      while(node&&node.type!=='PAGE'&&node.type!=='DOCUMENT'){scope.glyph26Watch.add(node.id);node=node.parent;}
+     }
+     for(const[id,old]of accepted)if(old.message.kind===scope.message.kind){clearTimeout(old.glyph26SyncTimer);accepted.delete(id);}
      accepted.set(scope.message.requestId,scope);capture=null;
     }else if(['v3-audit-error','v3-audit-cancelled'].includes(message.type)){abortData(scope.ownerRequestId,message.code);capture=null;}
     const reply=message.code==='AUDIT_SOURCE_CHANGED'?Object.assign({},message,{sourceChange:sourceChange(scope,'capture')}):Object.assign({},message);
@@ -347,7 +374,31 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
  }
  return{
   busy,
+  recordGlyph26Replacements(ids:string[]){
+   for(const scope of accepted.values()){
+    const allowed=new Set((scope.glyph26Review?.candidates||[]).map((item:any)=>item.id));
+    for(const id of ids)if(allowed.has(id))scope.glyph26Tracked.add(id);
+    queueGlyph26Sync(scope);
+   }
+  },
+  syncTrackedGlyph26(){for(const scope of accepted.values())queueGlyph26Sync(scope);},
+  async glyph26Review(runId:string,platform:string){
+   const scope=accepted.get(runId);
+   const guard=()=>{
+    if(closed||busy()||accepted.get(runId)!==scope||!scope?.glyph26Review||scope.message.channel!==platform||!['iOS','Android'].includes(platform))throw Error('Результат ревью недоступен. Повтори проверку в Apollo.');
+    if((figma.fileKey||null)!==scope.fileKey||figma.currentPage.id!==scope.pageId)throw Error('Открыт другой макет. Вернись к проверенной области.');
+   };
+   guard();const roots:SceneNode[]=[];
+   for(const id of scope.rootIds){
+    const node=await figma.getNodeByIdAsync(id);guard();
+    let parent=node;while(parent&&parent.type!=='PAGE')parent=parent.parent;
+    if(!node||node.removed||node.type==='PAGE'||node.type==='DOCUMENT'||parent?.id!==scope.pageId)throw Error('Проверенная область недоступна. Повтори проверку в Apollo.');
+    roots.push(node as SceneNode);
+   }
+   return {page:figma.currentPage,roots,candidates:scope.glyph26Review.candidates,servicePattern:scope.glyph26Review.servicePattern};
+  },
   observeChange(event:NodeChangeEvent){
+   for(const scope of accepted.values())if(event.nodeChanges?.some(change=>scope.glyph26Watch?.has(change.id)))queueGlyph26Sync(scope);
    const scopes=new Set<any>(Array.from(accepted.values()).concat(capture?[capture]:[],operation?[operation.scope]:[]));
    for(const scope of scopes){
     if(scope.invalidated){
@@ -381,6 +432,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
    }
   },
   invalidate(callsite='native-invalidate'){
+   for(const scope of accepted.values())queueGlyph26Sync(scope);
    if(operation?.paintEvents&&operation.started&&!operation.announcingMutation)operation.paintInterrupted=true;
    if(operation?.textEvents&&operation.started&&!operation.announcingMutation)operation.textInterrupted=true;
    const scopes=new Set<any>(Array.from(accepted.values()).concat(capture?[capture]:[]));for(const scope of scopes){const afterWrite=operation?.scope===scope&&operation.started===true;traceFor(scope).add('context-invalidated',Object.assign(context(scope),{callsite,outcome:afterWrite?'refresh-required':'refused'}),!afterWrite);}
@@ -388,7 +440,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
    if(capture)capture.bridge.invalidate();
    if(operation&&!operation.started){operation.reject(Error('AUDIT_SOURCE_CHANGED'));abortData(operation.requestId,'AUDIT_SOURCE_CHANGED');}
   },
-  close(){closed=true;focusing?.cancel();capture?.bridge.cancel();if(operation){operation.cancelled=true;if(!operation.started)operation.reject(Error('AUDIT_CANCELLED'));}for(const task of pending.values()){clearTimeout(task.timer);task.reject(Error('AUDIT_CANCELLED'));}pending.clear();accepted.clear();},
+  close(){closed=true;for(const scope of accepted.values())clearTimeout(scope.glyph26SyncTimer);focusing?.cancel();capture?.bridge.cancel();if(operation){operation.cancelled=true;if(!operation.started)operation.reject(Error('AUDIT_CANCELLED'));}for(const task of pending.values()){clearTimeout(task.timer);task.reject(Error('AUDIT_CANCELLED'));}pending.clear();accepted.clear();},
   accept(message:any){
    if(message?.type==='v3-audit-data-response'){
     const task=pending.get(message.requestId);if(!task)return true;

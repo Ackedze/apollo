@@ -102,9 +102,10 @@ function Picker({row,state,client,onClose,onPreview}:{row:any;state:any;client:a
     <footer className="apollo-skill-footer"><div className="apollo-skills-actions"><Button label="Пропустить" type="secondary" onPress={()=>{client.skip(rowIdentity(row));onClose();}}/></div></footer>
   </Dialog>;
 }
-export function ReglyphSkill({client}:{client:any}) {
+export function ReglyphSkill({client,openRequest=0}:{client:any;openRequest?:number}) {
   const state:any=useSyncExternalStore(client.subscribe,client.getState);
   const [open,setOpen]=useState(false),[picker,setPicker]=useState<any>(null),[confirm,setConfirm]=useState(false),[large,setLarge]=useState<any>(null);
+  useEffect(()=>{if(openRequest){setOpen(true);client.open();}},[openRequest,client]);
   const previewToken=useRef(0);
   const content=useRef<HTMLElement>(null),groups=useRef<HTMLDivElement>(null),previousStatus=useRef(state.status),scroll=useRef(0),previewScroll=useRef(0);
   useLayoutEffect(()=>{

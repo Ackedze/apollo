@@ -13,7 +13,9 @@
 | R2 | Audit classification, snapshot/diff, assessment, filters, policies, reference loading, contracts, stats, Agent | 1 актуальный trusted approval от code owner |
 | R3 | Manifest permissions/domains, network transport, dependencies, workflows, build/release и privacy boundary | 1 актуальный trusted approval от code owner и явная security-проверка |
 
-Workflow `Review policy` вычисляет риск по изменённым путям. Более строгая классификация имеет приоритет. Workflow проверяет последнее решение @Ackedze и SHA коммита, который он одобрил.
+Проверка `Required approvals` вычисляет риск по изменённым путям. Более строгая
+классификация имеет приоритет. Проверка учитывает последнее решение @Ackedze
+и SHA коммита, который он одобрил.
 
 Для любого уровня риска требуется один актуальный approval владельца
 **@Ackedze**. Workflow проверяет его approval, а защита `main` дополнительно
@@ -23,6 +25,33 @@ Workflow `Review policy` вычисляет риск по изменённым �
 проверок `validate` и `Required approvals`. Force push и удаление ветки запрещены.
 Администратор сохраняет bypass для работы владельца напрямую в `main`;
 внешние участники используют PR. Merge не публикует плагин или данные.
+
+## Обновление проверки одобрения
+
+`Review policy` принимает события PR и review без разрешений токена и без
+checkout. После его завершения `Owner approval gate` выполняет проверяющий
+скрипт из точного коммита основной ветки. Этот workflow получает только
+`contents: read`, `pull-requests: read`, `checks: write`; код и артефакты PR
+с правами записи не исполняются, в том числе для форков.
+
+На каждый head PR создаётся одна собственная проверка `Required approvals`.
+Approve текущего SHA обновляет её на success; отзыв одобрения, Request changes
+или новый head требуют нового актуального approval. Комментарий не отменяет
+прежнего решения. Draft получает neutral и остаётся заблокирован самим GitHub.
+Ручной перезапуск старого CI после одобрения не нужен.
+
+Обработчики выполняются последовательно и перечитывают все открытые PR в `main`,
+поэтому объединение ожидающих событий не теряет обновления другого PR. Head
+повторно проверяется перед записью результата. Ошибка чтения review/files
+закрывает затронутую проверку с failure; сбой обработчика виден отдельным job.
+Нативные code-owner review, актуальная база, `validate` и Owner-only rule
+сохраняются независимо от результата скрипта.
+
+**Переход со старого workflow:** исторические красные Actions jobs не
+переписываются. Уже открытые PR нужно один раз обновить от `main` с новым
+workflow: на новом SHA не будет старого отдельного `Required approvals` job.
+После этого review обновляет единственную проверку текущего SHA. Одобрение
+предыдущего SHA не переносится на новый коммит.
 
 ## Проверка автором
 

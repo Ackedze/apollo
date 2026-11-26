@@ -29,6 +29,7 @@ function downloadJson(name,content){
 }
 function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http://localhost:3001',onChange=()=>{},statistics=null,onStart=()=>{},pollDelay=700}){
  let sequence=0,closed=false,active=null,operation=null;
+ let glyph26History=null;
  let agentInputAccess=null;
  const listeners=new Set(),reads=new Map(),operations=new Map();
  const traces={components:[],texts:[]},droppedTraces={components:0,texts:0};
@@ -174,6 +175,15 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
  }
  const api={
   getState:()=>state,subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);},busy:()=>Boolean(active||operation),
+  removeReplacedGlyph26(ids){
+   if(!state.result||!Array.isArray(ids))return;
+   const removed=new Set(ids),before=state.result.visibleViews?.glyph26||[],entries=before.filter(item=>!removed.has(item.id));
+   if(entries.length===before.length)return;
+   const glyph26=Object.assign({},state.result.glyph26,{findings:(state.result.glyph26?.findings||[]).filter(item=>!removed.has(item.nodeId)),
+    resolvedNodeIds:Array.from(new Set((state.result.glyph26?.resolvedNodeIds||[]).concat(before.filter(item=>removed.has(item.id)).map(item=>item.id))))});
+   emit({stale:true,result:Object.assign({},state.result,{glyph26,
+    visibleViews:Object.assign({},state.result.visibleViews,{glyph26:entries}),report:Object.assign({},state.result.report,{glyph26})})});
+  },
   snapshot(kind='components'){
    if(!['components','texts'].includes(kind))throw Error('AUDIT_REQUEST_INVALID');
    const saved=kind==='components'?state.result:state.texts.result,attempt=state.attempts[kind],work=active?.kind===kind?active:null;
@@ -286,6 +296,30 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     const task=reads.get(message.requestId);if(task?.ownerRequestId===message.ownerRequestId){relayTrace(task.ownerRequestId)?.add('data-relay-cancelled',{dataRequestId:message.requestId});reads.delete(message.requestId);task.abort.abort();}return true;
    }
    if(!message?.type?.startsWith('v3-audit-')||message.schemaVersion!==p.BRIDGE)return false;
+   if(message.type==='v3-audit-glyph26-sync'){
+    const history=glyph26History;
+    if(!history||message.runId!==state.runId||message.runId!==history.runId||!Number.isSafeInteger(message.sequence)||message.sequence<=history.sequence||!Array.isArray(message.updates)||message.updates.length>history.entries.size)return true;
+    const key=value=>typeof value==='string'&&/^[a-f0-9]{40}$/.test(value);
+    if(message.updates.some(item=>!history.entries.has(item?.id)||!['legacy','current','unknown'].includes(item.status)||item.status==='legacy'&&(!['violation','warning'].includes(item.classification)||!key(item.sourceKey)||(item.targetKey!==null&&!key(item.targetKey))||typeof item.ruleId!=='string'||item.ruleId.length>160||typeof item.reason!=='string'||item.reason.length>80)))return true;
+    history.sequence=message.sequence;
+    const entries=new Map((state.result.visibleViews.glyph26||[]).map(item=>[item.id,item]));
+    const findings=new Map((state.result.glyph26?.findings||[]).map(item=>[item.nodeId,item]));
+    const resolved=new Set(state.result.glyph26?.resolvedNodeIds||[]);
+    for(const update of message.updates){
+     if(update.status==='unknown'){history.unknown.add(update.id);continue;}
+     history.unknown.delete(update.id);
+     if(update.status==='current'){entries.delete(update.id);findings.delete(update.id);resolved.add(update.id);continue;}
+     const original=history.entries.get(update.id);
+     entries.set(update.id,Object.assign({},original,{componentKey:update.sourceKey,glyph26Status:update.classification,glyph26Reason:update.reason}));
+     findings.set(update.id,Object.assign({},history.findings.get(update.id)||{nodeId:update.id,name:original.name,path:original.fullPath},{classification:update.classification,reason:update.reason,ruleId:update.ruleId,sourceKey:update.sourceKey,targetKey:update.targetKey}));
+     resolved.delete(update.id);
+    }
+    const ordered=Array.from(history.entries.keys()).filter(id=>entries.has(id));
+    const glyph26=Object.assign({},state.result.glyph26,{status:history.unknown.size?'incomplete':history.status,
+     findings:ordered.map(id=>findings.get(id)).filter(Boolean),resolvedNodeIds:Array.from(resolved),syncUnknownIds:Array.from(history.unknown)});
+    emit({stale:true,result:Object.assign({},state.result,{glyph26,visibleViews:Object.assign({},state.result.visibleViews,{glyph26:ordered.map(id=>entries.get(id))}),report:Object.assign({},state.result.report,{glyph26})})});
+    return true;
+   }
    if(message.type==='v3-audit-invalidated'){
     const kind=kindForRun(message.runId);if(kind)nativeTrace(message,kind,message.runId,message.runId);
     if(message.runId===state.runId||message.runId===state.texts.runId)emit({sourceChange:sourceChange(message.sourceChange)});
@@ -319,6 +353,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     else{
      const staleActionIds=Array.isArray(message.staleActionIds)?message.staleActionIds.filter(p.id):[];
      statistics?.finish(work.requestId,'native-document',nativeMetrics(result,work.settings));
+     glyph26History={runId:work.requestId,sequence:0,status:result.glyph26?.status||'incomplete',unknown:new Set(),entries:new Map((result.visibleViews?.glyph26||[]).map(item=>[item.id,item])),findings:new Map((result.glyph26?.findings||[]).map(item=>[item.nodeId,item]))};
      emit({result,runId:work.requestId,resultSettings:work.settings,stale:false,staleActionIds,paintFixes:[],sourceChange:sourceChange(message.sourceChange)});
      finish(work);
     }return true;

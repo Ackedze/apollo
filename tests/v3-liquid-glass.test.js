@@ -2,12 +2,11 @@
 const test=require('node:test'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
 const {buildSync}=require('esbuild');
 const {data}=require('./fixtures/v3-audit-compact-index.cjs');
-const {compileLegacyComponents}=require('../../../services/apollo-proxy/src/audit-data/policies/liquid-glass');
 const {buildV3Groups,nativeMetrics}=require('../src/v3-audit/ui-model');
 const {identifyLegacyComponent}=require('../src/v3-audit/policies/liquidGlassComponentPolicy');
-const code=buildSync({stdin:{contents:'module.exports=Object.assign({},require("./src/v3-audit/liquid-glass"),require("./src/v3-audit/entry"),require("./src/v3-audit/embedded-data"),require("./src/v3-audit/remediation/session"))',resolveDir:path.join(__dirname,'..')},bundle:true,write:false,platform:'node',format:'cjs',supported:{'object-rest-spread':false}}).outputFiles[0].text;
+const code=buildSync({stdin:{contents:'module.exports=Object.assign({},require("./src/v3-audit/liquid-glass"),require("./src/v3-audit/bridge"),require("./src/v3-audit/entry"),require("./src/v3-audit/embedded-data"),require("./src/v3-audit/remediation/session"))',resolveDir:path.join(__dirname,'..')},bundle:true,write:false,platform:'node',format:'cjs',supported:{'object-rest-spread':false}}).outputFiles[0].text;
 const runtime={exports:{}};new Function('module','exports','require',code)(runtime,runtime.exports,require);
-const {readLiquidGlassRegistry,runV3Audit,createOfflineAuditIndex,createAuditSession}=runtime.exports;
+const {readLiquidGlassRegistry,runV3Audit,createOfflineAuditIndex,createAuditSession,auditResultForUi}=runtime.exports;
 const legacy='63ebc76450fc4eca2e3580eeec8951336937c046',conditional='dd134e78b30b144f5fa9471e40367f51d7a1128d',oldVariant='a'.repeat(40),falseVariant='b'.repeat(40),trueVariant='9'.repeat(40),local='8'.repeat(40),property='👻 LiquidGlassEffect';
 function policy(){
  const payload=JSON.parse(JSON.stringify(data.payload).replaceAll('d'.repeat(40),legacy).replaceAll('e'.repeat(40),conditional));
@@ -19,7 +18,12 @@ function policy(){
   {key:conditional,name:'State family',fileKey:'SyntheticLibrary',allowLocalSupplement:false,variantCondition:{property,equals:'False',missingPropertyValue:'False',variantValues:{[falseVariant]:'False',[trueVariant]:'True'}}},
   {key:local,name:'Local supplement',fileKey:'OtherLibrary',allowLocalSupplement:true},
  ]};
- return {index,registry:compileLegacyComponents(Buffer.from(JSON.stringify(index)),config)};
+ // Wire fixture for the Apollo consumer; real Proxy compilation is exercised in the paired Proxy suite.
+ const registry={schemaVersion:'apollo.legacy-components.v1',status:'draft',platform:'iOS',sourceIndexDataId:index.dataId,
+  families:config.families.map(family=>Object.assign({},family,{source:family.allowLocalSupplement?'local-supplement':'catalog',
+   variantKeys:family.key===legacy?[oldVariant]:family.key===conditional?[falseVariant]:[]}))};
+ registry.registryId=crypto.createHash('sha256').update(JSON.stringify(registry)).digest('hex');
+ return {index,registry};
 }
 
 test('native data reader pins policy to the captured audit index and rejects changed or malformed policy',async()=>{
@@ -52,8 +56,10 @@ test('normal native traversal finds nested, renamed and supplemented instances; 
  const absentNavbar=instance('absent-navbar',oldVariant,legacy);absentNavbar.parent=absent;absent.children=[absentNavbar];
  const supplemented=instance('supplemented','7'.repeat(40),local),hidden=instance('hidden',oldVariant,legacy);hidden.visible=false;
  const unknown=instance('unknown','6'.repeat(40),'5'.repeat(40));
+ const glyphKey=require('../src/skills/reglyph/default.json').mappings[0].oldKey;
+ const glyph=instance('old-glyph',glyphKey,'3'.repeat(40));
  const unread=instance('unread','4'.repeat(40),conditional);Object.defineProperty(unread,'variantProperties',{get(){throw Error('unreadable');}});
- page.children=[top,parent,absent,off,supplemented,hidden,unknown,unread];
+ page.children=[top,parent,absent,off,supplemented,hidden,unknown,unread,glyph];
  globalThis.figma={fileKey:'fixture',currentPage:page,currentUser:null,root:{name:'Fixture'},editorType:'figma',mixed:Symbol('mixed'),variables:{getVariableCollectionByIdAsync:async()=>null},
   getNodeByIdAsync:async id=>all.find(n=>n.id===id)||null,importComponentByKeyAsync:async key=>mains.get(key),viewport:{scrollAndZoomIntoView(nodes){focused=nodes[0].id;}}};
  t.after(()=>delete globalThis.figma);
@@ -62,6 +68,15 @@ test('normal native traversal finds nested, renamed and supplemented instances; 
  assert.deepEqual(findings.map(n=>n.id).sort(),['absent','false','nested-old','old','other-child','supplemented','unread']);
  assert.equal(findings.find(n=>n.id==='unread').liquidGlassStatus,'unknown');
  assert.equal(result.report.liquidGlass.findings.length,7);
+ const ui=auditResultForUi(result);
+ assert.equal(ui.visibleViews.glyph26.length,1);
+ assert.equal(ui.visibleViews.glyph26[0].id,'old-glyph');
+ assert.equal(ui.report.glyph26.findings[0].nodeId,'old-glyph');
+ assert.equal(ui.liquidGlass.status,'connected');
+ assert.equal(ui.report.liquidGlass.findings.length,7);
+ const combined=buildV3Groups(ui,{pickerLabel:'iOS'});
+ assert.equal(combined.groups.find(g=>g.id==='icons').count,1);
+ assert.equal(combined.groups.find(g=>g.id==='components').categories.find(c=>c.id==='liquidGlass').count,7);
  assert(!result.report.liquidGlass.findings.some(n=>['covered-navbar','absent-navbar'].includes(n.id)));
  // The production session discovers focus targets from the same visible view as other categories.
  const actions={get:()=>null,values:()=>[]};

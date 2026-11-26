@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const {createReglyphBridge}=require('../../src/skills/reglyph/native');
 const {createReglyphClient,pickerRepresentatives,searchText}=require('../../src/skills/reglyph/client');
 const p=require('../../src/skills/reglyph/protocol');
-function fixture(detection={containers:[],iconViewSets:[]}) {
+function fixture(detection={containers:[],iconViewSets:[]},readReview) {
   const messages=[],events={},storage=new Map(),swaps=[],undoEvents=[];
   let key='old',imports=async value=>({key:value,width:24,height:24,children:[],exportAsync:async()=>new Uint8Array([1])});
   const page={id:'page',type:'PAGE',selection:[],findAllWithCriteria:()=>[]};
@@ -13,7 +13,7 @@ function fixture(detection={containers:[],iconViewSets:[]}) {
   const catalog={version:1,scenarioId:'default',oldIcons:[{key:'old',name:'Old'}],newIcons:[{key:'new',name:'New',familyId:'new',width:24,height:24}],mappings:[{oldKey:'old',newKey:'new'}]};
   const catalogs={default:catalog,services:Object.assign({},catalog,{scenarioId:'services',newIcons:[{key:'logo',name:'Logo'}],mappings:[{oldKey:'old',newKey:'logo'}]})};
   let changed=0,notify=()=>{};
-  const bridge=createReglyphBridge({api,catalogs,detection,post:value=>{messages.push(value);notify(value);},onMutation:()=>changed++});
+  const bridge=createReglyphBridge({api,catalogs,detection,readReview,post:value=>{messages.push(value);notify(value);},onMutation:()=>changed++});
   let sequence=0,revision=0;
   const context=(platform='iOS',channelId='b2b')=>bridge.accept({type:'reglyph-context',schemaVersion:p.SCHEMA,revision:++revision,context:{channelId,pickerLabel:platform}});
   const request=(operation,payload={})=>new Promise(resolve=>{
@@ -27,6 +27,7 @@ test('same ABM implementation works on iOS and Android without replacing the Apo
     const f=fixture();f.context(platform);await f.request('scan');assert.equal(f.swaps.length,0);
     await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});
     assert.deepEqual(f.swaps,['new']);assert.equal(f.changed(),1);assert.equal(f.api.ui.onmessage,'original');assert.equal(f.bridge.busy(),false);
+    assert.deepEqual(f.messages.findLast(message=>message.event?.type==='done').event.completedIds,['icon']);
   }
 });
 test('Desktop and MobileWeb cannot scan or mutate using ABM rules',async()=>{
@@ -321,11 +322,20 @@ test('all AlertView sets and standalone components are observed as protected and
   const detection=require('../../src/skills/reglyph/detection.json');
   const expected=['AlertNoInternet','AlertNotFound','AlertServerError','AlertNoAccessRights','AlertDefaultAction','AlertFilters','AlertDefault','AlertSearch','AlertLeaveSavePossible','AlertLeaveSaveImossible','AlertDelete'];
   const sets=detection.protectedComponentSets.filter(row=>row.scope==='alert-view'),components=detection.protectedComponents.filter(row=>row.scope==='alert-view');
-  assert.equal(sets.length,14);assert.equal(components.length,8);
+  assert.equal(sets.length,21);assert.equal(components.length,12);
+  const v2=[...sets,...components].filter(row=>row.name.startsWith('AlertViewV2 '));
+  assert.deepEqual(v2.map(row=>row.key).sort(),[
+    'c4c93254de1f2c69583d6de531e0b89cca5d1b3b','3d5d62fd07efff69afd51af4f5df433a4075e10c',
+    'ef9d828b48410e5593b701c7c67902d955c4cc93','54c7bea4be49b5416e537432688b92976c068667',
+    'b97bcc45c296b106468482f2b60e2aedeec0b45c','04916b147d7f5b67899ce14319f3b7529645f193',
+    '977bb58fc6fb6606de806cfa885aca5b352d44e4','eab01794346fac404a597629eebc25913843f166',
+    '22d6fb82d30c974d17d81574ab97f68d67ed6d20','03d646424ee6030f64b91b6dc97ee0037602c921',
+    '5a3efb110e814b490b222e50b2fd8a91fbdae0b9',
+  ].sort());
   for(const name of expected)assert.equal([...sets,...components].filter(row=>row.name==='AlertView (🟦) / '+name).length,2,name);
-  for(const row of [...sets,...components]){
+  for(const row of [...sets,...components])for(const view of sets.includes(row)?['Compact','Fullscreen']:['standalone']){
     const f=fixture(detection);f.context();
-    f.frame.type='INSTANCE';f.frame.getMainComponentAsync=async()=>sets.includes(row)?{key:'owner',parent:{type:'COMPONENT_SET',key:row.key}}:{key:row.key};
+    f.frame.type='INSTANCE';f.frame.getMainComponentAsync=async()=>sets.includes(row)?{key:'owner-'+view,variantProperties:{ViewType:view},parent:{type:'COMPONENT_SET',key:row.key}}:{key:row.key};
     await f.request('scan');const scan=f.messages.findLast(m=>m.event?.type==='scan').event;
     assert.equal(scan.rows.length,0,row.name);assert.equal(scan.observedRows.length,1,row.name);assert.equal(scan.observedRows[0].category,'protected');
     await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.deepEqual(f.swaps,[],row.name);
@@ -359,6 +369,7 @@ test('a failed swap still closes its undo batch',async()=>{
   const f=fixture();f.context();await f.request('scan');f.icon.swapComponent=()=>{f.undoEvents.push('attempt');throw Error('swap failed');};
   await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.deepEqual(f.undoEvents,['commit','attempt','commit']);
   assert.equal(f.messages.findLast(m=>m.event?.type==='done').event.failed,1);
+  assert.deepEqual(f.messages.findLast(m=>m.event?.type==='done').event.completedIds,[]);
 });
 test('Undo resets client choices, scope, summaries and dialogs and service requests stay disabled',()=>{
   const f=historyClient();const before=f.sent.length;f.client.scenario('services');assert.equal(f.sent.length,before);
@@ -504,4 +515,90 @@ test('cache clearing reloads only selected result targets rather than the entire
   const f=historyClient(false);f.feed({type:'scan',rows:f.rows,targetPreviews:[{key:'new',image:'prepared'}]});
   f.feed({type:'preview-cache-reset'});f.settle();assert.equal(f.client.getState().previewGeneration,1);
   assert.deepEqual(f.sent.filter(m=>m.operation==='preview').map(m=>m.payload.key),['new']);
+});
+
+test('review receives only confirmed IDs from the active replacement, including partial success',()=>{
+ const sent=[],removed=[];let undos=0;
+ const client=createReglyphClient({send:message=>sent.push(message),onReplaced:ids=>removed.push(ids),onUndo:()=>undos++});
+ client.setContext({channelId:'b2b',pickerLabel:'iOS'});client.open();
+ const feed=(event,request=sent.findLast(message=>message.type==='reglyph-request'))=>client.accept({type:'reglyph-event',schemaVersion:p.SCHEMA,revision:request.revision,requestId:request.requestId,event});
+ const settle=()=>{let job;while((job=sent.findLast(message=>message.type==='reglyph-request'&&!message.settled))){job.settled=true;client.accept({type:'reglyph-result',schemaVersion:p.SCHEMA,revision:job.revision,requestId:job.requestId});}};
+ feed({type:'catalog',catalog:{scenarioId:'default',newIcons:[{key:'new'}]}});settle();
+ const rows=[{oldKey:'old',newKey:'new',ids:['success','failed'],name:'Old'}];
+ feed({type:'scan',rows,observedRows:[]});client.replace();
+ const job=sent.findLast(message=>message.operation==='replace');assert(job);
+ const event={type:'done',replaced:1,failed:1,completedIds:['success','failed','outside','success'],remainingRows:[Object.assign({},rows[0],{ids:['failed']})]};
+ feed(event,Object.assign({},job,{requestId:'reglyph-other'}));assert.deepEqual(removed,[]);
+ feed(event,job);assert.deepEqual(removed,[['success']]);settle();
+ client.undo();feed({type:'undo-complete'});assert.equal(undos,1);settle();
+});
+
+test('review handoff prepares only accepted IDs in original roots, with no selection rescan or automatic swap',async()=>{
+ const calls=[];
+ const f=fixture(undefined,(runId,platform)=>{calls.push([runId,platform]);return {page:f.api.currentPage,roots:[f.frame],candidates:[{id:'icon',key:'old'}]};});
+ f.frame.findAllWithCriteria=criteria=>{assert.deepEqual(criteria,{types:['TEXT']});return [];};
+ const unrelated={id:'unrelated',type:'FRAME',name:'Other',parent:f.api.currentPage};f.api.currentPage.selection=[unrelated];
+ f.context();await f.request('ready');assert.equal((await f.request('review',{runId:'accepted-review'})).error,null);
+ assert.deepEqual(calls,[['accepted-review','iOS']]);assert.deepEqual(f.swaps,[]);
+ assert.equal(f.api.currentPage.selection[0],unrelated);
+ const scan=f.messages.findLast(m=>m.event?.type==='scan').event;
+ assert.equal(scan.scopeName,'Исходный фрейм');assert.deepEqual(scan.rows[0].ids,['icon']);assert.equal(scan.rows[0].newKey,'new');
+ await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.deepEqual(f.swaps,['new']);
+ await f.request('review',{runId:'accepted-review'});assert.equal(f.messages.findLast(m=>m.event?.type==='scan').event.rows.length,0);
+});
+test('review handoff rejects moved/changed sources and unavailable runs and preserves service policy',async()=>{
+ for(const mode of ['missing-run','moved','changed','services']){
+  const f=fixture(undefined,()=>{if(mode==='missing-run')throw Error('Review unavailable');return {page:f.api.currentPage,roots:[f.frame],candidates:[{id:'icon',key:'old'}],servicePattern:mode==='services'};});
+  f.context();await f.request('ready');
+  if(mode==='moved')f.icon.parent={id:'other',type:'FRAME',parent:f.api.currentPage};
+  if(mode==='changed')f.icon.swapComponent({key:'unexpected-old'});
+  const count=f.swaps.length;await f.request('review',{runId:'old-review'});assert.equal(f.swaps.length,count);
+  if(mode==='services')assert(f.messages.some(m=>m.event?.type==='services-pattern-required'));
+  else assert(f.messages.some(m=>m.event?.type==='error'));
+ }
+});
+test('client queues review preparation after ready and never starts replacement automatically',()=>{
+ const sent=[];const client=createReglyphClient({send:message=>sent.push(message)});
+ client.setContext({channelId:'b2b',pickerLabel:'iOS'});client.openReview('accepted-review');
+ const ready=sent.findLast(m=>m.type==='reglyph-request');assert.equal(ready.operation,'ready');
+ client.accept({type:'reglyph-event',schemaVersion:p.SCHEMA,revision:ready.revision,requestId:ready.requestId,event:{type:'catalog',catalog:{scenarioId:'default',newIcons:[]}}});
+ client.accept({type:'reglyph-result',schemaVersion:p.SCHEMA,revision:ready.revision,requestId:ready.requestId});
+ const review=sent.findLast(m=>m.type==='reglyph-request');assert.equal(review.operation,'review');assert.deepEqual(review.payload,{runId:'accepted-review'});
+ assert.equal(client.getState().status,'scanning');assert(!sent.some(m=>m.operation==='scan'||m.operation==='replace'));
+});
+
+test('a review-prepared plan still refuses a source changed before replacement',async()=>{
+ const f=fixture(undefined,()=>({page:f.api.currentPage,roots:[f.frame],candidates:[{id:'icon',key:'old'}]}));
+ f.context();await f.request('ready');await f.request('review',{runId:'accepted-review'});
+ f.icon.swapComponent({key:'edited-after-preview'});const before=f.swaps.length;
+ await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});
+ assert.equal(f.swaps.length,before);assert(f.messages.some(m=>m.event?.type==='error'&&m.event.requestType==='replace'));
+});
+
+test('review handoff rechecks live Services titles before preparation and before replacement',async()=>{
+ for(const mode of ['before','after','hidden','unverified','unreadable']){
+  const detection={containers:[],iconViewSets:[],serviceHeaderSets:[{key:'header-set'}]};
+  const f=fixture(detection,()=>({page:f.api.currentPage,roots:[f.frame],candidates:[{id:'icon',key:'old'}],servicePattern:false}));
+  const title={id:'title',type:'TEXT',name:'_title',characters:mode==='after'?'Каталог':'Сервисы',visible:mode!=='hidden'};
+  const header={id:'header',type:'INSTANCE',parent:f.frame,visible:true,getMainComponentAsync:async()=>{
+   if(mode==='unreadable')throw Error('Header unavailable');
+   return {key:'header',parent:{type:'COMPONENT_SET',key:mode==='unverified'?'other-set':'header-set'}};
+  },findAllWithCriteria:()=>[title]};title.parent=header;
+  f.frame.findAllWithCriteria=criteria=>criteria.types[0]==='TEXT'?[title]:[f.icon,header];
+  f.context();await f.request('ready');await f.request('review',{runId:'review-before-title-change'});
+  if(mode==='before'){
+   assert(f.messages.some(m=>m.event?.type==='services-pattern-required'));
+   await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.deepEqual(f.swaps,[]);
+   continue;
+  }
+  if(mode==='unreadable'){
+   assert(f.messages.some(m=>m.event?.type==='error'&&m.event.requestType==='review'));assert.deepEqual(f.swaps,[]);continue;
+  }
+  assert(f.messages.some(m=>m.event?.type==='scan'));
+  if(mode==='after')title.characters='Сервисы';
+  await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});
+  if(mode==='after'){
+   assert.deepEqual(f.swaps,[]);assert.match(f.messages.findLast(m=>m.event?.type==='error').event.text,/сервисов/);
+  }else assert.deepEqual(f.swaps,['new']);
+ }
 });

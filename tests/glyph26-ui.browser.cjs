@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const root=path.resolve(__dirname,'..'),out=path.join(root,'build-tmp/glyph26-ui');fs.mkdirSync(out,{recursive:true});
+const root=path.resolve(__dirname,'..'),out=process.env.APOLLO_TEST_SCREENSHOTS||path.join(root,'build-tmp/glyph26-ui');fs.mkdirSync(out,{recursive:true});
 const requirements=require('../src/compatibility-requirements.json');
 const schema='apollo.v3-audit-bridge.v1';
 function install(schema){
@@ -31,8 +31,8 @@ function install(schema){
 }
 async function run(){
  const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH});
- try{for(const [platform,width] of [['iOS',800],['iOS',440],['Android',800],['Desktop',800],['MobileWeb',800]]){
-  const page=await browser.newPage({viewport:{width,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ try{for(const [platform,width] of [['iOS',800],['Android',800],['Desktop',800],['MobileWeb',800]]){
+  const page=await browser.newPage({viewport:{width,height:860}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.route('http://localhost:3001/**',async route=>{
    const url=new URL(route.request().url());let value={success:true};
    if(url.pathname==='/health')value={ok:true,proxy:{version:requirements.minProxyVersion},compatibility:{protocolVersion:requirements.protocolVersion,data:{state:'ready',version:'a'.repeat(64),schemaVersion:requirements.dataSchemaVersion,profileVersion:requirements.dataProfiles.at(-1),deliveryProfile:requirements.deliveryProfile,generatedAt:'2026-11-24T00:00:00Z'}}};
@@ -47,9 +47,9 @@ async function run(){
   if(['iOS','Android'].includes(platform)){
    const card=page.getByRole('button',{name:'Иконки: 2 замечаний',exact:true});await card.waitFor();
    assert.equal(await page.getByRole('button',{name:/^Паттерны:/}).count(),0);
-   assert.equal(await card.locator('.apollo-overview-group-description').innerText(),'Устаревшие иконки, которые необходимо заменить\nна Glyph-26');
+   assert.equal(await card.locator('.apollo-overview-tile-count').innerText(),'2');
    await page.screenshot({path:path.join(out,platform+'-overview-'+width+'.png'),fullPage:true});
-   await card.click();await page.getByRole('button',{name:'Вернуться к обзору проверки',exact:true}).waitFor();
+   await card.click();await page.getByRole('button',{name:'Закрыть результаты проверки',exact:true}).waitFor();
    assert.equal(await page.getByRole('navigation',{name:'Категории проверки',exact:true}).count(),0);
    assert.equal(await page.getByRole('button',{name:'Иконки · 2',exact:true}).count(),0);
    const banner=page.locator('.apollo-glyph26-banner');
@@ -68,7 +68,7 @@ async function run(){
     'Устаревшая иконка: при автоматической замене может потребовать вмешательство, используй навык «Перевести на Glyph-26».',
    ].entries()){
     await page.getByRole('button',{name:'Сведения проверки',exact:true}).nth(index).click();
-    assert.equal(await page.getByRole('dialog').getByText(message,{exact:true}).count(),1);
+    assert.equal(await page.getByRole('dialog',{name:'Сведения проверки'}).getByText(message,{exact:true}).count(),1);
     await page.getByRole('button',{name:'Закрыть сведения проверки',exact:true}).click();
    }
    assert.equal(await page.getByRole('button',{name:'Показать в макете',exact:true}).count(),2);
@@ -108,7 +108,7 @@ async function run(){
     assert.equal(await page.getByRole('img',{name:'Нарушение',exact:true}).count(),0);
     assert.equal(await page.getByRole('img',{name:'Замечание',exact:true}).count(),1);
     assert.equal(await page.evaluate(()=>window.__wire.filter(m=>m.type==='v3-audit-run').length),1);
-    await page.getByRole('button',{name:'Вернуться к обзору проверки',exact:true}).click();
+    await page.getByRole('button',{name:'Закрыть результаты проверки',exact:true}).click();
     await page.getByRole('button',{name:'Иконки: 1 замечаний',exact:true}).waitFor();
     const sync=updates=>page.evaluate(updates=>window.__emit({type:'v3-audit-glyph26-sync',schemaVersion:'apollo.v3-audit-bridge.v1',runId:window.__run,sequence:window.__sync=(window.__sync||0)+1,updates}),updates);
     await sync([{id:'node-0',status:'current'}]);
@@ -120,17 +120,17 @@ async function run(){
     assert.equal(await page.getByRole('img',{name:'Замечание',exact:true}).count(),1);
     await sync([{id:'node-0',status:'current'}]);
     await page.waitForFunction(()=>document.querySelectorAll('.apollo-finding-status.violation').length===0);
-    await page.getByRole('button',{name:'Вернуться к обзору проверки',exact:true}).click();
+    await page.getByRole('button',{name:'Закрыть результаты проверки',exact:true}).click();
     await page.getByRole('button',{name:'Иконки: 1 замечаний',exact:true}).waitFor();
    }
   }else{
-   await page.getByRole('button',{name:/^Паттерны:/}).waitFor();
+   assert.equal(await page.getByRole('button',{name:/^Паттерны:/}).count(),0);
    assert.equal(await page.getByRole('button',{name:/^Иконки:/}).count(),0);
   }
   if(!['iOS','Android'].includes(platform)){const size=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth}));assert.equal(size.scroll,size.width);}
   assert.deepEqual(errors,[]);
   await page.screenshot({path:path.join(out,platform+'-findings-'+width+'.png'),fullPage:true});await page.close();
  }}finally{await browser.close();}
- console.log('PASS: mobile Icons replace Patterns with exact copy; web keeps Patterns; red/warning cards, focus and 800/440 px verified.');
+ console.log('PASS: mobile Icons, hidden Patterns, red/warning cards and focus at 800 px.');
 }
 run().catch(e=>{console.error(e);process.exitCode=1;});

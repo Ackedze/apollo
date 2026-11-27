@@ -54,8 +54,9 @@ test('Locals includes components outside DS catalogs, retaining native identity 
 });
 test('Base separates found and target component; detached message uses canonical source name',()=>{
  const result={visibleViews:{themization:[{id:'theme',name:'[D][Corporate] Input',recommendation:'[D] Input'}],detached:[{id:'detached',name:'Renamed layer',componentName:'[D] NavigationCardView'}]}};
- const base=buildV3Groups(result).theme.entries[0];assert.equal(base.displayName,'[D][Corporate] Input');assert.equal(base.title,'Замени на [D] Input');assert.equal(category(result,'detached').entries[0].title,'Компонент [D] NavigationCardView раздетачен.');
- assert.equal(category(result,'detachedStyles').title,'Без стиля или токена');
+ const summary=buildV3Groups(result),base=summary.theme.entries[0];assert.equal(base.displayName,'[D][Corporate] Input');assert.deepEqual(base.messages,['[D][Corporate] Input → [D] Input']);
+ assert.deepEqual(summary.baseCategories.map(({id,count})=>[id,count]),[['pageSettings',0],['corporateComponents',1]]);assert.equal(category(result,'detached').entries[0].title,'Компонент [D] NavigationCardView раздетачен.');
+ assert.equal(category(result,'detachedStyles').title,'Без токена');
 });
 test('toast uses a cross, black secondary text in enabled/disabled states and dismisses',async()=>{
  const d=fixture(),w=d.window;w.eval(js+'\nwindow.QA=QA;');const view=w.QA.mount(w.document.querySelector('#root'),{});
@@ -78,11 +79,11 @@ test('opening Text Audit from Tools leaves one status and one working Stop',asyn
  try{
   controller.setV3AuditState(ready);
   await wait();
-  const group=[...d.querySelectorAll('button')].find(b=>b.textContent.trim().startsWith('Компоненты'));
+  const group=[...d.querySelectorAll('button')].find(b=>b.getAttribute('aria-label')?.startsWith('Компоненты:'));
   assert.ok(group);
   group.click();
   await wait();
-  assert.ok(d.querySelector('.apollo-back'));
+  assert.ok(d.querySelector('.apollo-audit-results-dialog[open]'));
 
   controller.setV3AuditState({...ready,busy:true,kind:'components',progress:'Проверяем компоненты…'});
   await wait();
@@ -108,6 +109,73 @@ test('opening Text Audit from Tools leaves one status and one working Stop',asyn
   controller.setV3AuditState({...ready,error:'Агент недоступен.'});
   await wait();
   assert.equal(d.querySelector('dialog[open] .apollo-text-stage-message[role="alert"]').textContent,'Агент недоступен.');
+ }finally{view.unmount();controller.destroy();w.close();}
+});
+test('a fresh Design result splits from the mascot once and downloads JSON directly',async()=>{
+ const dom=fixture(),w=dom.window,d=w.document;
+ let reducedMotion=false;
+ w.matchMedia=()=>({get matches(){return reducedMotion;},addEventListener(){},removeEventListener(){}});
+ const animations=[],downloads=[];
+ w.Element.prototype.getBoundingClientRect=function(){
+  if(this.classList.contains('apollo-mascot-body'))return new w.DOMRect(328,240,144,144);
+  if(this.classList.contains('apollo-overview-tile')) {
+   const index=[...this.parentElement.children].indexOf(this);
+   return new w.DOMRect(174+154*index,260,144,144);
+  }
+  return new w.DOMRect();
+ };
+ w.Element.prototype.animate=function(frames){
+  animations.push({node:this,frames});
+  return {cancel(){}};
+ };
+ w.eval(js+'\nwindow.QA=QA;');
+ const controller=w.QA.createDesignCheckController({auditEngine:'v3'});
+ const initial=controller.getState().v3Audit;
+ const view=w.QA.mountDesignCheck(d.querySelector('#root'),controller,{},{v3Client:{download:kind=>downloads.push(kind)}});
+ const result={visibleViews:{relevance:{update:[{id:'component',name:'Example'}]}}};
+ const download=()=>d.querySelector('button[aria-label="Скачать"]');
+ try{
+  await wait();
+  assert.equal(download(),null);
+  controller.setV3AuditState({...initial,busy:true,kind:'components'});
+  await wait();
+  assert.ok(d.querySelector('.apollo-mascot-body'));
+  const ready={...initial,result,runId:'design-1'};
+  controller.setV3AuditState(ready);
+  await wait();
+  const tiles=animations.filter(({node})=>node.matches('.apollo-overview-tile'));
+  assert.deepEqual(tiles.map(({frames})=>frames[0].transform),[
+   'translate3d(154px,-20px,0) scale(.96)',
+   'translate3d(0px,-20px,0) scale(.96)',
+   'translate3d(-154px,-20px,0) scale(.96)',
+  ]);
+  assert.ok(tiles.every(({frames})=>frames.at(-1).transform==='none'));
+  assert.equal(d.querySelector('.apollo-design-diagnostics'),null);
+  assert.equal(download().title,'Скачать JSON');
+  download().click();
+  assert.deepEqual(downloads,['components']);
+
+  const count=animations.length;
+  controller.setV3AuditState({...ready,result:{...result}});
+  await wait();
+  controller.setV3AuditState({...ready,busy:true,kind:'components'});
+  await wait();
+  controller.setV3AuditState(ready);
+  await wait();
+  assert.equal(animations.length,count,'updated or restored results do not replay');
+
+  reducedMotion=true;
+  controller.setV3AuditState({...ready,busy:true,kind:'components'});
+  await wait();
+  controller.setV3AuditState({...ready,runId:'design-2'});
+  await wait();
+  assert.equal(animations.length,count);
+  assert.equal(d.querySelectorAll('.apollo-overview-tile').length,3);
+
+  controller.setV3AuditState({...initial,attempts:{components:{requestId:'failed'}}});
+  await wait();
+  download().click();
+  assert.deepEqual(downloads,['components','components']);
  }finally{view.unmount();controller.destroy();w.close();}
 });
 test('house menu groups libraries and caps inner scrolling at five option rows while keeping outer shadow and keyboard actions',async()=>{
@@ -196,7 +264,8 @@ test('finding and binding menu show confirmed colors, with text-only ambiguous o
 
 const builder=esbuild.buildSync({entryPoints:[path.join(app,'src/v3-audit/services/auditViewBuilder.ts')],bundle:true,write:false,platform:'node',format:'cjs',logLevel:'silent'}),moduleUnderTest={exports:{}};
 new Function('require','module','exports',builder.outputFiles[0].text)(require,moduleUnderTest,moduleUnderTest.exports);
-const {collectCustomStyles}=moduleUnderTest.exports;
+const {collectStyleFindings}=moduleUnderTest.exports;
+const collectCustomStyles = async (node, options) => (await collectStyleFindings(node, options)).custom;
 test('attached text styles stay out of the unstyled typography category',async()=>{
  const mixed=Symbol('mixed');
  globalThis.figma={mixed};
@@ -252,4 +321,131 @@ test('generic paint collection detects raw gradients and unknown styles, retaini
   assert.deepEqual(await reasons({fills:[{type:'SOLID',boundVariables:{color:alias}}]}),[]);assert.deepEqual(await reasons({fills:[{type:'SOLID',boundVariables:{color:{id:'VariableID:'+'b'.repeat(40)+'/1:2'}}}],fillStyleId:'known'}),['fill']);
   assert.deepEqual(await reasons({fills:[{type:'IMAGE'}]}),[]);assert.deepEqual(await reasons({fills:[{type:'IMAGE'}],fillStyleId:'local'}),['fill']);assert.deepEqual(await reasons({fills:[{type:'GRADIENT_LINEAR',visible:false}],fillStyleId:'local'}),[]);assert.deepEqual(await reasons({fills:[],fillStyleId:'local'}),[]);
  }finally{delete globalThis.figma;}
+});
+
+test('Design audit checks each gradient stop in fills and strokes, reports locations and focuses the layer', async t => {
+ const { data } = require('./fixtures/v3-audit-compact-index.cjs');
+ const compiled = esbuild.buildSync({
+  stdin:{resolveDir:app, contents:'module.exports=Object.assign({},require("./src/v3-audit/entry"),require("./src/v3-audit/embedded-data"),require("./src/v3-audit/remediation/session"),require("./src/v3-audit/remediation/findingActionRegistry"))'},
+  bundle:true,write:false,platform:'node',format:'cjs',supported:{'object-rest-spread':false},
+ });
+ const runtime={exports:{}};
+ new Function('module','exports','require',compiled.outputFiles[0].text)(runtime,runtime.exports,require);
+ const { runV3Audit, createOfflineAuditIndex, createAuditSession, FindingActionRegistry } = runtime.exports;
+ const payload = structuredClone(data.payload);
+ const keys = { active:'1'.repeat(40), deprecated:'2'.repeat(40), scheduled:'3'.repeat(40), local:'4'.repeat(40), unknown:'5'.repeat(40) };
+ const variableIds = { local:'VariableID:12:34', unknown:'VariableID:56:78' };
+ const variableAlias = id => ({ type:'VARIABLE_ALIAS', id });
+ const indexedAlias = name => variableAlias('VariableID:' + keys[name] + '/1:1');
+ const variables = ['active','deprecated','scheduled','unknown'].map(status => {
+  const key = keys[status];
+  payload.resources.tokens[key] = { status, closed:false, observations:[] };
+  return { key, id:'VariableID:' + key, name:status, resolvedType:'COLOR' };
+ });
+ // An identical numeric export ID must not turn a different document variable into a catalog token.
+ variables[0].id = variableIds.local;
+ payload.tokenCatalogs.push({ meta:{fileName:'Fixture Colors'}, collections:[{name:'Fixture',variables}] });
+ const page = { id:'1:1', type:'PAGE', name:'Fixture', parent:null, explicitVariableModes:{} };
+ const color = { r:1, g:0, b:0, a:0.5 };
+ const stop = (position, binding, rgba = color) => Object.assign({ position, color:rgba },
+  binding ? { boundVariables:{ color:binding } } : {});
+ const paint = (type, gradientStops, visible = true) => ({ type, gradientStops, visible });
+ const rectangle = (id, fields) => Object.assign({ id, name:id, type:'RECTANGLE', visible:true, parent:page },fields);
+ const obsolete = indexedAlias('deprecated');
+ const mixed = Symbol('mixed');
+ const layer = rectangle('1:2', {
+  fills:[
+   paint('GRADIENT_LINEAR', [stop(0,indexedAlias('active')), stop(.65), stop(.65), stop(1,obsolete)]),
+   paint('GRADIENT_RADIAL', [stop(.2,variableAlias(variableIds.local)), stop(.4,indexedAlias('unknown'))]),
+   paint('GRADIENT_DIAMOND', [stop(0,obsolete)], false),
+  ],
+  strokes:[paint('GRADIENT_ANGULAR', [stop(.1,indexedAlias('scheduled')), stop(.65,obsolete), stop(1,variableAlias(variableIds.unknown))])],
+  boundVariables:{fills:[obsolete],strokes:[obsolete]},
+ });
+ const styled = rectangle('1:3', {
+  fillStyleId:'S:' + '9'.repeat(40) + ',',
+  fills:[paint('GRADIENT_LINEAR',[stop(0,obsolete)])],
+  boundVariables:{fills:[obsolete]},
+ });
+ const missing = rectangle('1:4', { strokes:[paint('GRADIENT_LINEAR',undefined)] });
+ const hidden = rectangle('1:5', {
+  fills:[paint('GRADIENT_LINEAR',[stop(0,obsolete)],false)],boundVariables:{fills:[obsolete]},
+ });
+ const mixedText = Object.assign(rectangle('1:6',{}),{
+  type:'TEXT',name:'Mixed',characters:'ABCD', fills:mixed,fillStyleId:mixed,textStyleId:'',fontName:{family:'Inter',style:'Regular'},fontSize:15,
+  lineHeight:{unit:'PIXELS',value:20},letterSpacing:{unit:'PIXELS',value:0},
+  openTypeFeatures:{},
+  getStyledTextSegments:()=>[
+   {start:0,end:2,fillStyleId:styled.fillStyleId,fills:styled.fills},
+   {start:2,end:4,fillStyleId:'',fills:[paint('GRADIENT_LINEAR',[stop(0),stop(1,variableAlias(variableIds.local))])]},
+  ],
+ });
+ const equalPaints = [paint('GRADIENT_LINEAR',[stop(0),stop(1,variableAlias(variableIds.local))])];
+ const sharedPaintText = Object.assign({},mixedText,{
+  id:'1:7',name:'Equal gradient paints',fills:equalPaints,
+  getStyledTextSegments:()=>[
+   {start:0,end:2,fillStyleId:styled.fillStyleId,fills:equalPaints},
+   {start:2,end:4,fillStyleId:'',fills:equalPaints},
+  ],
+ });
+ payload.styleCatalogs.push({ meta:{fileName:'Fixture styles'},styles:[{key:'9'.repeat(40),type:'paint',group:'Fixture',name:'Attached'}] });
+ const secondStyleKey = '7'.repeat(40);
+ payload.styleCatalogs[payload.styleCatalogs.length - 1].styles.push({key:secondStyleKey,type:'paint',group:'Fixture',name:'Second attached'});
+ const allStyledText = Object.assign({},sharedPaintText,{
+  id:'1:8',name:'Equal gradient paints with two styles',
+  getStyledTextSegments:()=>[
+   {start:0,end:2,fillStyleId:styled.fillStyleId,fills:equalPaints},
+   {start:2,end:4,fillStyleId:'S:' + secondStyleKey + ',',fills:equalPaints},
+  ],
+ });
+ const selection = [layer,styled,missing,hidden,mixedText,sharedPaintText,allStyledText];
+ page.children = selection;
+ const lookups = [], focusCalls = [];
+ globalThis.figma = { currentPage:page, currentUser:null, root:{name:'Fixture'}, editorType:'figma', mixed,
+  getNodeByIdAsync:async id=>selection.find(node=>node.id===id)??null, getStyleByIdAsync:async()=>null,
+  variables:{getVariableByIdAsync:async id=>{
+   lookups.push(id);
+   return id === variableIds.local ? { key:keys.local, name:'Local red', resolvedType:'COLOR' } : null;
+  }},
+  viewport:{scrollAndZoomIntoView:nodes=>focusCalls.push(nodes.map(node=>node.id))},
+ };
+ t.after(()=>delete globalThis.figma);
+ const registry = new FindingActionRegistry();
+ const result = await runV3Audit({
+  runId:'gradient-fixture',channel:'Desktop',offlineIndex:createOfflineAuditIndex(payload,data.dataId),
+  pageType:null,shellAuditEnabled:true,pluginVersion:'fixture',selection,findingActions:registry,assertCurrent(){},onProgress(){},
+ });
+ const views = result.views.visibleViews;
+ const rows = id => views.customStyles.filter(row=>row.id===id && row.gradientStop);
+ assert.equal(views.customStyles.filter(row=>row.id===layer.id).length,5,'the entire gradient never becomes an extra raw finding');
+ assert.deepEqual(rows(layer.id).map(row=>[row.reason,row.gradientStop.paintIndex,row.gradientStop.stopIndex,row.gradientStop.position,row.resource.type,row.status??null]),[
+  ['fill',0,1,.65,'raw-value',null],['fill',0,2,.65,'raw-value',null],['fill',1,0,.2,'token',null],
+  ['fill',1,1,.4,'raw-value','incomplete'],['stroke',0,2,1,'raw-value','incomplete'],
+ ]);
+ assert.equal(rows(layer.id)[0].actualColor,'#FF000080');
+ assert.equal(rows(layer.id)[2].resource.key,keys.local);
+ assert(rows(layer.id).every(row=>!row.actions?.length));
+ assert.deepEqual(views.deprecatedStyles.map(row=>[row.id,row.reason,row.styleKey,row.gradientStop?.stopIndex,row.scheduled??false]),[
+  [layer.id,'fill',keys.deprecated,3,false],[layer.id,'stroke',keys.scheduled,0,true],[layer.id,'stroke',keys.deprecated,1,false],
+ ]);
+ assert.equal(rows(hidden.id).length,0);
+ assert.equal(rows(styled.id).length,0);
+ assert.equal(rows(missing.id)[0].status,'incomplete');
+ assert.deepEqual(rows(mixedText.id).map(row=>[row.gradientStop.textStart,row.gradientStop.textEnd]),[[2,4],[2,4]]);
+ assert.deepEqual(rows(sharedPaintText.id).map(row=>[row.gradientStop.textStart,row.gradientStop.textEnd]),[[2,4],[2,4]]);
+ assert.equal(rows(allStyledText.id).length,0);
+ assert.deepEqual(lookups,[variableIds.local,variableIds.unknown]);
+ const session = await createAuditSession(result,registry,page.id,()=>{},id=>selection.find(node=>node.id===id));
+ const detached = category(result.views,'detachedStyles');
+ assert.equal(detached.incomplete,true);
+ assert.equal(detached.entries.filter(row=>row.item.gradientStop).length,7);
+ assert.equal(category(result.views,'customStyles').entries.filter(row=>row.item.gradientStop).length,3);
+ assert.equal(category(result.views,'deprecatedStyles').count,3);
+ const raw = detached.entries.filter(row=>row.item.id===layer.id && row.classification==='violation');
+ assert.equal(raw.length,2);
+ assert.notEqual(raw[0].id,raw[1].id,'coincident stops retain distinct identities');
+ assert.deepEqual(raw.map(row=>row.messages[0]),['Заливка 1 · градиент · точка 2 (65%)','Заливка 1 · градиент · точка 3 (65%)']);
+ assert.equal(raw[0].focusActionId,raw[1].focusActionId);
+ await session.focus(raw[0].focusActionId,()=>{});
+ assert.deepEqual(focusCalls,[[layer.id]]);
 });

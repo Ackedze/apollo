@@ -29,9 +29,14 @@ export function V3Findings({category,client,runId,stale,busy,mutationAvailable,s
  const disabled=stale||busy||!mutationAvailable||!runId;
  const staleActions=new Set(staleActionIds);
  const deprecatedStyles=category.id==='deprecatedStyles';
+ const pageSettings=category.id==='pageSettings';
+ const occurrences=new Map<string,number>();
  return <div className="apollo-findings apollo-v3-findings">
   {category.id==='glyph26'&&<div className="apollo-glyph26-banner"><span className="apollo-glyph26-banner-title">Для автозамены используй навык «Перевести на Glyph-26»</span><SmallButton label="Перейти" singleIcon={false} className="apollo-glyph26-banner-button" disabled={busy||!onOpenGlyph26} onPress={onOpenGlyph26}/></div>}
   {category.entries.map((row:any)=>{
+   // A layer can have several findings with the same report ID, such as multiple shadows.
+   const occurrence=occurrences.get(row.id)??0;
+   occurrences.set(row.id,occurrence+1);
    const tone=row.classification==='violation'?'violation':['compliant','allowed','not-applicable'].includes(row.classification)?'current':'warning';
    const actions=(items:any[]=[])=>{
     const available=items.filter(item=>!staleActions.has(item.id));
@@ -39,8 +44,11 @@ export function V3Findings({category,client,runId,stale,busy,mutationAvailable,s
     return <FindingActions actions={stale?items:available} disabled={disabled||stale} onAction={id=>void client.action(id)}/>;
    };
    const swatch=<FindingColorSwatch color={row.item.actualColor} describe/>;
-   return <ResultCard key={row.id} title={row.displayName||row.item.name||row.title} caption={row.library||undefined} onFocus={row.focusActionId&&!busy&&runId?()=>void client.focus(runId,row.focusActionId):undefined}
-    indicator={<span className={`apollo-finding-status ${tone}`} role="img" aria-label={tone==='violation'?'Нарушение':tone==='warning'?'Замечание':'Соответствует'}>{tone==='current'?<span/>:<img src={tone==='warning'?assets.imgStatusWarning:assets.imgStatusCircle} width={36} height={36} alt=""/>}</span>}
+   const status = <span className={`apollo-finding-status ${tone}`} role="img" aria-label={tone==='violation'?'Нарушение':tone==='warning'?'Замечание':'Соответствует'}>{tone==='current'?<span/>:<img src={tone==='warning'?assets.imgStatusWarning:assets.imgStatusCircle} width={36} height={36} alt=""/>}</span>;
+   if (pageSettings) return <ResultCard key={row.id} title={row.title} indicator={status}
+    actions={<>{actions(row.actions)}{row.incomplete && <FindingInformation>{row.messages?.map((message:string)=><p key={message}>{message}</p>)}</FindingInformation>}</>}/>;
+   return <ResultCard key={`${category.id}:${row.id}:${occurrence}`} title={row.displayName||row.item.name||row.title} caption={row.library||undefined} onFocus={row.focusActionId&&!busy&&runId?()=>void client.focus(runId,row.focusActionId):undefined}
+    indicator={status}
     actions={<>{row.focusActionId&&<span><SmallButton focusTarget ariaLabel="Показать в макете" title={row.location} disabled={busy||!runId} icon={<FocusIcon/>} onPress={()=>void client.focus(runId,row.focusActionId)}/></span>}
      <FindingInformation><p>{labels[row.classification]||row.classification}</p><p>{row.informationMessage||row.title}</p><p>{row.location}</p>{row.messages?.map((message:string,index:number)=><p key={index}>{message}</p>)}{row.diffs?.map((diff:any,index:number)=><DiffInfo key={index} diff={diff}/>)}{row.item?.evidence&&<details><summary>Основание проверки</summary><pre>{JSON.stringify(row.item.evidence,null,2)}</pre></details>}</FindingInformation>
     </>}>

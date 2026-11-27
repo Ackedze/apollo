@@ -46,6 +46,8 @@ export function createColorTokenValueReader(catalogs: ReturnType<typeof getToken
   return {
     findColorTokenValueCandidates: (node: SceneNode, field: 'fill' | 'stroke') =>
       findColorTokenValueCandidates(node, field, index).filter(candidate => isActive(candidate.key)),
+    findGradientStopTokenCandidates: (color: RGBA, field: 'fill' | 'stroke') =>
+      matchingColorTokens(buildColorKey(color, color.a), field, index).filter(candidate => isActive(candidate.key)),
     readColorTokenPreview: (node: SceneNode, key: string) =>
       isActive(key) ? readColorTokenPreview(node, key, index) : null,
   };
@@ -57,7 +59,10 @@ export function findColorTokenValueCandidates(
   index = colorTokenIndex,
 ): ColorTokenValueCandidate[] {
   const colorKey = getNodeUniformColorKey(node, field);
-  if (!colorKey) return [];
+  return colorKey ? matchingColorTokens(colorKey, field, index) : [];
+}
+
+function matchingColorTokens(colorKey: string, field: 'fill' | 'stroke', index = colorTokenIndex) {
   const matches = index?.byColor.get(colorKey) ?? [];
   return matches
     .filter((candidate) => scopeSupportsField(candidate.scopes, field))

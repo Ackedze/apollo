@@ -26,7 +26,7 @@ function indexWorkflow(text){
   '# Portable Figma Plugin API',
   '',
   'Use the pinned symbol map instead of shell grep or sequentially reading all declarations.',
-  'The portable declarations omit documentation comments. Original upstream line numbers do not address this file.',
+  'The map addresses the exact supplied declarations. Original upstream line numbers do not address this resource.',
   '',
   '## Addressed reader',
   '',

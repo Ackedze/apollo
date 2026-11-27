@@ -15,8 +15,9 @@ import {
   resolveLocalComponentDefinition,
 } from './localComponentDependencyAudit';
 import {
-  collectCustomStyles,
+  collectStyleFindings,
   collectDetachedEntry,
+  type ResolveGradientToken,
 } from './auditViewBuilder';
 import { collectDeprecatedStyleUsages } from './deprecatedStyleAudit';
 import { getLibraryComponentFreshnessScope } from './libraryComponentFreshness';
@@ -47,6 +48,7 @@ type IndexedAudit = {
   isSharedShellKey?(key:string):boolean;
   classifyComponent(node:SceneNode, definition:ComponentNode|null):Promise<AuditItem>;
   wrongChannel(item:AuditItem):boolean;
+  resolveGradientToken?: ResolveGradientToken;
   wrongChannelTypography?(node:TextNode):Promise<WrongChannelTypographyEntry[]>;
   themization(node:SceneNode,item:AuditItem):ThemeAuditEntry|null;
   referenceByKey: typeof import('../reference/library').findComponent;
@@ -100,7 +102,6 @@ export async function collectAuditTargets(
     shellAuditEnabled,
   } = options;
   const {buildNodeSegments,getComponentKeyCached,getNodeById,throwIfCancelled,indexed} = dependencies;
-  const auditTypography = indexed?.wrongChannelTypography;
   const {
     componentKeyCache,
     customStyleOptions: customStyleReasonOptions,
@@ -297,33 +298,22 @@ export async function collectAuditTargets(
       if (skipDetachedChildren) return { skipChildren: true };
 
       if (node.type !== 'SECTION') {
-        if (node.type === 'TEXT' && auditTypography) {
-          const findings = await auditTypography(node);
-          checkState.wrongChannelTypographyEntries.push(...findings);
-        }
-        const customStyleReasons = await measure('customStyles',()=>collectCustomStyles(
-          node,
-          customStyleReasonOptions,
-        ));
+        const { custom, deprecatedGradient, gradientFields } = await measure('customStyles', async () => {
+          if (node.type === 'TEXT' && indexed?.wrongChannelTypography) {
+            const findings = await indexed.wrongChannelTypography(node);
+            checkState.wrongChannelTypographyEntries.push(...findings);
+          }
+          return collectStyleFindings(node, customStyleReasonOptions, indexed?.resolveGradientToken);
+        });
         const deprecatedStyleEntries = await measure('deprecatedStyles',()=>collectDeprecatedStyleUsages(
           node,
           deprecatedStyleOptions,
+          gradientFields,
         ));
 
         measureSync('visitStyleGrouping', () => {
-          if (customStyleReasons.length) {
-            checkState.customStyleEntries = [
-              ...checkState.customStyleEntries,
-              ...customStyleReasons,
-            ];
-          }
-
-          if (deprecatedStyleEntries.length) {
-            checkState.deprecatedStyleEntries = [
-              ...checkState.deprecatedStyleEntries,
-              ...deprecatedStyleEntries,
-            ];
-          }
+          checkState.customStyleEntries.push(...custom);
+          checkState.deprecatedStyleEntries.push(...deprecatedStyleEntries, ...deprecatedGradient);
         });
       }
     },

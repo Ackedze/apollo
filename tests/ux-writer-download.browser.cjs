@@ -80,6 +80,7 @@ async function run() {
         const grouped=runRequests>1,empty=runRequests===4;
         if(runRequests===5)return send({success:true,run:{id:'synthetic-model',status:'failed',error:{code:'UX_WRITER_DATA_CHANGED'}}});
         if(runRequests===6)return send({success:true,run:{id:'synthetic-model',status:'failed',error:{code:'OPENROUTER_UNAVAILABLE'}}});
+        if(runRequests===7)return send({success:true,run:{id:'synthetic-model',status:'failed',error:{code:'OPENROUTER_CREDITS_REQUIRED'}}});
         const findings=empty?[{nodeId:'text0',priority:'error',category:'Типографика',message:'Последняя правка',replacement:'Готово',sources:[source]}]:grouped?Array.from({length:8},(_,i)=>({nodeId:'text'+i,priority:i===7?'info':i===6?'warning':'error',category:'Типографика',message:i===7?'Уточни значение в контексте':'После предлога нужен неразрывный пробел. '+('Проверь текст в строке. '.repeat(i===0?5:1)),replacement:i===7?null:'Для\u00a0кого '+i,sources:[source]})):[{nodeId:'text',priority:'error',category:'Паттерн и гигиена макета',message:findingMessage,replacement:'Архив',sources:[source]}];
         return send({success:true,run:{id:'synthetic-model',status:'completed',agentInputAvailable:true,
           validation:{skillId:'ux-writer-v2',coverageGaps:empty?[]:['Недоступно одно правило проверки.'],unverifiedTexts:empty?[]:[{nodeId:grouped?'text8':'skipped',reason:'Заглушка вместо текста — не проверялась'}],findings}}});
@@ -339,6 +340,12 @@ async function run() {
     assert.equal(await textTool.getByRole('button',{name:'Применить всё',exact:true}).count(),0);
     const retry=textTool.getByRole('button',{name:'Повторить анализ',exact:true});assert.equal(await retry.isEnabled(),true);
     await retry.focus();await capture('texts-model-failure');await page.keyboard.press('Enter');
+    const creditAlert=textTool.getByRole('alert').filter({hasText:'OpenRouter отклонил запрос'});await creditAlert.waitFor();
+    assert.equal(await creditAlert.textContent(),'OpenRouter отклонил запрос: недостаточно средств или исчерпан лимит API-ключа. Проверь в OpenRouter баланс и лимит ключа, подключённого в Apollo Proxy, затем повтори анализ.');
+    assert.doesNotMatch(await creditAlert.textContent(),/Модель не справилась|OPENROUTER_CREDITS_REQUIRED/);
+    assert.equal(await textTool.locator('.apollo-text-card').count(),0);assert.equal(await textTool.getByRole('button',{name:'Применить всё',exact:true}).count(),0);
+    assert.equal(runRequests,7,'billing error does not retry automatically');assert.equal(await retry.isEnabled(),true);
+    await capture('texts-credit-error');await retry.click();
     await textTool.getByRole('tab',{name:'Ошибки · 7',exact:true}).waitFor();
     assert.equal(await textTool.getByRole('button',{name:'Повторить анализ',exact:true}).count(),0);
     assert.equal(await textTool.getByRole('button',{name:'Применить всё',exact:true}).isEnabled(),true);

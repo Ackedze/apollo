@@ -20,6 +20,7 @@ const { createSessionBridge } = require("./generation/session/protocol");
 const { createDocumentAuditBridge } = require("./document-audit/bridge");
 const {createLayerNamesBridge}=require("./skills/layer-names/native");
 const {createReglyphBridge}=require("./skills/reglyph/native");
+const {createTaskPassportBridge}=require("./skills/task-passport/native");
 const {resolveNativeNode,currentPageTarget}=require("./canvas-target");
 const {contractFocusTargets}=require("./audit-focus");
 const {boundedRead,cooperativeRead,readScheduling,setHostYieldTransport,completeHostYield}=require("./document-audit/reads");
@@ -61,8 +62,13 @@ figmaAuditBridge=require('./figma-audit/native').createFigmaAuditBridge({api:fig
 const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,observer:()=>nativePageObserver.snapshot(),isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy()),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
 reglyphBridge=createReglyphBridge({api:figma,post,onReplaced:(ids:string[])=>v3Port?.recordGlyph26Replacements(ids),onUndo:()=>v3Port?.syncTrackedGlyph26(),readReview:(runId:string,platform:string)=>{if(!v3Port)throw Error('Ревью недоступно.');return v3Port.glyph26Review(runId,platform);},isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
 landingCanvas=require('./landing/context-native').createLandingCanvasBridge({api:figma,hash:engine.stableHash,post,buildId:__APOLLO_NATIVE_BUILD_INPUTS_SHA__,isUnavailable:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy()});
+const taskPassportBridge=createTaskPassportBridge({
+ api:figma,hash:engine.stableHash,post,
+ isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy(),
+ onMutation:()=>{v3Revision++;v3Port?.invalidate();documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();},
+});
 v3Port=createV3NativePort({post,useCompactIndex:true,pluginVersion:require('../package.json').version,readRevision:()=>v3Revision,
- isUnavailable:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy(),
+ isUnavailable:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy()||taskPassportBridge.busy(),
  canMutate:()=>{const observation=nativePageObserver.snapshot();return observation.status==='available'&&observation.pageId===figma.currentPage.id;},
  onBusy:value=>{busy=value;},onMutation:()=>{v3Revision++;v3Port?.invalidate();documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
 
@@ -528,6 +534,7 @@ figma.ui.onmessage = async (message: any) => {
   if (reglyphBridge.accept(message)) return;
   if (figmaAuditBridge.accept(message)) return;
   if (layerNamesBridge.accept(message)) return;
+  if (taskPassportBridge.accept(message)) return;
   if (designCheckUiBridge.accept(message)) return;
   if (generationSessionBridge.accept(message)) return;
   if (documentAuditBridge.accept(message)) return;

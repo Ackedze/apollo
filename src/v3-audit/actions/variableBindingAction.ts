@@ -1,9 +1,10 @@
 import type { VariableFindingAction } from '../remediation/types';
 import { getNodePaintFingerprint } from '../services/styleMetadata';
 import type { MutationControl } from './findingAction';
+import { bindGradientStop, gradientStopFingerprint, readGradientStopTarget } from './gradientStopBinding';
 
 export type VariableBindingActionResult =
-  | { ok: true; node: SceneNode }
+  | { ok: true; node: SceneNode; variableCollectionId: string }
   | { ok: false; message: string };
 export type StartTokenImportTiming = () => (outcome: 'success' | 'error') => void;
 
@@ -25,25 +26,29 @@ export async function applyVariableBindingAction(
   const sceneNode = node as SceneNode;
   const styleProperty =
     action.styleField === 'fill' ? 'fillStyleId' : 'strokeStyleId';
-  const currentStyleId = (sceneNode as any)[styleProperty];
+  const currentStyleId = action.gradientStop ? null : (sceneNode as any)[styleProperty];
   const normalizedStyleId =
     typeof currentStyleId === 'string' && currentStyleId
       ? currentStyleId
       : null;
-  if (normalizedStyleId !== action.expectedStyleId) {
+  if (!action.gradientStop && normalizedStyleId !== action.expectedStyleId) {
     return {
       ok: false,
       message: 'Стиль изменился после проверки. Запустите проверку ещё раз.',
     };
   }
   const paintProperty = action.styleField === 'fill' ? 'fills' : 'strokes';
-  const paints = (sceneNode as any)[paintProperty] as
+  const paints = (action.gradientStop ? null : (sceneNode as any)[paintProperty]) as
     | readonly Paint[]
-    | PluginAPI['mixed'];
-  if (
-    getNodePaintFingerprint(sceneNode, action.styleField) !==
-    action.expectedFingerprint
-  ) {
+    | PluginAPI['mixed']
+    | null;
+  const readTarget = () => action.gradientStop
+    ? readGradientStopTarget(sceneNode, action.styleField, action.gradientStop) : null;
+  const initialStop = readTarget();
+  const fingerprint = action.gradientStop
+    ? initialStop && gradientStopFingerprint(initialStop)
+    : getNodePaintFingerprint(sceneNode, action.styleField);
+  if (fingerprint !== action.expectedFingerprint) {
     return {
       ok: false,
       message: 'Значение изменилось после проверки. Запустите проверку ещё раз.',
@@ -69,37 +74,60 @@ export async function applyVariableBindingAction(
     };
   }
   finishImport?.('success');
+  const { textStart, textEnd } = action.gradientStop ?? {};
+  if (sceneNode.type === 'TEXT' && textStart !== undefined && textEnd !== undefined) {
+    try {
+      const fonts = sceneNode.getRangeAllFontNames(textStart, textEnd);
+      await Promise.all(fonts.map(font => figma.loadFontAsync(font)));
+    } catch {
+      mutation?.assertCurrent();
+      return { ok: false, message: 'Не удалось загрузить шрифты для привязки токена.' };
+    }
+  }
   if(mutation?.verifyBeforeWrite)await mutation.verifyBeforeWrite();
   mutation?.assertCurrent();
-  const current=(sceneNode as any)[styleProperty];
-  if(!isUsableRuntimeNode(sceneNode,action.nodeId)||(typeof current==='string'&&current?current:null)!==action.expectedStyleId||getNodePaintFingerprint(sceneNode,action.styleField)!==action.expectedFingerprint){
+  if (!isUsableRuntimeNode(sceneNode, action.nodeId)) {
+    return { ok: false, message: 'Не удалось найти слой для привязки токена.' };
+  }
+  const current=action.gradientStop ? null : (sceneNode as any)[styleProperty];
+  const target = readTarget();
+  const stillMatches = action.gradientStop
+    ? target && gradientStopFingerprint(target) === action.expectedFingerprint
+    : (typeof current === 'string' && current ? current : null) === action.expectedStyleId &&
+      getNodePaintFingerprint(sceneNode, action.styleField) === action.expectedFingerprint;
+  if (!stillMatches) {
     return{ok:false,message:'Значение изменилось во время загрузки токена. Запустите проверку ещё раз.'};
   }
   if (variable.resolvedType !== 'COLOR') {
     return { ok: false, message: 'Выбранный токен не является цветовым.' };
   }
-  if (confirmBinding && (variable.key !== action.targetVariableKey || !variable.id)) {
+  if ((confirmBinding || action.gradientStop) && (variable.key !== action.targetVariableKey || !variable.id)) {
     return { ok: false, message: 'Не удалось подтвердить библиотечный токен.' };
   }
+  let confirmedGradient = false;
   try {
-    mutation?.beforeWrite();
-    if (Array.isArray(paints) && paints.length) {
-      (sceneNode as any)[paintProperty] = bindPaints(paints, variable);
-    } else if (
-      action.styleField === 'fill' &&
-      sceneNode.type === 'TEXT' &&
-      typeof (sceneNode as TextNode).getStyledTextSegments === 'function'
-    ) {
-      const textNode = sceneNode as TextNode;
-      for (const segment of textNode.getStyledTextSegments(['fills'])) {
-        textNode.setRangeFills(
-          segment.start,
-          segment.end,
-          bindPaints(segment.fills, variable),
-        );
-      }
+    if (action.gradientStop && target) {
+      confirmedGradient = bindGradientStop(sceneNode, action.styleField, action.gradientStop, target, variable, mutation?.beforeWrite);
     } else {
-      return { ok: false, message: 'Слой не содержит однозначной заливки.' };
+      mutation?.beforeWrite();
+      if (Array.isArray(paints) && paints.length) {
+        (sceneNode as any)[paintProperty] = bindPaints(paints, variable);
+      } else if (
+        action.styleField === 'fill' &&
+        sceneNode.type === 'TEXT' &&
+        typeof (sceneNode as TextNode).getStyledTextSegments === 'function'
+      ) {
+        const textNode = sceneNode as TextNode;
+        for (const segment of textNode.getStyledTextSegments(['fills'])) {
+          textNode.setRangeFills(
+            segment.start,
+            segment.end,
+            bindPaints(segment.fills, variable),
+          );
+        }
+      } else {
+        return { ok: false, message: 'Слой не содержит однозначной заливки.' };
+      }
     }
   } catch (error) {
     console.error('[Apollo] failed to bind library variable', {
@@ -109,10 +137,10 @@ export async function applyVariableBindingAction(
     });
     return { ok: false, message: 'Figma не смогла привязать библиотечный токен.' };
   }
-  if (confirmBinding && !hasConfirmedBinding(sceneNode, action.styleField, variable.id)) {
+  if (action.gradientStop ? !confirmedGradient : confirmBinding && !hasConfirmedBinding(sceneNode, action.styleField, variable.id)) {
     throw Error('AUDIT_ACTION_UNCONFIRMED');
   }
-  return { ok: true, node: sceneNode };
+  return { ok: true, node: sceneNode, variableCollectionId: variable.variableCollectionId };
 }
 
 function hasConfirmedBinding(node: SceneNode, field: 'fill' | 'stroke', variableId: string): boolean {

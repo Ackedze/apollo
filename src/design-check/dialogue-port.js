@@ -1,6 +1,10 @@
 const BUSY_MESSAGE = 'Apollo ещё обрабатывает предыдущий запрос. Вопрос сохранён — отправь его, когда агент освободится.';
 function busyError() { return Object.assign(new Error(BUSY_MESSAGE), { code: 'APOLLO_AGENT_BUSY' }); }
+function dialogueCancellation(body) {
+  return body?.capabilities?.parallelDialogue === true && typeof body.dialogue?.busy === 'boolean' && body.dialogue.cancelScope === 'server-request';
+}
 function proxyBusy(body) {
+  if (dialogueCancellation(body)) return body.dialogue.busy;
   const values = [body.agent?.busy, body.codex?.busy, body.generation?.busy];
   return values.includes(true) ? true : values.includes(false) ? false : null;
 }
@@ -22,7 +26,7 @@ function createExistingDialoguePort({ request, endpoint, createSessionId, readSt
       if (readStatus) return readStatus({ signal });
       const response = await request(new URL('/health', url).href, { method: 'GET', signal });
       const body = await response.json();
-      return { available: response.ok && body.ok === true, version: typeof body.proxy?.version === 'string' ? body.proxy.version : null, busy: proxyBusy(body) };
+      return { available: response.ok && body.ok === true, version: typeof body.proxy?.version === 'string' ? body.proxy.version : null, busy: proxyBusy(body), ...(dialogueCancellation(body) ? { cancelScope: 'server-request' } : {}) };
     },
     async send({ source, question, dialogue, dialoguePlatform, context, signal }) {
       if (!['langflow', 'codex'].includes(source) || typeof question !== 'string' || !question.trim() || question.length > 8000
@@ -65,4 +69,4 @@ function createExistingDialoguePort({ request, endpoint, createSessionId, readSt
       return { dialogueLibrary: ['ab','abm'].includes(body.dialogueLibrary) ? body.dialogueLibrary : undefined, answerBlocks, text: body.result, source: body.source || source, returnedSource: body.source ?? null, provider: body.provider ?? null, knowledgeRelease: body.knowledgeRelease ?? null };
     } };
 }
-module.exports = { createExistingDialoguePort, proxyBusy };
+module.exports = { createExistingDialoguePort, proxyBusy, dialogueCancellation };

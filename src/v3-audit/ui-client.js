@@ -9,6 +9,7 @@ const messages={UX_WRITER_SKILL_UNAVAILABLE:'Обнови данные Proxy д�
 const uncertain=new Set(['node-unreadable','notification-unavailable','outside-observation','unobserved-property','identity-unconfirmed','identity-unavailable','topology-notification']);
 function sourceChange(value){if(!value||typeof value.reason!=='string'||!/^[-a-z]{1,80}$/.test(value.reason))return null;return{reason:value.reason,stage:['capture','operation','retained'].includes(value.stage)?value.stage:null,nodeId:typeof value.nodeId==='string'?value.nodeId.slice(0,200):null,fields:Array.isArray(value.fields)?value.fields.filter(field=>typeof field==='string').slice(0,32).map(field=>field.slice(0,80)):[]};}
 const indexMessages={
+ OPENROUTER_CREDITS_REQUIRED:'OpenRouter отклонил запрос: недостаточно средств или исчерпан лимит API-ключа. Проверь в OpenRouter баланс и лимит ключа, подключённого в Apollo Proxy, затем повтори анализ.',
  AUDIT_TEXT_DIFF_TOO_COMPLEX:'Не удалось безопасно сохранить оформление текста. Внеси эту замену вручную.',
  AUDIT_TEXT_UNCONFIRMED:'Не удалось подтвердить замену текста. Проверь слой и повтори проверку.',
  AUDIT_TEXT_VALUE_INVALID:'Предложение содержит недопустимые символы. Исправь текст перед заменой.',
@@ -107,7 +108,7 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
   if(work.kind==='components'&&(error||cancelled))statistics?.finish(work.requestId,'native-document',null,cancelled?'cancelled':'failed');
   const modelFailed=!!error&&!cancelled&&work.modelFailed===true;
   const attempt={requestId:work.requestId,kind:work.kind,settings:work.settings,phase:work.phase,cancelled,error:error?.message||null,modelFailed,capture:work.capture||null};
-  const errorMessage=modelFailed?'Модель не справилась с анализом. '+(messages[error.message]?readable(error.message,state.sourceChange):'Повтори анализ.'):error?readable(error.message,state.sourceChange):'';
+  const errorMessage=error?.message==='OPENROUTER_CREDITS_REQUIRED'?readable(error.message,state.sourceChange):modelFailed?'Модель не справилась с анализом. '+(messages[error.message]?readable(error.message,state.sourceChange):'Повтори анализ.'):error?readable(error.message,state.sourceChange):'';
   active=null;emit({attempts:Object.assign({},state.attempts,{[work.kind]:attempt}),busy:false,stopping:false,progress:'',error:cancelled?'':errorMessage,notice:cancelled?(work.phase==='model'?'Ожидание остановлено. Проверка текстов на сервере может продолжаться.':'Проверка остановлена. Предыдущий результат сохранён.'):'',operation:{busy:false,status:cancelled?'cancelled':error?'error':'success',message:''}});
  }
  async function serve(message){
@@ -269,9 +270,9 @@ function createV3UiClient({send,request=(...args)=>fetch(...args),endpoint='http
     if(reply.recheckRequestId){operation=null;begin(reply.recheckRequestId,'components',state.resultSettings,true,runId);emit({stale:true});}
     else{
      operation=null;
-     const paintFix=reply.paintFix;
-     const paintFixes=type==='v3-audit-action'&&runId===state.runId&&typeof paintFix?.nodeId==='string'&&['fill','stroke'].includes(paintFix.field)
-      ?state.paintFixes.concat({nodeId:paintFix.nodeId,field:paintFix.field}):state.paintFixes;
+     const paintFix=p.readPaintFix(reply.paintFix);
+     const paintFixes=type==='v3-audit-action'&&runId===state.runId&&paintFix
+      ?state.paintFixes.concat(paintFix):state.paintFixes;
      emit({paintFixes,texts:type==='v3-audit-text-replace'&&runId===state.texts.runId?Object.assign({},state.texts,{stale:state.texts.stale||!!reply.stale,applied:confirmedTextReplacements(state.texts,runId,payload.replacements,reply.textReplacements)}):state.texts,operation:{busy:false,status:'success',message:reply.message||''}});
     }return true;
    }catch(error){

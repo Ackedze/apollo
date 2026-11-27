@@ -205,20 +205,20 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
     const resource=key?labels.get(key):undefined;
     return resource?.variableKey===key?resource:undefined;
   };
-  const tokenLookups=new Map<string,Promise<TokenLabelEntry|undefined>>();
-  const resolveNativeToken=(id:string)=>{
-    if(typeof figma.variables?.getVariableByIdAsync!=='function') return Promise.resolve(undefined);
-    const cached=tokenLookups.get(id);
-    if(cached) return cached;
-    const lookup=(async()=>{
-      try{
-        const variable=await measure('figmaGetVariableByIdAsync',()=>figma.variables.getVariableByIdAsync(id));
-        return tokenByKey(variable?.key??null);
-      }catch{return undefined;}
-    })();
-    tokenLookups.set(id,lookup);
+  const tokenLookups = new Map<string, Promise<Variable | null>>();
+  const readNativeToken = (id: string) => {
+    if (typeof figma.variables?.getVariableByIdAsync !== 'function') return Promise.resolve(null);
+    let lookup = tokenLookups.get(id);
+    if (!lookup) {
+      lookup = (async () => {
+        try { return await measure('figmaGetVariableByIdAsync', () => figma.variables.getVariableByIdAsync(id)); }
+        catch { return null; }
+      })();
+      tokenLookups.set(id, lookup);
+    }
     return lookup;
   };
+  const resolveNativeToken = async (id: string) => tokenByKey((await readNativeToken(id))?.key ?? null);
   const glyph26Findings:any[]=[],glyph26Unknown:any[]=[];let glyph26Services=false;
   const glyphCheck=['iOS','Android'].includes(options.channel)?glyph26Evaluator(getMainComponent,guard):null;
   const getReference=(key:string|null)=>{const found=index.find(key);return found.state==='found'?found.reference:null;};
@@ -283,6 +283,26 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
         return token?.variableKey&&channels?{channels,resource:{type,key:token.variableKey,name:token.label,
           library:token.sourceFile??token.library??null,sourceFile:token.sourceFile}}:null;
       },guard),
+      async resolveGradientToken(id) {
+        guard();
+        const aliasKey = id.startsWith('VariableID:') ? extractAliasKey(id) : null;
+        const indexedAlias = tokenByKey(aliasKey);
+        const variable = indexedAlias ? null : await readNativeToken(id);
+        guard();
+        if (!indexedAlias && (!variable?.key || variable.resolvedType !== 'COLOR')) return { status: 'unknown' };
+        const key = indexedAlias?.variableKey ?? variable!.key;
+        const metadata = indexedAlias ?? tokenByKey(key);
+        const status = index.tokenStatus(key);
+        if (status === 'active') return { status };
+        if (status === 'unknown' || !status && metadata) return { status: 'unknown' };
+        return {
+          status: status ?? 'local',
+          resource: {
+            type: 'token', id, key, name: metadata?.label ?? variable?.name ?? key,
+            library: metadata?.library ?? null, sourceFile: metadata?.sourceFile,
+          },
+        };
+      },
       themization(node,item){
         const found=index.find(item.componentKey);if(found.state!=='found')return null;
         return buildCorporateThemizationEntry(node,found.reference,()=>{
@@ -293,6 +313,7 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
       },
       async classifyComponent(node,definition){
         const key=await getKey(node,traversal.componentKeyCache,{retryIfMissing:true});
+        const keyReadIssue=node.type==='INSTANCE'&&!key?snapshot?.getMainComponentReadIssue?.(node.id):undefined;
         const found=index.find(key),reference=found.state==='found'?found.reference:null;
         const forcedCategory=getForcedAuditCategory(reference);
         const libraryFreshness=node.type==='INSTANCE'?await traversal.libraryComponentFreshnessChecker.check(node,getLibraryComponentFreshnessScope(node)):null;
@@ -303,7 +324,7 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
         const relevance=reference?.status==='deprecated'?'deprecated':forcedCategory??(reference?.status==='update'?'update':standalonePart?'technical':found.state==='unknown'?'unknown':'current');
         const item:AuditItem={id:node.id,name:node.name,nodeType:node.type,pageName:getPageName(node),pathSegments:buildNodeSegments(node),
           fullPath:buildNodePath(node),componentKey:key,reference,relevance,librarySource:reference?.source??null,librarySourceFile:reference?.sourceFile??null,
-          isLocal:found.state==='outside'&&!!(definition||key),diffs:[],comparisonIssues:found.state==='unknown'?[found.reason]:[],libraryFreshness,forcedCategory,
+          isLocal:found.state==='outside'&&!!(definition||key),diffs:[],comparisonIssues:found.state==='unknown'?[keyReadIssue??found.reason]:[],libraryFreshness,forcedCategory,
           forcedCategoryReason:forcedCategory?getForcedAuditCategoryReason(forcedCategory,reference):null,
           updateReasons:reference?.status==='update'?['catalog-lifecycle']:[],
           resolvedReferenceVariantName:found.state==='found'?found.variantName:null,
@@ -344,6 +365,7 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
     findExactTypographyStyleMatches:node=>style.findExactTypographyStyleMatches(node).filter(candidate=>
       index.typographyChannels('styles',candidate.key)?.includes(options.channel)!==false),
     findColorTokenValueCandidates:colorTokenReader.findColorTokenValueCandidates,readColorTokenPreview:colorTokenReader.readColorTokenPreview,
+    findGradientStopTokenCandidates:colorTokenReader.findGradientStopTokenCandidates,
     isActiveColorToken:key=>availableColorKeys.has(key)&&index.tokenStatus(key)==='active',
     getNodePaintFingerprint,getNodeTypographyFingerprint,getPaintStyleFingerprint,
     channelCounterpart:(key,platform)=>{

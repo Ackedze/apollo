@@ -9,7 +9,7 @@ const bundle = esbuild.build({
   stdin: { contents: "export { mountDesignCheck, createDesignCheckController, tabDefinitions } from './src/design-check';", resolveDir: app },
   bundle: true, write: false, outfile: path.join(app, 'tests/progressbar-transport.bundle.js'),
   loader: { '.module.css': 'local-css' }, platform: 'browser', format: 'iife', globalName: 'PilotShell',
-  // A test-only launcher exercises transport without reopening the disabled production category.
+  // A test-only launcher exercises transport without exposing the production category.
   plugins: [{ name: 'diagnostic-pattern-entry', setup(build) {
     build.onResolve({ filter: /^\.\/AuditOverview$/ }, () => ({ path: 'overview', namespace: 'diagnostic' }));
     build.onLoad({ filter: /.*/, namespace: 'diagnostic' }, () => ({ loader: 'tsx', resolveDir: app,
@@ -36,7 +36,7 @@ async function harness() {
   const view = ui.PilotShell.mountDesignCheck(ui.document.querySelector('#root'), controller);
   await tick();
   const productionEntry = ui.document.querySelector('[aria-label^="Паттерны:"]');
-  assert.equal(productionEntry.disabled, true); productionEntry.click(); await tick();
+  assert.equal(productionEntry, null);
   assert.equal(native.length, 0); assert.equal(ui.document.querySelector('.apollo-progressbar-start'), null);
   ui.document.querySelector('[data-diagnostic-pattern-entry]').click(); await tick();
   ui.document.querySelector('.apollo-progressbar-start').click(); await tick();

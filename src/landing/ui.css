@@ -54,11 +54,29 @@
 .landing-message p { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; font-size:14px; line-height:20px; }
 .landing-message-user { margin-left:auto; padding:16px 20px; background:#f2f3f5; border-radius:20px; }
 .landing-message-assistant { padding:0 4px; }
+.landing-message p + p { margin-top:12px; }
+.landing-message strong { font-weight:600; }
+.landing-workspace .landing-message a { text-decoration:underline; }
+.landing-workspace .landing-question { min-width:0; margin:16px 0 0; padding:0; border:0; font:inherit; }
+.landing-question legend { width:100%; margin:0 0 12px; padding:0; font-size:14px; line-height:20px; font-weight:600; white-space:pre-wrap; overflow-wrap:anywhere; }
+.landing-question-option { display:grid; grid-template-columns:16px minmax(0,1fr); align-items:start; gap:10px; margin:0 0 8px; padding:12px; border:1px solid #e5e6e9; border-radius:16px; color:#18181b; cursor:pointer; font-size:14px; line-height:20px; }
+.landing-question-option:last-child { margin-bottom:0; }
+.landing-question-option input { width:16px; height:16px; margin:2px 0 0; accent-color:#212124; }
+.landing-question-option strong { display:block; }
+.landing-question-description { display:block; color:#62626b; font-size:13px; line-height:20px; overflow-wrap:anywhere; }
+.landing-question-description:empty { display:none; }
+.landing-question-option:has(input:enabled):hover { background:#f2f3f5; }
+.landing-question-option:has(input:checked) { border-color:#212124; background:#f2f3f5; }
+.landing-question-option:has(input:focus-visible) { outline:2px solid #1769d2; outline-offset:2px; }
+.landing-question-option input:focus-visible { outline:none; }
+.landing-question-option:has(input:disabled) { cursor:default; }
 .landing-notice { margin:0; padding:0 20px; color:#62626b; font-size:13px; line-height:20px; }
 .landing-notice:empty { display:none; }
+.landing-chat-actions { display:flex; flex:none; align-items:center; justify-content:space-between; gap:12px; padding:0 12px; }
+.landing-workspace .landing-chat-actions a { display:inline-flex; align-items:center; min-height:24px; color:#1769d2; font-size:14px; line-height:20px; text-decoration:none; text-underline-offset:3px; }
+.landing-workspace .landing-chat-actions a:hover { text-decoration:underline; }
 .landing-details { padding:0 20px; color:#62626b; font-size:12px; }
 .landing-details summary { cursor:pointer; }
-.landing-details pre { max-height:160px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; font:inherit; }
 .landing-details button { padding:6px 12px; border:0; border-radius:12px; background:#f2f3f5; color:inherit; }
 .landing-workspace .landing-composer.generation-prompt-form { flex:0 0 auto; box-sizing:border-box; display:flex; flex-direction:column; gap:8px; margin:0; padding:12px; border:1px solid #edeef0; border-radius:32px; background:rgba(255,255,255,.88); backdrop-filter:blur(2px); box-shadow:0 4px 24px rgba(0,0,0,.05); position:relative; }
 .landing-composer .apollo-message-field { display:flex; align-items:flex-end; min-width:0; border-radius:24px; background:#f2f3f5; }

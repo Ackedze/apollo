@@ -67,11 +67,11 @@ test('area scan preserves real main/set names in its existing identity read',asy
  const ts=require('typescript'),box={exports:{}};vm.runInNewContext(ts.transpileModule(fs.readFileSync(path.join(__dirname,'../src/area-scan.ts'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,{module:box,exports:box.exports,require:()=>require('../src/document-audit/reads'),Date,setTimeout,clearTimeout});
  const f=fixture(),scan=await box.exports.scanArea([f.root],()=>{});assert.equal(f.counts.identity,1);assert.equal(scan.selection.components[0].componentName,'Observed component');
 });
-test('private actual main routes contract audit into shared native pattern capture; no HTTP or model call', {skip:!process.env.APOLLO_SHARED_CAPTURE_BUNDLE},async()=>{
+test('built main routes contract audit into shared native pattern capture; no HTTP or model call',async()=>{
  const {postactionScene}=require('./postaction-scoped.fixture.cjs'),f=postactionScene(),key='a'.repeat(40);let exports=0,identities=0;
  f.source=JSON.parse(JSON.stringify(f.source).replaceAll('host-key',key));f.actual.main.key=key;f.latest.key=key;f.actual.variantProperties={};f.page.selection=[f.actual];
  f.actual.exportAsync=async()=>{exports++;return Buffer.alloc(64,1);};const read=f.actual.getMainComponentAsync;f.actual.getMainComponentAsync=async()=>{identities++;return read();};
- vm.runInNewContext(fs.readFileSync(process.env.APOLLO_SHARED_CAPTURE_BUNDLE,'utf8'),{figma:f.api,__html__:'',TextEncoder,setTimeout,clearTimeout});
+ vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../dist/code.js'),'utf8'),{figma:f.api,__html__:'',TextEncoder,setTimeout,clearTimeout});
  const wait=async(id,type)=>{for(let i=0;i<600;i++){const m=f.messages.find(m=>m.type===type&&m.requestId===id);if(m)return m;await new Promise(r=>setTimeout(r,5));}throw Error(JSON.stringify(f.messages.filter(m=>m.type==='error')));};
  const request=(id,operation,captureId=null)=>f.api.ui.onmessage({type:'progressbar-native-request',requestId:id,operation,captureId,nodeId:null});
  try{

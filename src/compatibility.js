@@ -1,6 +1,6 @@
 'use strict';
 const REQUIREMENTS = require('./compatibility-requirements.json');
-const { proxyBusy } = require('./design-check/dialogue-port');
+const { proxyBusy, dialogueCancellation } = require('./design-check/dialogue-port');
 function version(value) {
   if (typeof value !== 'string' || !/^\d+\.\d+\.\d+$/.test(value)) return null;
   const parts = value.split('.').map(Number);
@@ -44,7 +44,7 @@ function createCompatibilityClient({ request, endpoint, onChange = () => {}, tim
       try { const response = await request(endpoint, { signal: abort.signal, cache: 'no-store' }); if (response.ok) health = await response.json(); }
       catch {} finally { clearTimeout(timer); }
       const status = { available: health?.ok === true, version: typeof health?.proxy?.version === 'string' ? health.proxy.version : null,
-        busy: proxyBusy(health || {}), compatibility: assessCompatibility(health) };
+        busy: proxyBusy(health || {}), ...(dialogueCancellation(health) ? { cancelScope: 'server-request' } : {}), compatibility: assessCompatibility(health) };
       onChange(status); return status;
     })().finally(() => { pending = null; });
     return pending;

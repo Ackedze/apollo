@@ -6,7 +6,9 @@ import type {
   AuditResource,
   AuditItem,
   CustomStyleEntry,
+  DeprecatedStyleEntry,
   DetachedEntry,
+  GradientStopLocation,
   PathSegment,
 } from '../types/audit';
 import {
@@ -24,6 +26,7 @@ import { getDetachedLibraryComponentKey } from './detachedComponentSource';
 export { __test_setAuditPolicyConfig } from '../policies/auditPolicyConfig';
 import {
   buildNodePath,
+  clampColorComponent,
   extractAliasKey,
   getPageName,
   isNodeVisible,
@@ -44,43 +47,115 @@ export interface CustomStyleCollectionOptions {
   ) => Promise<StyleMetadataEntry | null>;
 }
 
-/**
- * Собирает все узлы, у которых явно навешаны кастомные стили (заливка/обводка/текст) вне компонентных диффов.
- */
-export async function collectCustomStyles(
+type PaintReason = 'fill' | 'stroke';
+type GradientTokenStatus =
+  | { status: 'active' | 'unknown' }
+  | { status: 'local' | 'deprecated' | 'scheduled'; resource: AuditResource & { id: string; key: string } };
+
+export type ResolveGradientToken = (id: string) => Promise<GradientTokenStatus>;
+
+/** Collect direct paint, typography and effect findings in the same scene traversal. */
+export async function collectStyleFindings(
   node: SceneNode,
   options: CustomStyleCollectionOptions,
-): Promise<CustomStyleEntry[]> {
-  const entries: CustomStyleEntry[] = [];
+  resolveGradientToken?: ResolveGradientToken,
+) {
+  const custom: CustomStyleEntry[] = [];
+  const deprecatedGradient: DeprecatedStyleEntry[] = [];
+  const gradientFields = new Set<PaintReason>();
+  if (node.type === 'SECTION' || await shouldIgnoreNodeDiagnostics(node, options.resolveComponentKey)) {
+    return { custom, deprecatedGradient, gradientFields };
+  }
 
-    if (await shouldIgnoreNodeDiagnostics(node,options.resolveComponentKey)) {
-      return entries;
+  let details: ReturnType<typeof styleNodeDetails> | undefined;
+  const getDetails = () => details ??= styleNodeDetails(node);
+  const reasons: string[] = [];
+  if (!await shouldIgnorePaintCustomStyle(node, options.referenceByKey, options.resolveComponentKey)) {
+    for (const [reason, paintsField, styleField] of [
+      ['fill', 'fills', 'fillStyleId'], ['stroke', 'strokes', 'strokeStyleId'],
+    ] as const) {
+      const paints = (node as unknown as Partial<MinimalFillsMixin & MinimalStrokesMixin>)[paintsField];
+      const styleId = readStyleId(node, styleField);
+      if (await hasCustomPaints(paints, styleId, options, Boolean(resolveGradientToken))) reasons.push(reason);
+      if (!resolveGradientToken) continue;
+
+      // Text can have equal paints across ranges that use different styles.
+      const useTextRanges = reason === 'fill' && node.type === 'TEXT' &&
+        (paints === figma.mixed || node.fillStyleId === figma.mixed);
+      const sources = useTextRanges
+        ? (node.getStyledTextSegments?.(['fills', 'fillStyleId']) ?? [])
+            .map(segment => ({ paints: segment.fills, styleId: segment.fillStyleId, textStart: segment.start, textEnd: segment.end }))
+        : Array.isArray(paints) ? [{ paints, styleId }] : [];
+      for (const source of sources) {
+        for (const [paintIndex, paint] of (source.paints ?? []).entries()) {
+          if (!isGradient(paint)) continue;
+          gradientFields.add(reason);
+          if (source.styleId || paint.visible === false) continue;
+          const stops = Array.isArray(paint.gradientStops) && paint.gradientStops.length
+            ? paint.gradientStops : [null];
+          for (const [stopIndex, stop] of stops.entries()) {
+            const binding = stop?.boundVariables?.color;
+            const status = !stop || binding && (binding.type !== 'VARIABLE_ALIAS' || !binding.id)
+              ? { status: 'unknown' } as const
+              : binding ? await resolveGradientToken(binding.id) : null;
+            if (status?.status === 'active') continue;
+            const gradientStop: GradientStopLocation = {
+              paintIndex,
+              stopIndex: stop ? stopIndex : null,
+              position: stop && Number.isFinite(stop.position) ? stop.position : null,
+            };
+            if ('textStart' in source) {
+              gradientStop.textStart = source.textStart;
+              gradientStop.textEnd = source.textEnd;
+            }
+            const entry = Object.assign({}, getDetails(), {
+              reason, gradientStop, actualColor: gradientStopColor(stop?.color),
+            });
+            if (status?.status === 'deprecated' || status?.status === 'scheduled') {
+              const resource = status.resource;
+              deprecatedGradient.push(Object.assign(entry, {
+                token: true as const, styleId: resource.id, styleKey: resource.key,
+                styleLabel: resource.name, sourceFile: resource.sourceFile ?? '',
+                sourceLibrary: resource.library ?? undefined,
+              }, status.status === 'scheduled' ? { scheduled: true as const } : {}));
+            } else {
+              const resource: AuditResource = status?.status === 'local'
+                ? status.resource : { type: 'raw-value', name: 'Raw gradient stop', key: null, library: null };
+              custom.push(Object.assign(entry, { resource },
+                status?.status === 'unknown' ? { status: 'incomplete' as const } : {}));
+            }
+          }
+        }
+      }
     }
-
-    if (node.type === 'SECTION') return entries;
-
-  const reasons = await describeCustomPaintAndEffectReasons(node, options);
+  }
+  reasons.push(...await describeCustomEffects(node, options));
   const typography = node.type === 'TEXT' ? await describeCustomTypography(node, options) : null;
   if (typography) reasons.push('typography');
 
-    if (reasons.length) {
-      for (const reason of reasons) {
-        entries.push({
-          id: node.id,
-          name: node.name,
-          nodeType: node.type,
-          pageName: getPageName(node),
-          path: buildNodePath(node),
-          visible: isNodeVisible(node),
-          reason,
-          resource: reason === 'typography' && typography
-            ? typography
-            : await resolveCustomStyleResource(node, reason, options),
-        });
-      }
-    }
+  for (const reason of reasons) {
+    const resource = reason === 'typography' && typography
+      ? typography : await resolveCustomStyleResource(node, reason, options);
+    custom.push(Object.assign({}, getDetails(), { reason, resource }));
+  }
+  return { custom: applyCustomStyleFilters(node, custom), deprecatedGradient, gradientFields };
+}
 
-  return applyCustomStyleFilters(node, entries);
+function styleNodeDetails(node: SceneNode) {
+  return {
+    id: node.id, name: node.name, nodeType: node.type, pageName: getPageName(node),
+    path: buildNodePath(node), visible: isNodeVisible(node),
+  };
+}
+
+function isGradient(paint: Paint | null | undefined): paint is GradientPaint {
+  return Boolean(paint && paint.type.startsWith('GRADIENT_'));
+}
+
+function gradientStopColor(color: RGBA | undefined): string | undefined {
+  if (!color || ![color.r, color.g, color.b, color.a].every(Number.isFinite)) return undefined;
+  return '#' + [color.r, color.g, color.b, color.a]
+    .map(value => clampColorComponent(value).toString(16).padStart(2, '0')).join('').toUpperCase();
 }
 
 async function resolveCustomStyleResource(
@@ -394,23 +469,6 @@ function baselineEvidenceScore(diff: DiffEntry): number {
   return score;
 }
 
-async function describeCustomPaintAndEffectReasons(
-  node: SceneNode,
-  options: CustomStyleCollectionOptions,
-): Promise<Array<CustomStyleEntry['reason']>> {
-  const reasons: Array<CustomStyleEntry['reason']> = [];
-  const ignorePaintReason = await shouldIgnorePaintCustomStyle(node,options.referenceByKey,options.resolveComponentKey);
-  if (!ignorePaintReason && (await hasCustomPaints(node, 'fills', 'fillStyleId', options))) {
-    reasons.push('fill');
-  }
-  if (!ignorePaintReason && (await hasCustomPaints(node, 'strokes', 'strokeStyleId', options))) {
-    reasons.push('stroke');
-  }
-  const effectReasons = await describeCustomEffects(node, options);
-  reasons.push(...effectReasons);
-  return reasons;
-}
-
 async function describeCustomTypography(
   node: TextNode,
   options: CustomStyleCollectionOptions,
@@ -492,48 +550,29 @@ function mapEffectType(type: string): string {
 }
 
 async function hasCustomPaints(
-  node: SceneNode,
-  paintsKey: 'fills' | 'strokes',
-  styleKey: 'fillStyleId' | 'strokeStyleId',
+  paints: readonly Paint[] | PluginAPI['mixed'] | undefined,
+  styleId: string | null,
   options: CustomStyleCollectionOptions,
+  checkGradientStops: boolean,
 ): Promise<boolean> {
-  if (!(paintsKey in node)) return false;
-  const paints = (node as any)[paintsKey];
-  if (!Array.isArray(paints)) {
-    return false;
-  }
-  const hasStyle = hasPaintStyle(node, styleKey);
-  const styleId = hasStyle ? String((node as any)[styleKey]) : null;
-  if (!paints.some((paint) => paint && paint.visible !== false)) return false;
-  if (hasStyle && !(await options.isKnownStyleId(styleId))) return true;
+  if (!Array.isArray(paints) || !paints.some(paint => paint && paint.visible !== false)) return false;
+  if (styleId && !(await options.isKnownStyleId(styleId))) return true;
 
   for (const paint of paints) {
-    if (!paint) continue;
-    if ((paint as Paint).visible === false) continue;
-    if (paint.type.startsWith('GRADIENT_')) {
-      if (!hasStyle) return true;
+    if (!paint || paint.visible === false) continue;
+    if (isGradient(paint)) {
+      if (!styleId && !checkGradientStops) return true;
       continue;
     }
     if (paint.type !== 'SOLID') continue;
-    const tokenInfo = getTokenAliasInfo(paint as SolidPaint, options.tokenLabelMap);
+    const tokenInfo = getTokenAliasInfo(paint, options.tokenLabelMap);
     if (tokenInfo.aliasKey) {
-      if (!tokenInfo.label) {
-        return true;
-      }
+      if (!tokenInfo.label) return true;
       continue;
     }
-    if (hasStyle) continue;
-    return true;
+    if (!styleId) return true;
   }
   return false;
-}
-
-function hasPaintStyle(
-  node: SceneNode,
-  styleKey: 'fillStyleId' | 'strokeStyleId',
-): boolean {
-  const styleId = (node as any)[styleKey];
-  return Boolean(styleId && styleId !== figma.mixed && typeof styleId === 'string');
 }
 
 function getTokenAliasInfo(

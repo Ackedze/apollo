@@ -1,6 +1,7 @@
+const {gradientStopKey}=require('./transport');
 const final=new Set(['compliant','allowed','not-applicable']);
-const titles={changes:'Кастомы',unknown:'Не удалось проверить',deprecated:'Устаревшие',update:'Пора менять',detached:'Детач',local:'Локальные',wrongChannel:'Не тот канал',liquidGlass:'Не на Liquid Glass',glyph26:'Иконки',wrongChannelTypography:'Не тот канал',presets:'Пресеты',technical:'Технические',current:'В каталоге',changesWip:'Все отличия от эталона',customStyles:'Локальные',detachedStyles:'Без стиля или токена',deprecatedStyles:'Устаревшие',themization:'База'};
-const groups=[{id:'styles',title:'Стили и токены',tabs:['customStyles','detachedStyles','deprecatedStyles','wrongChannelTypography'],description:'Стили, цвета и привязки к токенам.'},{id:'components',title:'Компоненты',tabs:['changes','deprecated','update','liquidGlass','detached','local','wrongChannel'],description:'Библиотечные связи, версии и правила компонентов.'},{id:'patterns',title:'Паттерны',tabs:[],description:'Сочетание компонентов и проектировочные паттерны.'}];
+const titles={changes:'Кастомы',unknown:'Не удалось проверить',deprecated:'Устаревшие',update:'Пора менять',detached:'Детач',local:'Локальные',wrongChannel:'Не тот канал',liquidGlass:'Не на Liquid Glass',wrongChannelTypography:'Не тот канал',glyph26:'Иконки',presets:'Пресеты',technical:'Технические',current:'В каталоге',changesWip:'Все отличия от эталона',customStyles:'Локальные',detachedStyles:'Без токена',deprecatedStyles:'Устаревшие',themization:'База',pageSettings:'Настройки страницы',corporateComponents:'Компоненты'};
+const groups=[{id:'styles',title:'Токены',tabs:['deprecatedStyles','detachedStyles','customStyles','wrongChannelTypography'],description:'Стили, цвета и привязки к токенам.'},{id:'components',title:'Компоненты',tabs:['deprecated','update','liquidGlass','detached','local','wrongChannel','changes'],description:'Библиотечные связи, версии и правила компонентов.'},{id:'patterns',title:'Паттерны',tabs:[],description:'Сочетание компонентов и проектировочные паттерны.'}];
 const channelLabel=channel=>channel==='MobileWeb'?'Mobile Web':channel;
 function classification(diffs){return diffs.some(diff=>diff.assessment?.verdict==='violation')?'violation':diffs.some(diff=>!diff.assessment||diff.assessment.verdict==='unknown')?'unknown':'allowed';}
 function location(item){return item.fullPath||item.path||item.name||'Слой';}
@@ -58,10 +59,27 @@ function customizationItems(views,relevance){
  for(const item of (relevance.update||[]).concat(relevance.deprecated||[]))add(item,(item.diffs||[]).filter(diff=>diff.assessment?.verdict==='violation'),true);
  return Array.from(items.values());
 }
+function gradientDetails(item) {
+ const stop = item.gradientStop;
+ if (!stop) return { key: '', label: null };
+ const field = item.reason === 'fill' ? 'Заливка' : 'Обводка';
+ const parts = [field + ' ' + (stop.paintIndex + 1), 'градиент'];
+ if (stop.stopIndex !== null) {
+  const percent = stop.position === null ? '' : ' (' + (stop.position * 100).toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + '%)';
+  parts.push('точка ' + (stop.stopIndex + 1) + percent);
+ }
+ if (stop.textStart !== undefined) parts.push('символы ' + (stop.textStart + 1) + '–' + stop.textEnd);
+ return {
+  key: ':gradient:' + gradientStopKey(stop),
+  label: parts.join(' · '),
+ };
+}
+
 function buildV3Groups(result,settings={},state={}){
  const views=result?.visibleViews||{},relevance=views.relevance||{},all=Object.values(relevance).flat(),unknown=[];
- const fixedPaints=new Set((state.paintFixes||[]).map(fix=>fix.nodeId+'/'+fix.field));
- const unfixedPaint=item=>item.token||!fixedPaints.has(item.id+'/'+item.reason);
+ const paintKey=(id,field,stop)=>id+'/'+field+(stop?'/'+gradientStopKey(stop):'');
+ const fixedPaints=new Set((state.paintFixes||[]).map(fix=>paintKey(fix.nodeId,fix.field,fix.gradientStop)));
+ const unfixedPaint=item=>(item.token&&!item.gradientStop)||!fixedPaints.has(paintKey(item.id,item.reason,item.gradientStop));
  const customStyles=(views.customStyles||[]).filter(unfixedPaint);
  const local=Array.from(new Map((views.local||[]).concat(all).filter(item=>!item.reference&&!item.catalogLifecycle?.checks?.some(check=>check.recordKeys.length)&&typeof item.componentKey==='string'&&item.componentKey.trim()&&!(item.comparisonIssues||[]).length&&!(item.gaps||[]).length&&item.status!=='incomplete').map(item=>[item.id,item])).values());
  for(const item of all){
@@ -96,29 +114,57 @@ function buildV3Groups(result,settings={},state={}){
    'typography-channel:'+item.id+':'+item.resource.type+':'+item.resource.key,item,'violation',
    item.resource.type==='token'?'Токен типографики не соответствует выбранному каналу.':'Стиль типографики не соответствует выбранному каналу.',
    {messages:[item.resource.name,`Каналы: ${item.channels.map(channelLabel).join(', ')}. Выбран: ${channelLabel(item.selectedChannel)}.`]})),
-  deprecatedStyles:(views.deprecatedStyles||[]).filter(unfixedPaint).map(item=>row('deprecated-style:'+item.id+':'+item.reason+(item.token?':'+item.styleKey:''),item,item.scheduled?'warning':'violation',item.token?(item.scheduled?'Токен пора менять.':'Используется устаревший токен.'):(item.scheduled?'Стиль пора менять.':'Используется устаревший стиль.'),{messages:[item.styleLabel||'Название недоступно']})),
-  customStyles:customStyles.filter(item=>item.resource?.type!=='raw-value').map(item=>row('style:'+item.id+':'+item.reason,item,'violation','Стиль или токен вне подключённой библиотеки.',{messages:item.resource?.name?[item.resource.name]:[]})),
-  detachedStyles:customStyles.filter(item=>item.resource?.type==='raw-value').map(item=>row('style:'+item.id+':'+item.reason,item,'violation',item.reason==='typography'?'Типографика без стиля.':item.reason==='fill'?'Заливка без стиля или токена.':item.reason==='stroke'?'Обводка без стиля или токена.':'Эффект без стиля.',{messages:item.resource?.name&&!/^Raw /.test(item.resource.name)?[item.resource.name]:[]})),
-  themization:(result?.baseChecks||[]).filter(item=>!final.has(item.classification)).map(item=>row('base:'+item.id,item,item.classification,item.message,{displayName:item.id==='font'?'Шрифт страницы':'Темизация страницы',messages:item.status==='incomplete'||(item.gaps||[]).length?['Часть данных не удалось подтвердить. Проверка неполная.']:[]})).concat((views.themization||[]).map(item=>row('theme:'+item.id,item,'violation',item.recommendation?`Замени на ${item.recommendation}`:'Используется компонент со старой темизацией.',{displayName:item.name}))),
+  deprecatedStyles:(views.deprecatedStyles||[]).filter(unfixedPaint).map(item=>{
+   const point = gradientDetails(item);
+   const title = item.token
+    ? (item.scheduled ? 'Токен пора менять.' : 'Используется устаревший токен.')
+    : (item.scheduled ? 'Стиль пора менять.' : 'Используется устаревший стиль.');
+   const messages = [item.styleLabel || 'Название недоступно'];
+   if (point.label) messages.push(point.label);
+   const id = 'deprecated-style:' + item.id + ':' + item.reason + (item.token ? ':' + item.styleKey : '');
+   return row(id + point.key, item, item.scheduled ? 'warning' : 'violation', title, { messages });
+  }),
+  customStyles:customStyles.filter(item=>item.resource?.type!=='raw-value').map(item=>{
+   const point = gradientDetails(item);
+   const messages = [item.resource?.name, point.label].filter(Boolean);
+   const title = point.label ? 'Токен точки градиента вне подключённой библиотеки.' : 'Стиль или токен вне подключённой библиотеки.';
+   return row('style:' + item.id + ':' + item.reason + point.key, item, 'violation', title, { messages });
+  }),
+  detachedStyles:customStyles.filter(item=>item.resource?.type==='raw-value').map(item=>{
+   const point = gradientDetails(item);
+   const unconfirmed = point.label && item.status === 'incomplete';
+   const title = unconfirmed ? 'Не удалось проверить цвет точки градиента.'
+    : point.label ? 'Цвет точки градиента без токена.'
+    : item.reason === 'typography' ? 'Типографика без стиля.'
+    : item.reason === 'fill' ? 'Заливка без стиля или токена.'
+    : item.reason === 'stroke' ? 'Обводка без стиля или токена.' : 'Эффект без стиля.';
+   const message = point.label || (item.resource?.name && !/^Raw /.test(item.resource.name) ? item.resource.name : null);
+   return row('style:' + item.id + ':' + item.reason + point.key, item, unconfirmed ? 'unknown' : 'violation', title,
+    { messages: message ? [message] : [] });
+  }),
+  themization:(result?.baseChecks||[]).filter(item=>!final.has(item.classification)).map(item=>row('base:'+item.id,item,item.classification,item.message,{displayName:item.id==='font'?'Шрифт страницы':'Темизация страницы',messages:item.status==='incomplete'||(item.gaps||[]).length?['Часть данных не удалось подтвердить. Проверка неполная.']:[]})).concat((views.themization||[]).map(item=>row('theme:'+item.id,item,'violation','Используется компонент со старой темизацией.',{displayName:item.name,messages:item.recommendation?[`${item.name} → ${item.recommendation}`]:[]}))),
  };
  const categories=Object.fromEntries(Object.keys(titles).map(id=>[id,category(id,data[id]||[],!!result)]));
  const mobileIcons=['iOS','Android'].includes(settings.pickerLabel);
  const visible=groups.map(baseGroup=>{
   const group=baseGroup.id==='patterns'&&mobileIcons?{id:'icons',title:'Иконки',tabs:['glyph26'],description:'Устаревшие иконки, которые необходимо заменить\nна Glyph-26'}:baseGroup;
   return Object.assign({},group,{categories:group.tabs.filter(id=>{
-  if(id==='liquidGlass')return settings.pickerLabel==='iOS'||['connected','unavailable'].includes(result?.liquidGlass?.status);
-  if(id==='wrongChannelTypography')return Array.isArray(views.wrongChannelTypography);
-  return !(settings.hideCustomizations&&['changes','changesWip'].includes(id));
- }).map(id=>categories[id]),connected:!!result&&group.tabs.length>0});});
- for(const group of visible)group.count=group.connected?new Set(group.categories.flatMap(category=>category.issues.map(row=>row.id))).size:null;
- const theme=['iOS','Android'].includes(settings.pickerLabel)?null:categories.themization;
+   if(id==='liquidGlass')return settings.pickerLabel==='iOS'||['connected','unavailable'].includes(result?.liquidGlass?.status);
+   return !(settings.hideCustomizations&&['changes','changesWip'].includes(id));
+  }).map(id=>categories[id]),connected:!!result&&group.tabs.length>0});});
+ for(const group of visible)group.count=group.connected?group.categories.reduce((total,category)=>total+category.count,0):null;
+ const theme=mobileIcons?null:categories.themization;
+ const baseCategories=theme?[
+  category('pageSettings',theme.entries.filter(row=>row.id.startsWith('base:')),!!result),
+  category('corporateComponents',theme.entries.filter(row=>row.id.startsWith('theme:')),!!result),
+ ]:[];
  const active=visible.flatMap(group=>group.categories).concat(theme?[theme]:[]),issues=active.flatMap(category=>category.issues),coverage=active.concat(categories.unknown);
- const coverageDetails=coverage.filter(category=>category.incomplete).map(category=>({id:category.id,title:category.id==='unknown'?'Компоненты':category.title,reason:category.id==='unknown'?'Не удалось подтвердить часть компонентов. Причины сохранены в диагностике проверки.':'Есть изменения, для которых пока не удалось подтвердить правило. Подробности — в карточках.'}));
+ const coverageDetails=coverage.filter(category=>category.incomplete).map(category=>({id:category.id,title:category.id==='unknown'?'Компоненты':category.title,reason:category.id==='unknown'?'Не удалось подтвердить часть компонентов. Причины сохранены в диагностике проверки.':category.id==='detachedStyles'?'Часть точек градиента не удалось проверить. Подробности — в карточках.':'Есть изменения, для которых пока не удалось подтвердить правило. Подробности — в карточках.'}));
  if(mobileIcons&&result&&(!result.glyph26||result.glyph26.status==='incomplete'))coverageDetails.push({id:'glyph26',title:'Иконки',reason:'Часть данных иконок не удалось подтвердить.'});
  if(result?.offlineCoverage?.gaps?.includes('component-index-coverage-partial'))coverageDetails.push({id:'athena-index',title:'Индексы Athena',reason:'Часть подключённых источников не покрыта индексом.'});
  if(result?.offlineCoverage?.gaps?.includes('capture-source-changed'))coverageDetails.push({id:'capture-source',title:'Актуальность макета',reason:'Часть данных могла измениться за время проверки. Найденные замечания доступны.'});
  if(result?.offlineCoverage?.gaps?.includes('capture-session-unavailable'))coverageDetails.push({id:'capture-session',title:'Исправления',reason:'Найденные замечания доступны. Не удалось подготовить исправления.'});
- return{groups:visible,theme,total:result?new Set(issues.map(row=>row.id)).size:null,stale:!!state.stale,unconfirmed:categories.unknown,incomplete:coverageDetails.length>0,coverageDetails};
+ return{groups:visible,theme,baseCategories,total:result?issues.length:null,stale:!!state.stale,unconfirmed:categories.unknown,incomplete:coverageDetails.length>0,coverageDetails};
 }
 function nativeMetrics(result,settings){
  const summary=buildV3Groups(result,settings),categories=summary.groups.flatMap(group=>group.categories).concat(summary.theme?[summary.theme]:[],summary.unconfirmed?[summary.unconfirmed]:[]);

@@ -264,12 +264,12 @@ test('one common run gates edits until completion and verification, then a model
  const mod={exports:{}};new Function('require','module','exports',built.outputFiles[0].text)(require,mod,mod.exports);
  globalThis.document={visibilityState:'visible'};t.after(()=>delete globalThis.document);
  const validation={skillId:'ux-writer-v2',coverageGaps:[],findings:[{nodeId:'text',priority:'warning',category:'Типографика',message:'Готовая механическая правка',replacement:'Для\u00a0кого',sources:[]}]};
- let resolvePoll,posts=0,mode='pending';
+ let resolvePoll,posts=0,mode='pending',failureCode='OPENROUTER_UNAVAILABLE';
  const f=setup({request:async(url,options)=>{
   if(options?.method==='POST'){
    posts++;
    return ok({success:true,run:{id:'remote-'+posts,status:mode==='failure'?'failed':mode==='pending'?'running':'completed',
-    error:mode==='failure'?{code:'OPENROUTER_UNAVAILABLE'}:null,validation}});
+    error:mode==='failure'?{code:failureCode}:null,validation}});
   }
   return new Promise(resolve=>{resolvePoll=resolve;});
  }});
@@ -289,8 +289,14 @@ test('one common run gates edits until completion and verification, then a model
   assert.doesNotMatch(render(),/Готовая механическая правка|Применить всё|Новая проверка/);
   assert.equal(await f.client.replaceTexts(),false);assert.equal(f.client.editText('text','После сбоя'),false);
   assert.equal(f.client.snapshot('texts').lastAttempt.error,'OPENROUTER_UNAVAILABLE');assert.equal(f.client.snapshot('texts').lastAttempt.modelFailed,true);
+  failureCode='OPENROUTER_CREDITS_REQUIRED';start('credits');await tick();
+  assert.equal(f.client.getState().error,'OpenRouter отклонил запрос: недостаточно средств или исчерпан лимит API-ключа. Проверь в OpenRouter баланс и лимит ключа, подключённого в Apollo Proxy, затем повтори анализ.');
+  assert.doesNotMatch(render(),/Модель не справилась|OPENROUTER_CREDITS_REQUIRED|Готовая механическая правка|Применить всё/);
+  assert.match(render(),/role="alert"/);assert.match(render(),/Повторить анализ/);
+  assert.equal(f.client.snapshot('texts').lastAttempt.error,'OPENROUTER_CREDITS_REQUIRED');assert.equal(f.client.snapshot('texts').lastAttempt.modelFailed,true);
+  assert.equal(await f.client.replaceTexts(),false);assert.equal(posts,3,'billing failure must not retry automatically');
   mode='success';start('retry');await tick();assert.equal(await f.client.replaceTexts(),false);await verify('retry');
-  assert.equal(posts,3);assert.equal(f.client.getState().texts.stale,false);assert.match(render(),/Готовая механическая правка/);assert.doesNotMatch(render(),/Повторить анализ|Модель не справилась/);
+  assert.equal(posts,4);assert.equal(f.client.getState().texts.stale,false);assert.match(render(),/Готовая механическая правка/);assert.doesNotMatch(render(),/Повторить анализ|Модель не справилась/);
  }finally{f.client.close();}
 });
 test('text edits are retained as drafts and apply through the original native target without a paid recheck',async()=>{

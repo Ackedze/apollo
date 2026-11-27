@@ -1,5 +1,5 @@
 import type { AuditChannel } from '../services/channelAudit';
-import type { FindingActionKind } from '../types/audit';
+import type { FindingActionKind, GradientStopLocation } from '../types/audit';
 
 export type ComponentActionReason =
   | 'wrong-channel'
@@ -46,6 +46,7 @@ export interface VariableFindingAction {
   targetColor?: string;
   styleField: 'fill' | 'stroke';
   expectedFingerprint: string;
+  gradientStop?: GradientStopLocation;
 }
 
 export type RegisteredFindingAction =

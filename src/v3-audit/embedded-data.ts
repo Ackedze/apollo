@@ -7,6 +7,11 @@ import type { AuditChannel } from './services/channelAudit';
 import { sha256Hex } from './utils/sha256';
 
 const platforms = ['Desktop', 'MobileWeb', 'iOS', 'Android'] as const;
+const sharedComponentCatalogPaths: ReadonlyMap<string, string> = new Map([
+  ['Icons', 'icons/'],
+  ['Logotypes', 'logotypes/'],
+  ['Сorp _ Image Library', 'images/'], // The Athena catalog uses a Cyrillic С.
+]);
 type PlatformCoverage = { expected: number; loaded: number; unclassified: number; gaps: readonly unknown[] };
 type Parent = {
   type: 'component';
@@ -30,10 +35,9 @@ type ThemingPair = {
   mapped: Record<string, {targetKey:string;properties:Record<string,string>}>;
 };
 type ResourceStatus = { status: 'active' | 'deprecated' | 'scheduled' | 'unknown'; closed: boolean;
-  observations?: readonly { source: number }[];
+  observations?: readonly { source: number; name?: string }[];
 };
 const typographyCatalogChannels: ReadonlyMap<string, readonly AuditChannel[]> = new Map([
-  ['101 _ Web Typography.json', ['Desktop', 'MobileWeb']],
   ['102 _ Android Typography.json', ['Android']],
   ['103 _ iOS Typography.json', ['iOS']],
 ]);
@@ -76,7 +80,7 @@ export function createOfflineAuditIndex(input: OfflineIndexInput, dataId: string
     }
     let channels = row.type === 'variant' ? row.platforms ?? parent.platforms : parent.platforms;
     if (!channels.length) {
-      const sharedPath = parent.library === 'Icons' ? 'icons/' : parent.library === 'Logotypes' ? 'logotypes/' : null;
+      const sharedPath = sharedComponentCatalogPaths.get(parent.library);
       if (!sharedPath || parent.sources.length === 0 ||
           !parent.sources.every(id => sourceById.get(id)?.catalogPath.startsWith(sharedPath))) {
         return { state: 'unknown' as const, reason: 'Платформа компонента недоступна.' };
@@ -125,11 +129,17 @@ export function createOfflineAuditIndex(input: OfflineIndexInput, dataId: string
     const channelSets = Array.isArray(sightings) ? sightings.map(observation => {
       const source = sourceById.get(observation?.source);
       if (source?.kind !== kind || !source.catalogPath?.startsWith(kind + '/')) return undefined;
-      return typographyCatalogChannels.get(source.catalogPath.slice(kind.length + 1));
+      const file = source.catalogPath.slice(kind.length + 1);
+      if (file === '101 _ Web Typography.json') {
+        const name = observation.name;
+        if (typeof name !== 'string' || !name.trim()) return undefined;
+        return [name.split('/').some(part => /-mobile$/i.test(part.trim())) ? 'MobileWeb' : 'Desktop'] as const;
+      }
+      return typographyCatalogChannels.get(file);
     }) : [];
     // An unclassified source cannot prove that a resource belongs to another channel.
     const channels = channelSets.length && channelSets.every(Boolean)
-      ? platforms.filter(channel => channelSets.some(available => available?.includes(channel)))
+      ? platforms.filter(channel => channelSets.some(available => available?.some(platform => platform === channel)))
       : undefined;
     typographyChannelCache.set(id, channels);
     return channels;

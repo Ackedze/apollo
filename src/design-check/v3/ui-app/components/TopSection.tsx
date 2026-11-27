@@ -35,6 +35,7 @@ type TopSectionProps = {
   settingsMessage?: string;
   onProxyRefresh?: () => Promise<void>;
   auditControlsVisible?: boolean;
+  pageTypeInSettings?: boolean;
   overlayScope?: string;
   pageTypeId: PageTypeId | null;
   channelId: string;
@@ -181,6 +182,7 @@ export function TopSection({
   settingsMessage,
   onProxyRefresh,
   auditControlsVisible = true,
+  pageTypeInSettings = false,
   overlayScope,
   pageTypeId,
   channelId,
@@ -360,6 +362,45 @@ export function TopSection({
     </div>
   );
 
+  const pageTypeControl = (
+    <div className={styles.pageTypeWrap} ref={pageTypeRootRef}>
+      <PickerButton
+        label={selectedPageType?.label ?? 'Тип страницы'}
+        open={pageTypeOpen}
+        disabled={!controlAvailability.pageTypeId || (actionLoading && actionLabel === 'Остановить')}
+        className={[
+          'design-check-page-picker',
+          styles.pageTypeButton,
+          selectedPageType ? styles.pageTypeButtonSelected : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        onPress={() => {
+          if (!pageTypeInSettings) setSettingsOpen(false);
+          setPickerOpen(false);
+          setWorkshopOpen(false);
+          setPageTypeOpen((value) => !value);
+        }}
+      />
+      {pageTypeOpen ? (
+        <OptionList className={styles.pageTypeMenu}>
+          {PAGE_TYPE_OPTIONS.map((option) => (
+            <OptionListCell
+              key={option.id}
+              label={option.label}
+              selected={pageTypeId === option.id}
+              showLeadingIcon={false}
+              onPress={() => {
+                onPageTypeChange?.(option.id);
+                setPageTypeOpen(false);
+              }}
+            />
+          ))}
+        </OptionList>
+      ) : null}
+    </div>
+  );
+
   const settingsControl = (
     <div className={styles.settingsWrap} ref={settingsRootRef}>
       <Button
@@ -455,6 +496,10 @@ export function TopSection({
               <span className={styles.switchThumb} />
             </span>
           </button>
+          {pageTypeInSettings && <div className={styles.settingsField}>
+            <div className={styles.settingsLabel}>Тип страницы</div>
+            {pageTypeControl}
+          </div>}
           <div className={styles.settingsDivider} />
           {readContractData && <button type="button" className={styles.settingsAction} aria-haspopup="dialog"
             onClick={() => { setSettingsOpen(false); setDataOpen(true); }}>
@@ -499,44 +544,6 @@ export function TopSection({
     />
   );
 
-  const pageTypeControl = (
-    <div className={styles.pageTypeWrap} ref={pageTypeRootRef}>
-      <PickerButton
-        label={selectedPageType?.label ?? 'Тип страницы'}
-        open={pageTypeOpen}
-        disabled={!controlAvailability.pageTypeId || (actionLoading && actionLabel === 'Остановить')}
-        className={[
-          'design-check-page-picker',
-          styles.pageTypeButton,
-          selectedPageType ? styles.pageTypeButtonSelected : '',
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        onPress={() => {
-          setSettingsOpen(false);
-          setPickerOpen(false);
-          setWorkshopOpen(false);
-          setPageTypeOpen((value) => !value);
-        }}
-      />
-      {pageTypeOpen ? (
-        <OptionList className={styles.pageTypeMenu}>
-          {PAGE_TYPE_OPTIONS.map((option) => (
-            <OptionListCell
-              key={option.id}
-              label={option.label}
-              selected={pageTypeId === option.id}
-              showLeadingIcon={false}
-              onPress={() => {
-                onPageTypeChange?.(option.id);
-                setPageTypeOpen(false);
-              }}
-            />
-          ))}
-        </OptionList>
-      ) : null}
-    </div>
-  );
 
   return (
     <>
@@ -547,7 +554,7 @@ export function TopSection({
         data-product={title}
         hidden={!auditControlsVisible}
       >
-        {pageTypeControl}
+        {!pageTypeInSettings && pageTypeControl}
         <div className={compact ? styles.compactRightSide : styles.rightSide}>
           {settingsHost === undefined ? <div className={styles.headerControls}>{platformControl}{settingsControl}</div> : null}
           {actionButton}

@@ -24,6 +24,7 @@ type DeprecatedStyleCandidate = {
 export async function collectDeprecatedStyleUsages(
   node: SceneNode,
   options: DeprecatedStyleCollectionOptions,
+  gradientFields?: ReadonlySet<DeprecatedStyleReason>,
 ): Promise<DeprecatedStyleEntry[]> {
   if (node.type === 'SECTION') {
     return [];
@@ -63,7 +64,13 @@ export async function collectDeprecatedStyleUsages(
 
   if(options.resolveTokenStatus){
     const seen = new Set<string>();
-    const queue:unknown[] = ['boundVariables' in node ? node.boundVariables : null];
+    const bindings = 'boundVariables' in node ? node.boundVariables : null;
+    // A node-level alias cannot identify a gradient stop and can repeat it.
+    const queue: unknown[] = Object.entries(bindings ?? {})
+      .filter(([field]) => field === 'fills' || field === 'textRangeFills'
+        ? !gradientFields?.has('fill')
+        : field !== 'strokes' || !gradientFields?.has('stroke'))
+      .map(([, aliases]) => aliases);
     for(const field of ['fills','strokes'] as const){
       const paints=(node as unknown as Record<string,unknown>)[field];
       if(Array.isArray(paints))for(const paint of paints)if(paint?.visible!==false)queue.push(paint?.boundVariables);

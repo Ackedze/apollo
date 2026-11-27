@@ -225,12 +225,12 @@ function createDesignCheckController(options = {}) {
     const nextProxy = { available: proxy.available, version: typeof proxy.version === 'string' ? proxy.version : null, busy,
       compatibility: proxy.compatibility || (proxy.available === false ? null : state.chat.proxy.compatibility) || null };
     if (busy === true && activeChat && state.chat.busy) activeChat.serverBusyObserved = true;
-    if (busy === false && activeChat?.serverBusyObserved && state.chat.busy) {
+    if (state.chat.cancelScope !== 'server-request' && busy === false && activeChat?.serverBusyObserved && state.chat.busy) {
       const pending = activeChat; activeChat = null; pending.abort.abort();
       setChat({ proxy: nextProxy, busy: false, notice: '', error: 'Ответ сервера не дошёл до Apollo. Повтори вопрос.' });
       return;
     }
-    setChat({ proxy: nextProxy, notice: busy === false ? '' : state.chat.notice });
+    setChat({ proxy: nextProxy, cancelScope: proxy.cancelScope === 'server-request' ? 'server-request' : options.dialogue?.cancelScope || null, notice: busy === false ? '' : state.chat.notice });
   }
   async function refreshProxyStatus() {
     if (!options.dialogue?.status) return;
@@ -304,8 +304,8 @@ function createDesignCheckController(options = {}) {
   function cancelChat() {
     if (!activeChat) return false;
     const pending = activeChat; activeChat = null; pending.abort.abort();
-    if (options.dialogue?.status) setProxyStatus(Object.assign({}, state.chat.proxy, { busy: true }));
-    setChat({ busy: false, error: 'Ожидание ответа остановлено. Запрос на сервере может продолжаться.' }); void refreshProxyStatus(); return true;
+    if (options.dialogue?.status) setProxyStatus(Object.assign({}, state.chat.proxy, { busy: true, cancelScope: state.chat.cancelScope }));
+    setChat({ busy: false, error: state.chat.cancelScope === 'server-request' ? '' : 'Ожидание ответа остановлено. Запрос на сервере может продолжаться.', notice: state.chat.cancelScope === 'server-request' ? 'Останавливаем ответ. Другие задачи продолжат работу.' : '' }); void refreshProxyStatus(); return true;
   }
   function setContext(key) {
     if (key === state.contextKey) return;

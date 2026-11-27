@@ -1,16 +1,62 @@
 import {createCooperativeYield,designTraversalBudget,forEachWithConcurrency} from './utils/promisePool';
 import {getDetachedLibraryComponentKey} from './services/detachedComponentSource';
 const {nodeEvidence}=require('../document-audit/notification-proof');
+const {readFailureReason}=require('../document-audit/protocol');
 const MAX_CAPTURE_NOTIFICATION_CHANGES=512;
-type Observation={node:BaseNode;value:string|null;fields:Set<string>;identity:string|null;main:ComponentNode|null;mainCaptured?:boolean;children?:readonly SceneNode[];childNames?:readonly string[];visible?:boolean;text?:string};
+type Observation={node:BaseNode;value:string|null;fields:Set<string>;identity:string|null;main:ComponentNode|null;mainCaptured?:boolean;mainReadIssue?:string;children?:readonly SceneNode[];childNames?:readonly string[];visible?:boolean;text?:string};
 type Impact=Map<string,ReadonlySet<string>|null>;
 const contextFields=['id','type','removed','parent','visible','explicitVariableModes','resolvedVariableModes','componentProperties','variantProperties','key','remote','detachedInfo','mainComponent'];
+type ObservationChange={reason:string;nodeId:string;fields:string[]};
+const explicitModeContext=contextFields.filter(field=>field!=='resolvedVariableModes');
+const typographyFields=explicitModeContext.concat([
+ 'textStyleId','characters','fontName','fontSize','fontWeight','lineHeight','letterSpacing','openTypeFeatures',
+ 'textCase','textDecoration','textAlignHorizontal','textAlignVertical','textAutoResize','textTruncation','maxLines',
+ 'paragraphSpacing','paragraphIndent','listSpacing','hangingPunctuation','hangingList','typographyBindings',
+ 'componentPropertyReferences','typographySegments',
+]);
+// Known bindings that do not control text or its visibility.
+const nonTypographyBindings=new Set([
+ 'fills','textRangeFills','strokes','effects','layoutGrids','opacity',
+ 'width','height','minWidth','minHeight','maxWidth','maxHeight','itemSpacing','counterAxisSpacing',
+ 'paddingTop','paddingRight','paddingBottom','paddingLeft','gridRowGap','gridColumnGap',
+ 'cornerRadius','topLeftRadius','topRightRadius','bottomLeftRadius','bottomRightRadius',
+ 'strokeWeight','strokeTopWeight','strokeRightWeight','strokeBottomWeight','strokeLeftWeight',
+]);
+function observedFieldName(field:string){
+ if(field==='typographyBindings')return 'boundVariables';
+ if(field==='typographySegments')return 'textSegments';
+ return field;
+}
+function bindingEvidence(value:any,field:string):unknown{
+ if(field==='typographyBindings'){
+  const bindings=value.boundVariables;
+  if(!bindings||typeof bindings!=='object'||Array.isArray(bindings))return bindings;
+  return Object.fromEntries(Object.entries(bindings).filter(([name])=>!nonTypographyBindings.has(name)));
+ }
+ if(field!=='typographySegments'||!Array.isArray(value.textSegments))return value[observedFieldName(field)];
+ const ranges:{start:number;end:number;format:string}[]=[];
+ for(const segment of value.textSegments){
+  if(!segment||!Number.isSafeInteger(segment.start)||!Number.isSafeInteger(segment.end))return value.textSegments;
+  const format=JSON.stringify(Object.entries(segment).filter(([name])=>!['start','end','characters','fills'].includes(name)));
+  const last=ranges[ranges.length-1];
+  if(last&&last.end===segment.start&&last.format===format)last.end=segment.end;
+  else ranges.push({start:segment.start,end:segment.end,format});
+ }
+ return ranges;
+}
+export function actionSourceChanged(change?:ObservationChange){
+ const actionChange=change&&{
+  reason:change.reason,nodeId:change.nodeId.slice(0,200),fields:change.fields.slice(0,32).map(field=>field.slice(0,80)),
+ };
+ return Object.assign(Error('AUDIT_ACTION_SOURCE_CHANGED'),{actionChange});
+}
 export type AuditSceneSnapshot={
  getChildren(node:SceneNode):readonly SceneNode[];
  getChildNames(node:SceneNode):readonly string[];
  isVisible(node:SceneNode):boolean;
  getText(node:TextNode):string;
  getMainComponent(node:InstanceNode,readMain?:(node:InstanceNode)=>Promise<ComponentNode|null>):Promise<ComponentNode|null>;
+ getMainComponentReadIssue?(nodeId:string):string|undefined;
  shouldSkipShared?(node:SceneNode):Promise<boolean>;
  prepareNodes?(nodes:readonly SceneNode[]):Promise<void>;
 };
@@ -43,35 +89,62 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
   if(node.type==='PAGE'||node.type==='DOCUMENT'||!('children' in node))return [];
   return node.children.map(child=>child.name);
  }
- function stable(record:Observation){
-  const current=read(record.node).value;
-  if(record.value===null||current===null)return refuse('node-unreadable',record.node.id);
-  if(current===record.value){
-   const captured=record.childNames;
-   if(!captured)return true;
-   try{
-    const names=childNames(record.node);
-    if(names.length===captured.length&&names.every((name,index)=>name===captured[index]))return true;
-    return refuse('observed-facts-changed',record.node.id,['childNames']);
-   }catch{return refuse('node-unreadable',record.node.id,['childNames']);}
+ function observationChange(record:Observation,fields:readonly string[]|null=null):ObservationChange|null{
+  const nodeId=record.node.id,current=read(record.node).value;
+  if(record.value===null||current===null)return {reason:'node-unreadable',nodeId,fields:[]};
+  if(current!==record.value){
+   const before=JSON.parse(record.value),after=JSON.parse(current);
+   const keys=fields??Array.from(new Set(Object.keys(before).concat(Object.keys(after))));
+   const changed=keys.filter(field=>JSON.stringify(bindingEvidence(before,field))!==JSON.stringify(bindingEvidence(after,field))).map(observedFieldName);
+   if(!fields||changed.length)return {reason:'observed-facts-changed',nodeId,fields:changed};
   }
-  const before=JSON.parse(record.value),after=JSON.parse(current),fields=Array.from(new Set(Object.keys(before).concat(Object.keys(after)))).filter(field=>JSON.stringify(before[field])!==JSON.stringify(after[field]));
-  return refuse('observed-facts-changed',record.node.id,fields);
- }
- async function readInstance(node:InstanceNode,readMain=(node:InstanceNode)=>node.getMainComponentAsync()){
+  if(fields||!record.childNames)return null;
   try{
-   const main=await readMain(node);
-   if(!main||main.removed||!main.id||typeof main.key!=='string'||typeof main.remote!=='boolean')return null;
+   const names=childNames(record.node),captured=record.childNames;
+   if(names.length===captured.length&&names.every((name,index)=>name===captured[index]))return null;
+   return {reason:'observed-facts-changed',nodeId,fields:['childNames']};
+  }catch{return {reason:'node-unreadable',nodeId,fields:['childNames']};}
+ }
+ function stable(record:Observation){
+  const change=observationChange(record);
+  return change?refuse(change.reason,change.nodeId,change.fields):true;
+ }
+ function inspectMainComponent(main:ComponentNode|null,requireKey=false):{instance:{main:ComponentNode;identity:string}|null;issue?:string}{
+  try{
+   if(!main)return {instance:null,issue:'Figma вернула пустой ответ при чтении основного компонента.'};
+   if(main.removed)return {instance:null,issue:'Основной компонент помечен в Figma как удалённый.'};
+   const key=main.key;
+   if(typeof key!=='string'||(requireKey&&!key.trim()))return {instance:null,issue:'У основного компонента Figma отсутствует ключ.'};
+   if(!main.id||typeof main.remote!=='boolean')return {instance:null,issue:'Figma вернула неполные сведения об основном компоненте.'};
    const ancestry=[];let parent=main.parent;const seen=new Set<string>();
    while(parent&&!seen.has(parent.id)){seen.add(parent.id);ancestry.push({id:parent.id,type:parent.type,name:parent.name,key:'key'in parent?parent.key:null,remote:'remote'in parent?parent.remote:null});parent=parent.parent;}
-   return {main,identity:JSON.stringify({id:main.id,key:main.key,name:main.name,type:main.type,remote:main.remote,ancestry})};
-  }catch{return null;}
+   return {instance:{main,identity:JSON.stringify({id:main.id,key,name:main.name,type:main.type,remote:main.remote,ancestry})}};
+  }catch(error){
+   return {instance:null,issue:`Не удалось прочитать свойства основного компонента Figma (${readFailureReason(error)}).`};
+  }
+ }
+ async function readInstance(node:InstanceNode){
+  try{return inspectMainComponent(await node.getMainComponentAsync()).instance;}catch{return null;}
  }
  function assertNodeCurrent(id:string){
   const record=nodes.get(id);
   if(!record||!stable(record))throw Error('AUDIT_SOURCE_CHANGED');
  }
- function recordPaintChange(id:string,field:'fill'|'stroke',preimage?:string){
+ function overridesOutsidePaint(value:unknown,nodeId:string,paint:string,style:string){
+  if(!Array.isArray(value))return null;
+  const rows=new Map<string,string[]>();
+  for(const row of value){
+   if(!row||typeof row.id!=='string'||!row.id||Object.keys(row).length!==2||rows.has(row.id))return null;
+   const fields=row.overriddenFields;
+   if(!Array.isArray(fields)||!fields.length||fields.some(field=>typeof field!=='string'||!field)||new Set(fields).size!==fields.length)return null;
+   const retained=row.id===nodeId
+    ? fields.filter(field=>field!==paint&&field!==style&&field!=='boundVariables')
+    : fields.slice();
+   rows.set(row.id,retained.sort());
+  }
+  return JSON.stringify(Array.from(rows).filter(([,fields])=>fields.length).sort(([a],[b])=>a.localeCompare(b)));
+ }
+ function recordPaintChange(id:string,field:'fill'|'stroke',preimage:string|undefined,gradientStop:boolean,variableCollectionId:string){
   const record=nodes.get(id),current=record&&read(record.node);
   if(!record?.value||!current?.value)throw Error('AUDIT_SOURCE_CHANGED');
   const paint=field==='fill'?'fills':'strokes';
@@ -79,7 +152,30 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
   const fields=new Set([paint,style,'boundVariables']);
   if(field==='fill'&&record.node.type==='TEXT')fields.add('textSegments');
   const before=JSON.parse(preimage??record.value),after=JSON.parse(current.value);
-  const otherBindings=(value:Record<string,unknown>|null)=>Object.entries(value||{}).filter(([key])=>key!==paint);
+  const hasCollection=typeof variableCollectionId==='string'&&variableCollectionId;
+  const beforeModes=before.resolvedVariableModes,afterModes=after.resolvedVariableModes;
+  // A binding can expose the effective mode of its newly used collection.
+  if(hasCollection&&
+   beforeModes&&typeof beforeModes==='object'&&!Array.isArray(beforeModes)&&
+   afterModes&&typeof afterModes==='object'&&!Array.isArray(afterModes)&&
+   !Object.prototype.hasOwnProperty.call(beforeModes,variableCollectionId)&&
+   Object.prototype.hasOwnProperty.call(afterModes,variableCollectionId)&&
+   typeof afterModes[variableCollectionId]==='string'&&afterModes[variableCollectionId]&&
+   Object.keys(afterModes).length===Object.keys(beforeModes).length+1&&
+   Object.keys(beforeModes).every(key=>typeof beforeModes[key]==='string'&&beforeModes[key]&&beforeModes[key]===afterModes[key])){
+   fields.add('resolvedVariableModes');
+  }
+  if(preimage&&hasCollection&&record.node.type==='INSTANCE'&&JSON.stringify(before.overrides)!==JSON.stringify(after.overrides)){
+   // Figma records the write in the instance's direct overrides.
+   const remaining=overridesOutsidePaint(after.overrides,id,paint,style);
+   if(remaining!==null&&remaining===overridesOutsidePaint(before.overrides,id,paint,style)&&
+    remaining===overridesOutsidePaint(JSON.parse(record.value).overrides,id,paint,style)){
+    fields.add('overrides');
+   }
+  }
+  const paintBindingFields=new Set([paint]);
+  if(gradientStop&&field==='fill'&&record.node.type==='TEXT')paintBindingFields.add('textRangeFills');
+  const otherBindings=(value:Record<string,unknown>|null)=>Object.entries(value||{}).filter(([key])=>!paintBindingFields.has(key));
   const changed=Array.from(new Set(Object.keys(before).concat(Object.keys(after)))).filter(key=>
    !fields.has(key)&&JSON.stringify(before[key])!==JSON.stringify(after[key]));
   if(JSON.stringify(otherBindings(before.boundVariables))!==JSON.stringify(otherBindings(after.boundVariables)))changed.push('boundVariables');
@@ -96,8 +192,10 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
    }
    if(after.boundVariables&&typeof after.boundVariables==='object'){
     previous.boundVariables=Object.assign({},previous.boundVariables);
-    if(Object.prototype.hasOwnProperty.call(after.boundVariables,paint))previous.boundVariables[paint]=after.boundVariables[paint];
-    else delete previous.boundVariables[paint];
+    for(const key of paintBindingFields){
+     if(Object.prototype.hasOwnProperty.call(after.boundVariables,key))previous.boundVariables[key]=after.boundVariables[key];
+     else delete previous.boundVariables[key];
+    }
    }
    record.value=JSON.stringify(previous);
   }else record.value=current.value;
@@ -232,6 +330,11 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
    for(const name of new Set(Object.keys(before).concat(Object.keys(after)))){
     if(JSON.stringify(before[name])!==JSON.stringify(after[name]))fields.add(name);
    }
+   if(record.node.type==='TEXT'){
+    for(const field of ['typographyBindings','typographySegments']){
+     if(fields.has(observedFieldName(field))&&JSON.stringify(bindingEvidence(before,field))!==JSON.stringify(bindingEvidence(after,field)))fields.add(field);
+    }
+   }
   }
   const capturedNames=record.childNames;
   if(includeChildNames&&capturedNames)try{
@@ -262,7 +365,7 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
   }
   return result;
  }
- function dependencies(targets:readonly string[],paintField?:'fill'|'stroke',page?:PageNode){
+ function dependencies(targets:readonly string[],bindingField?:'fill'|'stroke'|'text',page?:PageNode){
   const records=new Map<Observation,readonly string[]|null>();
   if(page){
    const record=nodes.get(page.id);
@@ -272,22 +375,31 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
   for(const id of targets){
    const target=nodes.get(id);
    if(!target)return null;
-   const fields=paintField?contextFields.concat(paintField==='fill'?['fills','fillStyleId','textSegments']:['strokes','strokeStyleId']):null;
+   const typography=bindingField==='text'&&target.node.type==='TEXT';
+   const paint=bindingField==='fill'||bindingField==='stroke';
+   const resolvedModes=paint&&target.value?JSON.parse(target.value).resolvedVariableModes:null;
+   const hasResolvedModes=resolvedModes&&typeof resolvedModes==='object'&&!Array.isArray(resolvedModes)&&
+    Object.entries(resolvedModes).every(([id,mode])=>id&&id!=='$state'&&typeof mode==='string'&&mode.length>0);
+   // Figma reports inherited effective modes on the paint consumer. Ancestors
+   // still provide explicit modes and context, including when setting a mode.
+   const context=typography||paint&&hasResolvedModes?explicitModeContext:contextFields;
+   const fields=typography?typographyFields:paint?
+    contextFields.concat(bindingField==='fill'?['fills','fillStyleId','textSegments']:['strokes','strokeStyleId']):null;
    const seen=new Set<string>();
    for(let node:BaseNode|null=target.node;node&&!seen.has(node.id);node=node.parent){
     seen.add(node.id);
     const record=nodes.get(node.id);
     if(!record)return null;
-    if(node===target.node||!records.has(record))records.set(record,node===target.node?fields:contextFields);
+    if(node===target.node)records.set(record,fields);
+    else if(!records.has(record)||context===contextFields&&records.get(record)===explicitModeContext){
+     records.set(record,context);
+    }
    }
   }
-  function assertCurrent(){
+   function assertCurrent(){
    for(const [record,fields] of records){
-    const latest=read(record.node).value;
-    if(!latest||!record.value)throw Error('AUDIT_ACTION_SOURCE_CHANGED');
-    if(!fields){if(!stable(record))throw Error('AUDIT_ACTION_SOURCE_CHANGED');continue;}
-    const before=JSON.parse(record.value),after=JSON.parse(latest);
-    if(fields.some(field=>JSON.stringify(before[field])!==JSON.stringify(after[field])))throw Error('AUDIT_ACTION_SOURCE_CHANGED');
+    const change=observationChange(record,fields);
+    if(change)throw actionSourceChanged(change);
    }
   }
   return {
@@ -299,18 +411,20 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
      guard();
      const current=await readInstance(record.node as InstanceNode);guard();
      if(!current||current.identity!==record.identity){
-      refuse(current?'main-component-changed':'identity-unavailable',record.node.id);
-      throw Error('AUDIT_ACTION_SOURCE_CHANGED');
+      throw actionSourceChanged({reason:current?'main-component-changed':'identity-unavailable',nodeId:record.node.id,fields:['mainComponent']});
      }
     });
     guard();assertCurrent();
    },
-   affected(changes:Impact){
+   affectedBy(changes:Impact):ObservationChange|null{
     for(const [record,fields] of records){
-     const impact=changes.get(record.node.id);
-     if(impact===null||impact&&(!fields||fields.some(field=>impact.has(field))))return true;
+     const nodeId=record.node.id,impact=changes.get(nodeId);
+     if(impact===null)return {reason:'node-unreadable',nodeId,fields:[]};
+     if(!impact)continue;
+     const changed=fields?fields.filter(field=>impact.has(field)):Array.from(impact);
+     if(changed.length)return {reason:'observed-facts-changed',nodeId,fields:Array.from(new Set(changed.map(observedFieldName)))};
     }
-    return false;
+    return null;
    },
   };
  }
@@ -355,6 +469,7 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
   isVisible(node){return !hidden.has(node.id)&&!excluded.has(node.id)&&(nodes.get(node.id)?.visible??node.visible!==false);},
   getText(node){return nodes.get(node.id)?.text??node.characters;},
   async getMainComponent(node,readMain){const record=nodes.get(node.id);if(record?.mainCaptured)return record.main;return record?.main??(readMain?readMain(node):node.getMainComponentAsync());},
+  getMainComponentReadIssue(nodeId){return nodes.get(nodeId)?.mainReadIssue;},
  };
  return{
   unchanged,verify,snapshot,assertTextCurrent,assertNodeCurrent,recordPaintChange,recordTextChanges,queueCaptureChange,finishCapture,impacts,dependencies,diagnostic:()=>diagnostic,
@@ -363,16 +478,33 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
   async beginTraversal(roots:SceneNode[],guard:()=>void,isSharedKey?:(key:string)=>boolean,readMain?:(node:InstanceNode)=>Promise<ComponentNode|null>){
    traversalCapture=true;
    const checkpoint=createCooperativeYield(guard,undefined,designTraversalBudget);
-   const mainReads=new Map<string,ReturnType<typeof readInstance>>();
+   const readNativeMain=readMain??((node:InstanceNode)=>node.getMainComponentAsync());
+   async function captureMain(node:InstanceNode):Promise<ReturnType<typeof inspectMainComponent>>{
+    guard();
+    let component:ComponentNode|null;
+    try{ component=await readNativeMain(node); }
+    catch{
+     await checkpoint();
+     guard();
+     try{ component=await readNativeMain(node); }
+     catch(error){
+      guard();
+      return {instance:null,issue:`getMainComponentAsync завершился ошибкой после повтора (${readFailureReason(error)}).`};
+     }
+    }
+    guard();
+    return inspectMainComponent(component,true);
+   }
+   const mainReads=new Map<string,ReturnType<typeof captureMain>>();
    function main(node:InstanceNode){
     let pending=mainReads.get(node.id);
-    if(!pending){pending=readInstance(node,readMain);mainReads.set(node.id,pending);}
+    if(!pending){pending=captureMain(node);mainReads.set(node.id,pending);}
     return pending;
    }
    snapshot.shouldSkipShared=async node=>{
     if(!isSharedKey)return false;
     if(excluded.has(node.id))return true;
-    const key=node.type==='INSTANCE'?(await main(node))?.main.key:
+    const key=node.type==='INSTANCE'?(await main(node)).instance?.main.key:
      node.type==='COMPONENT'||node.type==='COMPONENT_SET'?node.key:getDetachedLibraryComponentKey(node);
     guard();
     if(key&&isSharedKey(key))excluded.add(node.id);
@@ -384,8 +516,9 @@ export function createV3SourceObservation(kind:'components'|'texts'='components'
     const record:Observation=Object.assign({node,children,identity:null,main:null},read(node,children));
     nodes.set(node.id,record);
     if(node.type==='INSTANCE'){
-     const identity=await main(node);guard();
-     record.main=identity?.main??null;record.identity=identity?.identity??null;record.mainCaptured=true;
+     const {instance,issue}=await main(node);guard();
+     record.main=instance?.main??null;record.identity=instance?.identity??null;
+     record.mainReadIssue=issue;record.mainCaptured=true;
     }
    }
    const included:SceneNode[]=[];

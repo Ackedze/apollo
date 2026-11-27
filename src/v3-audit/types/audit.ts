@@ -90,6 +90,14 @@ export interface DetachedEntry {
   visible: boolean;
 }
 
+export interface GradientStopLocation {
+  paintIndex: number;
+  stopIndex: number | null;
+  position: number | null;
+  textStart?: number;
+  textEnd?: number;
+}
+
 export interface CustomStyleEntry {
   id: string;
   name: string;
@@ -99,6 +107,8 @@ export interface CustomStyleEntry {
   visible: boolean;
   reason: string;
   resource: AuditResource;
+  gradientStop?: GradientStopLocation;
+  status?: 'incomplete';
   actualColor?: string;
   actions?: FindingActionSummary[];
 }
@@ -118,6 +128,7 @@ export interface DeprecatedStyleEntry {
   sourceLibrary?: string;
   token?: true;
   scheduled?: true;
+  gradientStop?: GradientStopLocation;
   actualColor?: string;
   actions?: FindingActionSummary[];
 }

@@ -1,6 +1,16 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const ts=require('typescript'),indexer=require('../scripts/index-landing-api');
+test('portable Figma workflow supplies the builder instructions and references used by current IDE skills',()=>{
+ const workflow=fs.readFileSync(path.join(__dirname,'../instructions/landing/figma-workflow.md'),'utf8'),blocks=indexer.sections(workflow),byId=new Map(blocks.map(block=>[block.id,block.text]));
+ assert.equal(byId.size,blocks.length,'Workflow resource IDs must be unique');
+ for(const id of ['figma-use/SKILL.md','figma-generate-design/SKILL.md','figma-use/references/fig-builder.md','figma-use/references/component-patterns.md','figma-use/references/variable-patterns.md','figma-use/references/text-style-patterns.md','figma-use/references/effect-style-patterns.md','figma-use/references/validation-and-recovery.md'])assert(byId.get(id)?.length>1000,'Missing execution reference '+id);
+ assert.match(byId.get('figma-use/SKILL.md'),/ALL NODE CREATION MUST USE THIS/);
+ assert.match(byId.get('figma-use/SKILL.md'),/references\/fig-builder\.md/);
+ assert.match(byId.get('figma-generate-design/SKILL.md'),/\$fig/);
+ assert.match(byId.get('figma-use/references/fig-builder.md'),/planNode\.node/);
+ assert.match(byId.get('figma-use/references/fig-builder.md'),/\$fig\.getVar/);
+});
 test('portable API index addresses every top-level declaration in the exact supplied typings',()=>{
  const workflow=fs.readFileSync(path.join(__dirname,'../instructions/landing/figma-workflow.md'),'utf8'),blocks=indexer.sections(workflow),types=blocks.find(p=>p.id===indexer.TYPES).text,map=JSON.parse(blocks.find(p=>p.id===indexer.SYMBOLS)?.text||'null');
  assert(map,'No addressed symbol map supplied');assert.equal(map.sourceSha256,crypto.createHash('sha256').update(types).digest('hex'));

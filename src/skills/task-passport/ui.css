@@ -1,0 +1,71 @@
+.apollo-passport-card .apollo-skill-agent-label {
+  background:#705bdb;
+  color:#fff;
+  border-radius:999px;
+}
+.apollo-passport-dialog .apollo-passport-header-tabs { flex:none; padding:28px 28px 0; }
+.apollo-passport-dialog .apollo-shared-stage.is-idle { top:calc(50% - 10px); }
+.apollo-passport-dialog .apollo-skills-actions>button { padding-inline:18px; }
+.apollo-passport-content[data-view="progress"] + .apollo-skill-footer button { gap:8px; padding-inline:20px; }
+.apollo-passport-content[data-view="progress"] + .apollo-skill-footer [class*="loader"] { width:20px; height:20px; }
+.apollo-passport-dialog .apollo-passport-content[data-view="result"] { padding-top:28px; }
+.apollo-passport-content>p { margin:0 0 16px; }
+.apollo-passport-scope { color:var(--apollo-muted); overflow-wrap:anywhere; }
+.apollo-passport-content label { display:block; margin-top:24px; font-weight:600; }
+.apollo-passport-content .apollo-passport-hint { margin:4px 0 12px; font-size:14px; color:var(--apollo-muted); }
+.apollo-passport-content[data-view="brief"] ol,.apollo-passport-content ul { padding-inline-start:21px; }
+.apollo-passport-content[data-view="brief"] li+li { margin-top:4px; }
+.apollo-passport-dialog .apollo-shared-stage-description .apollo-passport-stage-hint {
+  position:absolute;
+  inset:100% 0 auto;
+  margin-top:6px;
+}
+.apollo-passport-stage-error { position:absolute; inset:auto 28px 90px; text-align:center; }
+.apollo-passport-content textarea {
+  box-sizing:border-box;
+  display:block;
+  width:100%;
+  min-height:164px;
+  padding:14px 16px;
+  border:1px solid #d5d6d9;
+  border-radius:12px;
+  background:#fff;
+  color:inherit;
+  font:inherit;
+  line-height:1.5;
+  resize:vertical;
+}
+.apollo-passport-content textarea::placeholder { color:#62626b; }
+.apollo-passport-content textarea:focus-visible,.apollo-passport-preview:focus-visible,.apollo-passport-preview summary:focus-visible { outline:2px solid #2a77ef; outline-offset:3px; }
+.apollo-passport-content textarea[aria-invalid="true"] { border-color:#a52b25; }
+.apollo-passport-error { color:#a52b25; }
+.apollo-passport-preview { display:grid; gap:10px; color:#000; font-size:16px; line-height:24px; letter-spacing:-.24px; }
+.apollo-passport-preview>p { color:var(--apollo-muted); }
+.apollo-passport-panel { margin:0; padding:20px; border:1px solid rgba(0,0,0,.12); border-radius:16px; }
+.apollo-passport-preview h3 { margin:0 0 24px; font-size:18px; line-height:24px; letter-spacing:-.17px; font-weight:500; }
+.apollo-passport-preview dl { margin:0; }
+.apollo-passport-preview dl>div { display:grid; grid-template-columns:minmax(0,320fr) minmax(0,354fr); gap:8px 12px; }
+.apollo-passport-preview dl>div+div { border-top:1px solid #edeef0; margin-top:16px; padding-top:16px; }
+.apollo-passport-preview dt { font-weight:500; letter-spacing:-.05px; overflow-wrap:anywhere; }
+.apollo-passport-preview dd { grid-column:2; margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.apollo-passport-preview small { display:block; margin-top:4px; color:var(--apollo-muted); font-size:14px; line-height:24px; letter-spacing:-.08px; }
+.apollo-passport-preview [data-source="missing"] { color:var(--apollo-muted); }
+.apollo-passport-draft {
+  display:inline-flex;
+  padding:0 8px;
+  border-radius:999px;
+  background:#6e6e7a;
+  color:#fff;
+  font-size:12px;
+  line-height:20px;
+  letter-spacing:normal;
+  text-transform:uppercase;
+  vertical-align:top;
+}
+.apollo-passport-draft+small { font-size:inherit; letter-spacing:inherit; }
+.apollo-passport-questions { list-style:none; }
+.apollo-passport-questions li { display:grid; grid-template-columns:20px minmax(0,1fr); gap:12px; overflow-wrap:anywhere; }
+.apollo-passport-questions li>span { font-weight:500; }
+.apollo-passport-questions li+li { border-top:1px solid #edeef0; margin-top:16px; padding-top:16px; }
+.apollo-passport-preview summary { width:fit-content; cursor:pointer; color:var(--apollo-muted); font-size:14px; }
+.apollo-passport-preview blockquote { margin:4px 0 0; padding-inline-start:10px; border-inline-start:1px solid #d5d6d9; }

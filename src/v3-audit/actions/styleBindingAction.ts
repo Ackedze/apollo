@@ -117,6 +117,7 @@ export async function applyStyleBindingAction(
       }
       mutationPhase = 'load-fonts';
       await loadTextFonts(textNode, textStyle.fontName);
+      if (mutation?.verifyBeforeWrite) await mutation.verifyBeforeWrite();
       assertBeforeWrite();
       mutationPhase = 'apply-text-style';
       mutation?.beforeWrite();
@@ -130,6 +131,8 @@ export async function applyStyleBindingAction(
       }
     }
   } catch (error) {
+    if (error instanceof Error && (error.message === 'AUDIT_ACTION_SOURCE_CHANGED' ||
+      mutationPhase === 'load-fonts' && ['AUDIT_SOURCE_CHANGED', 'AUDIT_CANCELLED'].includes(error.message))) throw error;
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error(
       `[Apollo] failed to bind library style (${mutationPhase}): ${errorMessage}`,

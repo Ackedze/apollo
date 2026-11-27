@@ -25,6 +25,7 @@ import {
   type ColorTokenValueCandidate,
 } from '../services/colorTokenValueIndex';
 import { createCooperativeYield } from '../utils/promisePool';
+import { gradientStopFingerprint, readGradientStopTarget } from '../actions/gradientStopBinding';
 
 const blueTintMigration = require('./blue-tint-migration.json') as {
   styles: Record<string, Array<{ key: string; role?: 'screen' | 'modal' | 'component' }>>;
@@ -44,6 +45,7 @@ export interface FindingActionResolverDependencies {
     node: SceneNode,
     field: 'fill' | 'stroke',
   ): ColorTokenValueCandidate[];
+  findGradientStopTokenCandidates?(color: RGBA, field: 'fill' | 'stroke'): ColorTokenValueCandidate[];
   isActiveColorToken?: (key: string) => boolean;
   readColorTokenPreview?: (node: SceneNode, key: string) => string | null;
   findExactTypographyStyleMatches(
@@ -104,6 +106,10 @@ export async function attachFindingActions(
 
   for (const entry of checkState.deprecatedStyleEntries) {
     await checkpoint();
+    if (entry.gradientStop) {
+      await attachGradientStopActions(entry, registry, dependencies, 'deprecatedStyles', guard);
+      continue;
+    }
     if(entry.token)continue;
     const migration = dependencies.isActiveColorToken && blueTintMigration.styles[entry.styleKey];
     if (migration) {
@@ -136,6 +142,10 @@ export async function attachFindingActions(
 
   for (const entry of checkState.customStyleEntries) {
     await checkpoint();
+    if (entry.gradientStop) {
+      await attachGradientStopActions(entry, registry, dependencies, 'customStyles', guard);
+      continue;
+    }
     await attachExactCustomStyleAction(
       entry,
       checkState,
@@ -143,6 +153,44 @@ export async function attachFindingActions(
       dependencies,
     );
     guard();
+  }
+}
+
+async function attachGradientStopActions(
+  entry: CheckState['customStyleEntries'][number] | CheckState['deprecatedStyleEntries'][number],
+  registry: FindingActionRegistry,
+  dependencies: FindingActionResolverDependencies,
+  scope: 'customStyles' | 'deprecatedStyles',
+  guard: () => void,
+): Promise<void> {
+  const { gradientStop, reason: field } = entry;
+  if (!gradientStop || (field !== 'fill' && field !== 'stroke') ||
+    !dependencies.findGradientStopTokenCandidates || ('status' in entry && entry.status === 'incomplete')) return;
+  const node = await dependencies.getNodeById(entry.id);
+  guard();
+  if (!node || node.type === 'DOCUMENT' || node.type === 'PAGE') return;
+  let target: ReturnType<typeof readGradientStopTarget>;
+  try { target = readGradientStopTarget(node, field, gradientStop); }
+  catch { return; }
+  const previousAlias = 'styleId' in entry ? entry.styleId : entry.resource.id ?? null;
+  if (!target || (target.stop.boundVariables?.color?.id ?? null) !== previousAlias) return;
+
+  const candidates = dependencies.findGradientStopTokenCandidates(target.stop.color, field);
+  const expectedFingerprint = gradientStopFingerprint(target);
+  for (const candidate of candidates) {
+    const action = registry.register({
+      kind: 'bind-variable',
+      nodeId: entry.id,
+      expectedStyleId: null,
+      targetVariableKey: candidate.key,
+      targetName: candidate.name,
+      targetLibrary: candidate.library,
+      targetColor: dependencies.readColorTokenPreview?.(node, candidate.key) ?? undefined,
+      styleField: field,
+      expectedFingerprint,
+      gradientStop,
+    }, scope === 'deprecatedStyles' ? 'Заменить' : 'Привязать', scope, node);
+    entry.actions = appendUniqueAction(entry.actions, action);
   }
 }
 

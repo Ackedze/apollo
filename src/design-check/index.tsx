@@ -3,6 +3,7 @@ import {Button} from './v3/ui-app/components/Button';
 import {V3Findings} from '../v3-audit/V3Findings';
 import {TextAudit} from '../v3-audit/TextAudit';
 import {PatternAuditSkill} from '../skills/pattern-audit/PatternAuditSkill';
+import {TaskPassportSkill} from '../skills/task-passport/TaskPassportSkill';
 const {buildV3Groups}=require('../v3-audit/ui-model');
 import { DocumentAuditCards, documentCheckForTab } from "./DocumentAudit";
 import React, { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
@@ -20,6 +21,7 @@ import "./new-shell.css";
 import { AuditOverview } from "./AuditOverview";
 import { buildResultGroups } from "./result-groups";
 import assets from "./assets";
+import skillSharedAssets from "../skills/shared/assets.json";
 import {SkillsPanel} from "../skills/layer-names/SkillsPanel";
 import {FigmaAuditSkill} from "../figma-audit/FigmaAuditSkill";
 import {ReglyphSkill} from "../skills/reglyph/ReglyphSkill";
@@ -31,7 +33,7 @@ const skillIcons = require("../skills/layer-names/assets");
 const textToolTitle = 'Проверка текстов';
 
 type Controller = ReturnType<typeof createDesignCheckController>;
-type DataOptions = { v3Client?:any; patternAuditClient?: any; figmaAuditClient?: any; skillsClient?: any; reglyphClient?: any; statisticsClient?: any; auditStatisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
+type DataOptions = { v3Client?:any; patternAuditClient?: any; taskPassportClient?: any; figmaAuditClient?: any; skillsClient?: any; reglyphClient?: any; statisticsClient?: any; auditStatisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
 type Slots = { setup?: HTMLElement; audit?: HTMLElement; auditDiagnostics?: HTMLElement; generation?: HTMLElement; patterns?: HTMLElement; texts?: HTMLElement };
 const readReasonLabels:Record<string,string>={'access-denied':'нет доступа','not-found-or-unpublished':'не найден или не опубликован',network:'ошибка соединения',timeout:'таймаут','invalid-response':'некорректный ответ',unavailable:'источник недоступен',cancelled:'чтение отменено',unknown:'причина не определена'};
 
@@ -125,7 +127,7 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
         <textarea className="agent-composer-input" ref={input} rows={1} aria-label="Вопрос Apollo" placeholder="Задайте вопрос" disabled={!connected || chat.busy}
           value={draft} maxLength={8000} onChange={event => { draftRevision.current++; setDraft(event.target.value); }} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); } }} />
         <button className={`agent-input-addon${chat.busy ? ' is-stop' : ''}`} type="submit" disabled={!connected || (!chat.busy && (!draft.trim() || chat.proxy.busy === true))}
-          aria-label={chat.busy ? 'Остановить ожидание ответа' : 'Отправить вопрос'} title={chat.busy ? 'Остановить ожидание. Серверный запрос может продолжаться.' : chat.proxy.busy === true ? 'Apollo ещё обрабатывает запрос' : 'Отправить вопрос'}>
+          aria-label={chat.busy ? chat.cancelScope === 'server-request' ? 'Остановить ответ' : 'Остановить ожидание ответа' : 'Отправить вопрос'} title={chat.busy ? chat.cancelScope === 'server-request' ? 'Остановить ответ в чате. Другие задачи продолжат работу.' : 'Остановить ожидание. Серверный запрос может продолжаться.' : chat.proxy.busy === true ? 'Apollo ещё обрабатывает запрос' : 'Отправить вопрос'}>
           {chat.busy ? <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" /></svg>
             : <img src={assets.sendCircle} alt="" />}
         </button>
@@ -135,6 +137,35 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
   </section>;
 }
 
+
+function AuditResultsDialog({title, onClose, toast, categories, children}: {
+  title?: string; onClose: () => void; toast: React.ReactNode; categories: React.ReactNode; children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useLayoutEffect(() => {
+    const dialog = ref.current;
+    const opener = document.activeElement;
+    dialog?.showModal();
+    return () => {
+      dialog?.close();
+      if (opener instanceof HTMLElement && opener.isConnected) opener.focus({preventScroll:true});
+    };
+  }, []);
+  return createPortal(<dialog ref={ref} className="apollo-skill-dialog apollo-audit-results-dialog apollo-new"
+    aria-labelledby="apollo-audit-result-title" onCancel={event => {
+      if (event.target === event.currentTarget) { event.preventDefault(); onClose(); }
+    }}>
+    <header className="apollo-audit-results-header">
+      <h2 id="apollo-audit-result-title">{title}</h2>
+      <button className="apollo-audit-results-close" type="button" aria-label="Закрыть результаты проверки" onClick={onClose}>
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 4 12 12M16 4 4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+      </button>
+      {categories && <nav className="apollo-categories" aria-label="Категории проверки">{categories}</nav>}
+    </header>
+    {children}
+    {toast}
+  </dialog>, document.body);
+}
 
 function DesignCheckShell({ controller, slots, dataOptions }: { controller: Controller; slots: Slots; dataOptions: DataOptions }) {
   const [progressBarClient] = useState(() => typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && __APOLLO_PROGRESSBAR_PILOT__
@@ -211,14 +242,16 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   }, [state.audit, state.auditBusy, state.auditStale, state.auditError, state.documentAudit.status, state.documentAudit.result, state.documentAudit.error,state.v3Audit]);
   const capabilities = controller.getSettingCapabilities();
   const v3=state.v3Audit;
+  const redesignedDesign = !!v3 && activeScreen === 'check';
+  const resultsOpen = redesignedDesign && !!groupId;
   const summary = v3 ? buildV3Groups(v3.result,settings,v3) : buildResultGroups(state, controller.getVisibleTabs(), controller.getTabItems);
   const acceptedSelection=v3?.result?.report?.scan?.selection||[];
   const acceptedScope=acceptedSelection.length===1?acceptedSelection[0].name:acceptedSelection.length?`Выбрано областей: ${acceptedSelection.length}`:checkedScope||'Проверенная область';
   const selectedGroup = summary.groups.find((group: any) => group.id === groupId);
-  const categories = groupId === 'base' ? summary.theme ? [summary.theme] : [] : selectedGroup?.categories || [];
+  const categories = groupId === 'base' ? (v3 ? summary.baseCategories : summary.theme ? [summary.theme] : []) : selectedGroup?.categories || [];
   const primaryIds = new Set(['changes','deprecated','update','detached','local','customStyles','deprecatedStyles','detachedStyles','localStyles','themization']);
-  const primaryCategories = groupId === 'base' ? [] : categories.filter((category: any) => v3||primaryIds.has(category.id));
-  const activeCategoryId = categoryId && categories.some((category: any) => category.id === categoryId) ? categoryId : state.selectedTab;
+  const primaryCategories = groupId === 'base' && !v3 ? [] : categories.filter((category: any) => v3||primaryIds.has(category.id));
+  const activeCategoryId = categoryId && categories.some((category: any) => category.id === categoryId) ? categoryId : v3 ? categories[0]?.id : state.selectedTab;
   const nativeCheck = documentCheckForTab(state.documentAudit, activeCategoryId);
   const activeTab = tabDefinitions.find(tab => tab.id === activeCategoryId), data = state.tabs[activeCategoryId || ''];
   const apply = (key: keyof typeof settings, value: unknown) => controller.updateSetting(key, value);
@@ -228,7 +261,12 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
     const first = group.categories.find((category: any) => category.count > 0) || group.categories.find((category: any) => category.connected) || group.categories[0];
     if (first) {setCategoryId(first.id);controller.selectTab(first.id);}
   }
-  function showDesign() { controller.setMode('check'); controller.setView('audit'); setGroupId(null); setCategoryId(null); }
+  function closeResults() {
+    setGroupId(null);
+    setCategoryId(null);
+    controller.setView('audit');
+  }
+  function showDesign() { controller.setMode('check'); closeResults(); }
   function categoryButtons(list: any[]) {
     return list.map(category => <button key={category.id} type="button" aria-pressed={activeCategoryId === category.id}
       onClick={() => { setCategoryId(category.id); controller.setView('audit'); controller.selectTab(category.id); }}>{category.title}{category.count > 0 ? ` · ${category.count}` : ''}</button>);
@@ -245,7 +283,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   const toastMessage=toastError||state.documentAction.message||state.auditNotice||(designGroupOpen&&actionBusy?progress:designGroupOpen&&summary.stale?`Показаны результаты проверки ${acceptedScope}`:'');
   const toastKey=(v3?.runId||'')+':'+(v3?.attempts?.components?.requestId||'')+':'+toastMessage;
   const failureHistory=<>{failures.length>0&&<details className="design-check-note"><summary>Диагностика проверки · {failures.length}</summary><p>История сбоев чтения и перепроверки, включая предыдущие попытки. Итоговое покрытие указано в результатах.</p><ul>{failures.map(f=><li key={f.errorId}>{f.code} · {f.stage} · {f.requestId}{f.read&&<> · {f.read.operation} · {readReasonLabels[f.read.sourceReason]||'причина не определена'}{f.read.sourceCode&&<> ({f.read.sourceCode})</>}{(f.resourceId||f.nodeId)&&<> · <span title={f.resourceId||f.nodeId}>{(f.resourceId||f.nodeId).slice(0,40)}{(f.resourceId||f.nodeId).length>40?'…':''}</span></>}</>}</li>)}</ul></details>}</>;
-  const toast = toastMessage && <AuditToast inline={showTextTool} key={toastKey} message={toastMessage} error={!!toastError} persistent={toastStop&&!toastError}>
+  const toast = toastMessage && <AuditToast inline={showTextTool || resultsOpen} key={toastKey} message={toastMessage} error={!!toastError} persistent={toastStop&&!toastError}>
     {toastStop && <Button label="Остановить" type="secondary" size="compact" disabled={v3.stopping} onPress={()=>dataOptions.v3Client.stop()}/>}
   </AuditToast>;
   const compatibility = state.chat.proxy.compatibility;
@@ -254,8 +292,17 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
       <p>{compatibility.message}</p>
       <button type="button" onClick={() => { void controller.refreshProxyStatus(); }}>Проверить снова</button>
     </section>;
-  const auditFooter = <footer className="apollo-audit-footer" aria-label="Запуск проверки" hidden={showTextTool || !showAudit || activeScreen==='check'&&['styles','components','base'].includes(groupId||'')}>
-      <TopSection title="Apollo" settingsHost={settingsHost} readContractData={dataOptions.readContractData} proxy={state.chat.proxy} proxyError={proxyError} settingsMessage={state.preferenceError || state.settingsNotice} onProxyRefresh={controller.refreshProxyStatus} auditControlsVisible={showAudit} overlayScope={`${state.mode}:${state.chat.open}:${showTextTool}:${actionBusy}`} pageTypeId={settings.pageTypeId} channelId={settings.channelId} pickerLabel={settings.pickerLabel}
+  function startDesignAudit() {
+    if (actionBusy) { controller.stopAudit(); return; }
+    pendingScope.current = { name: selectedScopeName(), audit: state.audit, native: state.documentAudit.result, v3:state.v3Audit?.runId };
+    void (v3 ? controller.startAudit('components') : documentAction ? controller.startDocumentAudit() : controller.startAudit());
+  }
+  const actionLabel = state.documentAction.status==='refreshing' ? 'Перепроверяем'
+    : state.documentAction.busy ? 'Выполняем' : state.auditStopping ? 'Останавливаем'
+    : actionBusy ? 'Остановить' : redesignedDesign && summary.total !== null ? 'Новая проверка' : 'Проверить';
+  const actionDisabled = state.documentAction.busy || state.auditStopping || !actionBusy && (!state.auditReady || !scope);
+  const auditFooter = <footer className="apollo-audit-footer" aria-label="Запуск проверки" hidden={redesignedDesign || showTextTool || !showAudit || activeScreen==='check'&&['styles','components','base'].includes(groupId||'')}>
+      <TopSection title="Apollo" settingsHost={settingsHost} readContractData={dataOptions.readContractData} proxy={state.chat.proxy} proxyError={proxyError} settingsMessage={state.preferenceError || state.settingsNotice} onProxyRefresh={controller.refreshProxyStatus} auditControlsVisible={showAudit&&!redesignedDesign} pageTypeInSettings={redesignedDesign} overlayScope={`${state.mode}:${state.chat.open}:${showTextTool}:${actionBusy}`} pageTypeId={settings.pageTypeId} channelId={settings.channelId} pickerLabel={settings.pickerLabel}
       actionLabel={ state.documentAction.status==='refreshing' ? 'Перепроверяем' : state.documentAction.busy ? 'Выполняем' : state.auditStopping ? 'Останавливаем' : actionBusy ? 'Остановить' : 'Проверить'} actionDisabled={showTextTool&&(!v3||!scope) || state.documentAction.busy || state.auditStopping || !actionBusy&&(!state.auditReady || activeScreen==='check'&&!scope)}
       actionLoading={activeScreen === 'check' && state.documentAction.busy} actionType={activeScreen === 'check' && state.documentAction.busy ? 'secondary' : 'primary'} compact={false}
       shellAuditEnabled={settings.shellAuditEnabled} connectCatalogs={v3?true:settings.connectCatalogs} showExpectedCustomizations={settings.showExpectedCustomizations}
@@ -265,10 +312,12 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
         experimentalContractV2Enabled: capabilities.experimentalContractV2Enabled === true, captureExample: controller.hasCapturePort() }}
       onActionPress={() => {
         if (!showAudit) return;
-        if (actionBusy) { controller.stopAudit(); return; }
-        if (showTextTool) { if (scope) void controller.startAudit('texts'); return; }
-        pendingScope.current = { name: selectedScopeName(), audit: state.audit, native: state.documentAudit.result, v3:state.v3Audit?.runId };
-        void (v3 ? controller.startAudit('components') : documentAction ? controller.startDocumentAudit() : controller.startAudit());
+        if (showTextTool) {
+          if (actionBusy) controller.stopAudit();
+          else if (scope) void controller.startAudit('texts');
+          return;
+        }
+        startDesignAudit();
       }} onToggleCompact={() => apply('compact', !settings.compact)}
       onPageTypeChange={value => apply('pageTypeId', value)} onChannelChange={value => apply('channelId', value)}
       onPickerChange={value => apply('pickerLabel', value)} onShellAuditToggle={() => apply('shellAuditEnabled', !settings.shellAuditEnabled)}
@@ -278,12 +327,18 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
       onExperimentalContractV2Toggle={() => apply('experimentalContractV2Enabled', !settings.experimentalContractV2Enabled)}
       onExampleCapture={controller.captureExample} />
   </footer>;
-  return <div className="shell design-check-shell apollo-new" style={v3 && showAudit ? {width:'min(800px, 100vw)'} : undefined}>
+  const activeFindingCategory = categories.find((category: any) => category.id === activeCategoryId);
+  const v3Findings = v3 && <V3Findings onOpenGlyph26={dataOptions.reglyphClient?()=>{
+    dataOptions.reglyphClient.openReview(v3.runId);setReglyphOpenRequest(value=>value+1);
+  }:undefined} category={activeFindingCategory} client={dataOptions.v3Client} runId={v3.runId} stale={v3.stale}
+    staleActionIds={v3.staleActionIds} busy={actionBusy} mutationAvailable={v3.result?.mutationAvailable===true}/>;
+  const groupTitle = groupId === 'base' ? 'База' : selectedGroup?.title;
+  return <div className={`shell design-check-shell apollo-new${redesignedDesign ? " apollo-design-redesign" : ""}`} style={v3 && showAudit ? {width:'min(800px, 100vw)'} : undefined}>
     <header className="apollo-topbar">
       <img className="apollo-logo" src={assets.logo} alt="Apollo" />
       <nav className="apollo-navigation" aria-label="Разделы Apollo">
         <button type="button" aria-label="Проверка" title="Дизайн" aria-pressed={activeScreen === 'check'} onClick={showDesign}>
-          <span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.design})`, WebkitMaskImage: `url(${assets.design})`}} /><span className="apollo-nav-label" aria-hidden="true">Дизайн</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m10 2.7 2.9 2.9L10 8.5 7.1 5.6 10 2.7Zm4.4 4.4 2.9 2.9-2.9 2.9-2.9-2.9 2.9-2.9Zm-8.8 0L8.5 10l-2.9 2.9L2.7 10l2.9-2.9Zm4.4 4.4 2.9 2.9-2.9 2.9-2.9-2.9 2.9-2.9Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg><span className="apollo-nav-label" aria-hidden="true">Дизайн</span>
         </button>
         <button type="button" aria-label="Генерация" title="Генерация" aria-pressed={activeScreen === 'generation'}
           onClick={() => controller.setMode('generation')}><span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.generation})`, WebkitMaskImage: `url(${assets.generation})`}} /><span className="apollo-nav-label" aria-hidden="true">Генерация</span></button>
@@ -291,7 +346,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           onClick={() => controller.openChat()}><span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.chat})`, WebkitMaskImage: `url(${assets.chat})`}} /><span className="apollo-nav-label" aria-hidden="true">Спросить</span>
           {state.chat.unreadCount > 0 && <span className="design-check-chat-unread" role="status" aria-label={`Непрочитанных ответов: ${state.chat.unreadCount}`}>{state.chat.unreadCount > 9 ? '9+' : state.chat.unreadCount}</span>}
         </button>
-        <button type="button" aria-label="Тулзы" title="Тулзы" aria-pressed={activeScreen === 'skills'} onClick={() => { setTextToolOpen(false); controller.setMode('skills'); }}><span className="apollo-skill-nav-icon" aria-hidden="true"><span className="apollo-nav-icon" style={{maskImage:`url(${skillIcons['magic-wand']})`,WebkitMaskImage:`url(${skillIcons['magic-wand']})`}} /></span><span className="apollo-nav-label" aria-hidden="true">Тулзы</span></button>
+        <button type="button" aria-label="Тулзы" title="Тулзы" aria-pressed={activeScreen === 'skills'} onClick={() => { setTextToolOpen(false); controller.setMode('skills'); }}><span className="apollo-skill-nav-icon" aria-hidden="true"><span className="apollo-nav-icon" style={{maskImage:`url(${assets.tools})`,WebkitMaskImage:`url(${assets.tools})`}} /></span><span className="apollo-nav-label" aria-hidden="true">Тулзы</span></button>
       </nav>
       <div ref={setSettingsHost} className="apollo-settings-host" />
     </header>
@@ -299,21 +354,27 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
       {!showTextTool && compatibilityNotice}
       <div className="design-check-content">
         <h1 className="design-check-sr-only">Apollo</h1>
-        {activeScreen === 'check' && toast}
+        {activeScreen === 'check' && !resultsOpen && toast}
         <section className="design-check-check-screen" hidden={activeScreen !== 'check'} aria-label="Проверка макета">
-          {groupId && <div className="apollo-contextbar">
-            <button className="apollo-back" type="button" onClick={() => { setGroupId(null); setCategoryId(null); controller.setView('audit'); }} aria-label="Вернуться к обзору проверки">
+          {groupId && !v3 && <div className="apollo-contextbar">
+            <button className="apollo-back" type="button" onClick={closeResults} aria-label="Вернуться к обзору проверки">
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="m10 5-7 7 7 7M3 12h18" /></svg>
               {groupId === 'base' ? 'База' : selectedGroup?.title}
             </button>
             {groupId !== 'icons' && <nav className="apollo-categories" aria-label="Категории проверки">{categoryButtons(primaryCategories)}</nav>}
           </div>}
-          {!groupId ? <AuditOverview progress={progress} summary={summary} busy={actionBusy}
+          {(!groupId || v3) && <AuditOverview progress={progress} summary={summary} busy={actionBusy}
             selectedScope={actionBusy ? pendingScope.current?.name ?? scope : scope}
-            checkedScope={v3 ? acceptedScope : checkedScope} onOpen={openGroup}
-            onBase={() => { setGroupId('base'); setCategoryId(null); controller.setView('audit'); controller.selectTab('themization'); }} />
-          : <main className="apollo-results" aria-label="Результаты проверки">
-            {state.view === 'audit' && v3 && <V3Findings onOpenGlyph26={dataOptions.reglyphClient?()=>{dataOptions.reglyphClient.openReview(v3.runId);setReglyphOpenRequest(value=>value+1);}:undefined} category={categories.find((category:any)=>category.id===activeCategoryId)} client={dataOptions.v3Client} runId={v3.runId} stale={v3.stale} staleActionIds={v3.staleActionIds} busy={actionBusy} mutationAvailable={v3.result?.mutationAvailable===true}/>}
+            checkedScope={v3 ? acceptedScope : checkedScope} onOpen={openGroup} newNavigation={!!v3} resultId={v3?.runId}
+            onBase={() => {
+              if (v3) openGroup({id:'base',categories:summary.baseCategories});
+              else { setGroupId('base'); setCategoryId(null); controller.setView('audit'); controller.selectTab('themization'); }
+            }} />}
+          {resultsOpen && <AuditResultsDialog title={groupTitle} onClose={closeResults} toast={toast}
+            categories={groupId !== 'icons' ? categoryButtons(primaryCategories) : null}>
+            <main className="apollo-results" aria-label="Результаты проверки" key={activeCategoryId}>{v3Findings}</main>
+          </AuditResultsDialog>}
+          {groupId && !v3 && <main className="apollo-results" aria-label="Результаты проверки">
             {state.view === 'audit' && !v3 && <>
               <h2 className="design-check-sr-only">{groupId === 'base' ? 'База' : activeTab?.title || 'Результаты'}</h2>
               {!nativeCheck && (!data || data.status === 'not-connected') && <p className="placeholder">Проверка этой категории ещё не подключена.</p>}
@@ -350,6 +411,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
               </span>
               <img className="apollo-skill-chevron" src={skillIcons['chevron-right']} alt="" />
             </button>
+            {dataOptions.taskPassportClient && <TaskPassportSkill client={dataOptions.taskPassportClient} />}
           </SkillsPanel>
           {v3 && <details className="apollo-sources apollo-text-diagnostics">
             <summary>Диагностика проверки текстов</summary>
@@ -368,11 +430,14 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
             {!slots.generation && <p className="placeholder">Генерация недоступна в этом режиме просмотра.</p>}
           </div>
         </section>
-        {v3 && activeScreen === 'check' && <details className="apollo-sources">
-          <summary>Диагностика проверки</summary>
-          {failureHistory}
-          <Button label="Скачать JSON" type="secondary" size="compact" onPress={()=>dataOptions.v3Client.download('components')}/>
-        </details>}
+        {redesignedDesign && (summary.total !== null || v3.attempts?.components || failures.length > 0) && <div className="apollo-design-download">
+          <Button label="Скачать" title="Скачать JSON" type="secondary" singleIcon
+            icon={<img src={skillSharedAssets.download} width={24} height={24} alt="" />}
+            onPress={()=>dataOptions.v3Client.download('components')}/>
+        </div>}
+        {redesignedDesign && <footer className="apollo-audit-footer apollo-audit-footer-centered" aria-label="Запуск проверки">
+          <Button label={actionLabel} type={actionBusy?'secondary':'primary'} loading={actionBusy} disabled={actionDisabled} onPress={startDesignAudit}/>
+        </footer>}
         {auditFooter}
         {showTextTool && createPortal(<dialog ref={textToolDialog} className="apollo-skill-dialog apollo-text-tool apollo-new"
           aria-labelledby="apollo-text-tool-title"

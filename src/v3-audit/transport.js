@@ -19,4 +19,23 @@ function command(message){
  const field=message.type==='v3-audit-focus'?'focusActionId':message.type==='v3-audit-action'?'actionId':null;
  return!!field&&exact(message,keys.concat('runId',field))&&id(message[field]);
 }
-module.exports={VERSION,BRIDGE,id,hash,exact,dataRequest,command};
+function gradientStopKey(location) {
+ return [location.textStart ?? '', location.textEnd ?? '', location.paintIndex, location.stopIndex ?? ''].join(':');
+}
+function readPaintFix(fix) {
+ if (typeof fix?.nodeId !== 'string' || !['fill','stroke'].includes(fix.field)) return null;
+ const paint = {nodeId:fix.nodeId,field:fix.field};
+ if (fix.gradientStop === undefined) return paint;
+ const stop = fix.gradientStop;
+ const index = value => Number.isSafeInteger(value) && value >= 0;
+ if (!stop || !index(stop.paintIndex) || !index(stop.stopIndex) ||
+  !Number.isFinite(stop.position) || stop.position < 0 || stop.position > 1) return null;
+ const gradientStop = {paintIndex:stop.paintIndex,stopIndex:stop.stopIndex,position:stop.position};
+ if (stop.textStart !== undefined || stop.textEnd !== undefined) {
+  if (fix.field !== 'fill' || !index(stop.textStart) || !index(stop.textEnd) || stop.textEnd <= stop.textStart) return null;
+  gradientStop.textStart = stop.textStart;
+  gradientStop.textEnd = stop.textEnd;
+ }
+ return Object.assign(paint, {gradientStop});
+}
+module.exports={VERSION,BRIDGE,id,hash,exact,dataRequest,command,gradientStopKey,readPaintFix};

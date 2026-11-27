@@ -13,11 +13,11 @@ const { buildV3Groups } = require('../src/v3-audit/ui-model');
 const { createComponentTimings } = require('../src/v3-audit/component-timings');
 const { createRunTrace, readTrace } = require('../src/v3-audit/run-trace');
 
-const source = require('esbuild').buildSync({ stdin: { contents: 'module.exports = Object.assign({},require("./src/v3-audit/native-port.ts"),require("./src/v3-audit/embedded-data.ts"),require("./src/v3-audit/services/auditTreeTraversal.ts"),require("./src/document-audit/reads.js"))', resolveDir: path.join(__dirname,'..') },
+const source = require('esbuild').buildSync({ stdin: { contents: 'module.exports = Object.assign({},require("./src/v3-audit/native-port.ts"),require("./src/v3-audit/embedded-data.ts"),require("./src/v3-audit/services/auditTreeTraversal.ts"),require("./src/v3-audit/source-observation.ts"),require("./src/document-audit/reads.js"))', resolveDir: path.join(__dirname,'..') },
   bundle: true, write: false, platform: 'node', format: 'cjs', supported: { 'object-rest-spread': false } }).outputFiles[0].text;
 const runtime = { exports: {} };
 new Function('module','exports','require',source)(runtime,runtime.exports,require);
-const { createV3NativePort, createOfflineAuditIndex, traverseAuditTree, setHostYieldTransport, completeHostYield } = runtime.exports;
+const { createV3NativePort, createOfflineAuditIndex, traverseAuditTree, setHostYieldTransport, completeHostYield, createV3SourceObservation } = runtime.exports;
 const {data:embedded,legacyKey,targetKey}=require('./fixtures/v3-audit-compact-index.cjs');
 const externalKey = '1234567890'.repeat(4);
 const getFixtureIndex=()=>createOfflineAuditIndex(embedded.payload,embedded.dataId);
@@ -384,26 +384,151 @@ test('Stop abandons a bounded batch of nested source lookups and late replies do
 test('shared component catalogs apply to every channel and keep their lifecycle status',async t=>{
   const payload=structuredClone(embedded.payload),rows=payload.components.rows;
   const iconParent='1'.repeat(40),icon='2'.repeat(40),logo='3'.repeat(40),unknown='4'.repeat(40);
-  payload.sources.sources.push({id:1,catalogPath:'icons/Icons.json'},{id:2,catalogPath:'logotypes/Logotypes.json'});
+  const imageParent='5'.repeat(40),image='6'.repeat(40),mixedSourceImage='7'.repeat(40),desktopImage='8'.repeat(40);
+  const missingSourceImage='9'.repeat(40),conflictedImage='0'.repeat(40);
+  const imageLibrary='Сorp _ Image Library';
+  payload.sources.sources.push(
+    {id:1,catalogPath:'icons/Icons.json'},
+    {id:2,catalogPath:'logotypes/Logotypes.json'},
+    {id:3,catalogPath:'images/Сorp _ Image Library -- Продуктовые имиджи.json'},
+  );
   rows[iconParent]={type:'component',name:'Glyph',library:'Icons',status:'active',role:'main',platforms:[],sources:[1]};
   rows[icon]={type:'variant',name:'Size=m',componentKey:iconParent};
   rows[logo]={type:'component',name:'Logotype',library:'Logotypes',status:'deprecated',role:'main',platforms:[],sources:[2]};
   rows[unknown]={...rows[iconParent],sources:[0]};
+  rows[imageParent]={type:'component',name:'Product image',library:imageLibrary,status:'active',role:'main',platforms:[],sources:[3]};
+  rows[image]={type:'variant',name:'Size=534, Crop=Center',componentKey:imageParent};
+  rows[mixedSourceImage]={...rows[imageParent],sources:[3,0]};
+  rows[desktopImage]={...rows[image],platforms:['Desktop']};
+  rows[missingSourceImage]={...rows[imageParent],sources:[99]};
+  rows[conflictedImage]={...rows[imageParent],conflicts:['Conflicting identity']};
   const index=createOfflineAuditIndex(payload,embedded.dataId);
-  for(const key of [iconParent,icon,logo]){
+  for(const key of [iconParent,icon,logo,imageParent,image]){
     const result=index.find(key);
     assert.equal(result.state,'found');
     assert.deepEqual(result.channels,['Desktop','MobileWeb','iOS','Android']);
   }
   assert.equal(index.find(logo).reference.status,'deprecated');
   assert.equal(index.find(unknown).state,'unknown');
-  const h=fixture(t,{key:icon,index:()=>index});
-  const result=await h.run();
-  assert(result.hasAcceptedResult,result.lastAttempt?.error);
-  assert.equal(result.originalPayload.visibleViews.relevance.current[0].librarySource,'Icons');
-  assert.equal(result.originalPayload.visibleViews.wrongChannel.length,0);
-  assert.equal(buildV3Groups(result.originalPayload).unconfirmed.entries.length,0);
+  for(const key of [mixedSourceImage,missingSourceImage,conflictedImage]){
+    assert.equal(index.find(key).state,'unknown');
+  }
+  assert.deepEqual(index.find(desktopImage).channels,['Desktop']);
+  for(const [key,library] of [[icon,'Icons'],[image,imageLibrary]]){
+    const h=fixture(t,{key,index:()=>index});
+    const result=await h.run();
+    assert(result.hasAcceptedResult,result.lastAttempt?.error);
+    assert.equal(result.originalPayload.visibleViews.relevance.current[0].librarySource,library);
+    assert.equal(result.originalPayload.visibleViews.wrongChannel.length,0);
+    assert.equal(buildV3Groups(result.originalPayload).unconfirmed.entries.length,0);
+  }
 });
+
+test('Design retries an initial failed Figma main read once and reuses its recovered key', async t => {
+  const h = fixture(t);
+  const readMain = h.instance.getMainComponentAsync;
+  let reads = 0;
+  h.instance.getMainComponentAsync = async () => {
+    if (++reads === 1) throw Error('Temporary Figma network failure');
+    return readMain();
+  };
+  const result = await h.run();
+  assert(result.hasAcceptedResult, result.lastAttempt?.error);
+  assert.equal(reads, 2);
+  const views = result.originalPayload.visibleViews;
+  assert.equal(views.relevance.current.find(item => item.id === h.instance.id)?.componentKey, legacyKey);
+  assert.equal(views.relevance.unknown.length, 0);
+  const calls = result.trace.sessions[0].native.componentTimings.calls.figmaGetMainComponentAsync;
+  assert.equal(calls.count, 2);
+  assert.equal(calls.failed, 1);
+});
+
+test('Design exports a layer ID and the final key read reason for failures and incomplete responses', async t => {
+  const h = fixture(t);
+  const originalMain = await h.instance.getMainComponentAsync();
+  const probes = [
+    {
+      read: async attempt => {
+        if (attempt === 1) throw Error('Temporary network failure');
+        throw Error('Permission denied for PRIVATE_EXCEPTION_TEXT');
+      },
+      reads: 2,
+      issue: /getMainComponentAsync.*после повтора.*access-denied/,
+    },
+    {read: async () => null, reads:1, issue: /пустой ответ/},
+    {read: async () => Object.assign({}, originalMain, {key:''}), reads:1, issue: /отсутствует ключ/},
+    {read: async () => Object.assign({}, originalMain, {key:undefined}), reads:1, issue: /отсутствует ключ/},
+    {read: async () => Object.assign({}, originalMain, {remote:undefined}), reads:1, issue: /неполные сведения/},
+    {
+      read: async () => Object.defineProperty(Object.assign({}, originalMain), 'key', {
+        get() { throw Error('Figma network problem'); },
+      }),
+      reads: 1,
+      issue: /прочитать свойства основного компонента.*network/,
+    },
+  ];
+  let nextId = 10;
+  for (const probe of probes) {
+    const id = '1:' + nextId++;
+    probe.id = id;
+    probe.actualReads = 0;
+    const node = Object.assign({}, h.instance, {id, getMainComponentAsync: () => probe.read(++probe.actualReads)});
+    h.page.children.push(node);
+    h.page.selection.push(node);
+  }
+
+  const result = await h.run();
+  assert(result.hasAcceptedResult, result.lastAttempt?.error);
+  const views = result.originalPayload.visibleViews;
+  assert.equal(views.relevance.unknown.length, probes.length);
+  assert(views.relevance.current.some(item => item.id === h.instance.id));
+  for (const probe of probes) {
+    assert.equal(probe.actualReads, probe.reads);
+    const item = views.relevance.unknown.find(item => item.id === probe.id);
+    assert.equal(item?.componentKey, null);
+    assert.equal(item.comparisonIssues.length, 1);
+    assert.match(item.comparisonIssues[0], probe.issue);
+  }
+  assert.doesNotMatch(JSON.stringify(result), /PRIVATE_EXCEPTION_TEXT/);
+});
+
+for (const pendingAttempt of [1, 2]) {
+  for (const interruption of ['Stop', 'page change']) {
+    test(`Design ${interruption} interrupts the Figma main read on attempt ${pendingAttempt}`, async t => {
+      const h = fixture(t);
+      const readMain = h.instance.getMainComponentAsync;
+      let reads = 0;
+      let settleRead;
+      h.instance.getMainComponentAsync = async () => {
+        reads++;
+        if (reads < pendingAttempt) throw Error('Initial Figma failure');
+        if (reads > pendingAttempt) return readMain();
+        return new Promise((resolve, reject) => {
+          settleRead = () => {
+            if (pendingAttempt === 1) reject(Error('Late Figma failure'));
+            else resolve(readMain());
+          };
+        });
+      };
+
+      const run = h.run();
+      await until(() => typeof settleRead === 'function');
+      if (interruption === 'Stop') {
+        assert(h.controller.stopAudit());
+      } else {
+        h.figma.currentPage = {id:'2:1',type:'PAGE',name:'Other page',children:[],selection:[]};
+      }
+      settleRead();
+      const result = await run;
+      assert.equal(result.hasAcceptedResult, false);
+      if (interruption === 'Stop') assert.equal(result.lastAttempt.cancelled, true);
+      else assert(h.posts.some(message => message.type === 'v3-audit-error' && message.code === 'AUDIT_SOURCE_CHANGED'));
+      await new Promise(resolve => setImmediate(resolve));
+      assert.equal(reads, pendingAttempt);
+      assert(!h.posts.some(message => message.type === 'v3-audit-result'));
+    });
+  }
+}
 
 test('Design keeps same-key ID differences in diagnostics and still reports a failed library lookup',async t=>{
   const h=fixture(t);
@@ -881,4 +1006,488 @@ test('an edited root paint does not disable the page Theme action',async t=>{
  assert(await h.ui.action(action.id));
  assert.deepEqual(h.page.explicitVariableModes,{theme:'corp'});
  await until(()=>!h.ui.busy());
+});
+
+for(const change of [
+ 'paint only','another field','opposite paint','another layer','another layer before write','removed foreign row',
+ 'unreadable overrides','malformed fields','duplicate row','missing collection',
+]){
+ test('Instance binding checks override metadata for '+change,async t=>{
+  const payload=structuredClone(embedded.payload),token=payload.tokenCatalogs[0].collections[0].variables[0];
+  const color={r:1,g:0,b:0};
+  token.actualValuesByMode={mode:[{...color,a:1}]};
+  const h=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
+  const ownId='I1:2;2:1',otherId='I1:2;2:2';
+  const override=(id,...overriddenFields)=>({id,overriddenFields});
+  const button=Object.assign({},h.instance,{id:ownId,name:'Button',parent:h.instance,children:[],fillStyleId:'',strokeStyleId:'',
+   resolvedVariableModes:{theme:'corp'},explicitVariableModes:{},
+   overrides:[override(otherId,'height','opacity'),override(ownId,'opacity','fillStyleId')]});
+  h.instance.children=[button];
+  for(const field of ['fills','strokes']){
+   let value=[{type:'SOLID',color}];
+   Object.defineProperty(button,field,{get:()=>value,set:next=>{
+    value=next;
+    const oldFields=field==='fills'?[]:['fills'];
+    const ownFields=oldFields.concat(field,'opacity','boundVariables');
+    if(change==='another field')ownFields.push('height');
+    if(change==='opposite paint')ownFields.push('strokes');
+    const otherFields=change==='another layer'||change==='another layer before write'?['opacity','height','fills']:['opacity','height'];
+    button.overrides=[override(ownId,...ownFields),override(otherId,...otherFields)];
+    if(change==='removed foreign row')button.overrides.pop();
+    if(change==='unreadable overrides')button.overrides=null;
+    if(change==='malformed fields')button.overrides[0].overriddenFields=null;
+    if(change==='duplicate row')button.overrides.push(override(ownId,field));
+    if(change==='paint only'&&field==='fills')button.resolvedVariableModes={theme:'corp',colors:'light'};
+    h.observeChange({nodeChanges:[{id:ownId,node:button,type:'PROPERTY_CHANGE',properties:[field,'overrides','resolvedVariableModes']}]});
+   }});
+  }
+  h.figma.variables.importVariableByKeyAsync=async key=>{
+   if(change==='another layer before write')button.overrides[0].overriddenFields.push('fills');
+   return {key,id:'VariableID:'+key,resolvedType:'COLOR',variableCollectionId:change==='missing collection'?null:'colors'};
+  };
+  h.figma.variables.setBoundVariableForPaint=(paint,field,variable)=>Object.assign({},paint,{boundVariables:{[field]:{type:'VARIABLE_ALIAS',id:variable.id}}});
+  const run=await h.run();
+  assert(run.hasAcceptedResult,run.lastAttempt?.error);
+  const action=field=>run.originalPayload.visibleViews.customStyles.find(row=>row.id===ownId&&row.reason===field)?.actions.find(item=>item.kind==='bind-variable');
+  assert(action('fill'));
+  const applied=await h.ui.action(action('fill').id);
+  const after=h.ui.snapshot();
+  assert.equal(applied,change==='paint only',after.trace.sessions.at(-1).native.firstFailure?.fields?.join(', '));
+  assert.deepEqual(after.originalPayload,run.originalPayload);
+  assert.equal(after.runId,run.runId);
+  assert.equal(after.stale,change!=='paint only');
+  assert.equal(h.posts.filter(m=>m.type==='v3-audit-result').length,1);
+  if(change==='paint only'){
+   assert.deepEqual(after.paintFixes,[{nodeId:ownId,field:'fill'}]);
+   assert.equal(button.fills[0].boundVariables.color.id,'VariableID:'+token.key);
+   assert.equal(await h.ui.action(action('stroke').id),true);
+   assert.deepEqual(h.ui.snapshot().paintFixes,[{nodeId:ownId,field:'fill'},{nodeId:ownId,field:'stroke'}]);
+  }else{
+   assert.equal(after.paintFixes,undefined);
+   const failure=after.trace.sessions.at(-1).native.firstFailure;
+   assert.equal(failure.code,'AUDIT_SOURCE_CHANGED');
+   assert.deepEqual(failure.fields,['overrides']);
+  }
+ });
+}
+
+for(const scenario of [
+ 'derived changes','layout binding only','text edited','style edited','font size after auditing','explicit mode',
+ 'typography binding edited','visibility binding edited','unknown binding edited','range typography edited',
+ 'OpenType notification','font size during import','font size during font loading','page changed during font loading',
+]){
+ test('Typography binding after a parent color token write handles '+scenario,async t=>{
+  const payload=structuredClone(embedded.payload);
+  const token=payload.tokenCatalogs[0].collections[0].variables[0],styleKey='7'.repeat(40);
+  const color={r:1,g:0,b:0},fontName={family:'Inter',style:'Regular'};
+  const lineHeight={unit:'PIXELS',value:20};
+  token.actualValuesByMode={mode:[{...color,a:1}]};
+  payload.resources.styles[styleKey]={status:'active',closed:false};
+  payload.styleCatalogs[0].styles.push({key:styleKey,type:'text',name:'15/20',group:'Paragraph',
+   value:{kind:'text',data:{fontName:'Inter Regular',fontSize:15,lineHeight:'20'}}});
+  const h=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
+  const button=h.instance;
+  Object.assign(button,{name:'Button',fillStyleId:'',fills:[{type:'SOLID',color}],explicitVariableModes:{},resolvedVariableModes:{theme:'corp'}});
+  const label={id:'I1:2;2:3',type:'TEXT',parent:button,visible:true,name:'Label',width:95,height:20,characters:'Example label',
+   fills:[],boundVariables:{},fillStyleId:'',textStyleId:'',fontName,fontSize:15,lineHeight,openTypeFeatures:{},textCase:'ORIGINAL',textDecoration:'NONE',
+   explicitVariableModes:{},resolvedVariableModes:{theme:'corp'},
+   getStyledTextSegments(fields){
+    return [Object.assign({start:0,end:this.characters.length},Object.fromEntries(fields.map(field=>[field,this[field]])))];
+   },
+   getRangeAllFontNames(){return [this.fontName];},
+   async setTextStyleIdAsync(id){this.textStyleId=id;},
+  };
+  button.children=[label];
+  if(scenario==='layout binding only')label.boundVariables={width:{type:'VARIABLE_ALIAS',id:'old-width'},height:{type:'VARIABLE_ALIAS',id:'old-height'}};
+  const getNode=h.figma.getNodeByIdAsync;
+  h.figma.getNodeByIdAsync=async id=>id===label.id?label:getNode(id);
+  const style={id:'S:'+styleKey+',',key:styleKey,type:'TEXT',name:'15/20',fontName,fontSize:15,lineHeight,textCase:'ORIGINAL',textDecoration:'NONE'};
+  h.figma.importStyleByKeyAsync=async key=>{
+   assert.equal(key,styleKey);
+   if(scenario==='font size during import')label.fontSize=16;
+   return style;
+  };
+  h.figma.variables.importVariableByKeyAsync=async key=>({key,id:'VariableID:'+key,resolvedType:'COLOR',variableCollectionId:'colors'});
+  h.figma.variables.setBoundVariableForPaint=(paint,field,variable)=>Object.assign({},paint,{boundVariables:{[field]:{type:'VARIABLE_ALIAS',id:variable.id}}});
+  h.figma.loadFontAsync=async()=>{
+   if(scenario==='font size during font loading')label.fontSize=16;
+   if(scenario==='page changed during font loading')h.figma.currentPage={id:'2:2',type:'PAGE',children:[],selection:[]};
+  };
+  const run=await h.run();
+  assert(run.hasAcceptedResult,run.lastAttempt?.error);
+  const findings=run.originalPayload.visibleViews.customStyles;
+  const paint=findings.find(row=>row.id===button.id&&row.reason==='fill')?.actions.find(item=>item.kind==='bind-variable');
+  const typography=findings.find(row=>row.id===label.id&&row.reason==='typography')?.actions?.find(item=>item.kind==='bind-style');
+  assert(paint&&typography);
+  assert(await h.ui.action(paint.id));
+  assert.equal(button.fills[0].boundVariables.color.id,'VariableID:'+token.key);
+
+  if(scenario==='layout binding only'){
+   label.boundVariables={width:{type:'VARIABLE_ALIAS',id:'new-width'},height:{type:'VARIABLE_ALIAS',id:'new-height'}};
+   h.observeChange({nodeChanges:[{id:label.id,node:label,type:'PROPERTY_CHANGE',properties:['boundVariables']}]});
+  }else{
+   // A paint binding can make Figma expose a computed color mode on descendants.
+   label.resolvedVariableModes={theme:'corp',colors:'light'};
+   label.width=96;
+   label.fills=[{type:'SOLID',color:{r:0,g:0,b:1}}];
+   label.boundVariables={fills:[{type:'VARIABLE_ALIAS',id:'paint-alias'}]};
+   h.observeChange({nodeChanges:[{id:label.id,node:label,type:'PROPERTY_CHANGE',properties:['resolvedVariableModes','width','fills','boundVariables']}]});
+  }
+  if(scenario==='text edited')label.characters='Edited label';
+  if(scenario==='style edited')label.textStyleId='another-style';
+  if(scenario==='font size after auditing')label.fontSize=16;
+  if(scenario==='typography binding edited')label.boundVariables.fontSize={type:'VARIABLE_ALIAS',id:'typography-alias'};
+  if(scenario==='visibility binding edited')label.boundVariables.visible={type:'VARIABLE_ALIAS',id:'visibility-alias'};
+  if(scenario==='unknown binding edited')label.boundVariables.unknown={type:'VARIABLE_ALIAS',id:'unknown-alias'};
+  if(scenario==='range typography edited'){
+   const segments=label.getStyledTextSegments.bind(label);
+   label.getStyledTextSegments=fields=>segments(fields).map(segment=>fields.includes('lineHeight')
+    ?Object.assign(segment,{lineHeight:{unit:'PIXELS',value:22}}):segment);
+  }
+  if(scenario==='explicit mode')button.explicitVariableModes={theme:'other'};
+  if(scenario==='OpenType notification'){
+   label.openTypeFeatures={TNUM:true};
+   h.observeChange({nodeChanges:[{id:label.id,node:label,type:'PROPERTY_CHANGE',properties:['openTypeFeatures']}]});
+   await until(()=>h.ui.snapshot().staleActionIds?.includes(typography.id));
+   const recorded=h.ui.snapshot().trace.sessions.find(item=>item.requestId===run.runId).native.events.find(event=>event.event==='action-invalidated'&&event.nodeId===label.id);
+   assert.deepEqual(recorded.fields,['openTypeFeatures','textSegments']);
+   assert.equal(label.textStyleId,'');
+   return;
+  }
+  const applied=await h.ui.action(typography.id);
+  const after=h.ui.snapshot();
+  const trace=after.trace.sessions.find(item=>item.requestId==='v3-operation-2');
+  const expected=scenario==='derived changes'||scenario==='layout binding only';
+  assert.equal(applied,expected,trace?.native?.firstFailure?.fields?.join(', '));
+  if(expected){
+   assert.equal(label.textStyleId,style.id);
+   assert.equal(trace.native.events.at(-1).outcome,'success');
+   await until(()=>!h.ui.busy());
+  }else if(scenario==='page changed during font loading'){
+   assert.equal(label.textStyleId,'');
+   assert.equal(trace.native.events.at(-1).code,'AUDIT_SOURCE_CHANGED');
+   assert.equal(trace.native.events.at(-1).mutationStarted,false);
+  }else{
+   assert.equal(label.textStyleId,scenario==='style edited'?'another-style':'');
+   assert.equal(after.stale,false);
+   assert(after.staleActionIds.includes(typography.id));
+   const failure=trace.native.firstFailure;
+   assert.equal(failure.code,'AUDIT_ACTION_SOURCE_CHANGED');
+   assert.equal(failure.mutationStarted,false);
+   assert.equal(failure.nodeId,scenario==='explicit mode'?button.id:label.id);
+   const changed={
+    'text edited':['characters','textSegments'],
+    'style edited':['textStyleId','textSegments'],
+    'explicit mode':['explicitVariableModes'],
+    'typography binding edited':['boundVariables'],
+    'visibility binding edited':['boundVariables'],
+    'unknown binding edited':['boundVariables'],
+    'range typography edited':['textSegments'],
+   }[scenario]||['fontSize','textSegments'];
+   assert.deepEqual(failure.fields,changed);
+   assert.deepEqual(trace.ui.events.at(-1).fields,changed);
+  }
+ });
+}
+
+for(const scenario of [
+ 'direct parent mode','late parent notification','parent notification during binding','parent mode replaced',
+ 'target mode changed','explicit parent mode changed','explicit page mode changed','target stroke changed','target identity changed',
+ 'target modes missing','target modes null','target modes array','target modes malformed','target modes undefined','target modes mixed',
+ 'target became unreadable',
+]){
+ test('Sequential Button fill and stroke bindings handle '+scenario,async t=>{
+  const payload=structuredClone(embedded.payload),token=payload.tokenCatalogs[0].collections[0].variables[0];
+  const color={r:1,g:0,b:0};
+  token.actualValuesByMode={mode:[{...color,a:1}]};
+  const h=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
+  const button=h.instance;
+  const frame={id:'1:3',type:'FRAME',parent:h.page,name:'Controls',visible:true,children:[button],
+   explicitVariableModes:{},resolvedVariableModes:{theme:'corp'}};
+  Object.assign(button,{id:'I1:3;2:4',parent:frame,name:'Button',fillStyleId:'',strokeStyleId:'',
+   explicitVariableModes:{},resolvedVariableModes:{theme:'corp'},strokes:[{type:'SOLID',color}]});
+  if(scenario==='target modes missing')delete button.resolvedVariableModes;
+  if(scenario==='target modes null')button.resolvedVariableModes=null;
+  if(scenario==='target modes array')button.resolvedVariableModes=[];
+  if(scenario==='target modes malformed')button.resolvedVariableModes={theme:42};
+  if(scenario==='target modes undefined')button.resolvedVariableModes=undefined;
+  if(scenario==='target modes mixed')button.resolvedVariableModes=h.figma.mixed;
+  if(scenario==='parent mode replaced')button.explicitVariableModes={theme:'corp'};
+  h.page.children=[frame];h.page.selection=[frame];
+  const getNode=h.figma.getNodeByIdAsync;
+  h.figma.getNodeByIdAsync=async id=>id===button.id?button:getNode(id);
+  function exposeParentMode(notify){
+   frame.resolvedVariableModes=scenario==='parent mode replaced'?{theme:'contrast'}:{theme:'corp',colors:'light'};
+   if(notify)h.observeChange({nodeChanges:[{id:frame.id,node:frame,type:'PROPERTY_CHANGE',properties:['resolvedVariableModes']}]});
+  }
+  let fills=[{type:'SOLID',color}];
+  Object.defineProperty(button,'fills',{get:()=>fills,set:next=>{
+   fills=next;
+   if(scenario==='parent notification during binding')exposeParentMode(true);
+  }});
+  let imports=0;
+  h.figma.variables.importVariableByKeyAsync=async key=>{
+   imports++;
+   return {key,id:'VariableID:'+key,resolvedType:'COLOR',variableCollectionId:'colors'};
+  };
+  h.figma.variables.setBoundVariableForPaint=(paint,field,variable)=>Object.assign({},paint,{boundVariables:{[field]:{type:'VARIABLE_ALIAS',id:variable.id}}});
+  const audit=await h.run();
+  assert(audit.hasAcceptedResult,audit.lastAttempt?.error);
+  const action=field=>audit.originalPayload.visibleViews.customStyles.find(row=>row.id===button.id&&row.reason===field)?.actions?.find(item=>item.kind==='bind-variable');
+  assert(action('fill')&&action('stroke'));
+  assert.equal(await h.ui.action(action('fill').id),true);
+  if(scenario!=='parent notification during binding')exposeParentMode(scenario==='late parent notification');
+  if(scenario==='target mode changed'){
+   button.resolvedVariableModes={theme:'contrast'};
+   frame.explicitVariableModes={theme:'contrast'};
+  }
+  if(scenario==='target stroke changed')button.strokes=[{type:'SOLID',color:{r:0,g:1,b:0}}];
+  if(scenario==='target identity changed'){
+   const main=await button.getMainComponentAsync();
+   button.getMainComponentAsync=async()=>Object.assign({},main,{id:'another-main'});
+  }
+  if(scenario==='target became unreadable')Object.defineProperty(button,'resolvedVariableModes',{get(){throw Error('fixture read failed');}});
+  if(scenario==='explicit parent mode changed')frame.explicitVariableModes={theme:'contrast'};
+  if(scenario==='explicit page mode changed')h.page.explicitVariableModes={theme:'contrast'};
+  if(scenario==='late parent notification')await new Promise(setImmediate);
+  const applied=await h.ui.action(action('stroke').id);
+  const state=h.ui.snapshot();
+  const allowed=['direct parent mode','late parent notification','parent notification during binding','parent mode replaced'].includes(scenario);
+  const trace=state.trace.sessions.find(item=>item.requestId==='v3-operation-2')?.native;
+  assert.equal(applied,allowed,trace?.firstFailure?.fields?.join(', '));
+  assert.equal(state.stale,false);
+  assert.equal(state.runId,audit.runId);
+  assert.deepEqual(state.originalPayload,audit.originalPayload);
+  assert.deepEqual(state.paintFixes.map(fix=>fix.field),allowed?['fill','stroke']:['fill']);
+  assert.equal(h.posts.filter(m=>m.type==='v3-audit-result').length,1);
+  assert.equal(imports,allowed?2:1);
+  if(!allowed){
+   assert.equal(trace.firstFailure.code,'AUDIT_ACTION_SOURCE_CHANGED');
+   assert.equal(trace.firstFailure.mutationStarted,false);
+   const fields={
+    'target stroke changed':['strokes'],'target identity changed':['mainComponent'],'target became unreadable':[],
+    'explicit parent mode changed':['explicitVariableModes'],'explicit page mode changed':['explicitVariableModes'],
+   }[scenario]||['resolvedVariableModes'];
+   assert.deepEqual(trace.firstFailure.fields,fields);
+   if(scenario==='target became unreadable')assert.equal(trace.firstFailure.reason,'node-unreadable');
+   const expectedNode=['target mode changed','target stroke changed','target identity changed','target became unreadable'].includes(scenario)
+    ?button:scenario==='explicit page mode changed'?h.page:frame;
+   assert.equal(trace.firstFailure.nodeId,expectedNode.id);
+  }
+ });
+}
+
+test('Combined paint dependencies keep the shared ancestor mode guard for an unproven consumer',async()=>{
+ const frame={id:'frame',type:'FRAME',parent:null,name:'Frame',visible:true,children:[],resolvedVariableModes:{theme:'corp'}};
+ const proven={id:'proven',type:'RECTANGLE',parent:frame,name:'Proven',visible:true,resolvedVariableModes:{}};
+ const unknown={id:'unknown',type:'RECTANGLE',parent:frame,name:'Unknown',visible:true};
+ frame.children=[proven,unknown];
+ const observation=createV3SourceObservation();
+ await observation.beginTraversal([frame],()=>{});
+ await observation.snapshot.prepareNodes([frame,proven,unknown]);
+ frame.resolvedVariableModes={theme:'contrast'};
+ const impact=new Map([[frame.id,new Set(['resolvedVariableModes'])]]);
+ for(const ids of [[proven.id,unknown.id],[unknown.id,proven.id]]){
+  const dependency=observation.dependencies(ids,'fill');
+  assert.throws(()=>dependency.assertCurrent(),{message:'AUDIT_ACTION_SOURCE_CHANGED'});
+  assert.deepEqual(dependency.affectedBy(impact),{reason:'observed-facts-changed',nodeId:frame.id,fields:['resolvedVariableModes']});
+ }
+});
+
+test('gradient stop actions bind one fill or stroke point and leave sibling findings actionable',async t=>{
+ const payload=structuredClone(embedded.payload),collection=payload.tokenCatalogs[0].collections[0];
+ const token=collection.variables[0], color={r:1,g:0,b:0,a:.5};
+ token.actualValuesByMode={mode:[color]};
+ const obsoleteKey='d'.repeat(40);
+ collection.variables.push({key:obsoleteKey,name:'Obsolete red',resolvedType:'COLOR',actualValuesByMode:{mode:[color]}});
+ payload.resources.tokens[obsoleteKey]={status:'deprecated',closed:false};
+ const h=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
+ const setterCalls=[];
+ const alias=id=>({type:'VARIABLE_ALIAS',id});
+ const point=(position,binding)=>Object.assign({position,color},binding?{boundVariables:{color:alias(binding)}}:{});
+ const gradient=stops=>({type:'GRADIENT_LINEAR',gradientTransform:[[1,0,0],[0,1,0]],opacity:.4,gradientStops:stops});
+ const otherPaint={type:'SOLID',color:{r:0,g:1,b:0},visible:false};
+ const variableCollectionId='VariableCollectionId:colors';
+ const layer={id:'1:3',type:'RECTANGLE',name:'Gradient',parent:h.page,visible:true,fillStyleId:'',strokeStyleId:'',
+  resolvedVariableModes:{theme:'corp'},explicitVariableModes:{}};
+ const peer={id:'1:4',type:'RECTANGLE',name:'Peer',parent:h.page,visible:true};
+ for(const [field, stack] of [
+  ['fills',[otherPaint,gradient([point(.65),point(.65),point(1,'VariableID:'+obsoleteKey+'/1:0')])]],
+  ['strokes',[gradient([point(0),point(1)])]],
+ ]){
+  let value=stack;
+  Object.defineProperty(layer,field,{get:()=>value,set:next=>{
+   value=next;
+   setterCalls.push(field);
+   const properties=[field];
+   if(!layer.resolvedVariableModes[variableCollectionId]){
+    layer.resolvedVariableModes={theme:'corp',[variableCollectionId]:'light'};
+    properties.push('resolvedVariableModes');
+   }
+   h.observeChange({nodeChanges:[{id:layer.id,node:layer,type:'PROPERTY_CHANGE',properties}]});
+  }});
+ }
+ h.page.children=[layer,peer];h.page.selection=[layer];
+ const imports=[];
+ h.figma.variables.importVariableByKeyAsync=async key=>{
+  imports.push(key);
+  assert.equal(key,token.key,'only active catalog matches can be applied');
+  return {key,id:'VariableID:'+key,resolvedType:'COLOR',variableCollectionId};
+ };
+ h.figma.variables.createVariableAlias=variable=>alias(variable.id);
+ const result=await h.run();
+ assert(result.hasAcceptedResult,result.lastAttempt?.error);
+ const baseline=JSON.stringify(result.originalPayload);
+ const paintResults=()=>h.posts.filter(m=>m.type==='v3-audit-result').length;
+ const findings=()=>{const state=h.ui.getState();return buildV3Groups(state.result,{},state).groups[0].categories.flatMap(tab=>tab.entries);};
+ const card=(field,stopIndex)=>findings().find(row=>row.item.reason===field&&row.item.gradientStop?.stopIndex===stopIndex);
+ const first=card('fill',0), coincident=card('fill',1), deprecated=card('fill',2), stroke=card('stroke',0);
+ assert.equal(first.actions[0].label,'Привязать');
+ assert.equal(deprecated.actions[0].label,'Заменить');
+ assert.deepEqual(first.actions.map(action=>action.kind),['bind-variable']);
+ const activeId='VariableID:'+token.key;
+ h.page.selection=[peer];
+ assert.equal(await h.ui.action(first.actions[0].id),true);
+ assert.deepEqual(layer.resolvedVariableModes,{theme:'corp',[variableCollectionId]:'light'});
+ assert.equal(layer.fills[1].gradientStops[0].boundVariables.color.id,activeId);
+ assert.equal(layer.fills[1].gradientStops[1].boundVariables,undefined);
+ assert.equal(layer.fills[0],otherPaint);
+ assert.equal(layer.fills[1].opacity,.4);
+ assert.equal(card('fill',0),undefined);
+ assert.equal(card('fill',1).actions[0].id,coincident.actions[0].id);
+ assert.equal(card('fill',2).actions[0].id,deprecated.actions[0].id);
+ assert.equal(card('stroke',0).actions[0].id,stroke.actions[0].id);
+ assert.equal(await h.ui.action(first.actions[0].id),false);
+ assert.equal(await h.ui.action(coincident.actions[0].id),true);
+ assert.equal(await h.ui.action(stroke.actions[0].id),true);
+ assert(card('stroke',1));
+ assert.equal(await h.ui.action(deprecated.actions[0].id),true);
+ assert.equal(card('fill',2),undefined);
+ assert.equal(layer.fills[1].gradientStops[2].boundVariables.color.id,activeId);
+ assert.deepEqual(setterCalls,['fills','fills','strokes','fills']);
+ assert.equal(imports.length,4);
+ const after=h.ui.snapshot();
+ assert.equal(after.stale,false);
+ assert.equal(after.runId,result.runId);
+ assert.equal(JSON.stringify(after.originalPayload),baseline);
+ assert.deepEqual(after.paintFixes.map(fix=>[fix.field,fix.gradientStop.paintIndex,fix.gradientStop.stopIndex]),[
+  ['fill',1,0],['fill',1,1],['stroke',0,0],['fill',1,2],
+ ]);
+ assert.equal(paintResults(),1);
+ assert.deepEqual(h.calls,[]);
+});
+
+for(const {label,beforeModes,afterModes,explicitMode,changedField,collectionId='colors'} of [
+ {label:'the bound collection changes an existing mode',beforeModes:{colors:'light'},afterModes:{colors:'dark'},changedField:'resolvedVariableModes'},
+ {label:'an unrelated collection appears',beforeModes:{},afterModes:{other:'dark'},changedField:'resolvedVariableModes'},
+ {label:'an unrelated collection also appears',beforeModes:{},afterModes:{colors:'light',other:'dark'},changedField:'resolvedVariableModes'},
+ {label:'an unrelated collection changes mode',beforeModes:{theme:'corp'},afterModes:{theme:'promo',colors:'light'},changedField:'resolvedVariableModes'},
+ {label:'an existing mode is removed',beforeModes:{theme:'corp'},afterModes:{colors:'light'},changedField:'resolvedVariableModes'},
+ {label:'an explicit mode also changes',beforeModes:{theme:'corp'},afterModes:{theme:'corp',colors:'light'},explicitMode:'light',changedField:'explicitVariableModes'},
+ {label:'the actual token collection is unavailable',beforeModes:{},afterModes:{colors:'light'},collectionId:null,changedField:'resolvedVariableModes'},
+ {label:'the previous mode map is unavailable',beforeModes:null,afterModes:{colors:'light'},changedField:'resolvedVariableModes'},
+ {label:'the new mode ID is malformed',beforeModes:{},afterModes:{colors:42},changedField:'resolvedVariableModes'},
+])test('Color binding rejects a post-write scene change when '+label,async t=>{
+ const payload=structuredClone(embedded.payload),token=payload.tokenCatalogs[0].collections[0].variables[0];
+ const color={r:1,g:0,b:0};
+ token.actualValuesByMode={mode:[color]};
+ const h=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
+ const layer={id:'1:3',type:'RECTANGLE',name:'Color',parent:h.page,visible:true,
+  resolvedVariableModes:beforeModes,explicitVariableModes:{}};
+ let fills=[{type:'SOLID',color}];
+ Object.defineProperty(layer,'fills',{get:()=>fills,set:next=>{
+  fills=next;
+  layer.resolvedVariableModes=afterModes;
+  if(explicitMode)layer.explicitVariableModes={colors:explicitMode};
+ }});
+ h.page.children=[layer];h.page.selection=[layer];
+ h.figma.variables.importVariableByKeyAsync=async key=>({key,id:'VariableID:'+key,resolvedType:'COLOR',variableCollectionId:collectionId});
+ h.figma.variables.setBoundVariableForPaint=(paint,field,variable)=>Object.assign({},paint,{boundVariables:{[field]:{type:'VARIABLE_ALIAS',id:variable.id}}});
+ const report=await h.run();
+ assert(report.hasAcceptedResult,report.lastAttempt?.error);
+ const action=report.originalPayload.visibleViews.customStyles[0].actions[0];
+ assert.equal(await h.ui.action(action.id),false);
+ const state=h.ui.snapshot();
+ assert.equal(state.stale,true);
+ assert.equal(state.paintFixes,undefined);
+ assert.equal(h.posts.filter(m=>m.type==='v3-audit-result').length,1);
+ const failure=state.trace.sessions.at(-1).native.firstFailure;
+ assert.equal(failure.code,'AUDIT_SOURCE_CHANGED');
+ assert.equal(failure.nodeId,layer.id);
+ assert.deepEqual(failure.fields,[changedField]);
+});
+
+test('gradient binding updates a single text range and retains other ranges',async t=>{
+ const payload=structuredClone(embedded.payload), token=payload.tokenCatalogs[0].collections[0].variables[0];
+ const color={r:1,g:0,b:0,a:1};token.actualValuesByMode={mode:[color]};
+ const h=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
+ const paint=()=>[{type:'GRADIENT_LINEAR',gradientTransform:[[1,0,0],[0,1,0]],gradientStops:[{position:0,color},{position:1,color}]}];
+ const rangePaints=[paint(),paint()], font={family:'Inter',style:'Regular'};
+ const writes=[],loaded=[];
+ const node={id:'1:3',type:'TEXT',name:'Text',characters:'ABCD',parent:h.page,visible:true,
+  fills:h.figma.mixed,fillStyleId:h.figma.mixed,textStyleId:'',fontName:font,fontSize:16,
+  lineHeight:{unit:'PIXELS',value:20},letterSpacing:{unit:'PIXELS',value:0},openTypeFeatures:{},boundVariables:{},
+  getStyledTextSegments:()=>rangePaints.map((fills,i)=>({start:2*i,end:2*i+2,fillStyleId:'',textStyleId:'',fills})),
+  getRangeFillStyleId:()=>'',
+  getRangeFills:(start,end)=>end===start+2?rangePaints[start/2]:h.figma.mixed,
+  getRangeAllFontNames:(start,end)=>{ assert.deepEqual([start,end],[2,4]);return [font]; },
+  setRangeFills(start,end,paints){
+   assert(loaded.length);
+   rangePaints[start/2]=paints;
+   writes.push([start,end]);
+   this.boundVariables={textRangeFills:[paints[0].gradientStops[0].boundVariables.color]};
+   h.observeChange({nodeChanges:[{id:this.id,node:this,type:'PROPERTY_CHANGE',properties:['fills','boundVariables']}]});
+  },
+ };
+ h.figma.loadFontAsync=async font=>{loaded.push(font);};
+ h.figma.variables.importVariableByKeyAsync=async key=>({key,id:'VariableID:'+key,resolvedType:'COLOR'});
+ h.figma.variables.createVariableAlias=variable=>({type:'VARIABLE_ALIAS',id:variable.id});
+ h.page.children=[node];h.page.selection=[node];
+ const before=await h.run();
+ const gradientFindings=before.originalPayload.visibleViews.customStyles.filter(row=>row.gradientStop);
+ const target=gradientFindings.find(row=>row.gradientStop.textStart===2&&row.gradientStop.stopIndex===0);
+ assert.equal(await h.ui.action(target.actions[0].id),true);
+ assert.deepEqual(writes,[[2,4]]);
+ assert.equal(rangePaints[0][0].gradientStops[0].boundVariables,undefined);
+ assert.equal(rangePaints[1][0].gradientStops[1].boundVariables,undefined);
+ const state=h.ui.getState();
+ const remaining=buildV3Groups(state.result,{},state).groups[0].categories.flatMap(tab=>tab.entries)
+  .filter(row=>row.item.gradientStop);
+ assert.deepEqual(remaining.map(row=>[row.item.gradientStop.textStart,row.item.gradientStop.stopIndex]),[[0,0],[0,1],[2,1]]);
+ assert.equal(h.posts.filter(m=>m.type==='v3-audit-result').length,1);
+});
+
+for(const [reason,expectedError] of [
+ ['Figma does not retain the alias','AUDIT_ACTION_UNCONFIRMED'],
+ ['the target changes during import','AUDIT_ACTION_SOURCE_CHANGED'],
+ ['an incompatible variable is returned','AUDIT_ACTION_FAILED'],
+ ['a different published variable is returned','AUDIT_ACTION_FAILED'],
+])test('a gradient action retains its finding when '+reason,async t=>{
+ const payload=structuredClone(embedded.payload),token=payload.tokenCatalogs[0].collections[0].variables[0];
+ const color={r:1,g:0,b:0,a:1};token.actualValuesByMode={mode:[color]};
+ const h=fixture(t,{index:()=>createOfflineAuditIndex(payload,embedded.dataId)});
+ const stop=position=>({position,color});
+ let fills=[{type:'GRADIENT_LINEAR',gradientTransform:[[1,0,0],[0,1,0]],gradientStops:[stop(0),stop(1)]}], writes=0;
+ const layer={id:'1:3',type:'RECTANGLE',name:'Gradient',parent:h.page,visible:true,fillStyleId:'',
+  get fills(){return fills;},set fills(value){writes++;}};
+ h.page.children=[layer];h.page.selection=[layer];
+ h.figma.variables.importVariableByKeyAsync=async key=>{
+  if(reason==='the target changes during import')fills=[Object.assign({},fills[0],{gradientStops:[stop(.5),stop(1)]})];
+  return {
+   key:reason==='a different published variable is returned'?externalKey:key,
+   id:'VariableID:'+key,
+   resolvedType:reason==='an incompatible variable is returned'?'FLOAT':'COLOR',
+  };
+ };
+ h.figma.variables.createVariableAlias=variable=>({type:'VARIABLE_ALIAS',id:variable.id});
+ const result=await h.run();
+ const target=result.originalPayload.visibleViews.customStyles.find(row=>row.gradientStop?.stopIndex===0);
+ assert.equal(await h.ui.action(target.actions[0].id),false);
+ assert.equal(writes,reason==='Figma does not retain the alias'?1:0);
+ const state=h.ui.snapshot();
+ assert.equal(state.paintFixes,undefined);
+ assert.deepEqual(state.originalPayload,result.originalPayload);
+ assert.equal(h.posts.filter(m=>m.type==='v3-audit-result').length,1);
+ const error=h.posts.find(m=>m.type==='v3-audit-operation-error');
+ assert.equal(error.code,expectedError);
 });

@@ -49,6 +49,6 @@ export function FindingActionMenu({actions,label,disabled,onAction}:{actions:any
      return <OptionListCell key={action.id} label={action.targetName||action.label} showLeadingIcon={hasColor} leadingIcon={hasColor?<FindingColorSwatch color={action.targetColor}/>:undefined} onPress={()=>{if(disabled)return;close(true);onAction(action.id);}}/>;
     })}
    </React.Fragment>)}</OptionList>
-  </div>,document.body)}
+  </div>,wrap.current?.closest('dialog')??document.body)}
  </span>;
 }

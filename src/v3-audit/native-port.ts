@@ -1,4 +1,4 @@
-import {createV3SourceObservation} from './source-observation';
+import {actionSourceChanged, createV3SourceObservation} from './source-observation';
 import { createAuditDataClient } from './data-client';
 import { createV3AuditBridge } from './bridge';
 import { FindingActionRegistry } from './remediation/findingActionRegistry';
@@ -70,9 +70,11 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
  function invalidateActions(scope:any,impact:Map<string,ReadonlySet<string>|null>){
   const affected:string[]=[];
   for(const [id,dependency] of scope.actionDependencies){
-   if((dependency?.affected(impact)??impact.size>0)&&!scope.staleActions.has(id)){
-    scope.staleActions.add(id);affected.push(id);
-   }
+   if(scope.staleActions.has(id))continue;
+   const change=dependency?.affectedBy(impact);
+   if(!change&&(dependency||!impact.size))continue;
+   scope.staleActions.set(id,change);affected.push(id);
+   if(change)scope.trace.add('action-invalidated',Object.assign(context(scope),change));
   }
   if(affected.length&&accepted.has(scope.message.requestId))post({type:'v3-audit-actions-invalidated',schemaVersion:p.BRIDGE,runId:scope.message.requestId,actionIds:affected,trace:scope.traceSnapshot()});
  }
@@ -150,12 +152,12 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
     scope.stage='actions';scope.trace.add('session-start',{stage:scope.stage});
     await settleNotifications(scope,context.guard);
     scope.pageId=context.pageId;scope.revision=context.revision;
-    scope.staleActions=new Set();
+    scope.staleActions=new Map();
     scope.actionDependencies=new Map();
     try{
      scope.session=await createAuditSession(result,scope.registry,context.pageId,context.guard,scope.offlineIndex?scope.observation.observedNode:undefined);
      if(scope.offlineIndex)for(const action of scope.session.actionScopes()){
-      scope.actionDependencies.set(action.id,scope.observation.dependencies(action.targets,action.paint,action.page?figma.currentPage:undefined));
+      scope.actionDependencies.set(action.id,scope.observation.dependencies(action.targets,action.binding,action.page?figma.currentPage:undefined));
      }
     }catch(error){
      if(!scope.offlineIndex)throw error;
@@ -200,7 +202,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
      if(scope.capturePartial){
       gaps.push('capture-source-changed');
       if(scope.captureUnverified)reply.result.mutationAvailable=false;
-      reply.staleActionIds=Array.from(scope.staleActions);
+      reply.staleActionIds=Array.from(scope.staleActions.keys());
       reply.sourceChange=sourceChange(scope,'capture');
      }
      reply.result.offlineCoverage={gaps};
@@ -209,7 +211,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
    }});
   capture=scope;notifyBusy();scope.bridge.accept(Object.assign({},message,{rootIds:ids}));
  }
- function actionReply(task:any,type:string,extra:any){task.trace.add('operation-terminal',Object.assign(context(task.scope),['AUDIT_SOURCE_CHANGED','AUDIT_ACTION_SOURCE_CHANGED'].includes(extra.code)?sourceChange(task.scope,'operation'):{},{stage:task.stage,code:extra.code,outcome:type==='v3-audit-operation-result'?'success':type==='v3-audit-operation-cancelled'?'cancelled':'error',mutationStarted:task.started}),type!=='v3-audit-operation-result');post(Object.assign({type,schemaVersion:p.BRIDGE,requestId:task.requestId,runId:task.scope.message.requestId,trace:task.trace.snapshot()},extra));}
+ function actionReply(task:any,type:string,extra:any){task.trace.add('operation-terminal',Object.assign(context(task.scope),['AUDIT_SOURCE_CHANGED','AUDIT_ACTION_SOURCE_CHANGED'].includes(extra.code)?(extra.sourceChange??sourceChange(task.scope,'operation')):{},{stage:task.stage,code:extra.code,outcome:type==='v3-audit-operation-result'?'success':type==='v3-audit-operation-cancelled'?'cancelled':'error',mutationStarted:task.started}),type!=='v3-audit-operation-result');post(Object.assign({type,schemaVersion:p.BRIDGE,requestId:task.requestId,runId:task.scope.message.requestId,trace:task.trace.snapshot()},extra));}
  async function focus(message:any){
   const scope=accepted.get(message.runId);
   if(!scope?.session)return post({type:'v3-audit-operation-error',schemaVersion:p.BRIDGE,requestId:message.requestId,runId:message.runId,code:'AUDIT_SESSION_UNAVAILABLE'});
@@ -259,7 +261,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
    const close=(outcome:string)=>{if(open){open=false;finish(outcome);}};textPhases.push(close);return close;
   }
   task.trace.add('operation-start',context(scope));
-  const guard=traceGuard(scope,()=>{if(closed||operation!==task||task.cancelled)throw Error('AUDIT_CANCELLED');if((figma.fileKey||null)!==scope.fileKey){task.trace.add('guard-refused',{stage:task.stage,reason:'file-changed',code:'AUDIT_SOURCE_CHANGED'},true);throw Error('AUDIT_SOURCE_CHANGED');}if(figma.currentPage.id!==scope.pageId){task.trace.add('guard-refused',{stage:task.stage,reason:'page-changed',code:'AUDIT_SOURCE_CHANGED'},true);throw Error('AUDIT_SOURCE_CHANGED');}if(textReplacement&&task.started&&(task.textInterrupted||options.readRevision()!==task.textRevision))throw Error('AUDIT_SOURCE_CHANGED');if(!task.started){sourceGuard(scope);if(scope.staleActions.has(message.actionId))throw Error('AUDIT_ACTION_SOURCE_CHANGED');}},task.trace,task.stage);
+  const guard=traceGuard(scope,()=>{if(closed||operation!==task||task.cancelled)throw Error('AUDIT_CANCELLED');if((figma.fileKey||null)!==scope.fileKey){task.trace.add('guard-refused',{stage:task.stage,reason:'file-changed',code:'AUDIT_SOURCE_CHANGED'},true);throw Error('AUDIT_SOURCE_CHANGED');}if(figma.currentPage.id!==scope.pageId){task.trace.add('guard-refused',{stage:task.stage,reason:'page-changed',code:'AUDIT_SOURCE_CHANGED'},true);throw Error('AUDIT_SOURCE_CHANGED');}if(textReplacement&&task.started&&(task.textInterrupted||options.readRevision()!==task.textRevision))throw Error('AUDIT_SOURCE_CHANGED');if(!task.started){sourceGuard(scope);if(scope.staleActions.has(message.actionId))throw actionSourceChanged(scope.staleActions.get(message.actionId));}},task.trace,task.stage);
   scope.guard=guard;scope.checkpoint=createCooperativeYield(guard);notifyBusy();
   const paintGuard=()=>{
    guard();
@@ -327,10 +329,10 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
    if(!paint)return scope.session.execute(message.actionId,{assertCurrent:guard,beforeWrite,verifyBeforeWrite});
    const applied=await scope.session.applyPaint(message.actionId,{assertCurrent:paintGuard,beforeWrite,verifyBeforeWrite},()=>task.trace.startPhase('token-import'));
    paintGuard();
-   scope.observation.recordPaintChange(paint.nodeId,paint.styleField,task.paintPreimage);
+   scope.observation.recordPaintChange(paint.nodeId,paint.styleField,task.paintPreimage,Boolean(paint.gradientStop),applied.variableCollectionId);
    for(const event of task.paintEvents){
     const impact=await scope.observation.impacts(event);
-    if(!impact||dependency?.affected(impact))throw Error('AUDIT_SOURCE_CHANGED');
+    if(!impact||dependency?.affectedBy(impact))throw Error('AUDIT_SOURCE_CHANGED');
     invalidateActions(scope,impact);
     paintGuard();
    }
@@ -356,7 +358,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
     const textRetained=textReplacement&&task.textRetained&&type==='v3-audit-operation-result';
     if(textRetained){scope.revision=task.textRevision;scope.invalidated=false;}
     if(code==='AUDIT_ACTION_SOURCE_CHANGED'&&dependency&&!task.started){
-     scope.staleActions.add(message.actionId);
+     scope.staleActions.set(message.actionId,error.actionChange);
      post({type:'v3-audit-actions-invalidated',schemaVersion:p.BRIDGE,runId:scope.message.requestId,actionIds:[message.actionId]});
     }
     const completedTexts=textReplacement?(outcome?.textReplacements||error?.textReplacements)?.filter((row:any)=>{
@@ -365,7 +367,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
     actionReply(task,type,Object.assign({code,message:outcome?.message||'',mutationStarted:task.started,recheckRequestId:recheckId},
      paintFix?{paintFix}:textRetained?{stale:false}:(paint||textReplacement)&&task.started?{stale:true}:{},
      completedTexts?{textReplacements:completedTexts,failedTextNodeId:error?.failedTextNodeId}:{},
-     (code==='AUDIT_SOURCE_CHANGED'||code==='AUDIT_ACTION_SOURCE_CHANGED')?{sourceChange:sourceChange(scope,'operation')}:{}));
+     (code==='AUDIT_SOURCE_CHANGED'||code==='AUDIT_ACTION_SOURCE_CHANGED')?{sourceChange:error.actionChange?Object.assign({stage:'operation'},error.actionChange):sourceChange(scope,'operation')}:{}));
     if(recheckId){
      captureRun(Object.assign({},scope.message,{requestId:recheckId}),true,scope.rootIds);
     }else notifyBusy();

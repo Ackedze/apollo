@@ -1,3 +1,4 @@
+const { gradientStopKey } = require('../transport');
 import { FindingActionRegistry } from './findingActionRegistry';
 import { executeFindingAction,type MutationControl } from '../actions/findingAction';
 import { applyVariableBindingAction, type StartTokenImportTiming } from '../actions/variableBindingAction';
@@ -72,7 +73,9 @@ export async function createAuditSession(result:any,registry:FindingActionRegist
     if(descriptor.kind==='reset')return {id,targets:[descriptor.payload.rootId,descriptor.payload.nodeId,...(descriptor.payload.remediations||[]).map(item=>item.nodeId)].filter((target):target is string=>Boolean(target))};
     if(descriptor.kind==='component')return {id,targets:[descriptor.nodeId]};
     const action=descriptor.kind==='registry'?registry.get(descriptor.id):null;
-    return {id,targets:action?[action.nodeId]:[],paint:action?.kind==='bind-variable'?action.styleField:undefined};
+    const binding=action?.kind==='bind-variable'?action.styleField:
+     action?.kind==='bind-style'&&action.styleField==='text'?'text':undefined;
+    return {id,targets:action?[action.nodeId]:[],binding};
    });
   },
   paintAction,
@@ -85,9 +88,15 @@ export async function createAuditSession(result:any,registry:FindingActionRegist
    if(!applied.ok)throw Error('AUDIT_ACTION_FAILED');
    for(const [actionId,descriptor] of actions){
     const candidate=descriptor.kind==='registry'?registry.get(descriptor.id):null;
-    if((candidate?.kind==='bind-variable'||candidate?.kind==='bind-style')&&candidate.nodeId===action.nodeId&&candidate.styleField===action.styleField)actions.delete(actionId);
+    if ((candidate?.kind !== 'bind-variable' && candidate?.kind !== 'bind-style') ||
+     candidate.nodeId !== action.nodeId || candidate.styleField !== action.styleField) continue;
+    if (action.gradientStop && candidate.kind === 'bind-variable' && candidate.gradientStop &&
+     gradientStopKey(action.gradientStop) !== gradientStopKey(candidate.gradientStop)) continue;
+    actions.delete(actionId);
    }
-   return {message:'Библиотечный токен привязан.',paintFix:{nodeId:action.nodeId,field:action.styleField}};
+   const paintFix = {nodeId:action.nodeId,field:action.styleField};
+   return {message:'Библиотечный токен привязан.',variableCollectionId:applied.variableCollectionId,paintFix:action.gradientStop
+    ? Object.assign(paintFix,{gradientStop:action.gradientStop}) : paintFix};
   },
   async focus(id:string,operationGuard:()=>void,trace?:{startPhase(stage:string):(outcome:string)=>void}){
    const nodeId=focus.get(id);

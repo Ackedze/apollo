@@ -15,6 +15,11 @@ Core/generation/adapter/pattern bundles; готовый `dist`, личные ski
 Proxy рядом в `services/apollo-proxy`, поэтому для полного validate клонируйте
 оба репозитория по структуре из `docs/AGENT_START_PROMPT.md`. CI создаёт эту структуру.
 
+Интеграционный тест общего захвата аудита и проверки паттернов всегда читает
+`dist/code.js` из обычной сборки. Отдельный приватный bundle и переменная
+`APOLLO_SHARED_CAPTURE_BUNDLE` для него не нужны. Тест использует синтетическую
+сцену: HTTP, модель и реальный документ Figma не вызываются.
+
 После любого изменения Apollo должен быть пересобран. Перед публикацией используется чистая установка зависимостей через `npm ci`.
 
 ## Требования по типу изменения
@@ -67,3 +72,6 @@ Proxy рядом в `services/apollo-proxy`, поэтому для полног�
 ## Evidence в PR
 
 PR должен содержать команды и результат автоматических проверок. Для UI и runtime приложите скриншот/видео. Для найденной в отчёте ошибки приложите только минимальный обезличенный fragment с actual, expected, component key и library, если эти данные допустимы к публикации.
+
+
+Параллельность чата и навыка: `tests/design-check/chat-parallel.test.js` проверяет отдельный dialogue status, legacy fallback и раздельную отмену. Браузерный сценарий `tests/design-check/chat-parallel.browser.cjs` запускается с `DESIGN_CHECK_QA_ROOT`, при необходимости `PLAYWRIGHT_MODULE` и `CHROME_PATH`; он проверяет текущий интерфейс шириной 800 px на mocked HTTP/UI bridge без модели или Figma. В Proxy `test/parallel-dialogue.test.js` использует два собственных fake CLI и проверяет одновременное выполнение, взаимно независимую отмену, сериализацию чата и сохранение общего maintenance busy.

@@ -1,6 +1,6 @@
 const final=new Set(['compliant','allowed','not-applicable']);
-const titles={changes:'Кастомы',unknown:'Не удалось проверить',deprecated:'Устаревшие',update:'Пора менять',detached:'Детач',local:'Локальные',wrongChannel:'Не тот канал',glyph26:'Иконки',wrongChannelTypography:'Не тот канал',presets:'Пресеты',technical:'Технические',current:'В каталоге',changesWip:'Все отличия от эталона',customStyles:'Локальные',detachedStyles:'Без стиля или токена',deprecatedStyles:'Устаревшие',themization:'База'};
-const groups=[{id:'styles',title:'Стили и токены',tabs:['customStyles','detachedStyles','deprecatedStyles','wrongChannelTypography'],description:'Стили, цвета и привязки к токенам.'},{id:'components',title:'Компоненты',tabs:['changes','deprecated','update','detached','local','wrongChannel'],description:'Библиотечные связи, версии и правила компонентов.'},{id:'patterns',title:'Паттерны',tabs:[],description:'Сочетание компонентов и проектировочные паттерны.'}];
+const titles={changes:'Кастомы',unknown:'Не удалось проверить',deprecated:'Устаревшие',update:'Пора менять',detached:'Детач',local:'Локальные',wrongChannel:'Не тот канал',liquidGlass:'Не на Liquid Glass',glyph26:'Иконки',wrongChannelTypography:'Не тот канал',presets:'Пресеты',technical:'Технические',current:'В каталоге',changesWip:'Все отличия от эталона',customStyles:'Локальные',detachedStyles:'Без стиля или токена',deprecatedStyles:'Устаревшие',themization:'База'};
+const groups=[{id:'styles',title:'Стили и токены',tabs:['customStyles','detachedStyles','deprecatedStyles','wrongChannelTypography'],description:'Стили, цвета и привязки к токенам.'},{id:'components',title:'Компоненты',tabs:['changes','deprecated','update','liquidGlass','detached','local','wrongChannel'],description:'Библиотечные связи, версии и правила компонентов.'},{id:'patterns',title:'Паттерны',tabs:[],description:'Сочетание компонентов и проектировочные паттерны.'}];
 const channelLabel=channel=>channel==='MobileWeb'?'Mobile Web':channel;
 function classification(diffs){return diffs.some(diff=>diff.assessment?.verdict==='violation')?'violation':diffs.some(diff=>!diff.assessment||diff.assessment.verdict==='unknown')?'unknown':'allowed';}
 function location(item){return item.fullPath||item.path||item.name||'Слой';}
@@ -84,6 +84,10 @@ function buildV3Groups(result,settings={},state={}){
   presets:(views.presets||[]).map(item=>row('preset:'+item.id,item,'warning','Проверь применение пресета.')),
   detached:(views.detached||[]).map(item=>row('detached:'+item.id,item,'warning',item.componentName?`Компонент ${item.componentName} раздетачен.`:'Компонент раздетачен.')),
   local:local.map(item=>row('local:'+item.id,item,'warning','Компонент вне подключённых каталогов DS.',{incomplete:item.relevance==='unknown'||Boolean(item.catalogLifecycle&&!item.reference)||item.status==='incomplete'||(item.gaps||[]).length>0})),
+  liquidGlass:(views.liquidGlass||[]).map(item=>row('liquid-glass:'+item.id,item,item.liquidGlassStatus||'violation',item.liquidGlassStatus==='unknown'?'Не удалось определить состояние Liquid Glass.':'Компонент не переведён на Liquid Glass.',{
+    informationMessage:item.liquidGlassReason==='variant-property-missing'?'Обнови компонент до актуальной версии и включи Liquid Glass.':item.liquidGlassReason==='variant-property-disabled'?'Включи Liquid Glass в свойствах компонента.':undefined,
+   }))
+   .concat((result?.liquidGlass?.status==='unavailable'||result&&!result.liquidGlass&&settings.pickerLabel==='iOS')?[row('liquid-glass:unavailable',{name:'Проверка Liquid Glass',status:'incomplete'},'unknown','Данные проверки Liquid Glass недоступны.')]:[]),
   glyph26:(views.glyph26||[]).map(item=>row('glyph26:'+item.id,item,item.glyph26Status||'warning',item.glyph26Status==='violation'?'Устаревшая иконка, есть в Glyph-26':'Устаревшая иконка, может не быть в Glyph-26',{
    informationMessage:item.glyph26Status==='violation'?'Устаревшая иконка: можно заменить автоматически, используй навык «Перевести на Glyph-26».':'Устаревшая иконка: при автоматической замене может потребовать вмешательство, используй навык «Перевести на Glyph-26».',
   })),
@@ -102,6 +106,7 @@ function buildV3Groups(result,settings={},state={}){
  const visible=groups.map(baseGroup=>{
   const group=baseGroup.id==='patterns'&&mobileIcons?{id:'icons',title:'Иконки',tabs:['glyph26'],description:'Устаревшие иконки, которые необходимо заменить\nна Glyph-26'}:baseGroup;
   return Object.assign({},group,{categories:group.tabs.filter(id=>{
+  if(id==='liquidGlass')return settings.pickerLabel==='iOS'||['connected','unavailable'].includes(result?.liquidGlass?.status);
   if(id==='wrongChannelTypography')return Array.isArray(views.wrongChannelTypography);
   return !(settings.hideCustomizations&&['changes','changesWip'].includes(id));
  }).map(id=>categories[id]),connected:!!result&&group.tabs.length>0});});

@@ -39,6 +39,7 @@ import { getPageName } from './utils/nodeHelpers';
 import type { createAuditDataClient } from './data-client';
 import type { AuditSceneSnapshot } from './source-observation';
 import { untimed, type createComponentTimings } from './component-timings';
+import {evaluateLiquidGlass,excludeResultNavigationBars,type LiquidGlassData} from './liquid-glass';
 import {glyph26Evaluator,glyph26RuleIds} from './glyph26';
 
 export type V3AuditProgress = { stage:string; message:string; checked?:number };
@@ -54,6 +55,7 @@ export type V3AuditOptions = {
   onProgress(progress:V3AuditProgress):void;
   findingActions?:FindingActionRegistry;
   snapshot?:AuditSceneSnapshot;
+  liquidGlass?:LiquidGlassData;
 };
 let activeDataId:string|null=null;
 
@@ -176,7 +178,10 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
   const timings=options.componentTimings,measure=timings?.measure??untimed;
   const measureSync=timings?.measureSync??untimed;
   const readMain=(node:InstanceNode)=>measure('figmaGetMainComponentAsync',()=>node.getMainComponentAsync());
-  const getMainComponent=(node:InstanceNode)=>snapshot?snapshot.getMainComponent(node,readMain):readMain(node);
+  const getMainComponent=async(node:InstanceNode)=>{
+    try{return await (snapshot?snapshot.getMainComponent(node,readMain):readMain(node));}
+    catch{guard();return null;}
+  };
   const resolveComponentKey=(node:BaseNode)=>node.type==='INSTANCE'
     ?getMainComponent(node).then(main=>main?.key??null)
     :getComponentKey(node);
@@ -219,7 +224,7 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
   const getReference=(key:string|null)=>{const found=index.find(key);return found.state==='found'?found.reference:null;};
   const traversal=createAuditTraversalContext({importComponentByKey:key=>measure('figmaImportComponentByKeyAsync',()=>figma.importComponentByKeyAsync(key)),
     customStyleOptions:{tokenLabelMap:labels,resolveStyleMetadata:style.resolveStyleMetadata,
-      resolveComponentKey:snapshot?resolveComponentKey:undefined,readStyleByIdAsync,
+      resolveComponentKey,readStyleByIdAsync,
       isKnownStyleId:async id=>Boolean(await style.resolveStyleMetadata(id)),referenceByKey:getReference,
       ignoreRawTypography:params=>shouldIgnoreRawTypography(params,index.policy)},
     deprecatedStyleOptions:{resolveStyleMetadata:style.resolveStyleMetadata,async resolveTokenStatus(id){
@@ -256,6 +261,7 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
     }
     const node=await pending;guard();return node;
   };
+  const liquidGlassFamilies=new Map<string,string>();
   timings?.start();
   await collectAuditTargets(options.selection,state,options.channel,traversal,{shellAuditEnabled:options.shellAuditEnabled,dependencyConcurrency:4},{
     getComponentKeyCached:getKey,buildNodeSegments,getNodeById,throwIfCancelled:guard,indexed:{
@@ -312,12 +318,23 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
           else if(assessment.status==='service-pattern-required')glyph26Services=true;
           else if(assessment.status==='unknown')glyph26Unknown.push({nodeId:node.id,reason:assessment.reason});
         }
+        if(node.type==='INSTANCE'&&options.channel==='iOS'){
+          let main:ComponentNode|null=null;
+          try{main=await getMainComponent(node);}catch{guard();}
+          const finding=await evaluateLiquidGlass(node,main,options.liquidGlass??{registry:null,error:null},options.channel);guard();
+          if(finding&&snapshot?.isVisible(node)!==false){
+            if(finding.status==='violation'&&typeof finding.assessment.familyKey==='string')liquidGlassFamilies.set(node.id,finding.assessment.familyKey);
+            const entry=Object.assign({},item,{liquidGlassStatus:finding.status,liquidGlassReason:finding.assessment.reason,liquidGlassMatchBasis:finding.assessment.matchBasis,liquidGlassSource:finding.assessment.source});
+            state.liquidGlassEntries.push(entry);
+          }
+        }
         measureSync('componentProgress',()=>options.onProgress({stage:'components',message:`Проверяем ${node.name}`,checked:state.totalItems+1}));
         return item;
       },
     },
   }).finally(()=>timings?.finish());
   guard();
+  state.liquidGlassEntries=excludeResultNavigationBars(state.liquidGlassEntries,liquidGlassFamilies,traversal.sceneNodeById);
   state.relevanceBuckets.current=state.relevanceBuckets.current.filter(item=>!item.isLocal);
   options.onProgress({stage:'base',message:'Проверяем тему и шрифт страницы…'});
   const baseChecks=await checkPageBase(figma,options.channel,options.selection,guard,Array.from(traversal.sceneNodeById.values()),snapshot?.shouldSkipShared);guard();
@@ -349,13 +366,16 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
       return metadata?{type:'token',id,key:metadata.variableKey??null,name:metadata.label||name||id,library:metadata.library??null,sourceFile:metadata.sourceFile??null}:null;
     },
   },true);guard();
+  const liquidGlass={status:options.channel!=='iOS'?'not-applicable':options.liquidGlass?.registry?'connected':'unavailable',
+    error:options.liquidGlass?.error??null,registryId:options.liquidGlass?.registry?.registryId??null,localRules:['deleted-switch-name']};
   if(glyph26Services)for(const item of state.glyph26Entries)Object.assign(item,{glyph26Status:'warning',glyph26Reason:'service-pattern-required'});
   if(glyph26Services)for(const finding of glyph26Findings)if(finding.classification==='violation'){finding.classification='warning';finding.ruleId=glyph26RuleIds.manual;finding.reason='service-pattern-required';}
   const glyph26={status:!['iOS','Android'].includes(options.channel)?'not-applicable':!glyphCheck||glyph26Unknown.length?'incomplete':'complete',
     source:'reglyph-bundled',findings:glyph26Findings,unknown:glyph26Unknown};
   Object.assign(result.report,{glyph26});
+  Object.assign(result.report,{liquidGlass:Object.assign({},liquidGlass,{findings:state.liquidGlassEntries})});
   return Object.assign({schemaVersion:'apollo.v3-audit-result.v1',runId:options.runId,dataId:index.dataId,checkState:state,baseChecks,
-    glyph26,offlineCoverage:{gaps:index.inventoriesComplete?[]:['component-index-coverage-partial']}},result);
+    liquidGlass,glyph26,offlineCoverage:{gaps:index.inventoriesComplete?[]:['component-index-coverage-partial']}},result);
 }
 
 export async function captureV3Texts(options:V3AuditOptions) {

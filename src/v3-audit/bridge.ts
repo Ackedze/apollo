@@ -36,12 +36,13 @@ export function auditResultForUi(result:any) {
   }
   return Object.assign({schemaVersion:result.schemaVersion,runId:result.runId,dataId:result.dataId,
     visibleViews:views,report:result.report,textReport:result.textReport,baseChecks:result.baseChecks||[],textTargets:result.textTargets||[],mutationAvailable:result.mutationAvailable===true},
-    result.offlineCoverage?{offlineCoverage:result.offlineCoverage}:{},result.glyph26?{glyph26:result.glyph26}:{});
+    result.offlineCoverage?{offlineCoverage:result.offlineCoverage}:{},result.liquidGlass?{liquidGlass:result.liquidGlass}:{},result.glyph26?{glyph26:result.glyph26}:{});
 }
 
 export function createV3AuditBridge(options:{
   data:ReturnType<typeof createAuditDataClient>|null;
   offlineIndex?():OfflineAuditIndex|Promise<OfflineAuditIndex>;
+  liquidGlass?():V3AuditRunOptions['liquidGlass'];
   snapshot?:AuditSceneSnapshot;
   componentTimings?:V3AuditRunOptions['componentTimings'];
   pluginVersion:string;
@@ -88,6 +89,7 @@ export function createV3AuditBridge(options:{
       if(message.kind==='components'&&options.offlineIndex){
         runOptions.onProgress({stage:'data',message:'Подключаем данные проверки…'});
         offlineIndex=await options.offlineIndex();guard();
+        runOptions.liquidGlass=options.liquidGlass?.();
       }
       const isSharedKey=message.shellAuditEnabled?undefined:offlineIndex?.isSharedShellComponent;
       runOptions.selection=await options.prepareRoots?.(roots,guard,isSharedKey)??roots;guard();

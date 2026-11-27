@@ -7,6 +7,7 @@ import { createCooperativeYield, designTraversalBudget } from './utils/promisePo
 import { sha256Hex } from './utils/sha256';
 import { readOfflineAuditIndex, type OfflineAuditIndex } from './embedded-data';
 import {createComponentTimings} from './component-timings';
+import {readLiquidGlassRegistry} from './liquid-glass';
 import {readTrackedGlyph26} from './glyph26';
 declare const __APOLLO_NATIVE_BUILD_INPUTS_SHA__: string;
 const p=require('./transport');
@@ -89,6 +90,10 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
     scope.guard();compactIndex=loaded;
    }
    scope.guard();scope.compactSummary=compactIndex.summary;
+   if(message.channel==='iOS'){
+    try{scope.liquidGlass=await readLiquidGlassRegistry(await request(scope,'legacy-components'),compactIndex.index.dataId,scope.guard);}
+    catch(error){scope.guard();scope.liquidGlass={registry:null,error:(error as Error).message};}
+   }
    scope.trace.add('data-index-ready',{dataId:compactIndex.summary.dataId,resource:compactIndex.summary.source});
    post({type:'v3-audit-progress',schemaVersion:p.BRIDGE,requestId:scope.ownerRequestId,
     progress:{stage:'data',message:athenaIndexProgress(compactIndex.summary.source)}});
@@ -102,7 +107,7 @@ export function createV3NativePort(options:{post(message:any):void;readRevision(
   };
   scope.data=scope.offlineIndex?null:createAuditDataClient({loadManifest:()=>request(scope,'manifest'),readAsset:(id,file)=>request(scope,'asset',id,file),hashText:text=>sha256Hex(text,scope.guard),yieldControl:()=>scope.checkpoint()});
   scope.registry=new FindingActionRegistry();scope.registry.reset();
-  scope.bridge=createV3AuditBridge({data:scope.data,offlineIndex:scope.offlineIndex,snapshot:scope.offlineIndex||textOnly?scope.observation.snapshot:undefined,pluginVersion:options.pluginVersion,findingActions:scope.registry,componentTimings,
+  scope.bridge=createV3AuditBridge({data:scope.data,offlineIndex:scope.offlineIndex,liquidGlass:()=>scope.liquidGlass,snapshot:scope.offlineIndex||textOnly?scope.observation.snapshot:undefined,pluginVersion:options.pluginVersion,findingActions:scope.registry,componentTimings,
    isUnavailable:()=>false,readRevision:options.readRevision,
    onGuard:guard=>{scope.guard=traceGuard(scope,guard);scope.checkpoint=createCooperativeYield(scope.guard,undefined,scope.offlineIndex?designTraversalBudget:undefined);},onBusy:()=>notifyBusy(),
    prepareRoots:async(roots,guard,isSharedKey)=>{

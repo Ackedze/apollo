@@ -1,12 +1,22 @@
 const test=require('node:test'),assert=require('node:assert/strict'),path=require('node:path'),fs=require('node:fs'),esbuild=require('esbuild');
 const peerRequire=require('node:module').createRequire(require.resolve('react-dom/client'));
 const {JSDOM}=require('jsdom'),app=path.resolve(__dirname,"../.."),delay=()=>new Promise(resolve=>setTimeout(resolve,40));
-const bundle=esbuild.buildSync({stdin:{contents:`import React from 'react';import {createRoot} from 'react-dom/client';import {AuditMascot} from './src/design-check/AuditMascot';import {AuditOverview} from './src/design-check/AuditOverview';export function mount(n,kind,props){const root=createRoot(n),render=p=>root.render(React.createElement(kind==='overview'?AuditOverview:AuditMascot,p));render(props);return{render,close:()=>root.unmount()};}`,resolveDir:app,loader:'jsx'},bundle:true,write:false,nodePaths:require.resolve.paths('react-dom/client')||[],alias:{react:path.dirname(peerRequire.resolve('react/package.json'))},platform:'browser',format:'iife',globalName:'MascotTest',define:{'process.env.NODE_ENV':'"production"'}}).outputFiles[0].text;
+const bundle=esbuild.buildSync({stdin:{contents:`import React from 'react';import {createRoot} from 'react-dom/client';import {flushSync} from 'react-dom';import {AuditMascot} from './src/design-check/AuditMascot';import {AuditOverview} from './src/design-check/AuditOverview';export function mount(n,kind,props){const root=createRoot(n),render=p=>root.render(React.createElement(kind==='overview'?AuditOverview:AuditMascot,p));flushSync(()=>render(props));return{render,close:()=>root.unmount()};}`,resolveDir:app,loader:'jsx'},bundle:true,write:false,nodePaths:require.resolve.paths('react-dom/client')||[],alias:{react:path.dirname(peerRequire.resolve('react/package.json'))},platform:'browser',format:'iife',globalName:'MascotTest',define:{'process.env.NODE_ENV':'"production"'}}).outputFiles[0].text;
 async function harness(kind,props,run){
  const dom=new JSDOM('<style>'+fs.readFileSync(path.join(app,"./src/design-check/new-shell.css"),'utf8')+'</style><div id="mount"></div>',{url:'https://apollo-ui.invalid/',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window;let mounted;
  const media=new w.EventTarget();media.matches=false;w.matchMedia=()=>media;
- try{w.eval(bundle+'\nwindow.MascotTest=MascotTest;');mounted=w.MascotTest.mount(w.document.querySelector('#mount'),kind,props);await delay();await run(w,mounted,media);}
+ try{w.eval(bundle+'\nwindow.MascotTest=MascotTest;');mounted=w.MascotTest.mount(w.document.querySelector('#mount'),kind,props);await run(w,mounted,media);}
  finally{mounted?.close();dom.window.close();}
+}
+function mockAnimationFrames(w){
+ const pending=new Map();let requested=0;
+ w.requestAnimationFrame=callback=>{pending.set(++requested,callback);return requested;};
+ w.cancelAnimationFrame=id=>pending.delete(id);
+ return {
+  pending,
+  get requested(){return requested;},
+  flush(){for(const [id,callback] of [...pending])if(pending.delete(id))callback(0);}
+ };
 }
 test('mascot mood and accessible quality remain available after every result',async()=>{
  await harness('mascot',{checking:false},async(w,mounted)=>{
@@ -19,13 +29,16 @@ test('mascot mood and accessible quality remain available after every result',as
  });
 });
 test('gaze follows the latest pointer once per frame and resets on leave or blur',async()=>{
- await harness('mascot',{checking:false},async w=>{
+ await harness('mascot',{checking:false},w=>{
   const node=w.document.querySelector('.apollo-mascot-body');node.getBoundingClientRect=()=>({left:100,top:100,width:144,height:144});
+  const frames=mockAnimationFrames(w);
   const move=(x,y)=>w.document.dispatchEvent(new w.MouseEvent('pointermove',{clientX:x,clientY:y}));
-  move(2000,2000);move(0,172);await delay();assert.ok(parseFloat(node.style.getPropertyValue('--gaze-x'))<0);assert.equal(parseFloat(node.style.getPropertyValue('--gaze-y')),0);
-  move(2000,2000);await delay();assert.ok(parseFloat(node.style.getPropertyValue('--gaze-x'))<=8);assert.ok(parseFloat(node.style.getPropertyValue('--gaze-y'))<=6);
+  move(2000,2000);move(0,172);assert.equal(frames.pending.size,1);frames.flush();
+  assert.ok(parseFloat(node.style.getPropertyValue('--gaze-x'))<0);assert.equal(parseFloat(node.style.getPropertyValue('--gaze-y')),0);
+  move(2000,2000);frames.flush();assert.ok(parseFloat(node.style.getPropertyValue('--gaze-x'))<=8);assert.ok(parseFloat(node.style.getPropertyValue('--gaze-y'))<=6);
   w.document.dispatchEvent(new w.Event('pointerleave'));assert.equal(node.style.getPropertyValue('--gaze-x'),'0px');
-  move(2000,2000);w.dispatchEvent(new w.Event('blur'));await delay();assert.equal(node.style.getPropertyValue('--gaze-y'),'0px');
+  move(2000,2000);assert.equal(frames.pending.size,1);w.dispatchEvent(new w.Event('blur'));
+  assert.equal(frames.pending.size,0);assert.equal(node.style.getPropertyValue('--gaze-y'),'0px');
  });
 });
 test('reduced motion, hidden document or pane and unmount stop pending gaze updates',async()=>{
@@ -44,11 +57,11 @@ test('checking cancels pending cursor frames, runs autonomously and restores tra
  await harness('mascot',{checking:false},async(w,mounted)=>{
   const root=w.document.querySelector('.apollo-mascot'),body=root.querySelector('.apollo-mascot-body'),gaze=root.querySelector('.apollo-mascot-gaze');
   body.getBoundingClientRect=()=>({left:100,top:100,width:144,height:144});
-  const frames=new Map();let requested=0;w.requestAnimationFrame=fn=>{frames.set(++requested,fn);return requested;};w.cancelAnimationFrame=id=>frames.delete(id);
+  const frames=mockAnimationFrames(w);
   const move=()=>w.document.dispatchEvent(new w.MouseEvent('pointermove',{clientX:400,clientY:172}));
-  move();assert.equal(frames.size,1);
-  mounted.render({checking:true});await delay();assert.equal(frames.size,0);assert.equal(body.style.getPropertyValue('--gaze-x'),'0px');
-  const before=requested;move();move();await delay();assert.equal(requested,before,'CSS loop schedules no cursor/rAF or React frame updates');
+  move();assert.equal(frames.pending.size,1);
+  mounted.render({checking:true});await delay();assert.equal(frames.pending.size,0);assert.equal(body.style.getPropertyValue('--gaze-x'),'0px');
+  const before=frames.requested;move();move();await delay();assert.equal(frames.requested,before,'CSS loop schedules no cursor/rAF or React frame updates');
   assert.equal(w.getComputedStyle(body).animationName,'apollo-mascot-breathe');assert.equal(w.getComputedStyle(gaze).animationName,'apollo-mascot-inspect');
   assert.equal(w.getComputedStyle(root.querySelector('.apollo-mascot-eyes span')).animationName,'apollo-mascot-check-blink');
   w.document.querySelector('#mount').hidden=true;assert.equal(w.getComputedStyle(body).animationPlayState,'paused');assert.equal(w.getComputedStyle(gaze).animationPlayState,'paused');
@@ -56,11 +69,11 @@ test('checking cancels pending cursor frames, runs autonomously and restores tra
   Object.defineProperty(w.document,'visibilityState',{configurable:true,value:'hidden'});w.document.dispatchEvent(new w.Event('visibilitychange'));await delay();
   assert.equal(w.getComputedStyle(body).animationPlayState,'paused');assert.equal(root.classList.contains('is-paused'),true);
   Object.defineProperty(w.document,'visibilityState',{configurable:true,value:'visible'});w.document.dispatchEvent(new w.Event('visibilitychange'));await delay();
-  assert.equal(root.classList.contains('is-paused'),false);move();assert.equal(requested,before);
+  assert.equal(root.classList.contains('is-paused'),false);move();assert.equal(frames.requested,before);
   mounted.render({checking:false,quality:'clean'});await delay();assert.equal(root.classList.contains('is-checking'),false);assert.ok(['','none'].includes(w.getComputedStyle(body).animationName));
-  move();assert.equal(frames.size,1);for(const [id,fn] of frames){frames.delete(id);fn(0);}assert.ok(parseFloat(body.style.getPropertyValue('--gaze-x'))>0);
-  move();assert.equal(frames.size,1);mounted.close();assert.equal(frames.size,0);assert.equal(body.style.getPropertyValue('--gaze-x'),'0px');
-  const closed=requested;move();assert.equal(requested,closed);
+  move();assert.equal(frames.pending.size,1);frames.flush();assert.ok(parseFloat(body.style.getPropertyValue('--gaze-x'))>0);
+  move();assert.equal(frames.pending.size,1);mounted.close();assert.equal(frames.pending.size,0);assert.equal(body.style.getPropertyValue('--gaze-x'),'0px');
+  const closed=frames.requested;move();assert.equal(frames.requested,closed);
  });
 });
 test('busy loops use only transform with matching endpoints, scoped layer promotion and reduced-motion override',async()=>{

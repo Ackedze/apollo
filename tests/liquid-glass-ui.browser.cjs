@@ -13,7 +13,7 @@ function install(schema){
   if(m.type==='contract-data-request')setTimeout(()=>emit({type:'contract-data-result',requestId:m.requestId,result:{mode:'proxy',contracts:[]}}),0);
   if(m.type==='v3-audit-run'){
    window.__run=m.requestId;
-   const items=['Старый компонент','ResultScreen без стекла'].map((name,i)=>({id:'node-'+i,name,librarySource:'iOS · Fixture',fullPath:'Макет / '+name,liquidGlassStatus:'violation',focusActionId:'focus-'+i}));
+   const items=['Старый компонент','ResultScreen без стекла'].map((name,i)=>({id:'node-'+i,name,librarySource:'iOS · Fixture',fullPath:'Макет / '+name,liquidGlassStatus:'violation',liquidGlassReason:i===1?'variant-property-missing':undefined,focusActionId:'focus-'+i}));
    setTimeout(()=>emit({type:'v3-audit-result',schemaVersion:schema,requestId:m.requestId,kind:'components',result:{runId:m.requestId,dataId:'a'.repeat(64),mutationAvailable:true,liquidGlass:{status:'connected'},visibleViews:{relevance:{},liquidGlass:items},report:{schemaVersion:1},textReport:{facts:{texts:[]}}}}),0);
   }
   if(m.type==='v3-audit-focus')setTimeout(()=>emit({type:'v3-audit-operation-result',schemaVersion:schema,requestId:m.requestId,runId:m.runId,result:{focused:true}}),0);
@@ -41,6 +41,9 @@ async function run(){
   assert.equal(await page.locator('.apollo-v3-findings').count(),1);
   assert.equal(await page.getByText('Компонент не переведён на Liquid Glass.',{exact:true}).count(),2);
   assert.equal(await page.getByRole('button',{name:'Показать в макете',exact:true}).count(),2);
+  await page.getByRole('button',{name:'Сведения проверки',exact:true}).nth(1).click();
+  assert.equal(await page.getByText('Обнови компонент до актуальной версии и включи Liquid Glass.',{exact:true}).isVisible(),true);
+  await page.getByRole('button',{name:'Закрыть сведения проверки',exact:true}).click();
   await page.getByRole('button',{name:'Показать в макете',exact:true}).first().click();
   await page.waitForFunction(()=>window.__wire.some(m=>m.type==='v3-audit-focus'&&m.focusActionId==='focus-0'));
   assert.equal(await page.getByRole('button',{name:'Заменить',exact:true}).count(),0);

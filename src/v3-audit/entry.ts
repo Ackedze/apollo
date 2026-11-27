@@ -178,7 +178,10 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
   const timings=options.componentTimings,measure=timings?.measure??untimed;
   const measureSync=timings?.measureSync??untimed;
   const readMain=(node:InstanceNode)=>measure('figmaGetMainComponentAsync',()=>node.getMainComponentAsync());
-  const getMainComponent=(node:InstanceNode)=>snapshot?snapshot.getMainComponent(node,readMain):readMain(node);
+  const getMainComponent=async(node:InstanceNode)=>{
+    try{return await (snapshot?snapshot.getMainComponent(node,readMain):readMain(node));}
+    catch{guard();return null;}
+  };
   const resolveComponentKey=(node:BaseNode)=>node.type==='INSTANCE'
     ?getMainComponent(node).then(main=>main?.key??null)
     :getComponentKey(node);
@@ -221,7 +224,7 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
   const getReference=(key:string|null)=>{const found=index.find(key);return found.state==='found'?found.reference:null;};
   const traversal=createAuditTraversalContext({importComponentByKey:key=>measure('figmaImportComponentByKeyAsync',()=>figma.importComponentByKeyAsync(key)),
     customStyleOptions:{tokenLabelMap:labels,resolveStyleMetadata:style.resolveStyleMetadata,
-      resolveComponentKey:snapshot?resolveComponentKey:undefined,readStyleByIdAsync,
+      resolveComponentKey,readStyleByIdAsync,
       isKnownStyleId:async id=>Boolean(await style.resolveStyleMetadata(id)),referenceByKey:getReference,
       ignoreRawTypography:params=>shouldIgnoreRawTypography(params,index.policy)},
     deprecatedStyleOptions:{resolveStyleMetadata:style.resolveStyleMetadata,async resolveTokenStatus(id){
@@ -315,13 +318,13 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
           else if(assessment.status==='service-pattern-required')glyph26Services=true;
           else if(assessment.status==='unknown')glyph26Unknown.push({nodeId:node.id,reason:assessment.reason});
         }
-        if(node.type==='INSTANCE'&&options.channel==='iOS'&&options.liquidGlass?.registry){
+        if(node.type==='INSTANCE'&&options.channel==='iOS'){
           let main:ComponentNode|null=null;
           try{main=await getMainComponent(node);}catch{guard();}
-          const finding=await evaluateLiquidGlass(node,main,options.liquidGlass,options.channel);guard();
+          const finding=await evaluateLiquidGlass(node,main,options.liquidGlass??{registry:null,error:null},options.channel);guard();
           if(finding&&snapshot?.isVisible(node)!==false){
-            if(finding.status==='violation')liquidGlassFamilies.set(node.id,finding.assessment.familyKey);
-            const entry=Object.assign({},item,{liquidGlassStatus:finding.status,liquidGlassReason:finding.assessment.reason});
+            if(finding.status==='violation'&&typeof finding.assessment.familyKey==='string')liquidGlassFamilies.set(node.id,finding.assessment.familyKey);
+            const entry=Object.assign({},item,{liquidGlassStatus:finding.status,liquidGlassReason:finding.assessment.reason,liquidGlassMatchBasis:finding.assessment.matchBasis,liquidGlassSource:finding.assessment.source});
             state.liquidGlassEntries.push(entry);
           }
         }
@@ -364,7 +367,7 @@ async function runOfflineComponentAudit(options:V3AuditRunOptions,index:OfflineA
     },
   },true);guard();
   const liquidGlass={status:options.channel!=='iOS'?'not-applicable':options.liquidGlass?.registry?'connected':'unavailable',
-    error:options.liquidGlass?.error??null,registryId:options.liquidGlass?.registry?.registryId??null};
+    error:options.liquidGlass?.error??null,registryId:options.liquidGlass?.registry?.registryId??null,localRules:['deleted-switch-name']};
   if(glyph26Services)for(const item of state.glyph26Entries)Object.assign(item,{glyph26Status:'warning',glyph26Reason:'service-pattern-required'});
   if(glyph26Services)for(const finding of glyph26Findings)if(finding.classification==='violation'){finding.classification='warning';finding.ruleId=glyph26RuleIds.manual;finding.reason='service-pattern-required';}
   const glyph26={status:!['iOS','Android'].includes(options.channel)?'not-applicable':!glyphCheck||glyph26Unknown.length?'incomplete':'complete',

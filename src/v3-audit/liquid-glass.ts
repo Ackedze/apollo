@@ -27,7 +27,8 @@ export async function readLiquidGlassRegistry(value:any,indexId:string,guard:()=
   const condition=family.variantCondition;
   if(condition!==null&&condition!==undefined){
    if(typeof condition!=='object'||typeof condition.property!=='string'||condition.equals!=='False'||!condition.variantValues||typeof condition.variantValues!=='object'||Array.isArray(condition.variantValues)||
-      (condition.missingPropertyValue!==undefined&&condition.missingPropertyValue!=='False'))fail();
+      (condition.missingPropertyValue!==undefined&&condition.missingPropertyValue!=='False')||
+      (condition.valueSource!==undefined&&(condition.valueSource!=='instance-properties'||condition.missingPropertyValue!=='False')))fail();
    for(const [k,v] of Object.entries(condition.variantValues))if(!key(k)||!['True','False'].includes(v as string))fail();
   }
  }
@@ -40,6 +41,7 @@ export async function evaluateLiquidGlass(node:InstanceNode,main:ComponentNode|n
  let variantProperties:Record<string,string>|undefined;
  try{variantProperties=node.variantProperties??undefined;}catch{}
  const assessment=identifyLegacyComponent(data.registry,{platform,mainComponentKey:main?.key,
+  nodeType:node.type,name:node.name,mainComponentName:main?(main.parent?.type==='COMPONENT_SET'?main.parent.name:main.name):undefined,
   componentSetKey:main?.parent?.type==='COMPONENT_SET'?main.parent.key:undefined,variantProperties});
  const conditionUnknown=assessment.status==='unknown'&&assessment.reason.startsWith('variant-condition-');
  return assessment.status==='legacy'||conditionUnknown?{status:conditionUnknown?'unknown':'violation',assessment}:null;

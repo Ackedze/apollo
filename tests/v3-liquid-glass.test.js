@@ -15,7 +15,7 @@ function policy(){
  const index={schema:'apollo.embedded-audit.v1',dataId:crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex'),payload};
  const config={schemaVersion:1,platform:'iOS',families:[
   {key:legacy,name:'Old family',fileKey:'SyntheticLibrary',allowLocalSupplement:false},
-  {key:conditional,name:'State family',fileKey:'SyntheticLibrary',allowLocalSupplement:false,variantCondition:{property,equals:'False',missingPropertyValue:'False',variantValues:{[falseVariant]:'False',[trueVariant]:'True'}}},
+  {key:conditional,name:'State family',fileKey:'SyntheticLibrary',allowLocalSupplement:false,variantCondition:{property,equals:'False',missingPropertyValue:'False',valueSource:'instance-properties',variantValues:{[falseVariant]:'False',[trueVariant]:'True'}}},
   {key:local,name:'Local supplement',fileKey:'OtherLibrary',allowLocalSupplement:true},
  ]};
  // Wire fixture for the Apollo consumer; real Proxy compilation is exercised in the paired Proxy suite.
@@ -32,6 +32,8 @@ test('native data reader pins policy to the captured audit index and rejects cha
  await assert.rejects(readLiquidGlassRegistry(registry,'0'.repeat(64),()=>{}),/DATA_INVALID/);
  const changed=structuredClone(registry);changed.families[0].key='1'.repeat(40);
  await assert.rejects(readLiquidGlassRegistry(changed,index.dataId,()=>{}),/DATA_INVALID/);
+ const wrongSource=structuredClone(registry);wrongSource.families[1].variantCondition.valueSource='catalog';
+ await assert.rejects(readLiquidGlassRegistry(wrongSource,index.dataId,()=>{}),/DATA_INVALID/);
  const invalid=structuredClone(registry);invalid.families[0].variantKeys=['local-id'];
  await assert.rejects(readLiquidGlassRegistry(invalid,index.dataId,()=>{}),/DATA_INVALID/);
  await assert.rejects(readLiquidGlassRegistry(registry,index.dataId,()=>{throw Error('AUDIT_CANCELLED');}),/CANCELLED/);
@@ -96,4 +98,89 @@ test('an unavailable detector is shown as incomplete, while other platforms reta
  assert.equal(category.entries[0].classification,'unknown');assert.equal(summary.incomplete,true);
  assert.equal(buildV3Groups({visibleViews:{}},{pickerLabel:'iOS'}).groups.find(g=>g.id==='components').categories.find(c=>c.id==='liquidGlass').incomplete,true);
  assert.equal(buildV3Groups({visibleViews:{},liquidGlass:{status:'not-applicable'}},{pickerLabel:'Android'}).groups.find(g=>g.id==='components').categories.some(c=>c.id==='liquidGlass'),false);
+});
+
+
+test('ResultScreen uses readable instance state over recorded variants and distinguishes update from enabling glass',()=>{
+ const {registry}=policy();
+ const identify=(key,props)=>identifyLegacyComponent(registry,{platform:'iOS',componentSetKey:conditional,mainComponentKey:key,variantProperties:props});
+ for(const key of [falseVariant,trueVariant]){
+  const missing=identify(key,{});assert.equal(missing.status,'legacy');assert.equal(missing.reason,'variant-property-missing');
+  assert.equal(identify(key,{[property]:'False'}).reason,'variant-property-disabled');
+  assert.equal(identify(key,{[property]:'True'}).status,'not-applicable');
+  for(const unread of [undefined,null,[]])assert.equal(identify(key,unread).status,'unknown');
+  assert.equal(identify(key,{[property]:'maybe'}).status,'unknown');
+ }
+ const entries=[{id:'missing',name:'Result',liquidGlassStatus:'violation',liquidGlassReason:'variant-property-missing'},
+  {id:'off',name:'Result',liquidGlassStatus:'violation',liquidGlassReason:'variant-property-disabled'}];
+ const group=buildV3Groups({visibleViews:{liquidGlass:entries},liquidGlass:{status:'connected'}},{pickerLabel:'iOS'}).groups.find(g=>g.id==='components');
+ const rows=group.categories.find(c=>c.id==='liquidGlass').entries;
+ assert.match(rows[0].informationMessage,/Обнови компонент.*включи Liquid Glass/);
+ assert.match(rows[1].informationMessage,/Включи Liquid Glass/);
+});
+
+test('deleted Switch is matched by exact component or instance name, without marking its wrapper or internal layer',async()=>{
+ const input={platform:'iOS',nodeType:'INSTANCE',name:'❌Switch'};
+ const absent={registry:null,error:'AUDIT_LEGACY_COMPONENTS_NOT_CONFIGURED'};
+ const yes=identifyLegacyComponent(null,input);assert.equal(yes.status,'legacy');assert.equal(yes.matchBasis,'instance-name');
+ assert.equal(yes.source,'local-rule');assert.equal(yes.familyKey,undefined);
+ for(const name of ['.❌Switch','Toggle','Switch','SelectionWrapper','❌Switch custom'])assert.notEqual(identifyLegacyComponent(null,Object.assign({},input,{name})).status,'legacy');
+ for(const nodeType of ['FRAME','TEXT','COMPONENT'])assert.notEqual(identifyLegacyComponent(null,Object.assign({},input,{nodeType})).status,'legacy');
+ assert.notEqual(identifyLegacyComponent(null,Object.assign({},input,{platform:'Android'})).status,'legacy');
+ const {evaluateLiquidGlass}=runtime.exports;
+ const deleted={id:'deleted',type:'INSTANCE',name:'❌Switch',variantProperties:{}};
+ const found=await evaluateLiquidGlass(deleted,null,absent,'iOS');assert.equal(found.assessment.matchBasis,'instance-name');
+ const current={key:'1'.repeat(40),type:'COMPONENT',name:'On',parent:{type:'COMPONENT_SET',name:'LG Toggle'}};
+ assert.equal(await evaluateLiquidGlass(deleted,current,absent,'iOS'),null,'renaming a current component to the old name must not flag it');
+ const oldMain={key:'2'.repeat(40),type:'COMPONENT',name:'Off',parent:{type:'COMPONENT_SET',name:'❌Switch'}};
+ const renamed=await evaluateLiquidGlass(Object.assign({},deleted,{name:'Renamed'}),oldMain,absent,'iOS');
+ assert.equal(renamed.assessment.matchBasis,'main-component-name');
+ assert.equal(await evaluateLiquidGlass(Object.assign({},deleted,{name:'.❌Switch'}),oldMain,absent,'iOS'),null);
+});
+
+
+test('native traversal reports nested deleted Switch once with focus, counts and name evidence, even without a registry',async t=>{
+ const {index}=policy();
+ const page={id:'switch-page',type:'PAGE',name:'Fixture',parent:null,children:[],explicitVariableModes:{}};
+ const all=[];
+ const make=(id,name,parent=page)=>{
+  const node={id,name,type:'INSTANCE',visible:true,opacity:1,parent,children:[],overrides:[],componentProperties:{},variantProperties:{},getMainComponentAsync:async()=>null};
+  all.push(node);return node;
+ };
+ const wrapper=make('wrapper','SelectionWrapper');
+ const nested=make('nested-switch','❌Switch',wrapper),internal=make('internal','.❌Switch',nested);
+ nested.children=[internal];wrapper.children=[nested];
+ const standalone=make('standalone-switch','❌Switch');standalone.getMainComponentAsync=async()=>{throw Error('source removed');};
+ const hidden=make('hidden-switch','❌Switch');hidden.visible=false;
+ const frame={id:'named-frame',type:'FRAME',name:'❌Switch',visible:true,opacity:1,parent:page,children:[]};all.push(frame);
+ page.children=[wrapper,standalone,hidden,frame];
+ globalThis.figma={fileKey:'fixture',currentPage:page,currentUser:null,root:{name:'Fixture'},editorType:'figma',mixed:Symbol('mixed'),variables:{getVariableCollectionByIdAsync:async()=>null},
+  getNodeByIdAsync:async id=>all.find(n=>n.id===id)||null,viewport:{scrollAndZoomIntoView(){}}};
+ t.after(()=>delete globalThis.figma);
+ const result=await runV3Audit({runId:'switches',channel:'iOS',offlineIndex:createOfflineAuditIndex(index.payload,index.dataId),liquidGlass:{registry:null,error:'missing'},pageType:null,shellAuditEnabled:false,pluginVersion:'test',selection:page.children,assertCurrent(){},onProgress(){}});
+ const findings=result.views.visibleViews.liquidGlass;
+ assert.deepEqual(findings.map(n=>n.id).sort(),['nested-switch','standalone-switch']);
+ assert(findings.every(n=>n.liquidGlassMatchBasis==='instance-name'&&n.liquidGlassSource==='local-rule'));
+ assert.equal(result.report.liquidGlass.findings.length,2);
+ const session=await createAuditSession(result,{get:()=>null,values:()=>[]},page.id,()=>{});
+ assert(findings.every(n=>typeof n.focusActionId==='string'));
+ const ui=auditResultForUi(result),category=buildV3Groups(ui,{pickerLabel:'iOS'}).groups.find(g=>g.id==='components').categories.find(c=>c.id==='liquidGlass');
+ assert.equal(category.issues.filter(row=>row.classification==='violation').length,2);
+ assert.equal(category.incomplete,true,'local Switch detection cannot claim the unavailable family registry is complete');
+ await session.focus(findings[0].focusActionId,()=>{});
+ const connected=await runV3Audit({runId:'switches-connected',channel:'iOS',offlineIndex:createOfflineAuditIndex(index.payload,index.dataId),liquidGlass:{registry:policy().registry,error:null},pageType:null,shellAuditEnabled:false,pluginVersion:'test',selection:page.children,assertCurrent(){},onProgress(){}});
+ const connectedGroup=buildV3Groups(auditResultForUi(connected),{pickerLabel:'iOS'}).groups.find(g=>g.id==='components');
+ assert.equal(connectedGroup.categories.find(c=>c.id==='liquidGlass').count,2);
+});
+
+
+test('withdrawn SexyOverlay families stay outside findings even when an older registry still lists them',async()=>{
+ const keys=['9b7cba716d4642a097e04b5d7bab3a95a172260c','6177e70b6bc7799c924da243126bb59a57368bc4','9fc632a82c356e4c1ccfbafd9a023ec148e62c95'];
+ const {registry}=policy();
+ for(const key of keys){
+  const older=structuredClone(registry);older.families.push({key,name:'Withdrawn family',source:'local-supplement',variantKeys:['c'.repeat(40)]});
+  assert.equal(identifyLegacyComponent(older,{platform:'iOS',componentSetKey:key}).status,'not-applicable');
+  const main={key:'c'.repeat(40),type:'COMPONENT',parent:{type:'COMPONENT_SET',key,name:'Withdrawn family'}};
+  assert.equal(await runtime.exports.evaluateLiquidGlass({type:'INSTANCE',name:'Renamed',variantProperties:{}},main,{registry:older,error:null},'iOS'),null);
+ }
 });

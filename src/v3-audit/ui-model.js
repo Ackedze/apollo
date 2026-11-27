@@ -84,7 +84,9 @@ function buildV3Groups(result,settings={},state={}){
   presets:(views.presets||[]).map(item=>row('preset:'+item.id,item,'warning','Проверь применение пресета.')),
   detached:(views.detached||[]).map(item=>row('detached:'+item.id,item,'warning',item.componentName?`Компонент ${item.componentName} раздетачен.`:'Компонент раздетачен.')),
   local:local.map(item=>row('local:'+item.id,item,'warning','Компонент вне подключённых каталогов DS.',{incomplete:item.relevance==='unknown'||Boolean(item.catalogLifecycle&&!item.reference)||item.status==='incomplete'||(item.gaps||[]).length>0})),
-  liquidGlass:(views.liquidGlass||[]).map(item=>row('liquid-glass:'+item.id,item,item.liquidGlassStatus||'violation',item.liquidGlassStatus==='unknown'?'Не удалось определить состояние Liquid Glass.':'Компонент не переведён на Liquid Glass.'))
+  liquidGlass:(views.liquidGlass||[]).map(item=>row('liquid-glass:'+item.id,item,item.liquidGlassStatus||'violation',item.liquidGlassStatus==='unknown'?'Не удалось определить состояние Liquid Glass.':'Компонент не переведён на Liquid Glass.',{
+    informationMessage:item.liquidGlassReason==='variant-property-missing'?'Обнови компонент до актуальной версии и включи Liquid Glass.':item.liquidGlassReason==='variant-property-disabled'?'Включи Liquid Glass в свойствах компонента.':undefined,
+   }))
    .concat((result?.liquidGlass?.status==='unavailable'||result&&!result.liquidGlass&&settings.pickerLabel==='iOS')?[row('liquid-glass:unavailable',{name:'Проверка Liquid Glass',status:'incomplete'},'unknown','Данные проверки Liquid Glass недоступны.')]:[]),
   glyph26:(views.glyph26||[]).map(item=>row('glyph26:'+item.id,item,item.glyph26Status||'warning',item.glyph26Status==='violation'?'Устаревшая иконка, есть в Glyph-26':'Устаревшая иконка, может не быть в Glyph-26',{
    informationMessage:item.glyph26Status==='violation'?'Устаревшая иконка: можно заменить автоматически, используй навык «Перевести на Glyph-26».':'Устаревшая иконка: при автоматической замене может потребовать вмешательство, используй навык «Перевести на Glyph-26».',

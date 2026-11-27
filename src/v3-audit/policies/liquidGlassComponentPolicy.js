@@ -21,11 +21,13 @@ function identifyLegacyComponent(registry,{platform,mainComponentKey,componentSe
   if(instanceState&&!readable)return {status:'unknown',reason:'variant-condition-unavailable'};
   const observed=variantProperties&&hasOwn(variantProperties,condition.property)?variantProperties[condition.property]:undefined;
   const recorded=hasOwn(condition.variantValues,mainComponentKey)?condition.variantValues[mainComponentKey]:undefined;
-  if((observed!==undefined&&!['False','True'].includes(observed))||(!instanceState&&observed!==undefined&&recorded!==undefined&&observed!==recorded)){
+  const confirmedMissing=readable&&!hasOwn(variantProperties,condition.property);
+  const instanceValue=observed??(confirmedMissing?condition.missingPropertyValue:undefined);
+  if((observed!==undefined&&!['False','True'].includes(observed))||
+     (!instanceState&&instanceValue!==undefined&&recorded!==undefined&&instanceValue!==recorded)){
    return {status:'unknown',reason:'variant-condition-conflict'};
   }
-  const confirmedMissing=readable&&!hasOwn(variantProperties,condition.property);
-  const value=observed??(confirmedMissing&&condition.missingPropertyValue!==undefined?condition.missingPropertyValue:instanceState?undefined:recorded);
+  const value=instanceValue??(instanceState?undefined:recorded);
   if(value===undefined)return {status:'unknown',reason:'variant-condition-unavailable'};
   if(value!==condition.equals)return {status:'not-applicable',familyKey:matches[0].key};
   if(instanceState)reason=confirmedMissing?'variant-property-missing':'variant-property-disabled';
